@@ -1,0 +1,11 @@
+{
+    "name": "mobx-docs-cn",
+    "private": true,
+    "scripts": {
+        "docs:build": "yarn --cwd website build",
+        "docs:start": "yarn --cwd website start",
+        "docs:publish": "yarn --cwd website publish-gh-pages",
+        "prepare": "yarn dedup && yarn --cwd website install",
+        "dedup": "npx yarn-deduplicate --strategy fewer yarn.lock"
+    }
+}
