@@ -18,19 +18,14 @@ MobX区分了应用程序中的以下三个概念：
 
 
 
-让我们仔细看看下面的这些概念，或者在[10分钟的MobX和React简介]中(https://mobx.js.org/getting-started)，您可以通过交互方式逐步深入了解这些概念，并构建一个简单的待办事项列表(Todo List)应用程序。
+让我们仔细看看下面的这些概念，或者在[10分钟的MobX和React简介](https://mobx.js.org/getting-started)中，您可以通过交互方式逐步深入了解这些概念，并构建一个简单的待办事项列表(Todo List)应用程序。
 
 
 ### 1. 定义状态并使其可观察
 
-_State_ is the data that drives your application.
+_状态_ 是驱动你的应用程序的数据。
 
-_状态_ 是驱动你的应用程序的数据
-
-Usually, there is _domain specific state_ like a list of todo items, and there is _view state_, such as the currently selected element.
-State is like spreadsheet cells that hold a value.
-
-通常来说，状态有_领域特定状态_（比如 Todo List 中的列表项数据）和_视图状态_ （比如当前选中的列表元素）
+通常来说，状态有_领域特定状态_（比如 Todo List 中的列表项数据）和_视图状态_ （比如当前选中的列表元素）。
 
 
 
