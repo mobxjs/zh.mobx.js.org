@@ -1,33 +1,44 @@
 ---
 title: The gist of MobX
-sidebar_label: The gist of MobX
+sidebar_label: MobX 主旨
 hide_title: true
 ---
 
 <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBD4KQ7&placement=mobxjsorg" id="_carbonads_js"></script>
 
-# The gist of MobX
+# MobX 主旨
 
-## Concepts
+## 概念
 
-MobX distinguishes between the following three concepts in your application:
+MobX区分了应用程序中的以下三个概念：
 
-1. State
-2. Actions
-3. Derivations
+1. State(状态)
+2. Actions(动作)
+3. Derivations(衍生)
 
-Let's take a closer look at these concepts below, or alternatively, in the [10 minute introduction to MobX and React](https://mobx.js.org/getting-started), where you can interactively dive deeper into these concepts step by step and build a simple Todo list app.
 
-### 1. Define state and make it observable
+
+让我们仔细看看下面的这些概念，或者在[10分钟的MobX和React简介]中(https://mobx.js.org/getting-started)，您可以通过交互方式逐步深入了解这些概念，并构建一个简单的待办事项列表(Todo List)应用程序。
+
+
+### 1. 定义状态并使其可观察
 
 _State_ is the data that drives your application.
+
+_状态_ 是驱动你的应用程序的数据
+
 Usually, there is _domain specific state_ like a list of todo items, and there is _view state_, such as the currently selected element.
 State is like spreadsheet cells that hold a value.
 
-Store state in any data structure you like: plain objects, arrays, classes, cyclic data structures or references. It doesn't matter for the workings of MobX.
-Just make sure that all properties you want to change over time are marked as `observable` so MobX can track them.
+通常来说，状态有_领域特定状态_（比如 Todo List 中的列表项数据）和_视图状态_ （比如当前选中的列表元素）
 
-Here is a simple example:
+
+
+将状态存储在任何您喜欢的数据结构中：普通对象、数组、类、循环数据结构或引用。这与MobX的工作方式无关。
+
+只要确保所有你想随时间改变的属性都被标记为`observable`，这样MobX就可以跟踪它们。
+
+以下是一个简单的示例：
 
 ```javascript
 import { makeObservable, observable, action } from "mobx"
@@ -52,12 +63,11 @@ class Todo {
 }
 ```
 
-**Hint**: this example can be shortened using [`makeAutoObservable`](observable-state.md), but by being explicit we can showcase the different concepts in greater detail.
+**提示**: 在这个例子中我们可以用 [`makeAutoObservable`](observable-state.md) 对其进行简化，但是为了能更详细的展示不同的概念，我们对其进行显式设置。 
 
-Using `observable` is like turning a property of an object into a spreadsheet cell.
-But unlike spreadsheets, these values can not only be primitive values, but also references, objects and arrays.
+使用 `observable` 就像将对象的属性放在Excel表格的单元格中。但是和单元格不同的是，他们的值不仅仅是数值，也可以是引用、对象和数组。
 
-But what about `toggle`, which we marked as `action`?
+接下来我们看一下被我们标记为 `action` 的`toggle`
 
 ### 2. Update state using actions
 
