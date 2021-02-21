@@ -21,9 +21,9 @@ MobX区分了应用程序中的以下三个概念：
 让我们仔细看看下面的这些概念，或者在[10分钟的MobX和React简介](https://mobx.js.org/getting-started)中，您可以通过交互方式逐步深入了解这些概念，并构建一个简单的待办事项列表(Todo List)应用程序。
 
 
-### 1. 定义状态并使其可观察
+### 1. 定义 State 并使其可观察
 
-_状态_ 是驱动你的应用程序的数据。
+_State(状态)_ 是驱动你的应用程序的数据。
 
 通常来说，状态有_领域特定状态_（比如 Todo List 中的列表项数据）和_视图状态_ （比如当前选中的列表元素）。
 
@@ -64,16 +64,23 @@ class Todo {
 
 接下来我们看一下被我们标记为 `action` 的`toggle`
 
-### 2. Update state using actions
+### 2. 使用 Action 更新 State
 
-An _action_ is any piece of code that changes the _state_. User events, backend data pushes, scheduled events, etc.
-An action is like a user that enters a new value into a spreadsheet cell.
+_Action(动作)_ 是任意可以改变 _State(状态)_ 的代码，比如用户事件处理、后端推送数据处理、调度器事件处理等等。
 
-In the `Todo` model above you can see that we have a `toggle` method that changes the value of `finished`. `finished` is marked as `observable`. It is recommended that you mark any piece of code that changes `observable`'s as an [`action`](actions.md). That way MobX can automatically apply transactions for effortless optimal performance.
+Action 就像用户在Excel单元格中输入了新的值。
+
+在 `Todo` 类中，我们可以看到 `toggle` 方法改变了 `finished` 属性的值，而 `finished` 是被标记为 `observable` 的。建议您将所有修改 `observable` 值的代码标记为 [`action`](actions.md)。这会让 MobX可以自动进行事务处理以便轻松获得最佳性能。
+
 
 Using actions helps you structure your code and prevents you from inadvertently changing state when you don't intend to.
 Methods that modify state are called _actions_ in MobX terminology. In contrast to _views_, which compute new information based on the current state.
 Every method should serve at most one of those two goals.
+
+使用 Action 可以帮助您整理代码，并防止您在无意中修改了 State
+在 MobX 术语中，可以修改 State 的方法被称为 _action(动作)_ 。这与基于当前状态来生成新信息的 _view(视图)_ 是不同的。
+每一个方法只应完成上述两个目标中的一个。
+
 
 ### 3. Create derivations that automatically respond to state changes
 
