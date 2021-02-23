@@ -14,7 +14,7 @@ MobX区分了应用程序中的以下三个概念：
 
 1. State(状态)
 2. Actions(动作)
-3. Derivations(衍生)
+3. Derivations(派生)
 
 
 
@@ -73,35 +73,36 @@ Action 就像用户在Excel单元格中输入了新的值。
 在 `Todo` 类中，我们可以看到 `toggle` 方法改变了 `finished` 属性的值，而 `finished` 是被标记为 `observable` 的。建议您将所有修改 `observable` 值的代码标记为 [`action`](actions.md)。这会让 MobX可以自动进行事务处理以便轻松获得最佳性能。
 
 
-Using actions helps you structure your code and prevents you from inadvertently changing state when you don't intend to.
-Methods that modify state are called _actions_ in MobX terminology. In contrast to _views_, which compute new information based on the current state.
-Every method should serve at most one of those two goals.
 
-使用 Action 可以帮助您整理代码，并防止您在无意中修改了 State
+
+使用 Action 可以帮助您整理代码，并防止您在无意中修改了 State。
 在 MobX 术语中，可以修改 State 的方法被称为 _action(动作)_ 。这与基于当前状态来生成新信息的 _view(视图)_ 是不同的。
-每一个方法只应完成上述两个目标中的一个。
+您代码中的每一个方法只应完成上述两个目标中的一个。
 
 
-### 3. Create derivations that automatically respond to state changes
+### 3. 创建 Derivations 以便自动对 State 变化进行响应
 
-_Anything_ that can be derived from the _state_ without any further interaction is a derivation.
-Derivations exist in many forms:
+_任何_ 来源是_State(状态)_ 并且不需要进一步交互的东西都是 Derivation(派生)。
 
--   The _user interface_
--   _Derived data_, such as the number of remaining `todos`
--   _Backend integrations_, e.g. sending changes to the server
+Derivations 包括许多方式:
 
-MobX distinguishes between two kinds of derivations:
+-   _用户界面_
+-   _派生数据_ , 比如剩余未完成`todos`的数量
+-   _后端集成_ , 比如发送改变到服务器端
 
--   _Computed values_, which can always be derived from the current observable state using a pure function
--   _Reactions_, side effects that need to happen automatically when the state changes (bridge between imperative and reactive programming)
+Mobx 区分了两种 Derivation :
 
-When starting with MobX, people tend to overuse reactions.
-The golden rule is, always use `computed` if you want to create a value based on the current state.
+-   _Computed values_,总是可以通过纯函数从当前的可观测 State 中派生。
+-   _Reactions_, 当 State 改变时需要自动发生的副作用 (命令式编程和反应式编程之间的桥梁)
 
-#### 3.1. Model derived values using computed
 
-To create a _computed_ value, define a property using a JS getter function `get` and mark it as `computed` with `makeObservable`.
+当最开始使用MobX时，人们倾向于过度使用 _Reaction_。
+
+黄金法则是，如果要基于当前 State 创建值，请始终使用 _computed_。
+
+#### 3.1. 模型中通过 computed 派生值
+
+为了创建一个 _computed_ 值，您需要定义一个 getter 方法并将其用 `makeObservable` 标记为 `computed`
 
 ```javascript
 import { makeObservable, observable, computed } from "mobx"
@@ -121,9 +122,9 @@ class TodoList {
 }
 ```
 
-MobX will ensure that `unfinishedTodoCount` is updated automatically when a todo is added or when one of the `finished` properties is modified.
+Mobx 会确保 `unfinishedTodoCount` 会在一个todos数组发生变化中或者 todos中的一个对象中的 `finished`属性被修改时自动更新。
 
-These computations resemble formulas in spreadsheet programs like MS Excel. They update automatically, but only when required. That is, if something is interested in their outcome.
+这些计算类似于 Excel 单元格中的公式。它们会自动更新，但仅在需要时更新。也就是说，如果有有人关心其结果时才会更新。
 
 #### 3.2. Model side effects using reactions
 
