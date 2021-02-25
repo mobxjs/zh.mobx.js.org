@@ -42,9 +42,6 @@ class Footer extends React.Component {
                     </div>
                     <div>
                         <h5>Community</h5>
-                        {/* <a href={this.pageUrl('users.html', this.props.language)}>
-              User Showcase
-            </a> */}
                         <a href="https://github.com/mobxjs/mobx/discussions" target="_blank" rel="noreferrer noopener">GitHub discussions (NEW)</a>
                         <a
                             href="https://stackoverflow.com/questions/tagged/mobx"
@@ -67,6 +64,7 @@ class Footer extends React.Component {
                         >
                             Star
                         </a>
+                        <a href="https://vercel.com/?utm_source=mobx-docs-cn&utm_campaign=oss" target="_blank"><img src="/img/powered-by-vercel.svg" /></a>
                         {this.props.config.twitterUsername && (
                             <div className="social">
                                 <a

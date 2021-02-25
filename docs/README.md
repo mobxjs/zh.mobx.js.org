@@ -17,51 +17,58 @@ _简单，可扩展的状态管理库_
 
 ---
 
-## Mobx中文文档翻译贡献者(排名不分先后)
+## 文档翻译贡献者
 
-> Mobx Team衷心感谢以下参与文档翻译的同学
+> Mobxjs Team衷心感谢以下参与文档翻译的同学(排名不分先后
 
-<table>
-  <tbody>
-    <tr>
-        <td align="center" valign="top">
-            <img width="60px" height="60px">
-            <br>
-            <a href="#" style="display: inline-block; width=100px; font-size: 12px" >虚位以待</a>
-        </td>
-        <td align="center" valign="top">
-            <img width="60px" height="60px">
-            <br>
-            <a href="#" style="display: inline-block; width=100px; font-size: 12px" >虚位以待</a>
-        </td>
-        <td align="center" valign="top">
-            <img width="60px" height="60px">
-            <br>
-            <a href="#" style="display: inline-block; width=100px; font-size: 12px" >虚位以待</a>
-        </td>
-        <td align="center" valign="top">
-            <img width="60px" height="60px">
-            <br>
-            <a href="#" style="display: inline-block; width=100px; font-size: 12px" >虚位以待</a>
-        </td>
-        <td align="center" valign="top">
-            <img width="60px" height="60px">
-            <br>
-            <a href="#" style="display: inline-block; width=100px; font-size: 12px" >虚位以待</a>
-        </td>  
-        <td align="center" valign="top">
-            <img width="60px" height="60px">
-            <br>
-            <a href="#" style="display: inline-block; width=100px; font-size: 12px" >虚位以待</a>
-        </td>  
-        <td align="center" valign="top">
-            <img width="60px" height="60px" src="https://mobx.js.org/assets/mobx.png">
-            <br>
-            <a href="https://github.com/mobxjs/zh.mobx.js.org" style="display: inline-block; width=100px; font-size: 12px" >立即参与翻译 ↗️</a>
-        </td>      
-     </tr>
-  </tbody>
-</table>
+<div style="overflow-x: scroll">
+    <table style="width: max-content;">
+        <tr>  
+            <td align="center">
+                <a href="https://github.com/mobxjs/zh.mobx.js.org" target="_blank">
+                    <img src="img/placeholder.svg" width="50px">
+                    <br />
+                    <sup style="font-size: 12px">虚位以待</sup>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/mobxjs/zh.mobx.js.org" target="_blank">
+                    <img src="img/placeholder.svg" width="50px">
+                    <br />
+                    <sup style="font-size: 12px">虚位以待</sup>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/mobxjs/zh.mobx.js.org" target="_blank">
+                    <img src="img/placeholder.svg" width="50px">
+                    <br />
+                    <sup style="font-size: 12px">虚位以待</sup>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/mobxjs/zh.mobx.js.org" target="_blank">
+                    <img src="img/placeholder.svg" width="50px">
+                    <br />
+                    <sup style="font-size: 12px">虚位以待</sup>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/mobxjs/zh.mobx.js.org" target="_blank">
+                    <img src="img/placeholder.svg" width="50px">
+                    <br />
+                    <sup style="font-size: 12px">虚位以待</sup>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/mobxjs/zh.mobx.js.org" target="_blank">
+                    <img width="50px" src="https://mobx.js.org/assets/mobx.png">
+                    <br />
+                    <sup style="font-size: 12px">立即参与翻译 ↗️</sup>
+                </a>
+            </td>  
+            </tr>
+    </table>
+</div>
 
 ## Mobx项目赞助商
 
