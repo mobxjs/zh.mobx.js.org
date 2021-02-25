@@ -1,4 +1,4 @@
-<img src="https://mobx.js.org/assets/mobx.png" alt="logo" height="120" align="right" />
+<img src="https://zh.mobx.js.org/assets/mobx.png" alt="logo" height="120" align="right" />
 
 # MobX
 
@@ -20,7 +20,7 @@ mobx是一个流行的状态管理库，在全世界有很多用户。mobx中文
 
 ### 翻译贡献者
 
-> Mobx Team衷心感谢以下参与文档翻译的同学(排名不分先后
+> Mobxjs Team衷心感谢以下参与文档翻译的同学(排名不分先后
 
 <table>
   <tr>
