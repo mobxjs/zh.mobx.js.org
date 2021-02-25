@@ -100,7 +100,7 @@ Mobx 区分了两种 Derivation :
 
 黄金法则是，如果要基于当前 State 创建值，请始终使用 _computed_。
 
-#### 3.1. 模型中通过 computed 派生值
+#### 3.1. 业务模型中通过 computed 派生值
 
 为了创建一个 _computed_ 值，您需要定义一个 getter 方法并将其用 `makeObservable` 标记为 `computed`
 
@@ -126,22 +126,24 @@ Mobx 会确保 `unfinishedTodoCount` 会在一个todos数组发生变化中或�
 
 这些计算类似于 Excel 单元格中的公式。它们会自动更新，但仅在需要时更新。也就是说，如果有有人关心其结果时才会更新。
 
-#### 3.2. Model side effects using reactions
+#### 3.2. 业务模型通过 reaction 产生副作用
 
-For you as a user to be able to see a change in state or computed values on the screen, a _reaction_ that repaints a part of the GUI is needed.
+作为一个用户，要想在屏幕上看到状态或计算值的变化，就需要一个重新绘制部分GUI的 _reactions_ 。
 
-Reactions are similar to computed values, but instead of producing information, they produce side effects like printing to the console, making network requests, incrementally updating React component tree to patch the DOM, etc.
+Reaction 和 computed 类似，但并不产生信息，而是产生副作用，如打印到控制台、发出网络请求、增量更新 React 组件树以便更新DOM等。
 
-In short, reactions bridge the worlds of [reactive](https://en.wikipedia.org/wiki/Reactive_programming) and [imperative](https://en.wikipedia.org/wiki/Imperative_programming) programming.
+简而言之，_reaction_ 是 [响应式编程](https://en.wikipedia.org/wiki/Reactive_programming)和[指令式编程](https://en.wikipedia.org/wiki/Imperative_programming)之间的桥梁。
 
-By far the most used form of reactions are UI components.
-Note that it is possible to trigger side effects from both actions and reactions.
-Side effects that have a clear, explicit origin from which they can be triggered, such
-as making a network request when submitting a form, should be triggered explicitly from the relevant event handler.
 
-#### 3.3. Reactive React components
+到目前为止，最常用的 reaction 形式是UI组件。
+注意，action 和 reaction 都可能引起副作用。
+副作用应有一个清晰的、显式的起源，例如在提交表单时发出网络请求，应该从相关的事件处理程序显式触发。
 
-If you are using React, you can make your components reactive by wrapping them with the [`observer`](react-integration.md) function from the bindings package you've [chosen during installation](installation.md#installation). In this example, we're going to use the more lightweight `mobx-react-lite` package.
+
+#### 3.3. 响应式 React 组件
+
+如果你使用 React，你可以将你的组件用[安装过程中](installation.md#installation)下载的包中的[`observer`](react-integration.md)函数来包装起来，以便让组件成为响应式的。在这个示例中，我们将用更轻量的 `mobx-react-lite` 包。
+
 
 ```javascript
 import * as React from "react"
