@@ -25,9 +25,9 @@ mobx是一个流行的状态管理库，在全世界有很多用户。mobx中文
 <table>
   <tr>
     <td align="center"><a href="https://github.com/WanderWang"><img src="https://avatars.githubusercontent.com/u/2238280?s=100&v=4" width="100px;" alt=""/><br /><sub><b>WanderWang</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/commits?author=WanderWang" title="PR">💻</a></td>
-    <td align="center"><a href="https://github.com/mobxjs/zh.mobx.js.org/"><img src="./website/static/img/placeholder.svg" width="100px;" alt=""/><br /><sub><b>next contributor</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls" title="PR">💻</a></td>
-    <td align="center"><a href="https://github.com/mobxjs/zh.mobx.js.org/"><img src="./website/static/img/placeholder.svg" width="100px;" alt=""/><br /><sub><b>next contributor</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls" title="PR">💻</a></td>
-    <td align="center"><a href="https://github.com/mobxjs/zh.mobx.js.org/"><img src="./website/static/img/placeholder.svg" width="100px;" alt=""/><br /><sub><b>next contributor</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls" title="PR">💻</a></td>
+    <td align="center"><a href="https://github.com/mobxjs/zh.mobx.js.org/"><img src="https://zh.mobx.js.org/assets/placeholder.svg" width="100px;" alt=""/><br /><sub><b>next contributor</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls" title="PR">💻</a></td>
+    <td align="center"><a href="https://github.com/mobxjs/zh.mobx.js.org/"><img src="https://zh.mobx.js.org/assets/placeholder.svg" width="100px;" alt=""/><br /><sub><b>next contributor</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls" title="PR">💻</a></td>
+    <td align="center"><a href="https://github.com/mobxjs/zh.mobx.js.org/"><img src="https://zh.mobx.js.org/assets/placeholder.svg" width="100px;" alt=""/><br /><sub><b>next contributor</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls" title="PR">💻</a></td>
   </tr>
 </table>
 
@@ -49,12 +49,12 @@ mobx是一个流行的状态管理库，在全世界有很多用户。mobx中文
 ### 翻译奖励
 对于提过PR并成功合并的同学，我们会将您的账号放在本项目仓库的README.md中的贡献者名单里(如上所示)。对于贡献较大的同学我们我们会奖励Mobx官方贴纸和Mobx6 Cheatsheet，并将您的Github账号放在文档网站首页。（一般来说贡献较大是指翻译一篇或者多篇文档，积极参与校对也属于贡献较大
 
-<img src="./website/static/img/gift.jpg" width="700px;" alt="gift for translation volunteer"/>
+<img src="https://zh.mobx.js.org/assets/gift.jpg" width="700px;" alt="gift for translation volunteer"/>
 
 >Mobx6 Cheatsheet为电子版PDF，通过Email发送。考虑邮递成本，Mobx贴纸将以中国邮政平信的方式寄到您的地址。
 
 ### 感谢赞助商Vercel
-<a href="https://vercel.com/?utm_source=mobx-docs-cn&utm_campaign=oss"><img src="./website/static/img/powered-by-vercel.svg" width="250px;" alt="zh-mobx-docs powered by vercel"/></a>
+<a href="https://vercel.com/?utm_source=mobx-docs-cn&utm_campaign=oss"><img src="https://zh.mobx.js.org/assets/powered-by-vercel.svg" width="250px;" alt="zh-mobx-docs powered by vercel"/></a>
 
 ### License
 MIT @ Mobxjs Team
