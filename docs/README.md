@@ -18,8 +18,8 @@ _简单，可扩展的状态管理库_
 ---
 
 ## 文档翻译贡献者
-
-> Mobxjs Team衷心感谢以下参与文档翻译的同学(排名不分先后
+> 旧版文档链接: [MobX 5](https://cn.mobx.js.org)、 [MobX 4 (LTS)](https://github.com/SangKa/MobX-Docs-CN/tree/4.0.0/docs)、[MobX 3](https://github.com/SangKa/MobX-Docs-CN/tree/3.0.0/docs)\
+ Mobxjs Team衷心感谢以下参与文档翻译的同学(排名不分先后
 
 <div style="overflow-x: scroll">
     <table style="width: max-content;">
@@ -61,7 +61,7 @@ _简单，可扩展的状态管理库_
             </td>
             <td align="center">
                 <a href="https://github.com/mobxjs/zh.mobx.js.org" target="_blank">
-                    <img width="50px" src="https://mobx.js.org/assets/mobx.png">
+                    <img width="50px" src="https://zh.mobx.js.org/assets/mobx.png">
                     <br />
                     <sup style="font-size: 12px">立即参与翻译 ↗️</sup>
                 </a>
