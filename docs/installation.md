@@ -1,16 +1,16 @@
 ---
-title: Installation
-sidebar_label: Installation
+title: 安装
+sidebar_label: 安装
 hide_title: true
 ---
 
 <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBD4KQ7&placement=mobxjsorg" id="_carbonads_js"></script>
 
-# Installation
+# 安装
 
-MobX works in any ES5 environment, which includes browsers and NodeJS.
+MobX可在任何ES5环境（包括浏览器和NodeJS）中运行。
 
-There are two types of React bindings, `mobx-react-lite` supports only functional components, whereas `mobx-react` also supports class based components. Append the appropriate bindings for your use case to the _Yarn_ or _NPM_ command below:
+有两种类型的React绑定，mobx-react-lite仅支持函数组件，而mobx-react也支持基于类的组件。可以使用Yarn、NPM、CDN集成MobX到您的项目中：
 
 **Yarn:** `yarn add mobx`
 
@@ -18,18 +18,18 @@ There are two types of React bindings, `mobx-react-lite` supports only functiona
 
 **CDN:** https://cdnjs.com/libraries/mobx / https://unpkg.com/mobx/dist/mobx.umd.production.min.js
 
-## Use spec compliant transpilation for class properties
+## 类属性使用符合规范进行转换
 
-⚠️ **Warning:** When using MobX with TypeScript and Babel, and you plan to use classes; make sure to update your configuration to use a TC-39 spec compliant transpilation for class fields, since this is not the default. Without this, class fields cannot be made observable before they are initialized.
+⚠️ **Warning:** 将MobX与TypeScript和Babel一起使用时，您计划使用类；确保更新您的配置，以将TC-39规范兼容的转换用于类字段，因为这不是默认设置。否则，无法在初始化类字段之前使其可观察。
 
--   For Babel: Make sure to use at least version 7.12. Use the plugin `["@babel/plugin-proposal-class-properties", { "loose": false }]`
--   For TypeScript, set the compiler option `"useDefineForClassFields": true`
+-   Babel: 请确保至少使用版本号为7.12的babel. 使用[@babel/plugin-proposal-class-properties](https://babel.docschina.org/docs/en/babel-plugin-proposal-class-properties/) plugin, babel针对类属性的配置为 `["@babel/plugin-proposal-class-properties", { "loose": false }]`
+-   TypeScript, 设置编译器选项为 `"useDefineForClassFields": true`
 
-## MobX on older JavaScript environments
+## 在较旧的JavaScript环境中使用MobX
 
-By default, MobX uses proxies for optimal performance and compatibility. However, on older JavaScript engines `Proxy` is not available (check out [Proxy support](https://kangax.github.io/compat-table/es6/#test-Proxy)). Examples of such are Internet Explorer (before Edge), Node.js < 6, iOS < 10, Android before RN 0.59, or Android on iOS.
+默认情况下，MobX使用代理来获得最佳性能和兼容性。但是，在较旧的JavaScript引擎Proxy上不可用 (请查看 [Proxy support](https://kangax.github.io/compat-table/es6/#test-Proxy))。例如Internet Explorer（Edge之前），Node.js <6，iOS <10，RN 0.59之前的Android或iOS上的Android。
 
-In such cases, MobX can fallback to an ES5 compatible implementation which works almost identically, although there are a few [limitations without Proxy support](configuration.md#limitations-without-proxy-support). You will have to explicitly enable the fallback implementation by configuring [`useProxies`](configuration.md#proxy-support):
+在这种情况下，MobX可以回退到与ES5兼容的实现，该实现几乎相同地工作，尽管没有代理支持也有一些限制[limitations without Proxy support](configuration.md#limitations-without-proxy-support)。您将必须通过配置明确启用降级方案 [`useProxies`](configuration.md#proxy-support):
 
 ```javascript
 import { configure } from "mobx"
@@ -37,15 +37,13 @@ import { configure } from "mobx"
 configure({ useProxies: "never" }) // Or "ifavailable".
 ```
 
-## MobX and Decorators
+## MobX和装饰器
 
-If you have used MobX before, or if you followed online tutorials, you probably saw MobX with decorators like `@observable`.
-In MobX 6, we have chosen to move away from decorators by default, for maximum compatibility with standard JavaScript.
-They can still be used if you [enable them](enabling-decorators.md) though.
+如果您以前使用过MobX，或者如果您遵循了在线教程，则可能会看到MobX支持装饰器，例如@observable。在MobX 6中，我们选择默认情况下远离装饰器，以最大程度地与标准JavaScript兼容。如果您启用了它们，它们仍然可以使用 [enable them](enabling-decorators.md)。
 
-## MobX on other frameworks / platforms
+## 其他框架/平台上的MobX
 
--   [MobX.dart](https://mobx.netlify.app/): MobX for Flutter / Dart
--   [lit-mobx](https://github.com/adobe/lit-mobx): MobX for lit-element
--   [mobx-angular](https://github.com/mobxjs/mobx-angular): MobX for angular
--   [mobx-vue](https://github.com/mobxjs/mobx-vue): MobX for Vue
+-   [MobX.dart](https://mobx.netlify.app/): 适用于Flutter / Dart的Mobx
+-   [lit-mobx](https://github.com/adobe/lit-mobx): 适用于lit-element的MobX
+-   [mobx-angular](https://github.com/mobxjs/mobx-angular): 适用于angular的
+-   [mobx-vue](https://github.com/mobxjs/mobx-vue): 适用于Vue的Mobx
