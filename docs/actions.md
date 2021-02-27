@@ -447,7 +447,7 @@ const projects = await store.fetchProjects()
 
 </details>
 
-## 关闭 flows {🚀}
+## 取消 flows {🚀}
 
 flow 的另一个好处就是它可以被取消。
 `flow` 的返回值是一个 Promise，在 generator 函数运行完成时它将会被 resolve。
