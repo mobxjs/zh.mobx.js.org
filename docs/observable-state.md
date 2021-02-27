@@ -68,7 +68,7 @@ class Doubler {
 ```
 
 **所有带注释** 的字段都是 **不可配置的**。<br>
-**所有的不可观察**（stateless）的字段（`action`, `flow`）都是 **不可写的**。
+**所有的不可观察**（无状态）的字段（`action`, `flow`）都是 **不可写的**。
 
 <!--factory function + makeAutoObservable-->
 
@@ -112,8 +112,8 @@ const tags = observable(["high prio", "medium prio", "low prio"])
 tags.push("prio: for fun")
 ```
 
-与第一个使用 `makeObservable` 的示例相反，`observable` 支持向对象添加（删除）字段。
-这对于动态对象，数组，Maps 和 Sets 之类的集合而言，极大的提升了它们的 `可观察性`。
+与第一个例子中的 `makeObservable` 不同，`observable` 支持向对象添加（和删除）字段。
+这使得 `observable` 非常适合用于动态对象、Array、Maps、Sets 之类的集合。
 
 <!--END_DOCUSAURUS_CODE_TABS-->
 
@@ -126,7 +126,7 @@ tags.push("prio: for fun")
 `makeAutoObservable` 类似于 `makeObservable`，在默认情况下它将推断所有的属性。你仍然可以使用 `overrides` 重写某些注解的默认行为。
 特别的，`false` 可用于在自动处理中排除一个属性或方法。
 查看上面的代码获取示例。
-因为不需要显式地提及新成员，所以使用 `makeAutoObservable` 函数比使用 `makeObservable` 函数，会写更少的代码，且更容易维护。
+与使用 `makeObservable` 相比，`makeAutoObservable` 函数更紧凑，也更容易维护，因为新成员不需要显式地提及。
 然而，`makeAutoObservable` 不能被用于具有 super 的 [子类](subclassing.md)。
 
 推断规则：
@@ -155,7 +155,7 @@ tags.push("prio: for fun")
 <details id="observable-array"><summary>**例子：** 可观察数组<a href="#observable-array" class="tip-anchor"></a></summary>
 
 下面的例子创建了一个可观察对象并且使用 [`autorun`](reactions.md#autorun) 观察它。
-可以使用类似的方法与 Map 和 Set 等集合一同工作。
+处理 Map 和 Set 集合的工作原理类似。
 
 ```javascript
 import { observable, autorun } from "mobx"
@@ -209,7 +209,7 @@ MobX 无法使原始值可观察，因为他们在 JavaScript 中是不可变的
 `make(Auto)Observable` 和 `observable` 之间最主要的区别在于，`make(Auto)Observable` 修改你在第一个参数位传递的对象，而 `observable` 创建一个可观察的 _clone_ 对象。
 
 第二个区别是，`observable` 创建一个 [`Proxy`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) 对象， 以便在将该对象用作动态查找图时能够捕获将要添加的属性。
-如果将要转化为可观察的对象有既定的结构，换句话说其中的所有成员都是预先知道的，我们推荐使用 `makeObservable`，因为非代理对象具有更快的速度，并且更容易在 debugger 中进行追踪检查，并且可以使用 `console.log` 方便地进行打印。
+如果你想让可观察的对象具有一个常规的结构，其中所有的成员都是事先已知的，我们建议使用 `makeObservable`，因为非代理对象速度更快，而且它们更容易在 `debugger` 和 `console.log` 中检查。
 
 因此，`make(Auto)Observable` 推荐在工厂函数中使用。
 值得一提的是，可以将 `{ proxy: false }` 作为 option 传递给 `observable` 获取非代理的克隆。
@@ -266,10 +266,10 @@ MobX 无法使原始值可观察，因为他们在 JavaScript 中是不可变的
 `options` 参数可以在 `target` 还不是可观察对象时提供。<br>
 一旦可观察对象被初始化，将无法更改 options。<br>
 options 被保存在 target 上并且在之后的 `makeObservable`/`extendObservable` 调用中将会被保持。<br>
-你不能在 [subclass](subclassing.md) 子类中传递不同的 options。
+你不能在 [子类](subclassing.md) 中传递不同的 options。
 </details>
 
-## 将可观察变量转化回原始 JavaScript 集合
+## 将 observable 转换回普通的 JavaScript 集合
 
 有时有必要将可观察的数据结构转换回原始的数据结构。
 例如，当将可观察对象传递到无法跟踪可观察对象的 React 组件时，或这想要获得将来不会改变的数据的克隆时。
@@ -292,5 +292,5 @@ MobX 原则上对此没有限制，并且可能有许多使用普通对象的 Mo
 但是，使用类的一个好处是更容易被索引以实现自动补全等功能，例如使用 TypeScript。
 另外，`instanceof` 非常强大，可以方便的用于类型推断，并且类实例不会被包装在 `Proxy` 对象中，从而提供更好的调试体验。
 最后，使用类可以从引擎优化中受益，因为它们是可预测的并且方法在原型上是共享的。
-但是，繁重的继承很容易成为 foot-guns，因此如果使用类，请尽量使其保持简单。
-因此，即使您并不喜欢使用类，我们也鼓励您尽可能多的使用类的写法。如果其他写法更适合你，也可以使用其他写法。
+但是，繁重的继承很容易成为军火库，因此如果使用类，请尽量使其保持简单。
+因此，尽管稍微倾向于使用类，但如果有更适合您的，我们肯定会鼓励您偏离这种风格。
