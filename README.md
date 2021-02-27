@@ -25,14 +25,19 @@ mobx是一个流行的状态管理库，在全世界有很多用户。mobx中文
 <table>
   <tr>
     <td align="center"><a href="https://github.com/WanderWang"><img src="https://avatars.githubusercontent.com/u/2238280?s=100&v=4" width="100px;" alt=""/><br /><sub><b>WanderWang</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/commits?author=WanderWang" title="PR">💻</a></td>
-    <td align="center"><a href="https://github.com/mobxjs/zh.mobx.js.org/"><img src="https://zh.mobx.js.org/assets/placeholder.svg" width="100px;" alt=""/><br /><sub><b>next contributor</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls" title="PR">💻</a></td>
+    <td align="center"><a href="https://github.com/BlackHole1"><img src="https://avatars.githubusercontent.com/u/8198408?s=100&v=4" width="100px;" alt=""/><br /><sub><b>BlackHole1</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/commits?author=BlackHole1" title="PR">💻</a></td>
+    <td align="center"><a href="https://github.com/wangjq4214"><img src="https://avatars.githubusercontent.com/u/35188480?s=100&v=4" width="100px;" alt=""/><br /><sub><b>wangjq4214</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/commits?author=wangjq4214" title="PR">💻</a></td>
+    <td align="center"><a href="https://github.com/TheFirstSunday"><img src="https://avatars.githubusercontent.com/u/20334663?s=100&v=4" width="100px;" alt=""/><br /><sub><b>TheFirstSunday</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/commits?author=TheFirstSunday" title="PR">💻</a></td>
     <td align="center"><a href="https://github.com/mobxjs/zh.mobx.js.org/"><img src="https://zh.mobx.js.org/assets/placeholder.svg" width="100px;" alt=""/><br /><sub><b>next contributor</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls" title="PR">💻</a></td>
     <td align="center"><a href="https://github.com/mobxjs/zh.mobx.js.org/"><img src="https://zh.mobx.js.org/assets/placeholder.svg" width="100px;" alt=""/><br /><sub><b>next contributor</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls" title="PR">💻</a></td>
   </tr>
 </table>
 
 ### 如何参与翻译？
-> 开始翻译前，请确认当前文档无人认领翻译，避免重复劳动
+#### 翻译前确认
+前往[翻译认领列表](https://github.com/mobxjs/zh.mobx.js.org/issues)寻找感兴趣的未翻译文档认领翻译，翻译是一件很辛苦的事情，我们要尽量避免重复劳动！认领流程参考[issue#12](https://github.com/mobxjs/zh.mobx.js.org/issues/12)
+
+#### 快速参与翻译
 > 不需要您clone本项目到本地，我们极力推荐所有工作都在Github网页完成。
 
 方式1：查看本项目docs文件夹，找到感兴趣的文档.md文件，在Github页面使用`edit this file`功能开始翻译
