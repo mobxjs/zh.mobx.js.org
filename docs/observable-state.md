@@ -208,7 +208,7 @@ MobX 无法使原始值可观察，因为他们在 JavaScript 中是不可变的
 
 `make(Auto)Observable` 和 `observable` 之间最主要的区别在于，`make(Auto)Observable` 修改你在第一个参数位传递的对象，而 `observable` 创建一个可观察的 _clone_ 对象。
 
-第二个区别是，`observable` 创建一个 [`Proxy`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) 对象， 以便在将该对象用作动态查找图时能够捕获将要添加的属性。
+第二个区别是，`observable` 创建一个 [`Proxy`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) 对象，以便在将该对象用作动态查找图时能够捕获将要添加的属性。
 如果你想让可观察的对象具有一个常规的结构，其中所有的成员都是事先已知的，我们建议使用 `makeObservable`，因为非代理对象速度更快，而且它们更容易在 `debugger` 和 `console.log` 中检查。
 
 因此，`make(Auto)Observable` 推荐在工厂函数中使用。
