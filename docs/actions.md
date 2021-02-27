@@ -370,7 +370,7 @@ class Store {
         this.githubProjects = []
         this.state = "pending"
         try {
-            // Yield instead of await.
+            // Yield 代替 await.
             const projects = yield fetchGithubProjectsSomehow()
             const filteredProjects = somePreprocessing(projects)
             this.state = "done"
@@ -400,22 +400,22 @@ const projects = await flowResult(store.fetchProjects())
 在 generator 内部，你可以使用 yield 串联 Promise（使用 `yield somePromise` 代替 `await somePromise`）。
 flow 机制将会确保 generator 在 Promise resolve 之后继续运行或者抛出错误。
 
-所以 `flow` 是 `async` / `await` 的一个替代方法，它不需要 `action` 的包装。它可以按照下面的方式工作：wrapping. It can be applied as follows:
+所以 `flow` 是 `async` / `await` 的一个替代方法，它不需要 `action` 的包装。它可以按照下面的方式工作：
 
-1. Wrap `flow` around your asynchronous function.
-2. Instead of `async` use `function *`.
-3. Instead of `await` use `yield`.
+1. 使用 `flow` 包装你的异步函数。
+2. 使用 `function *` 代替 `async`。
+3. 使用 `yield` 代替 `await`。
 
-The [`flow` + generator function](#asynchronous-actions) example above shows what this looks like in practice.
+上面的 [`flow` + generator 函数](#asynchronous-actions) 的示例展示了实际情况中的用法。
 
-Note that the `flowResult` function is only needed when using TypeScript.
-Since decorating a method with `flow`, it will wrap the returned generator in a promise.
-However, TypeScript isn't aware of that transformation, so `flowResult` will make sure that TypeScript is aware of that type change.
+需要注意的是，当使用 TypeScript 时才需要使用 `flowResult` 函数。
+由于使用 `flow` 包装方法，他将把返回的 generator 包裹在 Promise 中。
+然而，TypeScript 并不知道这种转换，因此使用 `flowResult` 确保 TypeScript 可以知道这种类型的改变。
 
-`makeAutoObservable` and friends will automatically infer generators to be `flow`s. `flow` annotated members will be non-enumerable.
+`makeAutoObservable` 将自动推断 generators 为 `flow`。带有 `flow` 注解的成员是不可枚举的。
 
-<details id="flow-wrap"><summary>{🚀} **Note:** using flow on object fields<a href="#flow-wrap" class="tip-anchor"></a></summary>
-`flow`, like `action`, can be used to wrap functions directly. The above example could also have been written as follows:
+<details id="flow-wrap"><summary>{🚀} **注意：** 将 flow 作为对象字段<a href="#flow-wrap" class="tip-anchor"></a></summary>
+像 `action` 一样，`flow` 也可以直接作为包装函数使用。上面的例子可以改写成下面的样子：
 
 ```typescript
 import { flow } from "mobx"
@@ -428,7 +428,7 @@ class Store {
         this.githubProjects = []
         this.state = "pending"
         try {
-            // yield instead of await.
+            // yield 代替 await.
             const projects = yield fetchGithubProjectsSomehow()
             const filteredProjects = somePreprocessing(projects)
             this.state = "done"
@@ -443,19 +443,19 @@ const store = new Store()
 const projects = await store.fetchProjects()
 ```
 
-The upside is that we don't need `flowResult` anymore, the downside is that `this` needs to be typed to make sure its type is inferred correctly.
+这样做的好处是我们不再需要 `flowResult` 了，但是需要传入 `this` 来确保正确的类型推断。
 
 </details>
 
-## Cancelling flows {🚀}
+## 关闭 flows {🚀}
 
-Another neat benefit of flows is that they are cancellable.
-The return value of `flow` is a promise that resolves with the value that is returned from the generator function in the end.
-The returned promise has an additional `cancel()` method that will interrupt the running generator and cancel it.
-Any `try` / `finally` clauses will still be run.
+flow 的另一个好处就是它可以被取消。
+`flow` 的返回值是一个 Promise，在 generator 函数运行完成时它将会被 resolve。
+返回的 Promise 中有一个额外的 `cancel()` 方法，该方法可以中断正在运行的 generator 并取消它。
+`try` / `finally` 字句仍将运行。
 
-## Disabling mandatory actions {🚀}
+## 关闭强制使用 action {🚀}
 
-By default, MobX 6 and later require that you use actions to make changes to the state.
-However, you can configure MobX to disable this behavior. Check out the [`enforceActions`](configuration.md#enforceactions) section.
-For example, this can be quite useful in unit test setup, where the warnings don't always have much value.
+默认情况下，MobX 6 和更高版本要求您使用 action 来更改 state。
+然而，你可以配置 MobX 来关闭这个行为。查看 [`enforceActions`](configuration.md#enforceactions)。
+例如，这在单元测试中非常有用，因为警告并不总是有价值的。
