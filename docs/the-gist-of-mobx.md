@@ -172,33 +172,36 @@ const store = new TodoList([new Todo("Get Coffee"), new Todo("Write simpler code
 render(<TodoListView todoList={store} />, document.getElementById("root"))
 ```
 
-`observer` converts React components into derivations of the data they render.
-When using MobX there are no smart or dumb components.
-All components render smartly, but are defined in a dumb manner. MobX will simply make sure the components are always re-rendered whenever needed, and never more than that.
+`observer` 将 React 组件转化为了从数据到渲染的派生过程。
+当使用 MobX 的时，不存在“智能组件”和“哑巴组件”。所有的组件在渲染时都是智能的，但是在定义时是按照哑巴组件的方式去定义的。MobX会简单确定这个组件是否需要进行重绘，并止步于此。
 
-So the `onClick` handler in the above example will force the proper `TodoView` component to re-render as it uses the `toggle` action, but will only cause the `TodoListView` component to re-render if the number of unfinished tasks has changed.
-And if you would remove the `Tasks left` line (or put it into a separate component), the `TodoListView` component would no longer re-render when ticking a task.
+因此，上述示例中的`onClick`事件处理器调用`toggle` Action 后，会使适当的`TodoView`组件重绘，但仅当未完成任务的数量发生更改时才会使 `TodoListView` 组件重绘。
 
-To learn more about how React works with MobX, check out the [React integration](react-integration.md) section.
+如果你移除了`Tasks left`这行代码（或者把他拆分到另一个组件中）,`TodoListView`组件就不再 `toggle` 执行时产生重绘了。
 
-#### 3.4. Custom reactions
+您可以查阅[与 React 集成](react-integration.md)来了解更多有关 React 是如何与 MobX 协同运作的。
 
-You will need them rarely, but they can be created using the [`autorun`](reactions.md#autorun),
-[`reaction`](reactions.md#reaction) or [`when`](reactions.md#when) functions to fit your specific situations.
-For example, the following `autorun` prints a log message every time the amount of `unfinishedTodoCount` changes:
+
+
+#### 3.4. 自定义 Reaction
+
+你不太经常会需要它们，它们可以可以使用 [`autorun`](reactions.md#autorun) ,[`reaction`](reactions.md#reaction) 或 [`when`](reactions.md#when) 方法来订制你的特殊业务场景。
+
+比如，下面的 `autorun` 将在`unfinishedTodoCount`的数量发生变化时输出日志。
+
 
 ```javascript
-// A function that automatically observes the state.
+// 一个自动观察state的函数
 autorun(() => {
     console.log("Tasks left: " + todos.unfinishedTodoCount)
 })
 ```
 
-Why does a new message get printed every time the `unfinishedTodoCount` is changed? The answer is this rule of thumb:
+为什么每次 `unfinishedTodoCount`发生改变时都会输出日志信息呢？答案是以下法则：
 
-_MobX reacts to any existing observable property that is read during the execution of a tracked function._
+_MobX对在执行跟踪函数期间读取的任何现有可观察属性作出反应_
 
-To learn more about how MobX determines which observables need to be reacted to, check out the [Understanding reactivity](understanding-reactivity.md) section.
+要了解更多关于MobX如何确定需要对哪些可见物作出反应的信息，请查看 [理解反应](understanding-reactivity.md) 章节。
 
 ## Principles
 
