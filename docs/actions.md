@@ -1,5 +1,5 @@
 ---
-title: Updating state using actions
+title: 使用 actions 更新 state
 sidebar_label: Actions
 hide_title: true
 ---
@@ -8,23 +8,23 @@ hide_title: true
 
 # 使用 actions 更新 state
 
-Usage:
+使用：
 
--   `action` _(annotation)_
+-   `action` _（注解）_
 -   `action(fn)`
 -   `action(name, fn)`
 
-All applications have actions. An action is any piece of code that modifies the state. In principle, actions always happen in response to an event. For example, a button was clicked, some input changed, a websocket message arrived, etc.
+所有的应用程序都有 actions。actions 是一些修改 state 的代码。原则上，actions 总是为了响应事件而发生的。例如，点击了一个按钮，一些输入被改变，一个 websocket 消息被送达，等等。 
 
-MobX requires that you declare your actions, although [`makeAutoObservable`](observable-state.md#makeautoobservable) can automate much of this job. Actions help you structure your code better and offer the following performance benefits:
+尽管 [`makeAutoObservable`](observable-state.md#makeautoobservable) 可以自动完成许多工作，但是 MobX 还是要求你声明你的 actions。Actions 可以帮助你更好的组织你的代码并提供一些性能优势：
 
-1. They are run inside [transactions](api.md#transaction). No observers will be updated until the outer-most action has finished, guaranteeing that intermediate or incomplete values produced during an action are not visible to the rest of the application until the action has completed.
+1. 他们在 [transactions](api.md#transaction) 内部运行。在最外层的 action 完成之前，不会更新任何的可观察对象，从而确保在 action 完成之前，action 中产生的中间值或不完整的值对应用程序是不可见的。
 
-2. By default, it is not allowed to change the state outside of actions. This helps to clearly identify in your code base where the state updates happen.
+2. 默认情况下，不允许在 actions 之外改变 state。这有助于在代码中清楚的定位状态更新发生的位置。
 
-The `action` annotation should only be used on functions that intend to _modify_ the state. Functions that derive information (performing lookups or filtering data) should _not_ be marked as actions, to allow MobX to track their invocations. `action` annotated members will be non-enumerable.
+`action` 注解应仅用于_修改_ state 的函数。派生其他信息（执行查询或者过滤数据）的函数_不应该_被标记为 actions，以允许 MobX 跟踪其调用。 带有 `action` 注解的成员是不可枚举的。
 
-## Examples
+## 例子
 
 <!--DOCUSAURUS_CODE_TABS-->
 <!--makeObservable-->
@@ -43,7 +43,7 @@ class Doubler {
     }
 
     increment() {
-        // Intermediate states will not become visible to observers.
+        // 观察者不会看到中间状态.
         this.value++
         this.value++
     }
@@ -92,7 +92,7 @@ class Doubler {
 
 const doubler = new Doubler()
 
-// Calling increment this way is safe as it is already bound.
+// 这样调用增量是安全的, 因为它已经绑定.
 setInterval(doubler.increment, 1000)
 ```
 
@@ -126,13 +126,13 @@ runInAction(() => {
 
 <!--END_DOCUSAURUS_CODE_TABS-->
 
-## Wrapping functions using `action`
+## 使用 `action` 包装函数
 
-To leverage the transactional nature of MobX as much as possible, actions should be passed as far outward as possible. It is good to mark a class method as an action if it modifies the state. It is even better to mark event handlers as actions, as it is the outer-most transaction that counts. A single unmarked event handler that calls two actions subsequently would still generate two transactions.
+为了尽可能地利用 MobX 的事务性，应该尽可能地对外暴露 actions。如果类方法将会修改 state，最好将其标记为 actions。事件处理函数是最常见的事务，最好将其标识为 actions。因为一个未被标记为 actions 的事件处理函数调用两个 actions 将会生成两个事务。
 
-To help create action based event handlers, `action` is not only an annotation, but also a higher order function. It can be called with a function as an argument, and in that case it will return an `action` wrapped function with the same signature.
+为了更容易地创建事件处理函数，`action` 不仅仅是一个注解，更是一个高阶函数。可以使用函数作为参数来调用它，在这种情况下它将会返回具有相同签名的使用 `action` 包装过的函数。
 
-For example in React, an `onClick` handler can be wrapped as below.
+例如在 React 中，可以按照下面的方式包装 `onClick` 事件处理函数。
 
 ```javascript
 const ResetButton = ({ formState }) => (
@@ -148,26 +148,26 @@ const ResetButton = ({ formState }) => (
 )
 ```
 
-For debugging purposes, we recommend to either name the wrapped function, or pass a name as the first argument to `action`.
+为了更好的调试体验，我们推荐为被包装的函数命名，或者将名称作为 `action` 的第一个参数进行传递。
 
-<details id="actions-are-untracked"><summary>**Note:** actions are untracked<a href="#actions-are-untracked" class="tip-anchor"></a></summary>
+<details id="actions-are-untracked"><summary>**注意：** actions 不会被追踪<a href="#actions-are-untracked" class="tip-anchor"></a></summary>
 
-Another feature of actions is that they are [untracked](api.md#untracked). When an action is called from inside a side effect or a computed value (very rare!), observables read by the action won't be counted towards the dependencies of the derivation
+actions 的另一个特征是它们是 [不可追踪](api.md#untracked) 的。当从副作用或者计算值（非常罕见）中调用 action 时，该 action 读取的可观察对象将不会计入依赖项。
 
-`makeAutoObservable`, `extendObservable` and `observable` use a special flavour of `action` called `autoAction`,
-that will determine at runtime if the function is a derivation or action.
+`makeAutoObservable`，`extendObservable` 和 `observable` 使用一种特殊的 `action` 叫做  `autoAction`，
+这样做将会在运行时确定函数是 derivation 还是 action。
 
 </details>
 
 ## `action.bound`
 
-Usage:
+使用：
 
--   `action.bound` _(annotation)_
+-   `action.bound` _（注解）_
 
-The `action.bound` annotation can be used to automatically bind a method to the correct instance, so that `this` is always correctly bound inside the function.
+`action.bound` 注解可用于将方法自动绑定到正确的实例，因此 `this` 总是正确地绑定在函数内部。
 
-<details id="auto-bind"><summary>**Tip:** use `makeAutoObservable(o, {}, { autoBind: true })` to bind all actions automatically<a href="#avoid-bound" class="tip-anchor"></a></summary>
+<details id="auto-bind"><summary>**提示：** 使用 `makeAutoObservable(o, {}, { autoBind: true })` 自动绑定所有的 actions<a href="#avoid-bound" class="tip-anchor"></a></summary>
 
 ```javascript
 import { makeAutoObservable } from "mobx"
@@ -190,16 +190,16 @@ class Doubler {
 
 ## `runInAction`
 
-Usage:
+使用：
 
 -   `runInAction(fn)`
 
-Use this utility to create a temporarily action that is immediately invoked. Can be useful in asynchronous processes.
-Check out the [above code block](#examples) for an example.
+使用这个工具函数可以创建一个立即调用的临时 action。在异步代码中非常有用。
+请查看 [上面代码块](#examples) 中的实例。
 
-## Actions and inheritance
+## Actions 和继承
 
-Only actions defined **on prototype** can be **overriden** by subclass:
+只有定义在 **prototype** 上的函数可以被子类 **overriden**：
 
 ```javascript
 class Parent {
@@ -237,22 +237,22 @@ class Child {
 }
 ```
 
-To **bind** a single _action_ to `this`, `action.bound` can be used instead of _arrow functions_.<br>
-See [**subclassing**](subclassing.md) for more information.
+为了将单个的 _action_ **绑定** 到 `this`，可以使用 `action.bound` 代替箭头函数。<br>
+查看 [**subclassing**](subclassing.md) 获取更多信息。
 
-## Asynchronous actions
+## 异步 actions
 
-In essence, asynchronous processes don't need any special treatment in MobX, as all reactions will update automatically regardless of the moment in time they are caused.
-And since observable objects are mutable, it is generally safe to keep references to them for the duration of an action.
-However, every step (tick) that updates observables in an asynchronous process should be marked as `action`.
-This can be achieved in multiple ways by leveraging the above APIs, as shown below.
+从本质上讲，异步进程在 MobX 中不需要任何特殊处理，因为不论是何时引发的所有 reactions 都将会自动更新。
+而且因为可观察对象是可变的，因此在 action 过程中保持对它们的引用一般是安全的。
+然而，在异步进程中更新可观察对象的每个步骤（tick）都应该被标识为 `action`。
+这一点可以利用上述的 API 以多种方式实现，如下所示。
 
-For example, when handling promises, the handlers that update state should be wrapped using `action` or be actions, as shown below.
+例如，在处理 Promise 时，更新 state 的处理程序应该使用 `action` 进行包装或者其本身就是 actions，如下所示。
 
 <!--DOCUSAURUS_CODE_TABS-->
 <!--Wrap handlers in `action`-->
 
-Promise resolution handlers are handled in-line, but run after the original action finished, so they need to be wrapped by `action`:
+Promise 的处理程序是内联的，但是会在原始的 action 执行完成之后运行，因此需要使用 `action` 进行包装：
 
 ```javascript
 import { action, makeAutoObservable } from "mobx"
@@ -284,7 +284,7 @@ class Store {
 
 <!--Handle updates in separate actions-->
 
-If the promise handlers are class fields, they will automatically be wrapped in `action` by `makeAutoObservable`:
+如果 Promise 的处理函数是类的字段，它们将由 `makeAutoObservable` 自动包装为 `action`：
 
 ```javascript
 import { makeAutoObservable } from "mobx"
@@ -317,8 +317,8 @@ class Store {
 
 <!--async/await + runInAction-->
 
-Any steps after `await` aren't in the same tick, so they require action wrapping.
-Here, we can leverage `runInAction`:
+`await` 之后的任何操作都不在同一个 tick 中，因此它们需要使用 action 包装。
+在这里，我们利用了 `runInAction`：
 
 ```javascript
 import { runInAction, makeAutoObservable } from "mobx"
@@ -365,7 +365,7 @@ class Store {
         })
     }
 
-    // Note the star, this a generator function!
+    // 注意星号, 这是一个 generator 函数!
     *fetchProjects() {
         this.githubProjects = []
         this.state = "pending"
@@ -387,20 +387,20 @@ const projects = await flowResult(store.fetchProjects())
 
 <!--END_DOCUSAURUS_CODE_TABS-->
 
-## Using flow instead of async / await {🚀}
+## 使用 flow 代替 async / await {🚀}
 
-Usage:
+使用：
 
--   `flow` _(annotation)_
+-   `flow` _（注解）_
 -   `flow(function* (args) { })`
 
-The `flow` wrapper is an optional alternative to `async` / `await` that makes it easier to
-work with MobX actions.
-`flow` takes a [generator function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator) as its only input.
-Inside the generator, you can chain promises by yielding them (instead of `await somePromise` you write `yield somePromise`).
-The flow mechanism will then make sure the generator either continues or throws when a yielded promise resolves.
+`flow` 包装器是 `async` / `await` 的替代方案，它使使用 MobX 的 action 更加容易。
 
-So `flow` is an alternative to `async` / `await` that doesn't need any further `action` wrapping. It can be applied as follows:
+`flow` 将 [generator 函数](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator) 作为唯一输入。
+在 generator 内部，你可以使用 yield 串联 Promise（使用 `yield somePromise` 代替 `await somePromise`）。
+flow 机制将会确保 generator 在 Promise resolve 之后继续运行或者抛出错误。
+
+所以 `flow` 是 `async` / `await` 的一个替代方法，它不需要 `action` 的包装。它可以按照下面的方式工作：wrapping. It can be applied as follows:
 
 1. Wrap `flow` around your asynchronous function.
 2. Instead of `async` use `function *`.
