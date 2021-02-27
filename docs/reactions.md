@@ -6,7 +6,7 @@ hide_title: true
 
 <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBD4KQ7&placement=mobxjsorg" id="_carbonads_js"></script>
 
-# Running side effects with reactions {🚀}
+# 使用 reactions 处理副作用 {🚀}
 
 Reactions are an important concept to understand, as it is where everything in MobX comes together.
 The goal of reactions is to model side effects that happen automatically.
