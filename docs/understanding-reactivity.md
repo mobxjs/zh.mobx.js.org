@@ -6,11 +6,11 @@ hide_title: true
 
 <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBD4KQ7&placement=mobxjsorg" id="_carbonads_js"></script>
 
-# Understanding reactivity
+# 理解应激性
 
-MobX usually reacts to exactly the things you expect it to, which means that in 90% of your use cases MobX should "just work".
-However, at some point you will encounter a case where it does not do what you expected.
-At that point it is invaluable to understand how MobX determines what to react to.
+Mobx 通常会像你所期待的那样对确定的一些事物做出反应，这意味着在 90% 的用例中 Mobx 都应该能正常工作。
+但是在不确定的某个时间，你可能会遇到一些情况，Mobx 并没有在这些情况下做出你所预想的反应。
+面对这些情况，理解 Mobx 如何确定要对哪些事物做出反应是十分重要的。
 
 > MobX reacts to any _existing_ **observable** _property_ that is read during the execution of a tracked function.
 
