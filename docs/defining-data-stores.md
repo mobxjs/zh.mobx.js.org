@@ -1,12 +1,12 @@
 ---
 title: Defining data stores
-sidebar_label: Defining data stores
+sidebar_label: 定义数据存储
 hide_title: true
 ---
 
 <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBD4KQ7&placement=mobxjsorg" id="_carbonads_js"></script>
 
-# Defining data stores
+# 定义数据存储
 
 This section contains some of the best practices for building large scale maintainable projects we discovered at Mendix while working with MobX.
 This section is opinionated and you are in no way forced to apply these practices.
