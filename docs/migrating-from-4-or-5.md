@@ -1,6 +1,6 @@
 ---
 title: Migrating from MobX 4/5
-sidebar_label: Migrating from MobX 4/5 {🚀}
+sidebar_label: 从Mobx4/5升级到Mobx6 {🚀}
 hide_title: true
 ---
 
