@@ -203,27 +203,27 @@ _MobX对在执行跟踪函数期间读取的任何现有可观察属性作出反
 
 要了解更多关于MobX如何确定需要对哪些可见物作出反应的信息，请查看 [理解反应](understanding-reactivity.md) 章节。
 
-## Principles
+## 原则
 
-MobX uses a uni-directional data flow where _actions_ change the _state_, which in turn updates all affected _views_.
+Mobx 使用在 _action_ 改变 _state_ 时使用单向数据流，进而更新所有受影响的 _view_
+
 
 ![Action, State, View](assets/action-state-view.png)
 
-1. All _derivations_ are updated **automatically** and **atomically** when the _state_ changes. As a result, it is never possible to observe intermediate values.
+1. 所有的 _derivations_ 将在 _state_ 改变时**自动更新**。因此不可能观察中间值。
+2. 所有的 _dervations_ 默认将会**同步**更新，这意味着 _action_ 可全在 _state_ 改变之后安全的直接调用 computed 值。
+3. _computed value_ 的更新是**惰性**的，任何 computed value 在需要他们的副作用发生之前都是不激活的。
+4. 所有的 _computed value_ 都应是**纯函数**,他们不应该修改 _state_。
 
-2. All _derivations_ are updated **synchronously** by default. This means that, for example, _actions_ can safely inspect a computed value directly after altering the _state_.
+想了解更多背景上下文，请查阅 [MobX背后的基本原则](https://hackernoon.com/the-fundamental-principles-behind-mobx-7a725f71f3e8)
 
-3. _Computed values_ are updated **lazily**. Any computed value that is not actively in use will not be updated until it is needed for a side effect (I/O).
-   If a view is no longer in use it will be garbage collected automatically.
 
-4. All _computed values_ should be **pure**. They are not supposed to change _state_.
+## 试一试!
 
-To learn more about the background context, check out [the fundamental principles behind MobX](https://hackernoon.com/the-fundamental-principles-behind-mobx-7a725f71f3e8).
+你可以在[CodeSandbox](https://codesandbox.io/s/concepts-principles-il8lt?file=/src/index.js:1161-1252) 上尝试运行上面的示例。
 
-## Try it out!
 
-You can play with the above examples yourself on [CodeSandbox](https://codesandbox.io/s/concepts-principles-il8lt?file=/src/index.js:1161-1252).
+## 提示
 
-## Linting
+如果您发现很难采用MobX的心智模型，请将其配置为非常严格，并在运行时在您偏离这些模式时发出警告。查看[linting MobX](configuration.md#linting-options)章节。
 
-If you find it hard to adopt the mental model of MobX, configure it to be very strict and warn you at runtime whenever you deviate from these patterns. Check out the [linting MobX](configuration.md#linting-options) section.
