@@ -1,5 +1,5 @@
 ---
-title: Deriving information with computeds
+title: 通过 computeds 派生信息
 sidebar_label: Computeds
 hide_title: true
 ---
@@ -8,24 +8,24 @@ hide_title: true
 
 # 通过 computeds 派生信息
 
-Usage:
+使用：
 
--   `computed` _(annotation)_
--   `computed(options)` _(annotation)_
+-   `computed` _（注解）_
+-   `computed(options)` _（注解）_
 -   `computed(fn, options?)`
 
-Computed values can be used to derive information from other observables.
-They evaluate lazily, caching their output and only recomputing if one of the underlying observables has changed.
-If they are not observed by anything, they suspend entirely.
+计算值可以从其他可观察对象中派生信息。
+计算值采用惰性求值，缓存输出，并且只有当依赖的可观察对象被改变时才会重新计算。
+如果它们没有被任何观察者使用，计算将完全停止。
 
-Conceptually, they are very similar to formulas in spreadsheets, and can't be underestimated. They help in reducing the amount of state you have to store and are highly optimized. Use them wherever possible.
+从概念上讲，它们和电子表格中的公式非常相似，并且作用强大不可估量。它们减少了必需存储的状态量，并进行了高度的优化。请尽量使用它们。
 
-## Example
+## 例子
 
-Computed values can be created by annotating JavaScript [getters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get) with `computed`.
-Use `makeObservable` to declare a getter as computed. If you instead want all getters to be automatically declared as `computed`, you can use either `makeAutoObservable`, `observable` or `extendObservable`.
+可以在 JavaScript 中的 [getters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get) 上添加 `computed` 注解来创建计算值。
+使用 `makeObservable` 将 getter 声明为 computed。如果你需要自动将所有的 getters 声明为 `computed`，可以使用 `makeAutoObservable`，`observable` 或者 `extendObservable`。
 
-To help illustrate the point of computed values, the example below relies on [`autorun`](reactions.md#autorun) from the [Reactions {🚀}](reactions.md) advanced section.
+为了辅助说明计算值的意义，下面的示例依赖于 [Reactions {🚀}](reactions.md) 高级部分中的 [`autorun`](reactions.md#autorun)。
 
 ```javascript
 import { makeObservable, observable, computed, autorun } from "mobx"
@@ -54,80 +54,80 @@ const order = new OrderLine(0)
 const stop = autorun(() => {
     console.log("Total: " + order.total)
 })
-// Computing...
+// 计算...
 // Total: 0
 
 console.log(order.total)
-// (No recomputing!)
+// (不会重新计算!)
 // 0
 
 order.amount = 5
-// Computing...
-// (No autorun)
+// 计算...
+// (无需 autorun)
 
 order.price = 2
-// Computing...
+// 计算...
 // Total: 10
 
 stop()
 
 order.price = 3
-// Neither the computation nor autorun will be recomputed.
+// 计算值和 autorun 都不会被重新计算.
 ```
 
-The above example nicely demonstrates the benefits of a `computed` value, it acts as a caching point.
-Even though we change the `amount`, and this will trigger the `total` to recompute,
-it won't trigger the `autorun`, as `total` will detect its output hasn't been affected, so there is no need to update the `autorun`.
+上面的例子很好的展示了 `计算值` 的好处，它充当了缓存的角色。
+即使我们改变了 `amount`，进而触发了 `total` 的重新计算，
+也不会触发 `autorun`，因为 `total` 将会检测到其输出未发生任何改变，所以也不需要更新 `autorun`。
 
-In comparison, if `total` would not be annotated, the `autorun` would run its effect 3 times,
-as it would directly depend on `total` and `amount`. [Try it out yourself](https://codesandbox.io/s/computed-3cjo9?file=/src/index.tsx).
+我们做一个对比，如果不对 `total` 进行注解，则 `autorun` 将会运行 3 次，
+因为它将直接依赖于 `total` 和 `amount`。[自己试一下吧](https://codesandbox.io/s/computed-3cjo9?file=/src/index.tsx)。
 
 ![computed graph](assets/computed-example.png)
 
-This is the dependency graph that would be created for the above example.
+上图是为以上示例创建的依赖图。
 
-## Rules
+## 规则
 
-When using computed values there are a couple of best practices to follow:
+使用计算值时，请遵循下面的最佳实践：
 
-1. They should not have side effects or update other observables.
-2. Avoid creating and returning new observables.
+1. 它们不应该由副作用或者更新其他可观察对象。
+2. 避免创建和返回新的可观察对象。
 
-## Tips
+## 提示
 
-<details id="computed-suspend"><summary>**Tip:** computed values will be suspended if they are _not_ observed<a href="#computed-suspend" class="tip-anchor"></a></summary>
+<details id="computed-suspend"><summary>**提示：** 如果_没有_被观察者使用，计算值将会被挂起<a href="#computed-suspend" class="tip-anchor"></a></summary>
 
-It sometimes confuses people new to MobX, perhaps used to a library like [Reselect](https://github.com/reduxjs/reselect), that if you create a computed property but don't use it anywhere in a reaction, it is not memoized and appears to be recomputed more often than necessary.
-For example, if we extended the above example with calling `console.log(order.total)` twice, after we called `stop()`, the value would be recomputed twice.
+有时这会使新接触 MobX 的人感到困惑，它们可能习惯于使用像 [Reselect](https://github.com/reduxjs/reselect) 这样的库，如果你创建了一个计算属性但是你没有在任何的 reaction 中使用它，他将不会被缓存并且会出现超出必要的频繁的计算。
+例如，我们在上面的例子后面加上两次对 `console.log(order.total)` 的调用，在调用了 `stop()` 之后，`total` 仍然会被重新计算两次。
 
-This allows MobX to automatically suspend computations that are not actively in use
-to avoid unnecessary updates to computed values that are not being accessed. But if a computed property is _not_ in use by some reaction, then computed expressions are evaluated each time their value is requested, so they behave just like a normal property.
+MobX 将会自动挂起不活动的计算值
+以避免不必要地更新未访问的计算值。但是，如果某些计算属性_没有_被任何 reaction 使用，当他们每次被请求的时候都会重新运行计算表达式，与普通属性的行为一致。
 
-If you only fiddle around computed properties might not seem efficient, but when applied in a project that uses `observer`, `autorun`, etc., they become very efficient.
+虽然直接操作计算属性这会导致效率下降，但是如果你在项目中使用 `observer`，`autorun` 等，它们会非常高效。
 
-The following code demonstrates the issue:
+下面的代码展示了这个问题：
 
 ```javascript
-// OrderLine has a computed property `total`.
+// OrderLine 拥有一个计算属性 `total`.
 const line = new OrderLine(2.0)
 
-// If you access `line.total` outside of a reaction, it is recomputed every time.
+// 如果你在 reaction 之外访问 `line.total`, 每次都会重新计算.
 setInterval(() => {
     console.log(line.total)
 }, 60)
 ```
 
-It can be overridden by setting the annotation with the `keepAlive` option ([try it out yourself](https://codesandbox.io/s/computed-3cjo9?file=/src/index.tsx)) or by creating a no-op `autorun(() => { someObject.someComputed })`, which can be nicely cleaned up later if needed.
-Note that both solutions have the risk of creating memory leaks. Changing the default behavior here is an anti-pattern.
+可以通过使用 `keepAlive` 选项来设置注解（[自己试一下吧](https://codesandbox.io/s/computed-3cjo9?file=/src/index.tsx)）或者创建一个不带任何选项的 `autorun(() => { someObject.someComputed })`，之后可以根据需要进行清理。
+请注意，这两种方式都有造成内存泄漏的风险。在此时更改默认行为是一种反模式。
 
-MobX can also be configured with the [`computedRequiresReaction`](configuration.md#computedrequiresreaction-boolean) option, to report an error when computeds are accessed outside of a reactive context.
+MobX 还可以使用 [`computedRequiresReaction`](configuration.md#computedrequiresreaction-boolean) 选项进行配置，当你在 reaction 之外访问计算属性时将会报错。
 
 </details>
 
-<details id="computed-setter"><summary>**Tip:** computed values can have setters<a href="#computed-setter" class="tip-anchor"></a></summary>
+<details id="computed-setter"><summary>**提示：** 计算值可以有 setters<a href="#computed-setter" class="tip-anchor"></a></summary>
 
-It is possible to define a [setter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/set) for computed values as well. Note that these setters cannot be used to alter the value of the computed property directly,
-but they can be used as an "inverse" of the derivation. Setters are automatically marked as actions. For example:
+你可以未计算值定义一个 [setter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/set)。需要注意的是，这些 setters 不能直接更改计算属性的值，
+但是它们可以作用于计算属性的依赖项。setters 会被自动标记为 actions。例如：
 
 ```javascript
 class Dimension {
@@ -148,9 +148,9 @@ class Dimension {
 
 </details>
 
-<details id="computed-struct"><summary>{🚀} **Tip:** `computed.struct` for comparing output structurally <a href="#computed-struct" class="tip-anchor"></a></summary>
+<details id="computed-struct"><summary>{🚀} **提示：** `computed.struct` 比较输出的结构<a href="#computed-struct" class="tip-anchor"></a></summary>
 
-If the output of a computed value that is structurally equivalent to the previous computation doesn't need to notify observers, `computed.struct` can be used. It will make a structural comparison first, rather than a reference equality check, before notifying observers. For example:
+如果在结构上等同于先前的计算结构就不需要通知观察者的，则可以使用 `computed.struct`。在通知观察者之前，它将会对结构进行比较而不是检查具体的引用是否相同。例如：
 
 ```javascript
 class Box {
@@ -174,64 +174,64 @@ class Box {
 }
 ```
 
-By default, the output of a `computed` is compared by reference. Since `topRight` in the above example will always produce a new result object, it is never going to be considered equal to a previous output. Unless `computed.struct` is used.
+默认请款下，`computed` 的输出比较引用。因为上面例子中的 `topRight` 将始终产生一个新的结果对象，因此永远不会认为其等同于先前的输出。除非使用 `computed.struct`。
 
-However, in the above example _we actually don't need `computed.struct`_!
-Computed values normally only re-evaluate if the backing values change.
-That's why `topRight` will only react to changes in `width` or `height`.
-Since if any of those change, we would get a different `topRight` coordinate anyway. `computed.struct` would never have a cache hit and be a waste of effort, so we don't need it.
+然而，上面的例子中_我们实际上并不需要 `computed.struct`_！
+计算值通常会在它依赖的值改变时重新计算。
+这就是为什么 `topRight` 只对 `width` 或者 `height` 的变化做出反应。
+一旦发生了这些变化，我们总会得到一个不同的 `topRight`。`computed.struct` 将永远也不会命中缓存并且还会造成无效的计算，因此我们并不需要它。
 
-In practice, `computed.struct` is less useful than it sounds. Only use it if changes in the underlying observables can still lead to the same output. For example, if we were rounding the coordinates first, the rounded coordinates might be equal to the previously rounded coordinates even though the underlying values aren't.
+在实践中，`computed.struct` 的作用远不如其听起来那么大。仅仅当依赖的可观察变量改变会出现相同的输出时才使用它。例如，我们会对坐标进行四舍五入，那么即使依赖的基础值不同，最终的坐标也可能等于先前的坐标。
 
-Check out the [`equals`](#equals) option for further customizations on determining whether the output has changed.
-
-</details>
-
-<details id="computed-with-args"><summary>{🚀} **Tip:** computed values with arguments<a href="#computed-with-args" class="tip-anchor"></a></summary>
-
-Although getters don't take arguments, several strategies to work with derived values that need arguments are discusses [here](computeds-with-args.md).
+查看 [`equals`](#equals) 选项自定义如何判断输出是否改变。
 
 </details>
 
-<details id="standalone"><summary>{🚀} **Tip:** create standalone computed values with `computed(expression)`<a href="#standalone" class="tip-anchor"></a></summary>
+<details id="computed-with-args"><summary>{🚀} **提示：** 计算值可以拥有参数<a href="#computed-with-args" class="tip-anchor"></a></summary>
 
-`computed` can also be invoked directly as a function, just like [`observable.box`](api.md#observablebox) creates a standalone computed value.
-Use `.get()` on the returned object to get the current value of the computation.
-This form of `computed` is not used very often, but in some cases where you need to pass a "boxed" computed value around it might prove itself useful, one such case is discussed [here](computeds-with-args.md).
+虽然 getters 不使用任何参数，但是在 [此处](computeds-with-args.md) 讨论了几种需要处理参数才可以派生值的策略。
+
+</details>
+
+<details id="standalone"><summary>{🚀} **提示：** 使用 `computed(expression)` 创建独立的计算值<a href="#standalone" class="tip-anchor"></a></summary>
+
+`computed` 也可以作为一个函数直接调用，就像 [`observable.box`](api.md#observablebox) 一样创建一个独立的计算值。
+在返回的对象上使用 `.get()` 获取当前的计算值。
+这种使用 `computed` 的形式并不常见，但是在某些情况下，使用 computed 生成独立的计算值可能会很有用，我们在 [这里](computeds-with-args.md) 讨论了一种情况。
 
 </details>
 
 ## Options {🚀}
 
-`computed` usually behaves the way you want it to out of the box, but it's possible to customize its behavior by passing in an `options` argument.
+通常情况下，`computed` 是可以开箱即用的，但是可以通过传入 `options` 参数自定义其行为。
 
 ### `name`
 
-This string is used as a debug name in the [Spy event listeners](analyzing-reactivity.md#spy) and [MobX developer tools](https://github.com/mobxjs/mobx-devtools).
+该字符串在 [Spy event listeners](analyzing-reactivity.md#spy) 和 [MobX developer tools](https://github.com/mobxjs/mobx-devtools) 中用作调试名称。
 
 ### `equals`
 
-Set to `comparer.default` by default. It acts as a comparison function for comparing the previous value with the next value. If this function considers the values to be equal, then the observers will not be re-evaluated.
+默认设置为 `comparer.default`。它作为比较函数比较之前的值和下一个值，如果该函数认为它们相等，那么将不会重新计算。
 
-This is useful when working with structural data and types from other libraries. For example, a computed [moment](https://momentjs.com/) instance could use `(a, b) => a.isSame(b)`. `comparer.structural` and `comparer.shallow` come in handy if you want to use structural / shallow comparison to determine whether the new value is different from the previous value, and as a result notify its observers.
+在处理其他库的数据和类型时，这个选项很有用。例如，一个计算 [moment](https://momentjs.com/) 的示例可以使用 `(a, b) => a.isSame(b)` 来进行比较。如果要使用结构比较或者浅对比来确定新值是否与之前的值不同，可以分别使用 `comparer.structural` 和 `comparer.shallow`，从而将结果通知观察者。
 
-Check out the [`computed.struct`](#computed-struct) section above.
+查看上面的 [`computed.struct`](#computed-struct) 部分。
 
-#### Built-in comparers
+#### 内置 comparers
 
-MobX provides four built-in `comparer` methods which should cover most needs of the `equals` option of `computed`:
+MobX 提供了四种内置的 `comparer` 方法，这些方法满足 `computed` 的 `equals` 选项的大多数需求：
 
--   `comparer.identity` uses the identity (`===`) operator to determine if two values are the same.
--   `comparer.default` is the same as `comparer.identity`, but also considers `NaN` to be equal to `NaN`.
--   `comparer.structural` performs deep structural comparison to determine if two values are the same.
--   `comparer.shallow` performs shallow structural comparison to determine if two values are the same.
+-   `comparer.identity` 使用三等 （`===`）号确定两个值是否相同。
+-   `comparer.default` 与 `comparer.identity` 相同，但是其认为 `NaN` 等于 `NaN`。
+-   `comparer.structural` 执行深层的结构比较以确定两个值是否相同。
+-   `comparer.shallow` 执行浅层的结构比较以确定两个值是否相同。
 
-You can import `comparer` from `mobx` to access these methods. They can be used for `reaction` as well.
+你可以从`MobX` 导入 `comparer` 来访问这些方法。它们也可以用于 `reaction`。
 
 ### `requiresReaction`
 
-It is recommended to set this one to `true` on very expensive computed values. If you try to read its value outside of the reactive context, in which case it might not be cached, it will cause the computed to throw instead of doing an expensive re-evalution.
+对于非常昂贵的计算值，推荐将其设置为 `true`。如果你试图在 reaction 的上下文之外读取计算值，在这种情况下，可能不会对其进行缓存，这将导致计算值抛出错误，而不是进行昂贵的重新计算。
 
 ### `keepAlive`
 
-This avoids suspending computed values when they are not being observed by anything (see the above explanation). Can potentially create memory leaks, similar to the ones discussed for [reactions](reactions.md#always-dispose-of-reactions).
+这样会避免在没有观察者调用时将其挂起（可以查看上面的解释）。与 [reactions](reactions.md#always-dispose-of-reactions) 的讨论类似，这可能会招致内存泄漏。
