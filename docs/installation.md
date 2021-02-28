@@ -45,5 +45,5 @@ configure({ useProxies: "never" }) // Or "ifavailable".
 
 -   [MobX.dart](https://mobx.netlify.app/): 适用于Flutter / Dart的Mobx
 -   [lit-mobx](https://github.com/adobe/lit-mobx): 适用于lit-element的MobX
--   [mobx-angular](https://github.com/mobxjs/mobx-angular): 适用于angular的
+-   [mobx-angular](https://github.com/mobxjs/mobx-angular): 适用于angular的MobX
 -   [mobx-vue](https://github.com/mobxjs/mobx-vue): 适用于Vue的Mobx
