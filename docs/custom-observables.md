@@ -1,18 +1,18 @@
 ---
-title: Creating custom observables
-sidebar_label: Custom observables {🚀}
+title: 创建一个自定义 observables
+sidebar_label: 自定义 observables {}
 hide_title: true
 ---
 
 <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBD4KQ7&placement=mobxjsorg" id="_carbonads_js"></script>
 
-# Creating custom observables {🚀}
+# 创建一个自定义的 observables {}
 
-## Atoms
+## Atoms （原子化设计）
 
-At some point you might want to have more data structures or other things (like streams) that can be used in reactive computations.
-Achieving this is pretty simple by using the concept of atoms.
-Atoms can be used to signal MobX that some observable data source has been observed or changed, and MobX will signal the atom whenever it is used or no longer in use.
+在某些情况下，您可能希望有更多的数据结构或其他东西(如流)，用于响应式计算。
+通过使用原子的概念来实现这一点非常简单。
+可以使用Atoms向MobX发出信号，表示某些可观察数据源已经被观察或更改，而MobX将在atom被使用或不再使用时向atom发出信号。
 
 _**Tip**: in many cases you can avoid the need to create your own atoms just by creating a normal observable, and using
 the [`onBecomeObserved`](lazy-observables.md) utility to be notified when MobX starts tracking it._
