@@ -74,8 +74,8 @@ Action 就像用户在Excel单元格中输入了新的值。
 
 
 
+使用 Action 可以帮助您更好地组织代码，并防止您在无意中修改 State。
 
-使用 Action 可以帮助您整理代码，并防止您在无意中修改了 State。
 在 MobX 术语中，可以修改 State 的方法被称为 _action(动作)_ 。这与基于当前状态来生成新信息的 _view(视图)_ 是不同的。
 您代码中的每一个方法只应完成上述两个目标中的一个。
 
@@ -96,7 +96,7 @@ Mobx 区分了两种 Derivation :
 -   _Reactions_, 当 State 改变时需要自动运行的副作用 (命令式编程和反应式编程之间的桥梁)
 
 
-当最开始使用MobX时，人们倾向于过度使用 _Reaction_。
+当最开始使用MobX时，人们容易过度使用 _Reaction_。
 
 黄金法则是，如果要基于当前 State 创建值，请始终使用 _computed_。
 
@@ -205,17 +205,17 @@ _MobX对在执行跟踪函数期间读取的任何现有可观察属性作出反
 
 ## 原则
 
-Mobx 使用在 _action_ 改变 _state_ 时使用单向数据流，进而更新所有受影响的 _view_
+Mobx 使用单向数据流，利用 _action_ 改变 _state_ ，进而更新所有受影响的 _view_
 
 
 ![Action, State, View](assets/action-state-view.png)
 
-1. 所有的 _derivations_ 将在 _state_ 改变时**自动更新**。因此不可能观察中间值。
+1. 所有的 _derivations_ 将在 _state_ 改变时**自动且原子化地更新**。因此不可能观察中间值。
 2. 所有的 _dervations_ 默认将会**同步**更新，这意味着 _action_ 可全在 _state_ 改变之后安全的直接调用 computed 值。
 3. _computed value_ 的更新是**惰性**的，任何 computed value 在需要他们的副作用发生之前都是不激活的。
 4. 所有的 _computed value_ 都应是**纯函数**,他们不应该修改 _state_。
 
-想了解更多背景上下文，请查阅 [MobX背后的基本原则](https://hackernoon.com/the-fundamental-principles-behind-mobx-7a725f71f3e8)
+想了解更多背景，请查阅 [MobX背后的基本原则](https://hackernoon.com/the-fundamental-principles-behind-mobx-7a725f71f3e8)
 
 
 ## 试一试!
@@ -225,5 +225,5 @@ Mobx 使用在 _action_ 改变 _state_ 时使用单向数据流，进而更新�
 
 ## 提示
 
-如果您发现很难采用MobX的心智模型，请将其配置为非常严格，并在运行时在您偏离这些模式时发出警告。查看[linting MobX](configuration.md#linting-options)章节。
+如果您发现很难适应 MobX 的心智模型，请将其配置为严格模式，在运行时偏离这些模式的情况下将会发出警告。更多信息请查看[linting MobX](configuration.md#linting-options)章节。
 
