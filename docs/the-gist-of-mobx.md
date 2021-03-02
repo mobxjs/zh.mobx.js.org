@@ -142,7 +142,7 @@ Reaction 和 computed 类似，但并不产生信息，而是产生副作用，�
 
 #### 3.3. 响应式 React 组件
 
-如果你使用 React，你可以将你的组件用[安装过程中](installation.md#installation)下载的包中的[`observer`](react-integration.md)函数来包装起来，以便让组件成为响应式的。在这个示例中，我们将用更轻量的 `mobx-react-lite` 包。
+如果使用 React，你可以将组件用[安装](installation.md#installation)中下载的包中的[`observer`](react-integration.md)函数来包装起来，以便让组件成为响应式的。在这个示例中，我们将用更轻量的 `mobx-react-lite` 包。
 
 
 ```javascript
@@ -177,7 +177,7 @@ render(<TodoListView todoList={store} />, document.getElementById("root"))
 
 因此，上述示例中的`onClick`事件处理器调用`toggle` Action 后，会使对应的`TodoView`组件重绘，但仅当未完成任务的数量发生更改时才会使 `TodoListView` 组件重绘。
 
-如果你移除了`Tasks left`这行代码（或者把他拆分到另一个组件中）,`TodoListView`组件就不再 `toggle` 执行时产生重绘了。
+如果移除了`Tasks left`这行代码（或者把他拆分到另一个组件中）,`TodoListView`组件就不再 `toggle` 执行时产生重绘了。
 
 您可以查阅[与 React 集成](react-integration.md)来了解更多有关 React 是如何与 MobX 协同运作的。
 
@@ -185,7 +185,7 @@ render(<TodoListView todoList={store} />, document.getElementById("root"))
 
 #### 3.4. 自定义 Reaction
 
-你不太经常会需要它们，它们可以可以使用 [`autorun`](reactions.md#autorun) ,[`reaction`](reactions.md#reaction) 或 [`when`](reactions.md#when) 方法来订制你的特殊业务场景。
+通常情况下你不需要使用它们，可以使用 [`autorun`](reactions.md#autorun) ,[`reaction`](reactions.md#reaction) 或 [`when`](reactions.md#when) 方法来订制你的特殊业务场景。
 
 比如，下面的 `autorun` 将在`unfinishedTodoCount`的数量发生变化时输出日志。
 
