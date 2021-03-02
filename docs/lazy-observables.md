@@ -29,7 +29,7 @@ export class City {
             suspend: false
         })
         this.location = location
-        // Only start data fetching if temperature is actually used!
+        // 仅会在 temperature 实际被使用时开启依赖收集
         onBecomeObserved(this, "temperature", this.resume)
         onBecomeUnobserved(this, "temperature", this.suspend)
     }
