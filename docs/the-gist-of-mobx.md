@@ -102,7 +102,7 @@ Mobx 区分了两种 Derivation :
 
 #### 3.1. 业务模型中通过 computed 派生值
 
-为了创建一个 _computed_ 值，您需要定义一个 getter 方法并将其用 `makeObservable` 标记为 `computed`
+你可以通过定义 getter 方法并使用 `makeObservable` 将其标记为 `computed` 的方式创建一个 _computed_ 值。
 
 ```javascript
 import { makeObservable, observable, computed } from "mobx"
@@ -122,13 +122,13 @@ class TodoList {
 }
 ```
 
-Mobx 会确保 `unfinishedTodoCount` 会在一个todos数组发生变化中或者 todos中的一个对象中的 `finished`属性被修改时自动更新。
+Mobx 会确保 `unfinishedTodoCount` 会在todos数组发生变化中或者 todos中的一个对象中的 `finished`属性被修改时自动更新。
 
-这些计算类似于 Excel 单元格中的公式。它们会自动更新，但仅在需要时更新。也就是说，如果有有人关心其结果时才会更新。
+这些计算类似于 Excel 单元格中的公式。它们仅在需要时自动更新。也就是说，如果有观察者使用其结果时才会更新。也就是说，如果有有人关心其结果时才会更新。
 
-#### 3.2. 业务模型通过 reaction 产生副作用
+#### 3.2. 使用 reaction 对副作用建模
 
-作为一个用户，要想在屏幕上看到状态或计算值的变化，就需要一个重新绘制部分GUI的 _reactions_ 。
+作为用户，要想在屏幕上看到状态或计算值的变化，就需要一个重新绘制部分GUI的 _reactions_ 。
 
 Reaction 和 computed 类似，但并不产生信息，而是产生副作用，如打印到控制台、发出网络请求、增量更新 React 组件树以便更新DOM等。
 
@@ -175,7 +175,7 @@ render(<TodoListView todoList={store} />, document.getElementById("root"))
 `observer` 将 React 组件转化为了从数据到渲染的派生过程。
 当使用 MobX 的时，不存在“智能组件”和“哑巴组件”。所有的组件在渲染时都是智能的，但是在定义时是按照哑巴组件的方式去定义的。MobX会简单确定这个组件是否需要进行重绘，并止步于此。
 
-因此，上述示例中的`onClick`事件处理器调用`toggle` Action 后，会使适当的`TodoView`组件重绘，但仅当未完成任务的数量发生更改时才会使 `TodoListView` 组件重绘。
+因此，上述示例中的`onClick`事件处理器调用`toggle` Action 后，会使对应的`TodoView`组件重绘，但仅当未完成任务的数量发生更改时才会使 `TodoListView` 组件重绘。
 
 如果你移除了`Tasks left`这行代码（或者把他拆分到另一个组件中）,`TodoListView`组件就不再 `toggle` 执行时产生重绘了。
 
@@ -211,7 +211,7 @@ Mobx 使用单向数据流，利用 _action_ 改变 _state_ ，进而更新所�
 ![Action, State, View](assets/action-state-view.png)
 
 1. 所有的 _derivations_ 将在 _state_ 改变时**自动且原子化地更新**。因此不可能观察中间值。
-2. 所有的 _dervations_ 默认将会**同步**更新，这意味着 _action_ 可全在 _state_ 改变之后安全的直接调用 computed 值。
+2. 所有的 _dervations_ 默认将会**同步**更新，这意味着 _action_ 可以在 _state_ 改变 之后安全的直接获得 computed 值。
 3. _computed value_ 的更新是**惰性**的，任何 computed value 在需要他们的副作用发生之前都是不激活的。
 4. 所有的 _computed value_ 都应是**纯函数**,他们不应该修改 _state_。
 
