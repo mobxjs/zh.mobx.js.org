@@ -93,7 +93,7 @@ Derivations 包括许多方式:
 Mobx 区分了两种 Derivation :
 
 -   _Computed values_,总是可以通过纯函数从当前的可观测 State 中派生。
--   _Reactions_, 当 State 改变时需要自动发生的副作用 (命令式编程和反应式编程之间的桥梁)
+-   _Reactions_, 当 State 改变时需要自动运行的副作用 (命令式编程和反应式编程之间的桥梁)
 
 
 当最开始使用MobX时，人们倾向于过度使用 _Reaction_。
