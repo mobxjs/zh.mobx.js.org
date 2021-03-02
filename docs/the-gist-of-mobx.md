@@ -100,7 +100,7 @@ Mobx 区分了两种 Derivation :
 
 黄金法则是，如果要基于当前 State 创建值，请始终使用 _computed_。
 
-#### 3.1. 业务模型中通过 computed 派生值
+#### 3.1. 通过 computed 对派生值进行建模
 
 你可以通过定义 getter 方法并使用 `makeObservable` 将其标记为 `computed` 的方式创建一个 _computed_ 值。
 
