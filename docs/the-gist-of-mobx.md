@@ -93,7 +93,7 @@ Derivations 包括许多方式:
 Mobx 区分了两种 Derivation :
 
 -   _Computed values_,总是可以通过纯函数从当前的可观测 State 中派生。
--   _Reactions_, 当 State 改变时需要自动运行的副作用 (命令式编程和反应式编程之间的桥梁)
+-   _Reactions_, 当 State 改变时需要自动运行的副作用 (命令式编程和响应式编程之间的桥梁)
 
 
 当最开始使用MobX时，人们容易过度使用 _Reaction_。
@@ -199,9 +199,9 @@ autorun(() => {
 
 为什么每次 `unfinishedTodoCount`发生改变时都会输出日志信息呢？答案是以下法则：
 
-_MobX对在执行跟踪函数期间读取的任何现有可观察属性作出反应_
+_MobX对在执行跟踪函数期间读取的任何现有可观察属性作出响应_
 
-要了解更多关于MobX如何确定需要对哪些可见物作出反应的信息，请查看 [理解反应](understanding-reactivity.md) 章节。
+要了解更多关于MobX如何确定需要对哪些可观察对象作出响应的信息，请查看 [理解反应](understanding-reactivity.md) 章节。
 
 ## 原则
 
