@@ -8,18 +8,30 @@ hide_title: true
 
 # 定义数据存储
 
+
+
 This section contains some of the best practices for building large scale maintainable projects we discovered at Mendix while working with MobX.
 This section is opinionated and you are in no way forced to apply these practices.
 There are many ways of working with MobX and React, and this is just one of them.
 
 This section focuses on an unobtrusive way of working with MobX, which works well in existing codebases, or with classic MVC patterns. Alternative, more opinionated ways of organizing stores are [mobx-state-tree](https://github.com/mobxjs/mobx-state-tree) and [mobx-keystone](https://mobx-keystone.js.org/). Both ship with cool features such as structurally shared snapshots, action middlewares, JSON patch support etc. out of the box.
 
-## Stores
+这一章节包含我们在 Mendix 中使用 MobX 构建大型、可扩展、可维护项目时探索到的最佳实践。
+这一章节是我们自身的意见，你不必强行遵循这些实践。
+这一章节关注在使用 MobX过程中以一种低侵入性的方式来确保他在现有的代码库或经典的MVC模式中运行良好。作为替代方案，更固执的组织数据存储的方式是  [mobx-state-tree](https://github.com/mobxjs/mobx-state-tree) 和 [mobx-keystone](https://mobx-keystone.js.org/) 。 两者都附带了一些很酷的开箱即用的特性，比如结构共享快照、动作中间件、JSON补丁支持等。
+
+
+
+## 数据存储(Store)
+
 
 Stores can be found in any Flux architecture and can be compared a bit with controllers in the MVC pattern.
 The main responsibility of stores is to move _logic_ and _state_ out of your components into a standalone testable unit that can be used in both frontend and backend JavaScript.
 
 Most applications benefit from having at least two stores: one for the _domain state_ and another one for the _UI state_. The advantage of separating those two is you can reuse and test _domain state_ universally, and you might very well reuse it in other applications.
+
+任意 Flux 架构中都可以发现数据存储(Store) ，并且经常用来和 MVC 模式中的 controller 进行比较。 
+Store 的主要职责是将组件中的 _逻辑_ 和 _状态_ 转移到一个独立的可测试单元中，该单元可以在同时在前端和后端JavaScript中使用。
 
 ## Domain Stores
 
