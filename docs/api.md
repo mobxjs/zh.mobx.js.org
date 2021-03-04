@@ -6,34 +6,35 @@ hide_title: true
 
 <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBD4KQ7&placement=mobxjsorg" id="_carbonads_js"></script>
 
-# MobX API Reference
+# MobX API 参考
 
-Functions marked with {🚀} are considered advanced, and should typically not be needed.
-Consider downloading our handy cheat sheet that explains all important APIs on a single page:
+用 {🚀} 标记的函数是进阶概念，通常不需要使用。
 
-<div class="cheat"><a href="https://gum.co/fSocU"><button title="Download the MobX 6 cheat sheet and sponsor the project">Download the MobX 6 cheat sheet</button></a></div>
+请考虑下载我们的小抄，它用一页纸解释了所有重要的 API：
 
-## Core APIs
+<div class="cheat"><a href="https://gum.co/fSocU"><button title="Download the MobX 6 cheat sheet and sponsor the project">下载 MobX 6 小抄</button></a></div>
 
-_These are the most important MobX APIs._
+## 核心 API
 
-> Understanding [`observable`](#observable), [`computed`](#computed), [`reaction`](#reaction) and [`action`](#action) is enough to master and use MobX in your applications!
+_这些是 MobX 中最重要的 API。_
 
-## Creating observables
+> 理解 [`observable`](#observable), [`computed`](#computed), [`reaction`](#reaction) 和 [`action`](#action) 就足够你掌握 MobX 并在你的应用中使用它了！ 
 
-_Making things observable._
+## 创建 observables
+
+_让事物可以被观察到。_
 
 ### `makeObservable`
 
-[**Usage**](observable-state.md#makeobservable): `makeObservable(target, annotations?, options?)`
+[**用法**](observable-state.md#makeobservable): `makeObservable(target, annotations?, options?)`
 
-Properties, entire objects, arrays, Maps and Sets can all be made observable.
+属性、完整的对象、数组、Maps 和 Sets 都可以变成 observable.
 
 ### `makeAutoObservable`
 
-[**Usage**](observable-state.md#makeautoobservable): `makeAutoObservable(target, overrides?, options?)`
+[**用法**](observable-state.md#makeautoobservable): `makeAutoObservable(target, overrides?, options?)`
 
-Automatically make properties, objects, arrays, Maps and Sets observable.
+自动将属性、对象、数组、Maps 和 Sets 转为 observable.
 
 ### `extendObservable`
 
