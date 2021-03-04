@@ -1,12 +1,12 @@
 ---
-title: Computeds with arguments
-sidebar_label: Computeds with arguments {🚀}
+title: 含参数的计算属性
+sidebar_label: 含参数的计算属性 {🚀}
 hide_title: true
 ---
 
 <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBD4KQ7&placement=mobxjsorg" id="_carbonads_js"></script>
 
-# Computeds with arguments {🚀}
+# 含参数的计算属性 {🚀}
 
 The `computed` annotation can only be used on getters, which don't take arguments.
 What about computations that do take arguments?
