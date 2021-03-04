@@ -9,7 +9,6 @@ hide_title: true
 # MobX API 参考
 
 用 {🚀} 标记的函数是进阶概念，通常不需要使用。
-
 请考虑下载我们的小抄，它用一页纸解释了所有重要的 API：
 
 <div class="cheat"><a href="https://gum.co/fSocU"><button title="Download the MobX 6 cheat sheet and sponsor the project">下载 MobX 6 小抄</button></a></div>
