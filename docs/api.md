@@ -85,7 +85,7 @@ const person = new Person("Michel", "Weststrate");
 
 根据所提供的 `initialMap` 创建一个新的可观察的 [ES6 Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) 。
 如果你想不只对特定值的改变作出反应，还想对它们的添加和删除做出反应，那么它们就会非常有用。
-如果你没有[启用代理](configuration.md#proxy-support)，那么创建可观察的Maps是创建动态键控集合的推荐方法。
+如果你没有[启用代理](configuration.md#proxy-support)，那么创建可观察的 Maps 是创建动态键控集合的推荐方法。
 
 除了语言内置的所有 Map 方法之外，可观察的 Maps 还提供了以下好东西供你使用：
 
@@ -93,7 +93,7 @@ const person = new Person("Michel", "Weststrate");
 -   `merge(values)` 将所提供的`values` (普通对象、数组或以字符串为键的 ES6 Map )的所有条目复制到该地图中。
 -   `replace(values)` 用所提供的 `values` 替换该 Map 的全部内容。
 
-If the values in the Map should not be turned into observables automatically, use the `{ deep: false }` option to make the Map shallowly observable.
+如果 Map 中的值不能被自动转化为 observable ，则可使用 `{ deep: false }` 选项对该 Map 进行浅转化。
 
 ### `observable.set`
 
