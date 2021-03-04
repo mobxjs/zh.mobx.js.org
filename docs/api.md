@@ -9,7 +9,7 @@ hide_title: true
 # MobX API 参考
 
 用 {🚀} 标记的函数是进阶概念，通常不需要使用。
-请考虑下载我们的小抄，它用一页纸解释了所有重要的 API：
+请考虑下载我们的小抄，它用一页纸解释了所有重要的 API:
 
 <div class="cheat"><a href="https://gum.co/fSocU"><button title="Download the MobX 6 cheat sheet and sponsor the project">下载 MobX 6 小抄</button></a></div>
 
@@ -17,81 +17,81 @@ hide_title: true
 
 _这些是 MobX 中最重要的 API。_
 
-> 理解 [`observable`](#observable), [`computed`](#computed), [`reaction`](#reaction) 和 [`action`](#action) 就足够你掌握 MobX 并在你的应用中使用它了！ 
+> 理解 [`observable`](#observable), [`computed`](#computed), [`reaction`](#reaction) 和 [`action`](#action) 就足够你掌握 MobX 并在你的应用中使用它了！
 
-## 创建 observables
+## 创建 observables (可观察对象)
 
-_让事物可以被观察到。_
+_把事物变得可观察。_
 
 ### `makeObservable`
 
 [**用法**](observable-state.md#makeobservable): `makeObservable(target, annotations?, options?)`
 
-属性、完整的对象、数组、Maps 和 Sets 都可以变成 observable.
+属性、完整的对象、数组、Maps 和 Sets 都可以被变得可观察。
 
 ### `makeAutoObservable`
 
 [**用法**](observable-state.md#makeautoobservable): `makeAutoObservable(target, overrides?, options?)`
 
-自动将属性、对象、数组、Maps 和 Sets 转为 observable.
+自动使属性、对象、数组、Maps 和 Sets 可观察。
 
 ### `extendObservable`
 
-{🚀} Usage: `extendObservable(target, properties, overrides?, options?)`
+{🚀} 用法: `extendObservable(target, properties, overrides?, options?)`
 
-Can be used to introduce new properties on the `target` object and make them observable immediately. Basically a shorthand for `Object.assign(target, properties); makeAutoObservable(target, overrides, options);`. However, existing properties on `target` won't be touched.
+可用于在 `target` 对象上引入新属性并立即使它们可观察。 基本上也就是 `Object.assign(target, properties); makeAutoObservable(target, overrides, options);` 的简写。 但不会动 `target` 上已有的属性。
 
-Old-fashioned constructor functions can nicely leverage `extendObservable`:
+老式的构造器函数可以很好地跟 `extendObservable` 结合使用:
 
 ```javascript
 function Person(firstName, lastName) {
-    extendObservable(this, { firstName, lastName })
+  extendObservable(this, { firstName, lastName });
 }
 
-const person = new Person("Michel", "Weststrate")
+const person = new Person("Michel", "Weststrate");
 ```
 
-It is possible to use `extendObservable` to add observable fields to an existing object after instantiation, but be careful that adding an observable property this way is in itself not a fact that can be observed.
+在一个对象实例化之后使用 `extendObservable` 在该对象上添加可观察字段也是可以的，但要注意，以这种方式添加可观察属性，这一行为本身并不能被观察到。
 
 ### `observable`
 
-[**Usage**](observable-state.md#observable): `observable(source, overrides?, options?)` or `observable` _(annotation)_
+[**用法**](observable-state.md#observable): `observable(source, overrides?, options?)` 或 `observable` _(annotation)_
 
-Clones an object and makes it observable. Source can be a plain object, array, Map or Set. By default, `observable` is applied recursively. If one of the encountered values is an object or array, that value will be passed through `observable` as well.
+克隆一个对象并使其可观察。`source` 可以是一个普通的对象、数组、 Map 或 Set 。默认情况下， `observable` 会递归运行。如果遇到的值中有一个是对象或数组，那么那个值也会被传入 `observable` 。
 
 ### `observable.object`
 
-{🚀} [**Usage**](observable-state.md#observable): `observable.object(source, overrides?, options?)`
+{🚀} [**用法**](observable-state.md#observable): `observable.object(source, overrides?, options?)`
 
-Alias for `observable(source, overrides?, options?)`. Creates a clone of the provided object and makes all of its properties observable.
+`observable(source, overrides?, options?)` 的另一种写法。创建一个被传入对象的副本并它的所有属性可观察。
 
 ### `observable.array`
 
-{🚀} Usage: `observable.array(initialValues?, options?)`
+{🚀} 用法: `observable.array(initialValues?, options?)`
 
-Creates a new observable array based on the provided `initialValues`.
-To convert observable arrays back to plain arrays, use the `.slice()` method, or check out [toJS](#tojs) to convert them recursively.
-Besides all the language built-in array functions, the following goodies are available on observable arrays as well:
+根据被所提供的 `initialValues` 创建一个新的可观察的数组。
+如果要把可观察的数组转化回普通数组，就请使用 `.slice()` 方法，或者参阅 [toJS](#tojs) 进行递归转化。
+除了语言中内置的所有数组方法之外，可观察的数组还提供了以下好东西供你使用：
 
--   `clear()` removes all current entries from the array.
--   `replace(newItems)` replaces all existing entries in the array with new ones.
--   `remove(value)` removes a single item by value from the array and returns `true` if the item was found and removed.
+-   `clear()` 删除数组中所有现存的元素。
+-   `replace(newItems)` 用新元素替换数组中所有现存的元素。
+-   `remove(value)` 从数组中删除一个值为 `value` 的元素，在找到并删除该元素后返回 `true`.
 
-If the values in the array should not be turned into observables automatically, use the `{ deep: false }` option to make the array shallowly observable.
+如果数组中的值不能被自动转化为 observable ，则可使用 `{ deep: false }` 选项对该数组进行浅转化。
 
 ### `observable.map`
 
 {🚀} Usage: `observable.map(initialMap?, options?)`
 
-Creates a new observable [ES6 Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) based on the provided `initialMap`.
-They are very useful if you don't want to react just to the change of a specific entry, but also to their addition and removal.
-Creating observable Maps is the recommended approach for creating dynamically keyed collections if you don't have [enabled Proxies](configuration.md#proxy-support).
+根据所提供的 `initialMap` 创建一个新的可观察的 [ES6 Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) 。
+如果你想不只对特定值的改变作出反应，还想对它们的添加和删除做出反应，那么它们就会非常有用。
+如果你没有[启用代理](configuration.md#proxy-support)，那么创建可观察的Maps是创建动态键控集合的推荐方法。
 
-Besides all the language built-in Map functions, the following goodies are available on observable Maps as well:
+除了语言内置的所有 Map 方法之外，可观察的 Maps 还提供了以下好东西供你使用：
 
--   `toJSON()` returns a shallow plain object representation of this Map (use [toJS](#tojs) for a deep copy).
--   `merge(values)` copies all entries from the provided `values` (plain object, array of entries or a string-keyed ES6 Map) into this Map.
--   `replace(values)` replaces the entire contents of this Map with the provided `values`.
+-   `toJSON()` 返回该 Map 的浅层纯对象表示（使用 [toJS](#tojs) 进行深拷贝）。
+-   `merge(values)` 将所提供的`values` (普通对象、数组或以字符串为键的 ES6 Map )的所有条目复制到该地图中。
+-   `replace(values)` 用所提供的 `values` 替换该 Map 的全部内容。
 
 If the values in the Map should not be turned into observables automatically, use the `{ deep: false }` option to make the Map shallowly observable.
 
