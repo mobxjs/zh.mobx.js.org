@@ -1,6 +1,6 @@
 ---
-title: MobX API Reference
-sidebar_label: MobX API Reference
+title: MobX API 参考
+sidebar_label: MobX API 参考
 hide_title: true
 ---
 
@@ -118,24 +118,24 @@ const person = new Person("Michel", "Weststrate");
 
 {🚀} [**用法**](observable-state.md#可用的注解): `observable.struct` _(annotation)_
 
-除了任何结构上等于当前值的赋值将被忽略之外，其他方面和 `observable` 注解类似。
+除了忽略所有结构上等于当前值的所赋的值之外，其他方面和 `observable` 注解类似。
 
 ### `observable.deep`
 
 {🚀} [**用法**](observable-state.md#可用的注解): `observable.deep` _(annotation)_
 
-[`observable`](#observable) 注解的别名.
+[`observable`](#observable) 注解的别名。
 
 ### `observable.box`
 
 {🚀} 用法: `observable.box(value, options?)`
 
-All primitive values in JavaScript are immutable and hence per definition not observable.
-Usually that is fine, as MobX can just make the _property_ that contains the value observable.
-In rare cases, it can be convenient to have an observable _primitive_ that is not owned by an object.
-For such cases, it is possible to create an observable _box_ that manages such a _primitive_.
+JavaScript 中的所有原始值都是不可变的，因而它们当然也都是不可观察的。
+这一点通常没问题，因为 MobX 可以使包含该值的 _属性_ 变成 observable 。
+在少数情况下，如果能有一个不属于对象的可观察的 _原始值_ 就会很方便。
+对于这种情况，可以创建一个可观察的 _box_ 来管理此类 _primitive_ 。
 
-`observable.box(value)` accepts any value and stores it inside a box. The current value can be accessed through `.get()` and updated using `.set(newValue)`.
+`observable.box(value)` 接受任意值并将其存储在一个 box 中。当前值可以通过 `.get()` 访问到，并使用 `.set(newValue)` 进行更新。
 
 ```javascript
 import { observable, autorun } from "mobx"
@@ -151,8 +151,7 @@ cityName.set("Amsterdam")
 // Prints: 'Amsterdam'
 ```
 
-If the values in the box should not be turned into observables automatically, use the `{ deep: false }` option to make the box shallowly observable.
-
+如果 box 中的值不能被自动转化为 observable ，则可使用 `{ deep: false }` 对该 box 进行浅转化。
 ---
 
 ## Actions
