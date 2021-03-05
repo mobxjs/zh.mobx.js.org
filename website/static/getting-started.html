@@ -35,23 +35,23 @@
 
                     <section id="main_content">
                         <p>
-                            <a href="https://github.com/mobxjs/mobx"><code>MobX</code></a> is a simple, scalable and battle tested state management solution.
-							This tutorial will teach you all the important concepts of MobX in ten minutes.
-                            MobX is a standalone library, but most people are using it with React and this tutorial focuses on that combination.
+														<a href="https://github.com/mobxjs/mobx"><code>MobX</code></a> 是一种简单、可扩展而且身经百战的状态管理解决方案。
+							这个教程会在十分钟之内教给你 MobX 中所有的重要概念。
+														MobX 是一个独立的库，但大多数人都把它和 React 放在一起使用，那么这个教程就着重介绍这种组合。
                         </p>
-                        <h3>The core idea</h3>
+												<h3>核心思想</h3>
 						<p>
-							State is the heart of each application and there is no quicker way to create buggy, unmanageable applications than by
-							producing an inconsistent state or state that is out-of-sync with local variables that linger around.
-							Hence many state management solutions try to restrict the ways in which you can modify state, for example by making state immutable.
-							But this introduces new problems; data needs to be normalized, referential integrity can no longer be guaranteed and it becomes next to impossible to use powerful concepts like classes in case you fancy those.
+							状态是每个应用的核心。想要创建出 bug 从生且难以管理的应用程序，那么再没有一种方法比
+							搞出不一致的状态或者与各种局部变量不同步的状态更快了。
+							因此，许多状态管理解决方案试图限制你修改状态的方式，比方说通过使状态不可变来做限制。
+							但这样就会引出新的问题；数据需要被规范化、无法保证引用完整性，而且万一你要是喜欢像 class 这样的功能强大的概念的话，你几乎没办法再用到他们。
 						</p><p>
-							MobX makes state management simple again by addressing the root issue: it makes it impossible to produce an inconsistent state.
-							The strategy to achieve that is simple:
-							<em>Make sure that everything that can be derived from the application state, will be derived. Automatically.</em>
+							MobX通过解决根本问题使状态管理再一次变得简单：它让不一致的状态的出现变得不可能。
+							要做到这一点，策略很简单：
+							<em>确保从应用状态中派生出的所有东西都将被自动派生。</em>
 						</p>
 						<p>
-							Conceptually MobX treats your application like a spreadsheet.
+							从概念上讲，MobX 将您的应用程序视为一份电子表格。
                         <p>
 							<img src="assets/getting-started-assets/overview.png" width="100%" />
 						<ol>
