@@ -24,12 +24,24 @@ mobx是一个流行的状态管理库，在全世界有很多用户。mobx中文
 
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/WanderWang"><img src="https://avatars.githubusercontent.com/u/2238280?s=100&v=4" width="100px;" alt=""/><br /><sub><b>WanderWang</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/commits?author=WanderWang" title="PR">💻</a></td>
-    <td align="center"><a href="https://github.com/BlackHole1"><img src="https://avatars.githubusercontent.com/u/8198408?s=100&v=4" width="100px;" alt=""/><br /><sub><b>BlackHole1</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/commits?author=BlackHole1" title="PR">💻</a></td>
-    <td align="center"><a href="https://github.com/wangjq4214"><img src="https://avatars.githubusercontent.com/u/35188480?s=100&v=4" width="100px;" alt=""/><br /><sub><b>wangjq4214</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/commits?author=wangjq4214" title="PR">💻</a></td>
-    <td align="center"><a href="https://github.com/TheFirstSunday"><img src="https://avatars.githubusercontent.com/u/20334663?s=100&v=4" width="100px;" alt=""/><br /><sub><b>TheFirstSunday</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/commits?author=TheFirstSunday" title="PR">💻</a></td>
-    <td align="center"><a href="https://github.com/mobxjs/zh.mobx.js.org/"><img src="https://zh.mobx.js.org/assets/placeholder.svg" width="100px;" alt=""/><br /><sub><b>next contributor</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls" title="PR">💻</a></td>
-    <td align="center"><a href="https://github.com/mobxjs/zh.mobx.js.org/"><img src="https://zh.mobx.js.org/assets/placeholder.svg" width="100px;" alt=""/><br /><sub><b>next contributor</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls" title="PR">💻</a></td>
+    <td align="center"><a href="https://github.com/WanderWang"><img src="https://avatars.githubusercontent.com/u/2238280?s=100&v=4" width="100px;" alt=""/><br /><sub><b>WanderWang</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3AWanderWang" title="PR">💻</a></td>
+    <td align="center"><a href="https://github.com/BlackHole1"><img src="https://avatars.githubusercontent.com/u/8198408?s=100&v=4" width="100px;" alt=""/><br /><sub><b>BlackHole1</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3ABlackHole1" title="PR">💻</a></td>
+    <td align="center"><a href="https://github.com/wangjq4214"><img src="https://avatars.githubusercontent.com/u/35188480?s=100&v=4" width="100px;" alt=""/><br /><sub><b>wangjq4214</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3Awangjq4214" title="PR">💻</a></td>
+    <td align="center"><a href="https://github.com/TheFirstSunday"><img src="https://avatars.githubusercontent.com/u/20334663?s=100&v=4" width="100px;" alt=""/><br /><sub><b>TheFirstSunday</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3ATheFirstSunday" title="PR">💻</a></td>
+    <td align="center"><a href="https://github.com/Neo42"><img src="https://avatars.githubusercontent.com/u/22409868?s=100&v=4" width="100px;" alt=""/><br /><sub><b>Neo42</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3ANeo42" title="PR">💻</a></td>
+    <td align="center"><a href="https://github.com/ai-xiaihai"><img src="https://avatars.githubusercontent.com/u/12586770?s=100&v=4" width="100px;" alt=""/><br /><sub><b>ai-xiaihai</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3Aai-xiaihai" title="PR">💻</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/ObservedObserver"><img src="https://avatars.githubusercontent.com/u/22167673?s=100&v=4" width="100px;" alt=""/><br /><sub><b>ObservedObserver</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3AObservedObserver" title="PR">💻</a></td>
+    <td align="center"><a href="https://github.com/xdlrt"><img src="https://avatars.githubusercontent.com/u/13093537?s=100&v=4" width="100px;" alt=""/><br /><sub><b>xdlrt</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3Axdlrt" title="PR">💻</a></td>
+    <td align="center"><a href="https://github.com/berber1016"><img src="https://avatars.githubusercontent.com/u/31471551?s=100&v=4" width="100px;" alt=""/><br /><sub><b>berber1016</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3Aberber1016" title="PR">💻</a></td>
+    <td align="center"><a href="https://github.com/BM-laoli"><img src="https://avatars.githubusercontent.com/u/60060313?s=100&v=4" width="100px;" alt=""/><br /><sub><b>BM-laoli</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3ABM-laoli" title="PR">💻</a></td>
+    <td align="center"><a href="https://github.com/Cufoon"><img src="https://avatars.githubusercontent.com/u/65291826?s=100&v=4" width="100px;" alt=""/><br /><sub><b>Cufoon</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3ACufoon" title="PR">💻</a></td>
+    <td align="center"><a href="https://github.com/ClearLuvMoki"><img src="https://avatars.githubusercontent.com/u/61321768?s=100&v=4" width="100px;" alt=""/><br /><sub><b>ClearLuvMoki</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3AClearLuvMoki" title="PR">💻</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/mobxjs/zh.mobx.js.org"><img src="https://zh.mobx.js.org/assets/placeholder.svg" width="100px;" alt=""/><br /><sub><b>Next Contributor</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls" title="PR">💻</a></td>
+    <td align="center"><a href="https://github.com/mobxjs/zh.mobx.js.org"><img src="https://zh.mobx.js.org/assets/placeholder.svg" width="100px;" alt=""/><br /><sub><b>Next Contributor</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls" title="PR">💻</a></td>
   </tr>
 </table>
 
