@@ -4,7 +4,7 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="十分钟入门 MobX + React">
+    <meta name="description" content="十分钟入门 MobX & React">
 
     <link rel="stylesheet" href="assets/getting-started-assets/style.css" />
     <link href='https://fonts.googleapis.com/css?family=PT+Serif' rel='stylesheet' type='text/css'>
@@ -27,7 +27,7 @@
                 <div class="left-content">
                     <header>
                         <a href="index.html" style="float:left">
-						<img style="width: 120px; padding-right: 20px;" src="assets/getting-started-assets/images/mobservable.png" id="logo" /></a>
+                        <img style="width: 120px; padding-right: 20px;" src="assets/getting-started-assets/images/mobservable.png" id="logo" /></a>
                         <h1 id="project_title">MobX</h1>
                         <h2 id="project_tagline" style="font-size: 18pt">十分钟入门 MobX & React</h2>
                         <hr/>
@@ -35,58 +35,36 @@
 
                     <section id="main_content">
                         <p>
-														<a href="https://github.com/mobxjs/mobx"><code>MobX</code></a> 是一种简单、可扩展而且身经百战的状态管理解决方案。
-							这个教程会在十分钟之内教给你 MobX 中所有的重要概念。
-														MobX 是一个独立的库，但大多数人都把它和 React 放在一起使用，那么这个教程就着重介绍这种组合。
+                            <a href="https://github.com/mobxjs/mobx"><code>MobX</code></a> 是一种简单、可扩展而且身经百战的状态管理解决方案。这个教程会在十分钟之内教给你 MobX 中所有的重要概念。MobX 是一个独立的库，但大多数人都把它和 React 放在一起使用，那么这个教程就着重介绍这个组合。
                         </p>
-												<h3>核心思想</h3>
-						<p>
-							状态是每个应用的核心。想要创建出 bug 从生且难以管理的应用程序，那么再没有一种方法比
-							搞出不一致的状态或者与各种局部变量不同步的状态更快了。
-							因此，许多状态管理解决方案试图限制你修改状态的方式，比方说通过使状态不可变来做限制。
-							但这样就会引出新的问题；数据需要被规范化、无法保证引用完整性，而且万一你要是喜欢像 class 这样的功能强大的概念的话，你几乎没办法再用到他们。
-						</p><p>
-							MobX通过解决根本问题使状态管理再一次变得简单：它让不一致的状态的出现变得不可能。
-							要做到这一点，策略很简单：
-							<em>确保从应用状态中派生出的所有东西都将被自动派生。</em>
-						</p>
-						<p>
-							从概念上讲，MobX 将您的应用程序视为一份电子表格。
+                        <h3>核心理念</h3>
                         <p>
-							<img src="assets/getting-started-assets/overview.png" width="100%" />
-						<ol>
-							<li>
-							First of all, there is the <em>application state</em>.
-							Graphs of objects, arrays, primitives, references that forms the model of your application.
-							These values are the &ldquo;data cells&rdquo; of your application.
-							</li>
-                            <li>Secondly there are <em>derivations</em>.
-								Basically, any value that can be computed automatically from the state of your application.
-            					These derivations, or computed values, can range from
-                                simple values, like the number of unfinished todos, to complex stuff like a visual HTML
-                                representation of your todos. In spreadsheet terms: these are the formulas and charts of
-                                your application.
+                            状态是每个应用的核心。想要创建出 bug 从生而且难以管理的应用程序，那么再没有一种方法比搞出不一致的状态或者与各种局部变量不同步的状态更快了。因此，许多状态管理解决方案会通过比如使状态不可变来试图限制你修改状态的方式。但这样就会引出新的问题；数据需要被规范化、无法保证引用的完整性，而且万一你喜欢像 class 这样功能强大的概念的话，那你几乎没办法再用到它们。
+                        </p>
+                        <p>
+                            MobX 通过解决根本问题使状态管理再一次变得简单：它让不一致的状态不再可能出现。要做到这一点，策略很简单： <em>要确保从应用状态中派生出的一切都将被自动派生</em> 。
+                        </p>
+                        <p>
+                            从概念上讲， MobX 将您的应用程序视为一份电子表格。
+                        <p>
+                            <img src="assets/getting-started-assets/overview.png" width="100%" />
+                        <ol>
+                            <li>
+                                首先是 <em>应用状态</em> 。就是那些呈图状结构分布并组成你应用状态模型的对象、数组、原始值和引用。这些值是你应用中的&ldquo;单元格&rdquo;。
                             </li>
-                            <li><em>Reactions</em> are very similar to derivations. The main difference is these functions don't produce a
-                                value. Instead, they run automatically to perform some task.
-                                Usually this is I/O related.
-                                They make sure that the DOM is updated or
-                                that network requests are made automatically at the right time.
+                            <li>
+                                其次是 <em>派生</em> 。也就是任何可以自动从你的应用状态中被计算出来的值。这些派生——或者叫计算值——可以是简单的值，比如未完成待办事项的个数；也可以是复杂的东西，比如你待办清单的 HTML 视觉表示。
                             </li>
-                            <li>Finally there are <em>actions</em>. Actions are all the things that alter the <em>state</em>.
-                            MobX will make sure that all changes to the application
-                                state caused by your actions are automatically processed by all derivations and reactions.
-                                Synchronously and glitch-free.
+                            <li>
+                                <em>反应</em> 与派生非常相似。但主要区别在于这些函数不会返回值，而是会自动执行一些任务。通常这些任务与 I/O 有关。它们会用来确保 DOM 的更新或者在对的时间自动发出网络请求。
+                            </li>
+                            <li>
+                                最后是 <em>动作</em> 。动作就是所有能修改状态的东西。MobX 会确保所有由于你的动作而引起的应用状态的改变都将被所有派生和反应同步而顺畅地自动处理掉。
                             </li>
                         </ol>
-                        <h3>A simple todo store...</h3>
+                        <h3>一个简单的待办事项 store...</h3>
                         <p>
-                            Enough theory, seeing it in action probably explains more than carefully reading the above stuff. For originality's sake
-                            let's start with a very simple ToDo store.
-                            Note that all the code blocks below are editable,
-                            So use the <em>run code</em> buttons to execute them.
-                            Below is a very straightforward <code>TodoStore</code> that maintains a collection of todos.
-                            No MobX involved yet.
+                            理论已经够多了，与其仔细阅读上面的东西，看一下实际的操作可能会带来出更好的理解。为了原创性，我们就从一个简单的待办事项 store 开始。注意，以下所有的代码块都是可以编辑的，也可以用 <em>运行代码</em> 按钮运行。下面是一个非常简单直白的待办事项 store <code>TodoStore</code> ，里面装着一个待办事项集合。暂时还没有 MobX 什么事儿。
                         </p>
 
                         <textarea spellcheck="false" class="prettyprint" id="code1" rows="25">
@@ -118,11 +96,8 @@ class TodoStore {
 
 const todoStore = new TodoStore();
                         </textarea>
-                        <p>We just created a <code>todoStore</code> instance with a <code>todos</code> collection.
-                            Time to fill the todoStore with some objects.
-                            To make sure we see the effects of our changes we invoke <code>todoStore.report</code> after each change and log it.
-                            Note that the report intentionally always prints the <em>first</em> task only.
-                            It makes this example a bit artificial, but as we will see later on it nicely demonstrates that MobX's dependency tracking is dynamic.
+                        <p>
+                            我们刚刚创建了一个带有待办事项 <code>todos</code> 集合的 <code>todoStore</code> 实例。是时候往 <code>TodoStore</code> 里装些对象了。为了确保我们看到更改的效果，我们在每次更改后调用 <code>todoStore.report</code> 把它打印出来。注意，report 会故意始终只打印第一个任务。这样会让这个例子有点假，但我们稍后会看到这样可以很好地展示 MobX 依赖追踪的动态性。
                         </p>
 
                         <textarea spellcheck="false" class="prettyprint" id="code2" rows="15">
@@ -141,9 +116,9 @@ console.log(todoStore.report());
 todoStore.todos[0].task = "grok MobX tutorial";
 console.log(todoStore.report());
                         </textarea>
-                        <button onClick="runCode(['#code1', '#code2'])" class="btn-run">Run code</button>
+                        <button onClick="runCode(['#code1', '#code2'])" class="btn-run">运行代码</button>
 
-                        <h3>Becoming reactive</h3>
+                        <h3>变成响应式</h3>
                         <p>So far, there is nothing special about this code.
                             But what if we didn't have to call <code>report</code> explicitly,
                             but that we could declare instead that it should be invoked upon each <em>relevant</em> state change?
@@ -445,20 +420,20 @@ rather than being something that's required by default for anything more than a 
                     </section>
 
                     <footer>
-                        <p class="copyright">MobX is maintained by <a href="https://twitter.com/mweststrate">mweststrate</a></p>
+                        <p class="copyright">MobX 由 <a href="https://twitter.com/mweststrate">mweststrate</a> 维护</p>
                     </footer>
                 </div>
               </div>
             </td>
             <td class="right">
                 <div class="right-content">
-                    <h3>React preview</h3>
+                    <h3>React 预览</h3>
                     <div id="reactjs-app">
-						<p style="text-align: center">Read on and press any <em>run</em> buttons you encounter!</p>
-					</div>
+                        <p style="text-align: center">接着读下去并按下你所遇到的 <em>运行</em> 按钮！</p>
+                    </div>
                     <hr/>
                     <h3>Console log
-                        <button onclick="clearConsole();" id="clear-btn">clear</button>
+                        <button onclick="clearConsole();" id="clear-btn">清除</button>
                     </h3>
                     <div id="consoleout"></div>
                 </div>
