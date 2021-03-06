@@ -39,7 +39,7 @@
                         </p>
                         <h3>核心理念</h3>
                         <p>
-                            状态是每个应用的核心。想要创建出 bug 从生而且难以管理的应用程序，那么再没有一种方法比搞出不一致的状态或者与各种局部变量不同步的状态更快了。因此，许多状态管理解决方案会通过比如使状态不可变来试图限制你修改状态的方式。但这样就会引出新的问题；数据需要被规范化、无法保证引用的完整性，而且万一你喜欢像 class 这样功能强大的概念的话，那你几乎没办法再用到它们。
+                            状态是每个应用的核心。想要创建出 bug 从生而且难以管理的应用程序，那么再没有一种方法比搞出不一致的状态或者与各种局部变量不同步的状态更快了。因此，许多状态管理解决方案会通过比如使状态不可变来试图限制你修改状态的方式。但这样就会引出新的问题；数据需要被规范化、无法保证引用的完整性，而且万一你喜欢像类这样功能强大的概念的话，那你几乎没办法再用到它们。
                         </p>
                         <p>
                             MobX 通过解决根本问题使状态管理再一次变得简单：它让不一致的状态不再可能出现。要做到这一点，策略很简单： <em>要确保从应用状态中派生出的一切都将被自动派生</em> 。
@@ -79,9 +79,9 @@ class TodoStore {
 
   report() {
     if (this.todos.length === 0)
-      return "<none>";
+      return "<无>";
     const nextTodo = this.todos.find(todo => todo.completed === false);
-    return `下一个待办："${nextTodo ? nextTodo.task : "<none>"}"。 ` +
+    return `下一个待办："${nextTodo ? nextTodo.task : "<无>"}"。 ` +
       `进度：${this.completedTodosCount}/${this.todos.length}`;
   }
 
@@ -97,7 +97,7 @@ class TodoStore {
 const todoStore = new TodoStore();
                         </textarea>
                         <p>
-                            我们刚刚创建了一个带有待办事项 <code>todos</code> 集合的 <code>todoStore</code> 实例。是时候往 <code>TodoStore</code> 里装些对象了。为了确保我们看到更改的效果，我们在每次更改后调用 <code>todoStore.report</code> 把它打印出来。注意，report 会故意始终只打印第一个任务。这样会让这个例子有点假，但我们稍后会看到这样可以很好地展示 MobX 依赖追踪的动态性。
+                            我们刚刚创建了一个带有待办事项 <code>todos</code> 集合的 <code>todoStore</code> 实例。是时候往 <code>TodoStore</code> 里装些对象了。为了确保我们看到更改的效果，我们在每次更改后调用 <code>todoStore.report</code> 把它打印出来。注意，这个报告会一直故意只打印第一个任务。这样会让这个例子有点假，但我们稍后会看到这样可以很好地展示 MobX 依赖追踪的动态性。
                         </p>
 
                         <textarea spellcheck="false" class="prettyprint" id="code2" rows="15">
@@ -119,24 +119,15 @@ console.log(todoStore.report());
                         <button onClick="runCode(['#code1', '#code2'])" class="btn-run">运行代码</button>
 
                         <h3>变成响应式</h3>
-                        <p>So far, there is nothing special about this code.
-                            But what if we didn't have to call <code>report</code> explicitly,
-                            but that we could declare instead that it should be invoked upon each <em>relevant</em> state change?
-                            That would free us from the responsibility of calling <code>report</code> from any place in our code
-                            base that <em>might</em> affect the report. We do want to be sure the latest report is printed.
-                            But we don't wanna be bothered by organizing that.
+                        <p>
+                            到目前为止，这段代码并没有什么特别之处。但如果我们不用非得刻意调用 <code>report</code> 而规定它必须在每次 <em>相关</em> 状态改变时被调用呢？那样的话我们就不需要从代码中所有 <em>有可能</em> 影响报告的地方来手动调用 <code>report</code> 了。我们确实想确保最新的报告被打印出来，但我们并不想因为要去手动组织它而费功夫。
                         </p>
                         <p>
-                            Luckily that is exactly what MobX can do for us. Automatically execute code that solely depends on state.
-                            So that our <code>report</code> function updates automatically, just like a chart in a spreadsheet.
-                            To achieve that, the <code>TodoStore</code> has to become observable so that MobX can track all the changes that are being made.
-                            Let's alter the class just enough to achieve that.
+                            幸运的是，这正是 MobX 能为我们做的事情。 自动执行只依赖于状态的代码。这样的话，我们的 <code>report</code> 函数就会自动更新，就像一张电子表格里的一个图表一样。为了做到这一点，<code>TodoStore</code> 必须变成可观察的，这样 MobX 就可以追踪到所有正在进行的更改。我们来改一下这个类来刚好实现这一点。
                         </p>
-                        <p>Also, the <code>completedTodosCount</code> property could be derived automatically from the todo
-                            list. By using the <code>observable</code> and <code>computed</code> annotations we can introduce observable properties on an
-                            object.
-                            In the example below we use <code>makeObservable</code> to show the annotations explicitly,
-                            but we could have used <code>makeAutoObservable(this)</code> instead to simplify this process.
+                        <p>
+                            还有，<code>completedTodosCount</code> 属性可以自动从待办清单中派生出来。通过使用 <code>observable</code> 和 <code>computed</code> 注解，我们可以在一个对象上引入可观察属性。
+                            在下面的例子里我们使用了 <code>makeObservable</code> 来刻意展示出注解，但我们本来也可以使用 <code>makeAutoObservable(this)</code> 以便简化这个过程。
                         </p>
                         <textarea spellcheck="false" class="prettyprint" id="code3" rows="8">
 class ObservableTodoStore {
@@ -162,9 +153,9 @@ class ObservableTodoStore {
 
   get report() {
     if (this.todos.length === 0)
-      return "<none>";
+      return "<无>";
     const nextTodo = this.todos.find(todo => todo.completed === false);
-    return `Next todo: "${nextTodo ? nextTodo.task : "<none>"}". ` +
+    return `Next todo: "${nextTodo ? nextTodo.task : "<无>"}". ` +
       `Progress: ${this.completedTodosCount}/${this.todos.length}`;
   }
 
