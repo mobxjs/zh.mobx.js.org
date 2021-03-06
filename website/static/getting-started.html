@@ -81,8 +81,8 @@ class TodoStore {
     if (this.todos.length === 0)
       return "<none>";
     const nextTodo = this.todos.find(todo => todo.completed === false);
-    return `Next todo: "${nextTodo ? nextTodo.task : "<none>"}". ` +
-      `Progress: ${this.completedTodosCount}/${this.todos.length}`;
+    return `下一个待办："${nextTodo ? nextTodo.task : "<none>"}"。 ` +
+      `进度：${this.completedTodosCount}/${this.todos.length}`;
   }
 
   addTodo(task) {
@@ -101,19 +101,19 @@ const todoStore = new TodoStore();
                         </p>
 
                         <textarea spellcheck="false" class="prettyprint" id="code2" rows="15">
-todoStore.addTodo("read MobX tutorial");
+todoStore.addTodo("阅读 MobX 教程");
 console.log(todoStore.report());
 
-todoStore.addTodo("try MobX");
+todoStore.addTodo("试用 MobX");
 console.log(todoStore.report());
 
 todoStore.todos[0].completed = true;
 console.log(todoStore.report());
 
-todoStore.todos[1].task = "try MobX in own project";
+todoStore.todos[1].task = "在自己的项目中试用 MobX";
 console.log(todoStore.report());
 
-todoStore.todos[0].task = "grok MobX tutorial";
+todoStore.todos[0].task = "理解 MobX 教程";
 console.log(todoStore.report());
                         </textarea>
                         <button onClick="runCode(['#code1', '#code2'])" class="btn-run">运行代码</button>
@@ -432,7 +432,7 @@ rather than being something that's required by default for anything more than a 
                         <p style="text-align: center">接着读下去并按下你所遇到的 <em>运行</em> 按钮！</p>
                     </div>
                     <hr/>
-                    <h3>Console log
+                    <h3>控制台打印
                         <button onclick="clearConsole();" id="clear-btn">清除</button>
                     </h3>
                     <div id="consoleout"></div>
