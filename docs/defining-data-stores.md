@@ -30,22 +30,34 @@ The main responsibility of stores is to move _logic_ and _state_ out of your com
 
 Most applications benefit from having at least two stores: one for the _domain state_ and another one for the _UI state_. The advantage of separating those two is you can reuse and test _domain state_ universally, and you might very well reuse it in other applications.
 
-任意 Flux 架构中都可以发现数据存储(Store) ，并且经常用来和 MVC 模式中的 controller 进行比较。 
+任意 Flux 架构中都存在数据存储(Store)这一概念 ，并且经常用来和 MVC 模式中的 controller 进行比较。 
 Store 的主要职责是将组件中的 _逻辑_ 和 _状态_ 转移到一个独立的可测试单元中，该单元可以在同时在前端和后端JavaScript中使用。
 
-## Domain Stores
+## 领域数据存储
 
 Your application will contain one or multiple _domain_ stores.
 These stores store the data your application is all about.
 Todo items, users, books, movies, orders, you name it.
 Your application will most probably have at least one domain store.
 
+你的应用程序会包含一个或者多个 _领域_ 数据存储。
+这些 Store 保存了全部与你应用相关的数据。
+你可能把他们命名为Todo项，用户，书籍，影片，订单等。
+你的应用程序至少包含了一个领域数据存储。
+
+
 A single domain store should be responsible for a single concept in your application. A single store is often organized as a tree structure with
 multiple domain objects inside.
+
+一个简单的领域数据存储应该负责应用程序中的单个概念。单个存储通常组织为树结构，其中包含多个领域对象。
+
 
 For example: one domain store for your products, and one for your orders and orderlines.
 As a rule of thumb: if the nature of the relationship between two items is containment, they should typically be in the same store.
 So a store just manages _domain objects_.
+
+比如，您可以将一个领域数据存储用来存储你的产品，另一个领域数据存储用来存储订单。
+根据经验法则：如果两项内容之间的关系本质上是包容关系，那么它们通常应该在同一个 Store 中。因此 Store 只应管理 _领域对象_。
 
 These are the responsibilities of a store:
 
