@@ -97,7 +97,7 @@ class TodoStore {
 const todoStore = new TodoStore();
                         </textarea>
                         <p>
-                            我们刚刚创建了一个带有待办事项 <code>todos</code> 集合的 <code>todoStore</code> 实例。是时候往 <code>TodoStore</code> 里装些对象了。为了让我们能够看到更改的效果，我们在每次更改后调用 <code>todoStore.report</code> 把它打印出来。注意，这个报告会一直故意只打印第一个任务。这会让这个例子有点假，但我们稍后会看到这样的话可以很好地展示 MobX 依赖追踪的动态性。
+                            我们刚刚创建了一个带有待办事项 <code>todos</code> 集合的 <code>todoStore</code> 实例。是时候往 <code>TodoStore</code> 里装些对象了。为了看到更改的效果，我们在每次更改后都调用 <code>todoStore.report</code> 把它打印出来。注意，这个报告会一直故意只打印第一个任务。这会让这个例子有点假，但我们稍后会看到这样的话可以很好地展示 MobX 依赖追踪的动态性。
                         </p>
 
                         <textarea spellcheck="false" class="prettyprint" id="code2" rows="15">
@@ -120,14 +120,13 @@ console.log(todoStore.report());
 
                         <h3>变成响应式</h3>
                         <p>
-                            到目前为止，这段代码并没有什么特别之处。但如果我们不用非得刻意调用 <code>report</code> ，而是规定它必须在每次 <em>相关</em> 状态改变时被调用呢？那样的话我们就不需要从代码中所有 <em>有可能</em> 对报告有影响的地方手动来调用 <code>report</code> 了。我们确实想让最新的报告被打印出来，但我们并不想因为要去手动组织它而费功夫。
+                            到目前为止，这段代码并没有什么特别之处。但如果我们不用非得刻意调用 <code>report</code> ，而可以规定它必须在每次 <em>相关</em> 状态改变时都被调用呢？那样的话我们就不需要从代码中所有 <em>有可能</em> 对报告产生影响的地方手动调用 <code>report</code> 了。我们确实想让最新的报告被打印出来，但我们并不想因为要手动去组织它而费功夫。
                         </p>
                         <p>
-                            幸运的是，这正是 MobX 能为我们做到的事情——自动执行只依赖于状态的代码。这样的话，我们的 <code>report</code> 函数就会自动更新，就像电子表格里的一个图表一样。为了做到这一点，<code>TodoStore</code> 就必须变成可观察的，这样 MobX 就可以追踪到所有正在进行的更改。为了刚好实现这一点，我们来改一下这个类。
+                            幸运的是，这正是 MobX 能为我们做到的事情——自动执行只依赖于状态的代码。这样的话，我们的 <code>report</code> 函数就可以自动更新，就像电子表格里的一个图表一样。为了做到这一点，<code>TodoStore</code> 就必须变成可观察的，这样 MobX 就可以追踪到所有正在进行的更改。为了实现这一点，我们来改一下这个类。
                         </p>
                         <p>
-                            还有，<code>completedTodosCount</code> 属性可以自动从待办清单中派生出来。通过使用 <code>observable</code> 和 <code>computed</code> 注解，我们可以为一个对象引入可观察属性。
-                            在下面的例子里我们为了刻意地展示出注解而使用了 <code>makeObservable</code> ，但我们其实也可以使用 <code>makeAutoObservable(this)</code> 来简化这个过程。
+                            还有，<code>completedTodosCount</code> 属性可以从待办清单中被自动派生出来。通过使用 <code>observable</code> 和 <code>computed</code> 注解，我们可以为一个对象引入可观察属性。在下面的例子里，我们为了刻意地展示出注解而使用了 <code>makeObservable</code> ，但我们其实也可以使用 <code>makeAutoObservable(this)</code> 来简化这个过程。
                         </p>
                         <textarea spellcheck="false" class="prettyprint" id="code3" rows="8">
 class ObservableTodoStore {
