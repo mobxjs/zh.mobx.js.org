@@ -1,14 +1,14 @@
 ---
-title: React integration
-sidebar_label: React integration
+title: 与 React 集成
+sidebar_label: 与 React 集成
 hide_title: true
 ---
 
 <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBD4KQ7&placement=mobxjsorg" id="_carbonads_js"></script>
 
-# 与 React 整合
+# 与 React 集成
 
-Usage:
+使用方式：
 
 ```javascript
 import { observer } from "mobx-react-lite" // Or "mobx-react".
@@ -16,9 +16,9 @@ import { observer } from "mobx-react-lite" // Or "mobx-react".
 const MyComponent = observer(props => ReactElement)
 ```
 
-While MobX works independently from React, they are most commonly used together. In [The gist of MobX](the-gist-of-mobx.md) you have already seen the most important part of this integration: the `observer` [HoC](https://reactjs.org/docs/higher-order-components.html) that you can wrap around a React component.
+虽然 MobX 独立于 React 工作，但是它们通常结合使用。相信你在 [MobX 主旨](the-gist-of-mobx.md) 部分已经看到了与 React 集成最关键的部分：使用 `observer` [HoC](https://reactjs.org/docs/higher-order-components.html) 包裹一个 React 组件。
 
-`observer` is provided by a separate React bindings package you choose [during installation](installation.md#installation). In this example, we're going to use the more lightweight [`mobx-react-lite` package](https://github.com/mobxjs/mobx-react-lite).
+你可以在 [安装过程](installation.md#installation) 中安装单独的 React 绑定包，`observer` 在其中提供。在这个例子中，我们使用轻量级的 [`mobx-react-lite` 包](https://github.com/mobxjs/mobx-react-lite)。
 
 ```javascript
 import React from "react"
@@ -40,8 +40,8 @@ class Timer {
 
 const myTimer = new Timer()
 
-// A function component wrapped with `observer` will react
-// to any future change in an observable it used before.
+// 使用 `observer` 包裹的函数式组件将会对
+// 使用的可观察对象未来的变化做出响应。
 const TimerView = observer(({ timer }) => <span>Seconds passed: {timer.secondsPassed}</span>)
 
 ReactDOM.render(<TimerView timer={myTimer} />, document.body)
@@ -51,61 +51,61 @@ setInterval(() => {
 }, 1000)
 ```
 
-**Hint:** you can play with the above example yourself on [CodeSandbox](https://codesandbox.io/s/minimal-observer-p9ti4?file=/src/index.tsx).
+**提示：**你可以在 [CodeSandbox](https://codesandbox.io/s/minimal-observer-p9ti4?file=/src/index.tsx) 中自己运行上面的示例。
 
-The `observer` HoC automatically subscribes React components to _any observables_ that are used _during rendering_.
-As a result, components will automatically re-render when relevant observables change.
-It also makes sure that components don't re-render when there are _no relevant_ changes.
-So, observables that are accessible by the component, but not actually read, won't ever cause a re-render.
+`observer` HoC 将会自动订阅在 React 组件_渲染过程_中使用的_任何可观察对象_。
+因此，当相关的可观察对象发生变化时，组件将会自动重新渲染。
+他同样会确保在_没有相关_更改的情况下，组件不会重新渲染。
+因此，那些可以被组件访问但从未真正读取的可观察对象，将不会造成组件重新渲染。
 
-In practice this makes MobX applications very well optimized out of the box and they typically don't need any additional code to prevent excessive rendering.
+实际上，MobX 提供了开箱即用的优化，所以通常不需要任何额外的代码就可以防止过度渲染。
 
-For `observer` to work, it doesn't matter _how_ the observables arrive in the component, only that they are read.
-Reading observables deeply is fine, complex expression like `todos[0].author.displayName` work out of the box.
-This makes the subscription mechanism much more precise and efficient compared to other frameworks in which data dependencies have to be declared explicitly or be pre-computed (e.g. selectors).
+`observer` 正常工作时，其并不关心可观察对象到达组件的_方式_，只需要组件读取可观察对象的值即可。
+读取类似 `todos[0].author.displayName` 的深层嵌套的可观察对象时，MobX 也可以正常工作。
+与必须显式声明或预先计算数据依赖的其他框架（例如：selectors）相比，订阅机制更加的精确且高效。
 
-## Local and external state
+## 局部和外部状态
 
-There is great flexibility in how state is organized, since it doesn't matter (technically that is) which observables we read or where observables originated from.
-The examples below demonstrate different patterns on how external and local observable state can be used in components wrapped with `observer`.
+因为从技术上来讲我们并不关心读取什么样的可观察对象以及可观察对象来自哪里，所以组织状态的方法具有很大的灵活性。
+下面的示例演示了在使用 `observer` 包装的组件中使用外部和局部可观察状态的不同方式。
 
-### Using external state in `observer` components
+### 在 `observer` 组件中使用外部状态
 
 <!--DOCUSAURUS_CODE_TABS-->
 <!--using props-->
 
-Observables can be passed into components as props (as in the example above):
+可观察对象可以作为 props 传递给组件（如下面的例子所示）：
 
 ```javascript
 import { observer } from "mobx-react-lite"
 
-const myTimer = new Timer() // See the Timer definition above.
+const myTimer = new Timer() // 查看上面 Timer 的定义.
 
 const TimerView = observer(({ timer }) => <span>Seconds passed: {timer.secondsPassed}</span>)
 
-// Pass myTimer as a prop.
+// 将 myTimer 作为 props 传递.
 ReactDOM.render(<TimerView timer={myTimer} />, document.body)
 ```
 
 <!--using global variables-->
 
-Since it doesn't matter _how_ we got the reference to an observable, we can consume
-observables from outer scopes directly (including from imports, etc.):
+由于我们并不关心_如何_获得可观察对象的引用，因此我们可以
+直接从外部（包括 import 等）导入并使用可观察对象：
 
 ```javascript
-const myTimer = new Timer() // See the Timer definition above.
+const myTimer = new Timer() // 查看上面 Timer 的定义.
 
-// No props, `myTimer` is directly consumed from the closure.
+// 没有 props, `myTimer` 通过闭包直接消费.
 const TimerView = observer(() => <span>Seconds passed: {myTimer.secondsPassed}</span>)
 
 ReactDOM.render(<TimerView />, document.body)
 ```
 
-Using observables directly works very well, but since this typically introduces module state, this pattern might complicate unit testing. Instead, we recommend using React Context instead.
+直接使用可观察对象的效果很好，但是这样通常会引入模块状态，这种设计模式会使得单元测试变得复杂起来。所以我们推荐改用 React Context。
 
 <!--using React context-->
 
-[React Context](https://reactjs.org/docs/context.html) is a great mechanism to share observables with an entire subtree:
+[React Context](https://reactjs.org/docs/context.html) 提供了一个与整棵子树共享可观察对象的机制：
 
 ```javascript
 import {observer} from 'mobx-react-lite'
@@ -114,8 +114,8 @@ import {createContext, useContext} from "react"
 const TimerContext = createContext<Timer>()
 
 const TimerView = observer(() => {
-    // Grab the timer from the context.
-    const timer = useContext(TimerContext) // See the Timer definition above.
+    // 从 context 中获取 timer.
+    const timer = useContext(TimerContext) // 查看上面的定义.
     return (
         <span>Seconds passed: {timer.secondsPassed}</span>
     )
@@ -129,35 +129,35 @@ ReactDOM.render(
 )
 ```
 
-Note that we don't recommend ever replacing the `value` of a `Provider` with a different one. Using MobX, there should be no need for that, since the observable that is shared can be updated itself.
+请注意，我们不推荐对 `Provider` 的 `value` 重新赋值。当你使用 MobX 时，不需要这样做，因为共享的可观察对象可以自动更新。
 
 <!--END_DOCUSAURUS_CODE_TABS-->
 
-### Using local observable state in `observer` components
+### 在 `observer` 组件中使用局部状态
 
-Since observables used by `observer` can come from anywhere, they can be local state as well.
-Again, different options are available for us.
+由于被 `observer` 使用的可观察对象可以来自任何地方，所以它们也可以被定义为局部状态。
+与上面相同，我们也可以有多种不同的使用方式。
 
 <!--DOCUSAURUS_CODE_TABS-->
 <!--`useState` with observable class-->
 
-The simplest way to use local observable state is to store a reference to an observable class with `useState`.
-Note that, since we typically don't want to replace the reference, we totally ignore the updater function returned by `useState`:
+使用局部可观察状态最简单的方式是使用 `useState` 存储可观察对象的引用。
+需要注意的是，由于我们通常不需要对可观察对象重新赋值，因此我们完全忽略了 `useState` 返回的 updater 函数。
 
 ```javascript
 import { observer } from "mobx-react-lite"
 import { useState } from "react"
 
 const TimerView = observer(() => {
-    const [timer] = useState(() => new Timer()) // See the Timer definition above.
+    const [timer] = useState(() => new Timer()) // 查看上面的 Timer 定义.
     return <span>Seconds passed: {timer.secondsPassed}</span>
 })
 
 ReactDOM.render(<TimerView />, document.body)
 ```
 
-If you want to automatically update the timer like we did in the original example,
-`useEffect` could be used in typical React fashion:
+如果你想像原始示例中那样自动更新计时器，
+你可以通过最常见的 React 风格使用 `useEffect`。
 
 ```javascript
 useEffect(() => {
@@ -172,8 +172,8 @@ useEffect(() => {
 
 <!--`useState` with local observable object-->
 
-As stated before, instead of using classes, it is possible to directly create observable objects.
-We can leverage [observable](observable-state.md#observable) for that:
+如同前面章节提到的，我们可以不使用类，而直接创建可观察对象。
+我们可以利用 [observable](observable-state.md#observable)：
 
 ```javascript
 import { observer } from "mobx-react-lite"
@@ -197,8 +197,8 @@ ReactDOM.render(<TimerView />, document.body)
 
 <!--`useLocalObservable` hook-->
 
-The combination `const [store] = useState(() => observable({ /* something */}))` is
-quite common. To make this pattern simpler the [`useLocalObservable`](https://github.com/mobxjs/mobx-react#uselocalobservable-hook) hook is exposed from `mobx-react-lite` package, making it possible to simplify the earlier example to:
+`const [store] = useState(() => observable({ /* something */}))` 的组合是
+十分常见的。可以使用 `mobx-react-lite` 包提供的 [`useLocalObservable`](https://github.com/mobxjs/mobx-react#uselocalobservable-hook) hook 简化这种模式，简化之后的版本如下：
 
 ```javascript
 import { observer, useLocalObservable } from "mobx-react-lite"
@@ -219,9 +219,9 @@ ReactDOM.render(<TimerView />, document.body)
 
 <!--END_DOCUSAURUS_CODE_TABS-->
 
-### You might not need locally observable state
+### 你或许并不需要局部可观察状态
 
-In general, we recommend to not resort to MobX observables for local component state too quickly, as this can theoretically lock you out of some features of React's Suspense mechanism.
+通常情况下，我们建议不要对本地组件过快地使用 MobX 可观察对象，因为从理论上讲In general, we recommend to not resort to MobX observables for local component state too quickly, as this can theoretically lock you out of some features of React's Suspense mechanism.
 As a rule of thumb, use MobX observables when the state captures domain data that is shared among components (including children). Such as todo items, users, bookings, etc.
 
 State that only captures UI state, like loading state, selections, etc, might be better served by the [`useState` hook](https://reactjs.org/docs/hooks-state.html), since this will allow you to leverage React suspense features in the future.
