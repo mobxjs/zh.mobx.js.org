@@ -1,5 +1,5 @@
 ---
-title: Analyzing reactivity
+title: 分析反应性
 sidebar_label: Analyzing reactivity {🚀}
 hide_title: true
 ---
