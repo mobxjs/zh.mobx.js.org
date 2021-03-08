@@ -177,7 +177,7 @@ const observableTodoStore = new ObservableTodoStore();
                             <code>pendingRequests</code> 和 <code>assignee</code> 属性目前还没有用到，但是会在这个教程后面的部分用到的。
                         </p>
                         <p>
-                            在构造函数中，我们创建了一个打印 <code>report</code> 的小函数并把它用 <code>autorun</code> 包裹了起来。而 autorun 会创建一个 <em>action</em> ，这个 action 会在小函数用到的任意一个 observable 数据发生改变时自动运行一次。<code>report</code> 会因为使用了 observable 属性 <code>todos</code> 而适时打印出 report 。这一点会在下面的列表中展示出来。只需要你按下 <em>运行代码</em> 按钮：
+                            在构造函数中，我们创建了一个打印 <code>report</code> 的小函数并把它用 <code>autorun</code> 包裹了起来。而 autorun 会创建一个 <em>action</em> ，这个 action 会在小函数用到的任意一个 observable 数据发生改变时自动运行一次。<code>report</code> 会因为使用了 observable 属性 <code>todos</code> 而适时打印出 report 。这一点会在下列代码中展示出来。只需要你按下 <em>运行代码</em> 按钮：
                         </p>
 
                         <textarea spellcheck="false" class="prettyprint" id="code4" rows="6">
@@ -197,19 +197,10 @@ observableTodoStore.todos[0].task = "理解 MobX 教程";
                             好的，目前我们把一个傻傻的 report 变成了响应式。是时候围绕着这同一个 store 构建一个响应式的用户界面了。React 组件本身并不是响应式的（他们的名字除外）。<code>mobx-react-lite</code> 包中的 <code>observer</code> 高阶组件封装通过——简而言之——把 React 组件用  <code>autorun</code> 封装起来解决了这个问题。这样可以自动让组件和状态相同步。从概念上讲，这跟我们刚才对于 <code>report</code> 的做法并没有什么不同。
                         </p>
                         <p>
-                            The next listing defines a few React components.
-                            The only MobX specific code in there is the <code>observer</code> wrapping.
-                            That is enough to make sure that each component individually re-renders when relevant data changes.
-                            We don't have to call state <code>useState</code> setters anymore,
-                            nor do we have to figure out how to subscribe to the proper parts
-                            of the application state using selectors or higher order components that need configuration.
-                            Basically, all components have become smart. Yet they are defined in a dumb, declarative manner.
+                            接下来这段代码定义了几个 React 组件。唯一 MobX 专用的代码是 <code>observer</code> 封装。这就足够让每个组件在相关数据发生改变时单独重新渲染了。我们不用再调用 state 的 <code>useState</code> setter 方法了，也不用去弄清楚怎样通过使用选择器或者需要手动配置的高阶组件来追踪应用状态中正确的那一部分。简而言之，所有组件都变得智能了。但他们是以一种傻瓜式、声明式的方式被定义出来的。
                         </p>
                         <p>
-                            Press the <em>运行代码</em> button to see the code below in action. The listing is editable so
-                            feel free to play with it. Try for example to remove all the <code>observer</code> calls, or
-                            just the one decorating the <code>TodoView</code>. The numbers in the preview on the right highlight
-                            how often a component is rendered.
+                            按下 <em>运行代码</em> 按钮，查看以下代码的实际运行状况。代码是可编辑的所以尽管动手玩起来。比如说，试试移除所有的 <code>observer</code> 调用，或者只移除那个装饰在 <code>TodoView</code> 上的。右边预览中的数字突出显示了每个组件的渲染频率。
                         </p>
                         <textarea spellcheck="false" class="" id="react1" rows="44">
 const TodoList = observer(({store}) => {
