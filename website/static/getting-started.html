@@ -97,7 +97,7 @@ class TodoStore {
 const todoStore = new TodoStore();
                         </textarea>
                         <p>
-                            我们刚刚创建了一个带有待办事项 <code>todos</code> 集合的 <code>todoStore</code> 实例。是时候往 <code>TodoStore</code> 里装些对象了。为了看到更改的效果，我们在每次更改后都调用 <code>todoStore.report</code> 把它打印出来。注意，这个报告会一直故意只打印第一个任务。这会让这个例子有点假，但我们稍后会看到这样的话可以很好地展示 MobX 依赖追踪的动态性。
+                            我们刚刚创建了一个带有待办事项 <code>todos</code> 集合的 <code>todoStore</code> 实例。是时候往 <code>TodoStore</code> 里装些对象了。为了看到更改的效果，我们在每次更改后都调用 <code>todoStore.report</code> 把它打印出来。注意，这个 report 会故意总是只打印第一个任务。这会让这个例子有点假，但我们稍后会看到这样的话可以很好地展示 MobX 依赖追踪的动态性。
                         </p>
 
                         <textarea spellcheck="false" class="prettyprint" id="code2" rows="15">
@@ -120,7 +120,7 @@ console.log(todoStore.report());
 
                         <h3>变成响应式</h3>
                         <p>
-                            到目前为止，这段代码并没有什么特别之处。但如果我们不用非得刻意调用 <code>report</code> ，而可以规定它必须在每次 <em>相关</em> 状态改变时都被调用呢？那样的话我们就不需要从代码中所有 <em>有可能</em> 对报告产生影响的地方手动调用 <code>report</code> 了。我们确实想让最新的报告被打印出来，但我们并不想因为要手动去组织它而费功夫。
+                            到目前为止，这段代码并没有什么特别之处。但如果我们不用非得刻意调用 <code>report</code> ，而可以规定它必须在每次 <em>相关</em> 状态改变时都被调用呢？那样的话我们就不需要从代码中所有 <em>有可能</em> 对 report 产生影响的地方手动调用 <code>report</code> 了。我们确实想让最新的 report 被打印出来，但我们并不想因为要手动去组织它而费功夫。
                         </p>
                         <p>
                             幸运的是，这正是 MobX 能为我们做到的事情——自动执行只依赖于状态的代码。这样的话，我们的 <code>report</code> 函数就可以自动更新，就像电子表格里的一个图表一样。为了做到这一点，<code>TodoStore</code> 就必须变成 observable ，这样 MobX 就可以追踪到所有正在进行的更改。为了实现这一点，我们来改一下这个类。
@@ -177,7 +177,7 @@ const observableTodoStore = new ObservableTodoStore();
                             <code>pendingRequests</code> 和 <code>assignee</code> 属性目前还没有用到，但是会在这个教程后面的部分用到的。
                         </p>
                         <p>
-                            在构造函数中，我们创建了一个打印 <code>report</code> 的小函数并把它用 <code>autorun</code> 包裹了起来。而 autorun 会创建一个 <em>action</em> ，这个 action 会在小函数用到的任意一个 observable 数据发生改变时自动运行一次。<code>report</code> 会因为使用了 observable 属性 <code>todos</code> 而适时打印出报告。这一点会在下面的列表中展示出来。只需要你按下 <em>运行代码</em> 按钮：
+                            在构造函数中，我们创建了一个打印 <code>report</code> 的小函数并把它用 <code>autorun</code> 包裹了起来。而 autorun 会创建一个 <em>action</em> ，这个 action 会在小函数用到的任意一个 observable 数据发生改变时自动运行一次。<code>report</code> 会因为使用了 observable 属性 <code>todos</code> 而适时打印出 report 。这一点会在下面的列表中展示出来。只需要你按下 <em>运行代码</em> 按钮：
                         </p>
 
                         <textarea spellcheck="false" class="prettyprint" id="code4" rows="6">
@@ -189,22 +189,12 @@ observableTodoStore.todos[0].task = "理解 MobX 教程";
                         </textarea>
                         <button onClick="runCode(['#code1', '#code3', '#code4'])" class="btn-run">运行代码</button>
 
-                        <p>Pure fun, right? The <code>report</code> did print automatically, synchronously and without leaking
-                            intermediate values. If you investigate the log carefully, you will see that the fifth line
-                            didn't result in a new log-line. Because the report did not <em>actually</em> change as a result
-                            of the rename, although the backing data did. On the other hand, changing the name of the first
-                            todo did update the report, since that name is actively used in the report.
-                            This demonstrates nicely that
-                            not just the <code>todos</code> array is being observed by the <code>autorun</code>, but also
-                            the individual properties inside the todo items.
+                        <p>
+                            很有意思，对吧？<code>report</code> 的确自动同步而顺畅地打印出来了。如果你仔细查看打印出来的记录，你会看到第五行代码最后并没有再触发一行记录。这是因为 report <em>实际上</em> 并没有因为第五行代码的重命名而发生改变——尽管它背后的数据变了。另一方面，更改第一个待办事项的名称确实更新了 report ，因为 report 正使用着那个新名字。这很好地证明了 <code>autorun</code> 不仅监视着 <code>todos</code> 数组，还监视着待办条目中的各个属性。
                         </p>
-                        <h3 id="reactive-reactjs-components">Making React reactive</h3>
-                        <p>Ok, so far we made a silly report reactive. Time to build a reactive user interface around this very
-                            same store. React components are (despite their name) not reactive out of the box.
-                            The <code>observer</code> HoC wrapper from the <code>mobx-react-lite</code> package fixes that by
-                            basically wrapping the React component in <code>autorun</code>. To automatically
-                            keep components in sync with the state. This is conceptually not different from what we did
-                            with the <code>report</code> before.
+                        <h3 id="reactive-reactjs-components">把 React 变成响应式</h3>
+                        <p>
+                            好的，目前我们把一个傻傻的 report 变成了响应式。是时候围绕着这同一个 store 构建一个响应式的用户界面了。React 组件本身并不是响应式的（他们的名字除外）。<code>mobx-react-lite</code> 包中的 <code>observer</code> 高阶组件封装通过——简而言之——把 React 组件用  <code>autorun</code> 封装起来解决了这个问题。这样可以自动让组件和状态相同步。从概念上讲，这跟我们刚才对于 <code>report</code> 的做法并没有什么不同。
                         </p>
                         <p>
                             The next listing defines a few React components.
