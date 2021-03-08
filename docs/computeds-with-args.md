@@ -10,7 +10,7 @@ hide_title: true
 
 `computed` 方法仅能用于getters上，然而getters并不接受参数。那么需要参数的计算要怎么处理呢？结合下面的例子：一个 `Item` 组件，用于表示多选组件中单个的选择项。
 
-那么我们要如何实现一个类似于 `store.isSelected(item.id)` 的衍生 _（一个订阅item.id变化的状态）_ 呢？
+那么我们要如何实现一个类似于 `store.isSelected(item.id)` 的derivation _（一个订阅item.id变化的状态）_ 呢？
 
 ```javascript
 import * as React from 'react'
@@ -27,18 +27,18 @@ const Item = observer(({ item, store }) => (
 
 > 译者注：衍生(derivation)是指一个订阅了某些observable的行为
 
-## 1. 衍生不一定_需要_ 用`computed`实现
+## 1. Derivation不一定_需要_ 用`computed`实现
 
 
 一个函数不一定要被 `computed` 包裹才能被mobx跟踪。上面的例子即便不被包裹也能够正常运行。
 我们需要认识到计算值（computed values）仅仅是 _缓存点_ 。
-如果衍生是纯粹的（也应当），那么函数是否被包裹是不会影响其行为的，只是会有一些轻微的性能损耗。
+如果derivation是纯粹的（也应当），那么函数是否被包裹是不会影响其行为的，只是会有一些轻微的性能损耗。
 
-> 译者注：纯粹的衍生是指，计算逻辑只依赖函数参数与store中的observable，而不依赖其他外部状态。
+> 译者注：纯粹的derivation是指，计算逻辑只依赖函数参数与store中的observable，而不依赖其他外部状态。
 
 上面的例子即便 `isSelected` 没有被 `computed` 包裹。`observer` 组件会检测并订阅 `isSelected` 内部的任何observable的变化因为`isSelected` 函数的执行是作为被跟踪的渲染函数的一部分。
 
-需要意识到，所有的 `Item` 组件，都会对未来多选组件的被选项发生改变时做出响应，这是由于他们都直接订阅了描述选择项的可观测对象。这是一个最差情况的例子。一般情况下，使用未包裹的函数来表示衍生信息完全ok，并且这是一种默认的优秀策略，直到有数据证明我们需要做额外的改进。
+需要意识到，所有的 `Item` 组件，都会对未来多选组件的被选项发生改变时做出响应，这是由于他们都直接订阅了描述选择项的observable。这是一个最差情况的例子。一般情况下，使用未包裹的函数来表示derivation完全ok，并且这是一种默认的优秀策略，直到有数据证明我们需要做额外的改进。
 
 ## 2. 整体作为参数被封装
 
@@ -59,7 +59,7 @@ const Item = observer(({ item, store }) => {
 }
 ```
 
-我们在对可观测对象(observable)的响应中间加入了一段新的计算值。
+我们在对observable的reaction中间加入了一段新的计算值。
 这样的逻辑是可以正确允许，并且会带来额外的值缓存，从而避免组件直接对每一个选择框的行为作出反馈。这种做法的优势是，只有在`isSelected` 状态变化时，组件本身才会重渲染。这里也就是我们需要重新渲染来替换 `className`
 
 事实是即便我们在下一次渲染时创建了新的 `computed` 也没有问题，新创的建计算值会成为新的缓存点而前一个则会被清理掉。
@@ -67,7 +67,7 @@ const Item = observer(({ item, store }) => {
 
 ## 3. 调整状态
 
-在这个具体的场景下，我们可以把 `isSelected` 这个计算值作为一个可观测对象(observable)存储在状态中（作为Item的一个属性），而不再是作为一个计算值。这样已选择的值就可以写作一个计算值而不是一个可观测对象 `get selection() { return this.items.filter(item => item.isSelected) }`，于是我们就不再需要 `isSelected` 计算值了。
+在这个具体的场景下，我们可以把 `isSelected` 这个计算值作为一个observable存储在状态中（作为Item的一个属性），而不再是作为一个计算值。这样已选择的值就可以写作一个计算值而不是一个observable `get selection() { return this.items.filter(item => item.isSelected) }`，于是我们就不再需要 `isSelected` 计算值了。
 
 之前的写法，selection作为一个状态，isSelected作为计算值。
 ```js
