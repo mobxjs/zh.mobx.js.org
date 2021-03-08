@@ -85,7 +85,7 @@ class ItemStore {
 }
 ```
 
-调整后的写法，`isSelected`作为状态，被选项selection作为计算。
+调整后的写法，`isSelected`作为状态，被选项selection作为计算值。
 ```js
 interface ItemType {
     id: string;
@@ -122,4 +122,4 @@ const d = autorun(() => {
 
 我们并不推荐你过早的使用它。它更针对记忆化的场景，你需要考虑清楚函数会接收到多少种不同的参数才能准确地评估出内存的消耗。
 不过，它确实会自动的清理掉那些没有被观测的缓存结果，所以你通常不需要担心内存泄露。
-可以查看 [CodeSandbox链接](https://codesandbox.io/s/multi-selection-odup1?file=/src/index.tsx) 来调试一下这个工具。
+具体用例可以查看 [CodeSandbox链接](https://codesandbox.io/s/multi-selection-odup1?file=/src/index.tsx)。
