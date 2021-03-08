@@ -39,10 +39,10 @@
                         </p>
                         <h3>核心理念</h3>
                         <p>
-                            状态是每个应用的核心。想要创建出 bug 丛生而且难以管理的应用程序，那么再没有一种方法比搞出不一致的状态或者与各种局部变量不同步的状态更快了。因此，许多状态管理解决方案会通过比如使状态不可变来试图限制你修改状态的方式。但这样就会引出新的问题；数据需要被规范化、引用的完整性无法得到保证，而且万一你喜欢像类这样功能强大的概念的话，那你几乎没办法再用到它们。
+                            状态是每个应用的核心。如果你想创建出 bug 丛生而且难以管理的应用程序，那么再没有比搞出不一致的状态或者与各种局部变量不同步的状态更快的方法了。因此，许多状态管理解决方案会通过比如使状态不可变来试图限制你修改状态的方式。但这样就会引出新的问题；数据需要被规范化、引用的完整性无法得到保证，而且万一你喜欢像类这样功能强大的概念的话，那你几乎没办法再用到它们。
                         </p>
                         <p>
-                            MobX 通过解决根本问题让状态管理又一次变得简单了：它让不一致的状态不再可能出现。要做到这一点，策略很简单： <em>要确保从应用状态中派生出的一切都将被自动派生出来</em> 。
+                            MobX 通过解决根本问题让状态管理又一次变得简单起来：它让不一致的状态不再可能出现。要做到这一点，策略很简单： <em>要确保从应用状态中派生出的一切都将被自动派生出来</em> 。
                         </p>
                         <p>
                             从概念上讲， MobX 会把你的应用程序视为一份电子表格。
@@ -53,13 +53,13 @@
                                 首先是 <em>应用状态</em> 。就是那些呈图状结构分布、组成你应用状态模型的对象、数组、原始值和引用。这些值是你应用中的&ldquo;单元格&rdquo;。
                             </li>
                             <li>
-                                其次是 <em>派生</em> 。也就是任何可以从你的应用状态中被自动计算出来的值。这些派生——或者叫计算值——可以是简单的值，比如未完成待办事项的个数；也可以是复杂的东西，比如你待办清单的 HTML 视觉表示。
+                                其次是 <em>derivation</em> 。也就是任何可以从你的应用状态中被自动计算出来的值。这些 derivation ——或者叫 computed ——可以是简单的值，比如未完成待办事项的个数；也可以是复杂的东西，比如你待办清单的 HTML 视觉表示。
                             </li>
                             <li>
-                                <em>反应</em> 与派生非常相似。但主要的区别在于这些函数不会返回值，而是会自动执行一些任务。通常这些任务与 I/O 有关。它们会用来确保 DOM 的更新或者在对的时间自动发出网络请求。
+                                <em>Reaction</em> 与 derivation 非常相似。但主要的区别在于这些函数不会返回值，而是会自动执行一些任务。通常这些任务与 I/O 有关。它们会用来确保 DOM 的更新或者在对的时间自动发出网络请求。
                             </li>
                             <li>
-                                最后是 <em>动作</em> 。动作就是所有能修改状态的东西。MobX 会确保所有因为你的动作而引起的应用状态的改变都将被所有的派生和反应同步而顺畅地自动处理掉。
+                                最后是 <em>action</em> 。action 就是所有能修改状态的东西。MobX 会确保所有由你的 action 而引发的应用状态改变都被所有的 derivation 和 reaction 同步而顺畅地自动处理掉。
                             </li>
                         </ol>
                         <h3>一个简单的待办事项 store...</h3>
@@ -123,10 +123,10 @@ console.log(todoStore.report());
                             到目前为止，这段代码并没有什么特别之处。但如果我们不用非得刻意调用 <code>report</code> ，而可以规定它必须在每次 <em>相关</em> 状态改变时都被调用呢？那样的话我们就不需要从代码中所有 <em>有可能</em> 对报告产生影响的地方手动调用 <code>report</code> 了。我们确实想让最新的报告被打印出来，但我们并不想因为要手动去组织它而费功夫。
                         </p>
                         <p>
-                            幸运的是，这正是 MobX 能为我们做到的事情——自动执行只依赖于状态的代码。这样的话，我们的 <code>report</code> 函数就可以自动更新，就像电子表格里的一个图表一样。为了做到这一点，<code>TodoStore</code> 就必须变成可观察的，这样 MobX 就可以追踪到所有正在进行的更改。为了实现这一点，我们来改一下这个类。
+                            幸运的是，这正是 MobX 能为我们做到的事情——自动执行只依赖于状态的代码。这样的话，我们的 <code>report</code> 函数就可以自动更新，就像电子表格里的一个图表一样。为了做到这一点，<code>TodoStore</code> 就必须变成 observable ，这样 MobX 就可以追踪到所有正在进行的更改。为了实现这一点，我们来改一下这个类。
                         </p>
                         <p>
-                            还有，<code>completedTodosCount</code> 属性可以从待办清单中被自动派生出来。通过使用 <code>observable</code> 和 <code>computed</code> 注解，我们可以为一个对象引入可观察属性。在下面的例子里，我们为了刻意地展示出注解而使用了 <code>makeObservable</code> ，但我们其实也可以使用 <code>makeAutoObservable(this)</code> 来简化这个过程。
+                            还有，<code>completedTodosCount</code> 属性可以从待办清单中被自动派生出来。通过使用 <code>observable</code> 和 <code>computed</code> 注解，我们可以为一个对象引入 observable 属性。在下面的例子里，我们为了刻意地展示出注解而使用了 <code>makeObservable</code> ，但我们其实也可以使用 <code>makeAutoObservable(this)</code> 来简化这个过程。
                         </p>
                         <textarea spellcheck="false" class="prettyprint" id="code3" rows="8">
 class ObservableTodoStore {
@@ -154,8 +154,8 @@ class ObservableTodoStore {
     if (this.todos.length === 0)
       return "<无>";
     const nextTodo = this.todos.find(todo => todo.completed === false);
-    return `Next todo: "${nextTodo ? nextTodo.task : "<无>"}". ` +
-      `Progress: ${this.completedTodosCount}/${this.todos.length}`;
+    return `下一个待办："${nextTodo ? nextTodo.task : "<无>"}"。 ` +
+      `进度：${this.completedTodosCount}/${this.todos.length}`;
   }
 
   addTodo(task) {
@@ -170,29 +170,24 @@ class ObservableTodoStore {
 const observableTodoStore = new ObservableTodoStore();
                         </textarea>
 
-                        <p>That's it! We marked some properties as being <code>observable</code> to signal MobX that these values can change over time.
-                            The computations are decorated with <code>computed</code> to identify that these can be derived from the state and caches as long as no underlying state changed.
+                        <p>
+                            就是这样！我们把有些属性标记为 <code>observable</code>，以便告诉 Mobx 这些值会随时间的推移而改变。有些值中的 <code>computed</code> 被用来标明这些值能够从状态中派生出来，而且只要底层状态没有发生改变，那么它们还可以从缓存中派生起来。
                         </p>
                         <p>
-                            The <code>pendingRequests</code> and <code>assignee</code> attributes are not used so far,
-                            but will be used later in this tutorial.
+                            <code>pendingRequests</code> 和 <code>assignee</code> 属性目前还没有用到，但是会在这个教程后面的部分用到的。
                         </p>
                         <p>
-                            In the constructor we created a small function that prints the <code>report</code> and
-                            wrapped it in <code>autorun</code>. Autorun creates a <em>reaction</em> that runs once, and after
-                            that automatically re-runs whenever any observable data that was used inside the function changes.
-                            Because <code>report</code> uses the observable <code>todos</code> property, it will print the
-                            report whenever appropriate. This is demonstrated in the next listing. Just press the <em>run</em> button:
+                            在构造函数中，我们创建了一个打印 <code>report</code> 的小函数并把它用 <code>autorun</code> 包裹了起来。而 autorun 会创建一个 <em>action</em> ，这个 action 会在小函数用到的任意一个 observable 数据发生改变时自动运行一次。<code>report</code> 会因为使用了 observable 属性 <code>todos</code> 而适时打印出报告。这一点会在下面的列表中展示出来。只需要你按下 <em>运行代码</em> 按钮：
                         </p>
 
                         <textarea spellcheck="false" class="prettyprint" id="code4" rows="6">
-observableTodoStore.addTodo("read MobX tutorial");
-observableTodoStore.addTodo("try MobX");
+observableTodoStore.addTodo("阅读 MobX 教程");
+observableTodoStore.addTodo("试用 MobX");
 observableTodoStore.todos[0].completed = true;
-observableTodoStore.todos[1].task = "try MobX in own project";
-observableTodoStore.todos[0].task = "grok MobX tutorial";
+observableTodoStore.todos[1].task = "在自己的项目中试用 MobX";
+observableTodoStore.todos[0].task = "理解 MobX 教程";
                         </textarea>
-                        <button onClick="runCode(['#code1', '#code3', '#code4'])" class="btn-run">Run code</button>
+                        <button onClick="runCode(['#code1', '#code3', '#code4'])" class="btn-run">运行代码</button>
 
                         <p>Pure fun, right? The <code>report</code> did print automatically, synchronously and without leaking
                             intermediate values. If you investigate the log carefully, you will see that the fifth line
@@ -221,7 +216,7 @@ observableTodoStore.todos[0].task = "grok MobX tutorial";
                             Basically, all components have become smart. Yet they are defined in a dumb, declarative manner.
                         </p>
                         <p>
-                            Press the <em>Run code</em> button to see the code below in action. The listing is editable so
+                            Press the <em>运行代码</em> button to see the code below in action. The listing is editable so
                             feel free to play with it. Try for example to remove all the <code>observer</code> calls, or
                             just the one decorating the <code>TodoView</code>. The numbers in the preview on the right highlight
                             how often a component is rendered.
@@ -229,7 +224,7 @@ observableTodoStore.todos[0].task = "grok MobX tutorial";
                         <textarea spellcheck="false" class="" id="react1" rows="44">
 const TodoList = observer(({store}) => {
   const onNewTodo = () => {
-    store.addTodo(prompt('Enter a new todo:','coffee plz'));
+    store.addTodo(prompt('输入新的待办：','请来杯咖啡'));
   }
 
   return (
@@ -240,9 +235,9 @@ const TodoList = observer(({store}) => {
           (todo, idx) => <TodoView todo={ todo } key={ idx } />
         ) }
       </ul>
-      { store.pendingRequests > 0 ? <marquee>Loading...</marquee> : null }
-      <button onClick={ onNewTodo }>New Todo</button>
-      <small> (double-click a todo to edit)</small>
+      { store.pendingRequests > 0 ? <marquee>载入中...</marquee> : null }
+      <button onClick={ onNewTodo }>新待办</button>
+      <small>（双击待办进行编辑）</small>
       <RenderCounter />
     </div>
   );
@@ -254,7 +249,7 @@ const TodoView = observer(({todo}) => {
   }
 
   const onRename = () => {
-    todo.task = prompt('Task name', todo.task) || todo.task;
+    todo.task = prompt('任务名称', todo.task) || todo.task;
   }
 
   return (
@@ -279,7 +274,7 @@ ReactDOM.render(
   document.getElementById('reactjs-app')
 );
                         </textarea>
-                        <button onClick="runCode(['#code1', '#code3', '#code4', '#react1'])" class="btn-run">Run code</button>
+                        <button onClick="runCode(['#code1', '#code3', '#code4', '#react1'])" class="btn-run">运行代码</button>
 
                         <p>
                             The next listing nicely demonstrates that we only have to alter the data, without doing any further bookkeeping.
@@ -289,13 +284,13 @@ ReactDOM.render(
                         <textarea spellcheck="false" class="" id="play1" rows="8">
 const store = observableTodoStore;
 store.todos[0].completed = !store.todos[0].completed;
-store.todos[1].task = "Random todo " + Math.random();
-store.todos.push({ task: "Find a fine cheese", completed: true });
-// etc etc.. add your own statements here...
+store.todos[1].task = "随机待办 " + Math.random();
+store.todos.push({ task: "找到一块好奶酪", completed: true });
+// 诸如此类...在这里添加你自己的语句
                         </textarea>
                         <button onClick="if (typeof observableTodoStore === 'undefined') { runCode(['#code1', '#code3', '#code4', '#react1']) } runCode(['#play1'])"
-                        class="btn-run">Run code</button>
-                        <button id="runline-btn" onClick="runCodePerLine()" class="btn-run">Run line-by-line</button>
+                        class="btn-run">运行代码</button>
+                        <button id="runline-btn" onClick="runCodePerLine()" class="btn-run">逐行运行</button>
                         <p>&nbsp;</p>
 
                         <h3>Working with references</h3>
@@ -309,13 +304,13 @@ store.todos.push({ task: "Find a fine cheese", completed: true });
                         <textarea spellcheck="false" class="" id="store2" rows="8">
 const peopleStore = observable([
   { name: "Michel" },
-  { name: "Me" }
+  { name: "我" }
 ]);
 observableTodoStore.todos[0].assignee = peopleStore[0];
 observableTodoStore.todos[1].assignee = peopleStore[1];
 peopleStore[0].name = "Michel Weststrate";
                         </textarea>
-                        <button onClick="runCode(['#code1', '#code3', '#code4', '#react1', '#store2'])" class="btn-run">Run code</button>
+                        <button onClick="runCode(['#code1', '#code3', '#code4', '#react1', '#store2'])" class="btn-run">运行代码</button>
                         <p>We now have two independent stores. One with people and one with todos. To assign an <code>assignee</code>
                             to a person from the people store, we just assigned a reference. These changes will be picked
                             up automatically by the <code>TodoView</code>. With MobX there is no need to normalize data first
@@ -323,10 +318,10 @@ peopleStore[0].name = "Michel Weststrate";
                             matter where the data is stored. As long as objects are made <em>observable</em>, MobX will be
                             able to track them. Real JavaScript references will just work. MobX will track them automatically
                             if they are relevant for a derivation. To test that, just try changing your name in the next
-                            input box (make sure you have pressed the above <em>Run code</em> button first!).
+                            input box (make sure you have pressed the above <em>运行代码</em> button first!).
                         </p>
                         <hr/>
-                        <p style="text-align:center">Your name:
+                        <p style="text-align:center">你的名字：
                             <input onkeyup="peopleStore[1].name = event.target.value" />
                         </p>
                         <hr/>
@@ -339,7 +334,7 @@ peopleStore[0].name = "Michel Weststrate";
                         </p>
                         <hr/>
                         <p style="text-align:center">
-                            <button onclick="observableTodoStore.pendingRequests++; setTimeout(function() { observableTodoStore.addTodo('Random Todo ' + Math.random()); observableTodoStore.pendingRequests--;  }, 2000);">Load todo</button>
+                            <button onclick="observableTodoStore.pendingRequests++; setTimeout(function() { observableTodoStore.addTodo('随机待办 ' + Math.random()); observableTodoStore.pendingRequests--;  }, 2000);">载入待办</button>
                         </p>
                         <hr/>
                         <p>The code behind that is really straightforward.
@@ -351,7 +346,7 @@ peopleStore[0].name = "Michel Weststrate";
                             but it makes sure that both mutations are processed in a single transaction, making sure any observers are only notified after both updates have completed.
 <pre>observableTodoStore.pendingRequests++;
 setTimeout(action(() => {
-  observableTodoStore.addTodo('Random Todo ' + Math.random());
+  observableTodoStore.addTodo('随机待办 ' + Math.random());
   observableTodoStore.pendingRequests--;
 }), 2000);</pre>
                         </p>
@@ -419,7 +414,7 @@ rather than being something that's required by default for anything more than a 
                 <div class="right-content">
                     <h3>React 预览</h3>
                     <div id="reactjs-app">
-                        <p style="text-align: center">接着读下去并按下你所遇到的 <em>运行</em> 按钮！</p>
+                        <p style="text-align: center">读下去并按下你遇到的 <em>运行</em> 按钮！</p>
                     </div>
                     <hr/>
                     <h3>控制台打印
