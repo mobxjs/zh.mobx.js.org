@@ -56,7 +56,7 @@
                                 其次是 <em>derivations</em>。也就是任何可以从你的应用状态中被自动计算出来的值。这些 derivations ——或者被计算出来的值——可以是简单的值，比如未完成待办的个数；也可以是复杂的东西，比如你待办清单的 HTML 视觉表示。
                             </li>
                             <li>
-                                <em>Reactions</em> 与 derivations 非常相似。但主要的区别在于这些函数不会返回值，而是会自动执行一些任务。通常这些任务与 I/O 有关。它们会用来确保 DOM 的更新或者在对的时间自动发出网络请求。
+                                <em>Reactions</em> 与 derivations 非常相似。但主要的区别在于这些函数不会返回值，而是会自动执行一些任务。通常这些任务与 I/O 有关。它们会确保 DOM 的更新或者在对的时间自动发出网络请求。
                             </li>
                             <li>
                                 最后是 <em>actions</em>。actions 就是所有能修改状态的东西。MobX 会让所有由于你的 actions 引发的应用状态的改变都被全部 derivations 和 reactions 同步而顺畅地自动处理掉。
