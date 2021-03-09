@@ -35,7 +35,7 @@
 
                     <section id="main_content">
                         <p>
-                            <a href="https://github.com/mobxjs/mobx"><code>MobX</code></a> 是一种简单、可扩展而且身经百战的状态管理解决方案。这个教程会在十分钟之内教给你 MobX 中所有的重要概念。MobX 是一个独立的库，但大多数人都把它和 React 放在一起使用，那么这个教程就着重介绍这个组合。
+                            <a href="https://github.com/mobxjs/mobx"><code>MobX</code></a> 是一种简单、可扩展而且身经百战的状态管理解决方案。这个教程会在十分钟之内教给你 MobX 中所有重要的概念。MobX 是一个独立的库，但大多数人都把它和 React 放在一起使用，那么这个教程就着重介绍这个组合。
                         </p>
                         <h3>核心理念</h3>
                         <p>
@@ -64,7 +64,7 @@
                         </ol>
                         <h3>一个简单的待办 store……</h3>
                         <p>
-                            理论已经够多了，与其仔细阅读上面的东西，看看实际的操作可能会带来出更好的理解。为了原创性，我们就从一个简单的待办 store 开始。请注意，以下所有的代码块都是可以编辑的，也可以用 <em>运行代码</em> 按钮运行。下面是一个非常简单直白的待办 store <code>TodoStore</code>，里面装着一个待办集合。暂时还没有 MobX 什么事儿。
+                            理论已经够多了，与其仔细阅读上面的东西，看看实际的操作可能会带来出更好的理解。为了原创性，我们就从一个简单的待办 store 开始。请注意，以下所有代码块都是可以编辑的，也可以用 <em>运行代码</em> 按钮运行。下面是一个非常简单直白的待办 store <code>TodoStore</code>，里面装着一个待办集合。暂时还没有 MobX 什么事儿。
                         </p>
 
                         <textarea spellcheck="false" class="prettyprint" id="code1" rows="25">
@@ -200,7 +200,7 @@ observableTodoStore.todos[0].task = "理解 MobX 教程";
                             接下来这段代码定义了几个 React 组件。唯一 MobX 专用的代码是 <code>observer</code> 包装器。这就足够让每个组件在相关数据发生改变时单独重新渲染了。我们不用再调用状态的 <code>useState</code> setter 方法了，也不用去弄清楚怎样通过使用选择器或者需要手动配置的高阶组件来追踪应用状态中正确的那一部分。简而言之，所有组件都变得智能了。但他们是以一种傻瓜式、声明式的方式被定义出来的。
                         </p>
                         <p>
-                            按下 <em>运行代码</em> 按钮，查看以下代码的实际运行状况。代码是可编辑的所以尽管动手玩起来。比如说，试试移除所有的 <code>observer</code> 调用，或者只移除那个装饰在 <code>TodoView</code> 上的。右边预览中的数字突出显示了每个组件的渲染频率。
+                            按下 <em>运行代码</em> 按钮，查看以下代码的实际运行状况。代码是可编辑的所以尽管动手玩起来。比如说，试试移除所有 <code>observer</code> 调用，或者只移除那个装饰在 <code>TodoView</code> 上的。右边预览中的数字突出显示了每个组件的渲染频率。
                         </p>
                         <textarea spellcheck="false" class="" id="react1" rows="44">
 const TodoList = observer(({store}) => {
