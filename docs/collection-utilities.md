@@ -1,6 +1,6 @@
 ---
 title: Collection utilities
-sidebar_label: Collection utilities {🚀}
+sidebar_label: 集合工具 {🚀}
 hide_title: true
 ---
 
@@ -9,7 +9,7 @@ hide_title: true
 # 集合工具 {🚀}
 
 可以使用通用的API操作`ObservableArrays`、`ObservableObjects` 和 `ObservableMaps`。
-这些API是完全自动响应的，这意味着即使没有[`Proxy`](configuration.md#limitations-without-proxy-support)的支持，如果使用 `set` 添加新的属性声明，并使用`values`或`keys`迭代它们，则Mobx可以检测到新的属性声明。
+这些API是完全自动反应的，这意味着即使没有[`Proxy`](configuration.md#limitations-without-proxy-support)的支持，使用 `set` 添加新的属性声明，并使用`values`或`keys`迭代它们，Mobx就可以检测到新的属性声明。
 
 使用`values`、`keys`和`entries`的另一个好处是它们返回数组而不是迭代器。例如，我们可以直接直接在结果上调用`.map(fn)`。
 
