@@ -17,18 +17,18 @@ hide_title: true
 
 访问:
 
--   `values(collection)` 返回一个包含集合所有值的数组.
--   `keys(collection)` 返回一个包含集合所有键的数组.
--   `entries(collection)` 返回一个包含集合所有键值对的数组.
+-   `values(collection)` 返回一个包含集合所有值的数组。
+-   `keys(collection)` 返回一个包含集合所有键的数组。
+-   `entries(collection)` 返回一个包含集合所有键值对的数组。
 
 变更:
 
--   `set(collection, key, value)` 或 `set(collection, { key: value })` 使用提供的键值更新集合.
--   `remove(collection, key)` 从集合中删除指定子元素. Splicing is used for arrays.
--   `has(collection, key)` 如果集合具有指定的可观察属性，则返回`true`.
--   `get(collection, key)` 返回指定的子元素.
+-   `set(collection, key, value)` 或 `set(collection, { key: value })` 使用提供的键值更新集合。
+-   `remove(collection, key)` 从集合中删除指定子元素. Splicing is used for arrays。
+-   `has(collection, key)` 如果集合具有指定的可观察属性，则返回`true`。
+-   `get(collection, key)` 返回指定的子元素。
 
-如果你在没有[`Proxy`](configuration.md#limitations-without-proxy-support)支持的环境中使用访问的API，那么也要使用变更的API， 这样它们就可以检测到修改。
+如果你在没有[`Proxy`](configuration.md#limitations-without-proxy-support)支持的环境中使用访问的API，那么也要使用变更的API，这样它们就可以检测到修改。
 
 ```javascript
 import { get, set, observable, values } from "mobx"
