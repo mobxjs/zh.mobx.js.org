@@ -42,7 +42,7 @@
                             状态是每个应用的核心。如果你想创建出 bug 丛生而且难以管理的应用程序，那么再没有比搞出不一致的状态或者与各种局部变量不同步的状态更快的方法了。因此，许多状态管理解决方案会通过比如使状态不可变来试图限制你修改状态的方式。但这样就会引出新的问题；数据需要被规范化、引用的完整性无法得到保证，而且万一你喜欢像类这样功能强大的概念的话，那你几乎没办法再用到它们。
                         </p>
                         <p>
-                            MobX 通过解决根本问题让状态管理又一次变得简单起来：它让不一致的状态不再可能出现。要做到这一点，策略很简单： <em>要确保从应用状态中派生出的一切都将被自动派生出来</em>。
+                            MobX 通过解决根本问题让状态管理又一次变得简单起来：它让不一致的状态不再可能出现。要做到这一点，策略很简单： <em>确保从应用状态中派生出的一切都将被自动派生出来</em>。
                         </p>
                         <p>
                             从概念上讲， MobX 会把你的应用程序视为一份电子表格。
@@ -53,18 +53,18 @@
                                 首先是 <em>应用状态</em>。就是那些呈图状结构分布、组成你应用状态模型的对象、数组、原始值和引用。这些值是你应用中的&ldquo;单元格&rdquo;。
                             </li>
                             <li>
-                                其次是 <em>derivation</em>。也就是任何可以从你的应用状态中被自动计算出来的值。这些 derivation ——或者叫 computed ——可以是简单的值，比如未完成待办事项的个数；也可以是复杂的东西，比如你待办清单的 HTML 视觉表示。
+                                其次是 <em>derivations</em>。也就是任何可以从你的应用状态中被自动计算出来的值。这些 derivations ——或者叫 computed ——可以是简单的值，比如未完成待办的个数；也可以是复杂的东西，比如你待办清单的 HTML 视觉表示。
                             </li>
                             <li>
-                                <em>Reaction</em> 与 derivation 非常相似。但主要的区别在于这些函数不会返回值，而是会自动执行一些任务。通常这些任务与 I/O 有关。它们会用来确保 DOM 的更新或者在对的时间自动发出网络请求。
+                                <em>Reactions</em> 与 derivations 非常相似。但主要的区别在于这些函数不会返回值，而是会自动执行一些任务。通常这些任务与 I/O 有关。它们会用来确保 DOM 的更新或者在对的时间自动发出网络请求。
                             </li>
                             <li>
-                                最后是 <em>action</em>。action 就是所有能修改状态的东西。MobX 会确保所有由你的 action 而引发的应用状态改变都被所有的 derivation 和 reaction 同步而顺畅地自动处理掉。
+                                最后是 <em>actions</em>。actions 就是所有能修改状态的东西。MobX 会让所有由于你的 actions 引发的应用状态的改变都被全部 derivations 和 reactions 同步而顺畅地自动处理掉。
                             </li>
                         </ol>
-                        <h3>一个简单的待办事项 store...</h3>
+                        <h3>一个简单的待办 store……</h3>
                         <p>
-                            理论已经够多了，与其仔细阅读上面的东西，看看实际的操作可能会带来出更好的理解。为了原创性，我们就从一个简单的待办事项 store 开始。注意，以下所有的代码块都是可以编辑的，也可以用 <em>运行代码</em> 按钮运行。下面是一个非常简单直白的待办事项 store <code>TodoStore</code>，里面装着一个待办事项集合。暂时还没有 MobX 什么事儿。
+                            理论已经够多了，与其仔细阅读上面的东西，看看实际的操作可能会带来出更好的理解。为了原创性，我们就从一个简单的待办 store 开始。请注意，以下所有的代码块都是可以编辑的，也可以用 <em>运行代码</em> 按钮运行。下面是一个非常简单直白的待办 store <code>TodoStore</code>，里面装着一个待办集合。暂时还没有 MobX 什么事儿。
                         </p>
 
                         <textarea spellcheck="false" class="prettyprint" id="code1" rows="25">
@@ -97,7 +97,7 @@ class TodoStore {
 const todoStore = new TodoStore();
                         </textarea>
                         <p>
-                            我们刚刚创建了一个带有待办事项 <code>todos</code> 集合的 <code>todoStore</code> 实例。是时候往 <code>TodoStore</code> 里装些对象了。为了看到更改的效果，我们在每次更改后都调用 <code>todoStore.report</code> 把它打印出来。注意，这个 report 会故意总是只打印第一个任务。这会让这个例子看起来有点假，但我们稍后会看到这样的话可以很好地展示出 MobX 依赖追踪的动态性。
+                            我们刚刚创建了一个带有待办 <code>todos</code> 集合的 <code>todoStore</code> 实例。是时候往 <code>TodoStore</code> 里装些对象了。为了看到更改的效果，我们在每次更改后都调用 <code>todoStore.report</code> 把它打印出来。请注意，这个 report 会故意总是只打印第一个任务。这会让这个例子看起来有点假，但我们稍后会看到这样的话可以很好地展示出 MobX 依赖追踪的动态性。
                         </p>
 
                         <textarea spellcheck="false" class="prettyprint" id="code2" rows="15">
@@ -123,7 +123,7 @@ console.log(todoStore.report());
                             到目前为止，这段代码并没有什么特别之处。但如果我们不用非得刻意调用 <code>report</code>，而可以规定它必须在每次 <em>相关</em> 状态改变时都被调用呢？那样的话我们就不需要从代码中所有 <em>有可能</em> 对 report 产生影响的地方手动调用 <code>report</code> 了。我们确实想让最新的 report 被打印出来，但我们并不想因为要手动去组织它而费功夫。
                         </p>
                         <p>
-                            幸运的是，这正是 MobX 能为我们做到的事情——自动执行只依赖于状态的代码。这样的话，我们的 <code>report</code> 函数就可以自动更新，就像电子表格里的一个图表一样。为了做到这一点，<code>TodoStore</code> 就必须变成 observable ，这样 MobX 就可以对所有正在进行的更改进行追踪。为了实现这一点，我们来改一下这个类。
+                            幸运的是，这正是 MobX 能为我们做到的事情——自动执行只依赖于状态的代码。这样的话，我们的 <code>report</code> 函数就可以自动更新，就像电子表格里的一个图表一样。为了做到这一点，<code>TodoStore</code> 就必须变成 observable，这样 MobX 就可以对所有正在进行的更改进行追踪。为了实现这一点，我们来改一下这个类。
                         </p>
                         <p>
                             还有，<code>completedTodosCount</code> 属性可以从待办清单中被自动派生出来。通过使用 <code>observable</code> 和 <code>computed</code> 注解，我们可以为一个对象引入 observable 属性。在下面的例子里，我们为了刻意地展示出注解而使用了 <code>makeObservable</code>，但我们其实也可以使用 <code>makeAutoObservable(this)</code> 来简化这个过程。
@@ -171,13 +171,13 @@ const observableTodoStore = new ObservableTodoStore();
                         </textarea>
 
                         <p>
-                            就是这样！我们把有些属性标记为 <code>observable</code>，以便告诉 Mobx 这些值会随时间的推移而改变。有些值中的 <code>computed</code> 被用来标明这些值能够从状态中派生出来，而且只要底层状态没有发生改变，那么它们还可以从缓存中派生起来。
+                            就是这样！我们把有些属性标记为 <code>observable</code>，以便告诉 Mobx 这些值会随时间的推移而改变。有些值中的 <code>computed</code> 用来标明这些值能够从状态中派生出来，而且只要底层状态没有发生改变，那么它们还可以从缓存中派生起来。
                         </p>
                         <p>
                             <code>pendingRequests</code> 和 <code>assignee</code> 属性目前还没有用到，但是会在这个教程后面的部分用到的。
                         </p>
                         <p>
-                            在构造函数中，我们创建了一个打印 <code>report</code> 的小函数并把它用 <code>autorun</code> 包裹了起来。而 autorun 会创建一个 <em>action</em>，这个 action 会在小函数用到的任意一个 observable 数据发生改变时自动运行一次。<code>report</code> 会因为使用了 observable 属性 <code>todos</code> 而适时打印出 report 。这一点会在下列代码中展示出来。只需要你按下 <em>运行代码</em> 按钮：
+                            在构造函数中，我们创建了一个打印 <code>report</code> 的小函数并把它用 <code>autorun</code> 包裹了起来。而 autorun 会创建一个 <em>action</em>，这个 action 会在小函数用到的任意一个 observable 数据发生改变时自动运行一次。<code>report</code> 会因为使用了 observable 属性 <code>todos</code> 而适时打印出 report。这一点会在下列代码中展示出来。只需要你按下 <em>运行代码</em> 按钮：
                         </p>
 
                         <textarea spellcheck="false" class="prettyprint" id="code4" rows="6">
@@ -190,14 +190,14 @@ observableTodoStore.todos[0].task = "理解 MobX 教程";
                         <button onClick="runCode(['#code1', '#code3', '#code4'])" class="btn-run">运行代码</button>
 
                         <p>
-                            很有意思，对吧？<code>report</code> 的确自动同步而顺畅地打印出来了。如果你仔细查看打印出来的记录，你会看到第五行代码最后并没有再触发一行记录。这是因为 report <em>实际上</em> 并没有因为第五行代码的重命名而发生改变——尽管它背后的数据变了。另一方面，更改第一个待办事项的名称确实更新了 report ，因为 report 正使用着那个新名字。这很好地证明 <code>autorun</code> 不仅监视着 <code>todos</code> 数组，还监视着待办条目中的各个属性。
+                            很有意思，对吧？<code>report</code> 的确自动同步而顺畅地打印出来了。如果你仔细查看打印出来的日志，你会看到第五行代码最后并没有再触发一行日志。这是因为 report <em>实际上</em> 并没有因为第五行代码的重命名而发生改变——尽管它背后的数据变了。另一方面，更改第一个待办的名称确实更新了 report，因为 report 正使用着那个新名字。这很好地证明了 <code>autorun</code> 不仅监视着 <code>todos</code> 数组，还监视着待办条目中的各个属性。
                         </p>
                         <h3 id="reactive-reactjs-components">把 React 变成响应式</h3>
                         <p>
-                            好的，目前为止我们把一个傻傻的 report 变成了响应式。是时候围绕着这同一个 store 构建一个响应式的用户界面了。React 组件本身并不是响应式的（他们的名字除外）。<code>mobx-react-lite</code> 包中的 <code>observer</code> 高阶组件封装通过——简而言之——把 React 组件用  <code>autorun</code> 封装起来解决了这个问题。这样可以自动让组件和状态相同步。从概念上讲，这跟我们刚才对于 <code>report</code> 的做法并没有什么不同。
+                            好的，目前为止我们把一个傻傻的 report 变成了响应式。是时候围绕着这同一个 store 构建一个响应式的用户界面了。React 组件本身并不是响应式的（他们的名字除外）。<code>mobx-react-lite</code> 包中的 <code>observer</code> 高阶组件包装器通过（简而言之）把 React 组件用  <code>autorun</code> 包装起来解决了这个问题。这样可以自动让组件和状态相同步。从概念上讲，这跟我们刚才对于 <code>report</code> 的做法并没有什么不同。
                         </p>
                         <p>
-                            接下来这段代码定义了几个 React 组件。唯一 MobX 专用的代码是 <code>observer</code> 封装。这就足够让每个组件在相关数据发生改变时单独重新渲染了。我们不用再调用 state 的 <code>useState</code> setter 方法了，也不用去弄清楚怎样通过使用选择器或者需要手动配置的高阶组件来追踪应用状态中正确的那一部分。简而言之，所有组件都变得智能了。但他们是以一种傻瓜式、声明式的方式被定义出来的。
+                            接下来这段代码定义了几个 React 组件。唯一 MobX 专用的代码是 <code>observer</code> 包装器。这就足够让每个组件在相关数据发生改变时单独重新渲染了。我们不用再调用状态的 <code>useState</code> setter 方法了，也不用去弄清楚怎样通过使用选择器或者需要手动配置的高阶组件来追踪应用状态中正确的那一部分。简而言之，所有组件都变得智能了。但他们是以一种傻瓜式、声明式的方式被定义出来的。
                         </p>
                         <p>
                             按下 <em>运行代码</em> 按钮，查看以下代码的实际运行状况。代码是可编辑的所以尽管动手玩起来。比如说，试试移除所有的 <code>observer</code> 调用，或者只移除那个装饰在 <code>TodoView</code> 上的。右边预览中的数字突出显示了每个组件的渲染频率。
@@ -216,7 +216,7 @@ const TodoList = observer(({store}) => {
           (todo, idx) => <TodoView todo={ todo } key={ idx } />
         ) }
       </ul>
-      { store.pendingRequests > 0 ? <marquee>载入中...</marquee> : null }
+      { store.pendingRequests > 0 ? <marquee>正在加载……</marquee> : null }
       <button onClick={ onNewTodo }>新待办</button>
       <small>（双击待办进行编辑）</small>
       <RenderCounter />
@@ -266,16 +266,16 @@ const store = observableTodoStore;
 store.todos[0].completed = !store.todos[0].completed;
 store.todos[1].task = "随机待办 " + Math.random();
 store.todos.push({ task: "找到一块好奶酪", completed: true });
-// 诸如此类...在这里添加你自己的语句
+// 诸如此类……在这里添加你自己的语句
                         </textarea>
                         <button onClick="if (typeof observableTodoStore === 'undefined') { runCode(['#code1', '#code3', '#code4', '#react1']) } runCode(['#play1'])"
                         class="btn-run">运行代码</button>
                         <button id="runline-btn" onClick="runCodePerLine()" class="btn-run">逐行运行</button>
                         <p>&nbsp;</p>
 
-                        <h3>引用的处理</h3>
+                        <h3>引用的使用</h3>
                         <p>
-                            到目前为止我们创建了 observable 对象（原型对象和普通对象）、数组和原始值。你可能会好奇，MobX 是怎么处理引用的呢？我的状态可以组成图结构吗？在之前的代码中你可能已经注意到了每个待办事项对象中都有一个 <code>assignee</code> 属性。我们通过引入另一个 &ldquo;store&rdquo; （好吧，只是一个被授予了非凡荣耀的数组）来给它们一些值——这个数组中装着一些人员——并把任务分配给他们。
+                            到目前为止我们创建了 observable 对象（原型对象和普通对象）、数组和原始值。你可能会好奇，MobX 是怎么处理引用的呢？我的状态可以组成图结构吗？在之前的代码中你可能已经注意到了每个待办对象中都有一个 <code>assignee</code> 属性。我们通过引入另一个装着若干人员的 &ldquo;store&rdquo; （好吧，只是一个被授予了非凡荣耀的数组）来给它们一些值，并把任务分配给它们。
                         </p>
                         <textarea spellcheck="false" class="" id="store2" rows="8">
 const peopleStore = observable([
@@ -288,32 +288,29 @@ peopleStore[0].name = "Michel Weststrate";
                         </textarea>
                         <button onClick="runCode(['#code1', '#code3', '#code4', '#react1', '#store2'])" class="btn-run">运行代码</button>
                         <p>
-                            我们现在有了两个独立的 store。一个装着人员，一个装着待办事项。刚才，为了把人员 store 中的人赋给 <code>assignee</code>，我们使用了一个引用。这些改变会被 <code>TodoView</code> 自动识别出来。有了 MobX ，你就不需要先对数据进行规范化处理和手写选择器来保证组件的更新。其实，数据存放在哪儿并不重要。只要对象被转化成了 <em>observable</em>，MobX 就能对它们进行追踪。
+                            我们现在有了两个独立的 store。一个装着人员，一个装着待办。刚才，为了把人员 store 中的人赋给 <code>assignee</code>，我们使用了一个引用。这些改变会被 <code>TodoView</code> 自动识别出来。有了 MobX，你就不需要先对数据进行规范化处理和手写选择器来保证组件的更新。其实，数据存放在哪儿并不重要。只要对象被转化成了 <em>observable</em>，MobX 就能对它们进行追踪。用真正的 JavaScript 引用就行。只要它们跟一个 derivation 有关，MobX 就会自动对它们进行追踪。想进行测试的话，就试着在下面的输入框内更改你的名字（要先确定你之前已经按过上面的 <em>运行代码</em> 按钮了！）
                         </p>
                         <hr/>
                         <p style="text-align:center">你的名字：
                             <input onkeyup="peopleStore[1].name = event.target.value" />
                         </p>
                         <hr/>
-                        <p>By the way, the HTML of the above input box is simply: <pre>&lt;input onkeyup="peopleStore[1].name = event.target.value" /&gt;</pre></p>
-
-                        <h3>Asynchronous actions</h3>
-                        <p>Since everything in our small Todo application is derived from the state, it really doesn't matter <em>when</em> state is changed.
-                            That makes creating asynchronous actions really straightforward.
-                            Just press the the following button (multiple times) to emulate asynchronously loading new todo items:
+                        <p>
+                            顺便说一下，上面输入框的 HTML 就只是 <pre>&lt;input onkeyup="peopleStore[1].name = event.target.value" /&gt;</pre> 这么简单而已。
+                        </p>
+                        <h3>异步 actions</h3>
+                        <p>既然我们小小待办应用中的一切都是从状态中派生出来的，那么状态在 <em>什么时候</em> 发生改变其实并不重要。这一点会让创建异步 actions 变得很简单。想模拟异步加载新待办的过程就按下下面的按钮吧（多按几次）。
                         </p>
                         <hr/>
                         <p style="text-align:center">
-                            <button onclick="observableTodoStore.pendingRequests++; setTimeout(function() { observableTodoStore.addTodo('随机待办 ' + Math.random()); observableTodoStore.pendingRequests--;  }, 2000);">载入待办</button>
+                            <button onclick="observableTodoStore.pendingRequests++; setTimeout(function() { observableTodoStore.addTodo('随机待办 ' + Math.random()); observableTodoStore.pendingRequests--;  }, 2000);">加载待办</button>
                         </p>
                         <hr/>
-                        <p>The code behind that is really straightforward.
-                            We start with updating the store property <code>pendingRequests</code> to have the UI reflect the current loading status.
-                            Once loading is finished, we update the todos of the store and decrease the <code>pendingRequests</code> counter again.
-                            Just compare this snippet with the earlier <code>TodoList</code> definition to see how the pendingRequests property is used.
-                        </p><p>
-                            Note that the timeout function is wrapped in <code>action</code>. This isn't strictly necessary,
-                            but it makes sure that both mutations are processed in a single transaction, making sure any observers are only notified after both updates have completed.
+                        <p>
+                            这背后的代码真的很简单。我们首先更新 store 中的 <code>pendingRequests</code> 属性好让 UI 反映出当前正在加载的状态。一旦加载完成，我们就更新 store 中的待办事项并让 <code>pendingRequests</code> 计数器减小。请比较一下这段代码和之前 <code>TodoList</code> 的定义，看看 <code>pendingRequests</code> 属性是如何被使用的。
+                        </p>
+                        <p>
+                            请注意，延时函数是包装在 <code>action</code> 里的。我们并不是非得这样做，但这样可以让我们只用一次传输就把两个变化都处理掉，让所有 observers 都只有在两个更新都完成后才会收到通知。
 <pre>observableTodoStore.pendingRequests++;
 setTimeout(action(() => {
   observableTodoStore.addTodo('随机待办 ' + Math.random());
@@ -321,34 +318,27 @@ setTimeout(action(() => {
 }), 2000);</pre>
                         </p>
 
-                        <h3>Conclusion</h3>
+                        <h3>总结</h3>
                         <p>
-                            That's all! No boilerplate. Just some simple, declarative components that form our complete UI. And which are derived completely,
-                            reactively from our state. You are now ready to start using the <code>mobx</code> and <code>mobx-react-lite</code> packages in your own applications.
-                            A short summary of the things you learned so far:
+                            就这些了! 没有样板代码。只是用了一些组成我们完整的 UI 的简单声明式组件。而且它们全部都是从我们的状态中被响应式地派生出来的。现在你已经准备好在你自己的应用程序中使用 <code>mobx</code> 和 <code>mobx-react-lite</code> 包了。对你目前所学到的东西做一个小结：
+
                         </p>
                         <ol>
                             <li>
-                                Use the <code>observable</code> decorator or <code>observable(object or array)</code> functions to make objects trackable for MobX.
+                                使用 <code>observable</code> 装饰器或 <code>observable(对象或数组)</code> 函数让对象能够被 MobX 追踪到。
                             </li>
                             <li>
-                                The <code>computed</code> decorator can be used to create functions that can automatically derive value from the state and cache them.
+                                <code>computed</code>装饰器可以用来创建能够从状态中自动派生值并缓存它们的函数。
                             </li>
                             <li>
-                                Use <code>autorun</code> to automatically run functions that depend on some observable state.
-                                This is useful for logging, making network requests, etc.
+                                使用 <code>autorun</code> 来自动运行依赖于某些 observable 状态的函数。这对于记录日志、进行网络请求等都很有用。
                             </li>
                             <li>
-                                Use the <code>observer</code> wrapper from the <code>mobx-react-lite</code> package to make your React components truly reactive.
-                                They will update automatically and
-                                efficiently. Even when used in large complex applications with large amounts of data.
+                                使用 <code>mobx-react-lite</code> 包中的 <code>observer</code> 包装器让你的 React 组件做到真正的响应式。它们将会自动而高效地进行更新——即使是在数据量大的大型复杂应用中使用。
                             </li>
                         </ol>
                         <p>
-                            Feel free to play around a bit longer with the editable code blocks above to get a basic feeling how MobX reacts to all your
-                            changes. You could for example add a log statement to the <code>report</code> function to see when it is called.
-                            Or don't show the <code>report</code> at all and see how that
-                            influences the rendering of the <code>TodoList</code>. Or show it only under specific circumstances...
+                            你可以随意用上面的可编辑代码块多玩一会儿，以便对 MobX 如何对你的所有更改作出反应有个大致的感觉。比如，你可以在 <code>report</code> 函数中添加一个日志语句，看看它会在什么时候被调用。或者直接不展示 <code>report</code>，看看那样会对 <code>TodoList</code> 渲染造成怎样的影响。又或者只在某些特定情况下把它展示出来……
                         </p>
 
                         <h3>MobX doesn't dictate architecture</h3>
