@@ -18,8 +18,8 @@
         "sidebar_label": "Analyzing reactivity {🚀}"
       },
       "api": {
-        "title": "MobX API Reference",
-        "sidebar_label": "MobX API Reference"
+        "title": "MobX API 参考",
+        "sidebar_label": "MobX API 参考"
       },
       "backers-sponsors": {
         "title": "MobX Backers and Sponsors"
@@ -184,7 +184,7 @@
       }
     },
     "links": {
-      "API查询": "API查询",
+      "API 参考": "API 参考",
       "英文文档": "英文文档",
       "赞助商": "赞助商",
       "GitHub": "GitHub"
