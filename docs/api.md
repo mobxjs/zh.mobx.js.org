@@ -39,9 +39,9 @@ _把事物变得可观察。_
 
 {🚀} 用法：`extendObservable(target, properties, overrides?, options?)`
 
-可用于在`target`对象上引入新属性并立即把它们全都变得可观察。基本上就是`Object.assign(target, properties); makeAutoObservable(target, overrides, options);`的简写。但不会变动`target`上已有的属性。
+可用于在`target`对象上引入新属性并立即把它们全都变得可观察。基本上就是`Object.assign(target, properties); makeAutoObservable(target, overrides, options);`的简写。但它不会变动`target`上已有的属性。
 
-老式的构造器函数可以很好地`extendObservable`结合起来使用:
+老式的构造器函数可以很好跟`extendObservable`结合起来使用:
 
 ```javascript
 function Person(firstName, lastName) {
@@ -57,19 +57,19 @@ const person = new Person('Michel', 'Weststrate');
 
 [**用法**](observable-state.md#observable)：`observable(source, overrides?, options?)`或`observable`_（注解）_
 
-克隆一个对象并使其可观察。`source`可以是一个普通的对象、数组、 Map 或 Set。默认情况下，`observable`会被递归调用。如果遇到的值中有一个是对象或数组，那么那个值也会被传入`observable`。
+克隆一个对象并使其可观察。`source`可以是一个普通的对象、数组、Map 或 Set。默认情况下，`observable`会被递归调用。如果遇到的值中有一个是对象或数组，那么那个值也会被传入`observable`。
 
 ### `observable.object`
 
 {🚀} [**用法**](observable-state.md#observable)：`observable.object(source, overrides?, options?)`
 
-`observable(source, overrides?, options?)`的别名。创建一个所提供对象的副本并使它的所有属性可观察。
+`observable(source, overrides?, options?)`的别名。创建一个被传入对象的副本并使它的所有属性可观察。
 
 ### `observable.array`
 
 {🚀} 用法：`observable.array(initialValues?, options?)`
 
-根据被所提供的`initialValues`创建一个新的可观察的数组。
+根据被传入的`initialValues`创建一个新的可观察的数组。
 如果要把可观察的数组转化回普通的数组，就请使用`.slice()`方法，或者参阅 [toJS](#tojs) 进行递归转化。
 除了语言中内置的所有数组方法之外，可观察的数组中还有以下好东西可用：
 
@@ -83,15 +83,15 @@ const person = new Person('Michel', 'Weststrate');
 
 {🚀} 用法：`observable.map(initialMap?, options?)`
 
-根据所提供的`initialMap`创建一个新的可观察的 [ES6 Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)。
-如果你想不只对特定值的改变作出反应，还想对其添加和删除做出反应，那么它们就会非常有用。
+根据被传入的`initialMap`创建一个新的可观察的 [ES6 Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)。
+如果你不仅想对特定值的改变作出反应，还想对其添加和删除做出反应的话，那么它们就会变得非常有用。
 如果你没有[启用代理](configuration.md#代理支持)，那么推荐你使用创建可观察的 Maps 的方式来创建动态键控集合。
 
 除了语言内置的所有 Map 方法之外，可观察的 Maps 中还有以下好东西可用：
 
 - `toJSON()`返回该 Map 的浅层纯对象表示（使用 [toJS](#tojs) 进行深拷贝）。
-- `merge(values)`将所提供的`values`(普通的对象、数组或以字符串为键的 ES6 Map )的所有条目复制到该地图中。
-- `replace(values)`用所提供的`values`替换该 Map 的全部内容。
+- `merge(values)`将被传入的`values`(普通的对象、数组或以字符串为键的 ES6 Map )的所有条目复制到该 Map 中。
+- `replace(values)`用被传入的`values`替换该 Map 的全部内容。
 
 如果 Map 中的值不能被自动转化为 observable，则可使用`{ deep: false }`选项对该 Map 进行浅转化。
 
@@ -182,46 +182,43 @@ _Action 就是任何一段修改状态的代码。_
 
 [**用法**](actions.md#使用-flow-代替-async--await-)：`flowResult(flowFunctionResult)`
 
-For TypeScript users only. Utility that casts the output of the generator to a promise.
 This is just a type-wise correction for the promise wrapping done by `flow`. At runtime it directly returns the inputted value.
-仅供 TypeScript 用户使用。将生成器的输出转换为承诺的实用程序。
-这只是对 "flow "所做的承诺包装的类型校正。在运行时，它直接返回输入的值。
+仅供 TypeScript 用户使用。将 generator 的输出结果转化为 promise 的实用程序。
+这只是一个对于`flow`所做的 promise 包装进行的类型上的更正。它在运行时会直接返回被输入的值。
 
 ---
 
-## Computeds
+## 计算值
 
-_Computed values can be used to derive information from other observables._
+_计算值可以用来从其他 observables 中派生出数据。_
 
 ### `computed`
 
 [**用法**](computeds.md)：`computed(fn, options?)`or `computed(options?)`_（注解）_
 
-Creates an observable value that is derived from other observables, but won't be recomputed unless one of the underlying observables changes.
+创建一个从其他 observables 中派生出来的可观察值。但只要底层 observables 不变，就这个值就不会被重新计算。
 
----
+## 与 React 的整合
 
-## React integration
-
-_From the `mobx-react` / `mobx-react-lite` packages._
+_来自`mobx-react`或`mobx-react-lite`包。_
 
 ### `observer`
 
 [**用法**](react-integration.md)：`observer(component)`
 
-A higher order component you can use to make a functional or class based React component re-render when observables change.
+一个高阶组件，你可以用它来使一个函数式或基于类的 React 组件在 observables 发生改变时重新渲染。
 
 ### `Observer`
 
 [**用法**](react-integration.md#回调组件可能需要观察者)：`<Observer>{() => rendering}</Observer>`
 
-Renders the given render function, and automatically re-renders it once one of the observables used in the render function changes.
+渲染被传入的 render 函数，并在 render 函数使用的 observables 之一发生改变时将其重新渲染。
 
 ### `useLocalObservable`
 
 [**用法**](react-integration.md#在观察者组件中使用局部可观察状态)：`useLocalObservable(() => source, annotations?)`
 
-Creates a new observable object using `makeObservable`, and keeps it around in the component for the entire life-cycle of the component.
+用`makeObservable`创建一个新的可观察对象
 
 ---
 
