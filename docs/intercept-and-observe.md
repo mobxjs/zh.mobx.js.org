@@ -112,41 +112,41 @@ const disposer2 = observe(person, "lastName", change => {
 
 相关文章: [Object.observe已死，mobx.observe当立（Object.observe is dead. Long live mobx.observe）](https://medium.com/@mweststrate/object-observe-is-dead-long-live-mobservable-observe-ad96930140c5)
 
-## Event overview
+## 时间概览 （Event overview）
 
-The callbacks of `intercept` and `observe` will receive an event object which has at least the following properties:
+ `intercept` 和 `observe` 会接受一个事件对象至少包含以下属性:
 
--   `object`: the observable triggering the event.
--   `debugObjectName`: the name of the observable triggering the event (for debugging).
--   `observableKind`: the type of the observable (value, set, array, object, map, computed).
--   `type` (string): the type of the current event.
+-   `object`: 可观察到的触发事件。
+-   `debugObjectName`: 可观察到的触发事件的名称 (为调试准备)。
+-   `observableKind`: 可观察的对象类型 (value, set, array, object, map, computed)。
+-   `type` (string):当前的事件类型。
 
-These are the additional fields that are available per type:
+这些是每种类型其他可用的字段:
 
-| Observable type              | Event type | Property     | Description                                                                                       | Available during intercept | Can be modified by intercept |
+| 可观察的对象类型              | 事件类型 | 属性     | 描述                                                                                       | Available during intercept | Can be modified by intercept |
 | ---------------------------- | ---------- | ------------ | ------------------------------------------------------------------------------------------------- | -------------------------- | ---------------------------- |
-| Object                       | add        | name         | Name of the property being added.                                                                 | √                          |                              |
-|                              |            | newValue     | The new value being assigned.                                                                     | √                          | √                            |
-|                              | update\*   | name         | Name of the property being updated.                                                               | √                          |                              |
-|                              |            | newValue     | The new value being assigned.                                                                     | √                          | √                            |
-|                              |            | oldValue     | The value that is replaced.                                                                       |                            |                              |
-| Array                        | splice     | index        | Starting index of the splice. Splices are also fired by `push`, `unshift`, `replace`, etc.        | √                          |                              |
-|                              |            | removedCount | Amount of items being removed.                                                                    | √                          | √                            |
-|                              |            | added        | Array with items being added.                                                                     | √                          | √                            |
-|                              |            | removed      | Array with items that were removed.                                                               |                            |                              |
-|                              |            | addedCount   | Amount of items that were added.                                                                  |                            |                              |
-|                              | update     | index        | Index of the single entry being updated.                                                          | √                          |                              |
-|                              |            | newValue     | The newValue that is / will be assigned.                                                          | √                          | √                            |
-|                              |            | oldValue     | The old value that was replaced.                                                                  |                            |                              |
-| Map                          | add        | name         | The name of the entry that was added.                                                             | √                          |                              |
-|                              |            | newValue     | The new value that is being assigned.                                                             | √                          | √                            |
-|                              | update     | name         | The name of the entry being updated.                                                              | √                          |                              |
-|                              |            | newValue     | The new value that is being assigned.                                                             | √                          | √                            |
-|                              |            | oldValue     | The value that has been replaced.                                                                 |                            |                              |
-|                              | delete     | name         | The name of the entry being removed.                                                              | √                          |                              |
-|                              |            | oldValue     | The value of the entry that was removed.                                                          |                            |                              |
-| Boxed & computed observables | create     | newValue     | The value that was assigned during creation. Only available as `spy` event for boxed observables. |                            |                              |
-|                              | update     | newValue     | The new value being assigned.                                                                     | √                          | √                            |
-|                              |            | oldValue     | The previous value of the observable.                                                             |                            |                              |
+| Object                       | add        | name         | 要添加的属性的名称                                                                                  | √                          |                              |
+|                              |            | newValue     | 将要变更成为的新值                                                                                  | √                          | √                            |
+|                              | update\*   | name         | 要添加的属性的名称                                                                                  | √                          |                              |
+|                              |            | newValue     | 将要变更成为的新值                                                                                  | √                          | √                            |
+|                              |            | oldValue     | 将被替换的旧值                                                                                      |                            |                              |
+| Array                        | splice     | index        | 通过迭代器触发索引变化的方法. 包括 `push`, `unshift`, `replace`, 等                                   | √                          |                              |
+|                              |            | removedCount | 被删除的数量统计                                                                                     | √                          | √                            |
+|                              |            | added        | 已经添加的数组元素                                                                                   | √                          | √                            |
+|                              |            | removed      | 被移除的数组元素                                                                                     |                            |                              |
+|                              |            | addedCount   | 添加的元素数量                                                                                       |                            |                              |
+|                              | update     | index        | 被更新的索引                                                                                         | √                          |                              |
+|                              |            | newValue     | 将会被合并的新值.                                                                                     | √                          | √                            |
+|                              |            | oldValue     | 将会被取代的旧值.                                                                                    |                            |                              |
+| Map                          | add        | name         | 添加的元素的名称。.                                                                                   | √                          |                              |
+|                              |            | newValue     | 被添加的新值.                                                                                         | √                          | √                            |
+|                              | update     | name         | 正在更新的元素名称。                                                                                   | √                          |                              |
+|                              |            | newValue     | 被更新的元素值.                                                                                       | √                          | √                            |
+|                              |            | oldValue     | 被更新取代的旧值.                                                                                     |                            |                              |
+|                              | delete     | name         | 被删除元素的名称.                                                                                     | √                          |                              |
+|                              |            | oldValue     | 被删除元素的旧值.                                                                                     |                            |                              |
+| Boxed & computed observables | create     | newValue     | 在创建过程中分配的值， 仅在boxed observables的 `spy` event 起效                                         |                            |                              |
+|                              | update     | newValue     | 将被合并的新值                                                                                         | √                          | √                            |
+|                              |            | oldValue     | 可观察的旧值                                                                                         |                            |                              |
 
-**Note:** object `update` events won't fire for updated computed values (as those aren't mutations). But it is possible to observe them by explicitly subscribing to the specific property using `observe(object, 'computedPropertyName', listener)`.
+**注意:** 对象的 `update` 事件不会触发更新（computed），他们不是变更 (mutations). 。但是可以通过使用指定的监听器监听特定属性来监听它们的改变：`observe(object, 'computedPropertyName', listener)`.
