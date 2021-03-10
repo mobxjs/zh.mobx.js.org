@@ -83,7 +83,7 @@ _参阅上述声明, 请避免使用此API 并改用 [`reaction`](reactions.md#r
 
 _`observe` 会在他们发生 **变更（mutations）** 时产生响应, `autorun` or `reaction` 会对 **新值（new values）** 产生时做出响应。 大多数情况下，这就足够了。_
 
-Example:
+例子:
 
 ```javascript
 import { observable, observe } from "mobx"
