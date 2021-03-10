@@ -39,61 +39,61 @@ _把事物变得可观察。_
 
 {🚀} 用法：`extendObservable(target, properties, overrides?, options?)`
 
-可用于在 `target` 对象上引入新属性并立即把它们全都变得可观察。基本上就是 `Object.assign(target, properties); makeAutoObservable(target, overrides, options);` 的简写。但不会变动 `target` 上已有的属性。
+可用于在`target`对象上引入新属性并立即把它们全都变得可观察。基本上就是`Object.assign(target, properties); makeAutoObservable(target, overrides, options);`的简写。但不会变动`target`上已有的属性。
 
-老式的构造器函数可以很好地 `extendObservable` 结合起来使用:
+老式的构造器函数可以很好地`extendObservable`结合起来使用:
 
 ```javascript
 function Person(firstName, lastName) {
   extendObservable(this, { firstName, lastName });
 }
 
-const person = new Person("Michel", "Weststrate");
+const person = new Person('Michel', 'Weststrate');
 ```
 
-使用 `extendObservable` 在一个对象实例化之后再为其添加可观察字段也是可以的，但要注意，以这种方式添加可观察属性这一行为本身并不能被观察到。
+使用`extendObservable`在一个对象实例化之后再为其添加可观察字段也是可以的，但要注意，以这种方式添加可观察属性这一行为本身并不能被观察到。
 
 ### `observable`
 
-[**用法**](observable-state.md#observable)：`observable(source, overrides?, options?)` 或 `observable` _（注解）_
+[**用法**](observable-state.md#observable)：`observable(source, overrides?, options?)`或`observable`_（注解）_
 
-克隆一个对象并使其可观察。 `source` 可以是一个普通的对象、数组、 Map 或 Set。默认情况下， `observable` 会被递归调用。如果遇到的值中有一个是对象或数组，那么那个值也会被传入 `observable`。
+克隆一个对象并使其可观察。`source`可以是一个普通的对象、数组、 Map 或 Set。默认情况下，`observable`会被递归调用。如果遇到的值中有一个是对象或数组，那么那个值也会被传入`observable`。
 
 ### `observable.object`
 
 {🚀} [**用法**](observable-state.md#observable)：`observable.object(source, overrides?, options?)`
 
-`observable(source, overrides?, options?)` 的别名。创建一个所提供对象的副本并使它的所有属性可观察。
+`observable(source, overrides?, options?)`的别名。创建一个所提供对象的副本并使它的所有属性可观察。
 
 ### `observable.array`
 
 {🚀} 用法：`observable.array(initialValues?, options?)`
 
-根据被所提供的 `initialValues` 创建一个新的可观察的数组。
-如果要把可观察的数组转化回普通的数组，就请使用 `.slice()` 方法，或者参阅 [toJS](#tojs) 进行递归转化。
+根据被所提供的`initialValues`创建一个新的可观察的数组。
+如果要把可观察的数组转化回普通的数组，就请使用`.slice()`方法，或者参阅 [toJS](#tojs) 进行递归转化。
 除了语言中内置的所有数组方法之外，可观察的数组中还有以下好东西可用：
 
 - `clear()` 删除数组中所有现存的元素。
 - `replace(newItems)` 用新元素替换数组中所有现存的元素。
-- `remove(value)` 从数组中删除一个值为 `value` 的元素，在找到并删除该元素后返回 `true`。
+- `remove(value)` 从数组中删除一个值为`value`的元素，在找到并删除该元素后返回`true`。
 
-如果数组中的值不能被自动转化为 observable，则可使用 `{ deep: false }` 选项对该数组进行浅转化。
+如果数组中的值不能被自动转化为 observable，则可使用`{ deep: false }`选项对该数组进行浅转化。
 
 ### `observable.map`
 
 {🚀} 用法：`observable.map(initialMap?, options?)`
 
-根据所提供的 `initialMap` 创建一个新的可观察的 [ES6 Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)。
-如果你想不只对特定值的改变作出反应，还想对它们的添加和删除做出反应，那么它们就会非常有用。
+根据所提供的`initialMap`创建一个新的可观察的 [ES6 Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)。
+如果你想不只对特定值的改变作出反应，还想对其添加和删除做出反应，那么它们就会非常有用。
 如果你没有[启用代理](configuration.md#代理支持)，那么推荐你使用创建可观察的 Maps 的方式来创建动态键控集合。
 
 除了语言内置的所有 Map 方法之外，可观察的 Maps 中还有以下好东西可用：
 
-- `toJSON()` 返回该 Map 的浅层纯对象表示（使用 [toJS](#tojs) 进行深拷贝）。
-- `merge(values)` 将所提供的`values` (普通的对象、数组或以字符串为键的 ES6 Map )的所有条目复制到该地图中。
-- `replace(values)` 用所提供的 `values` 替换该 Map 的全部内容。
+- `toJSON()`返回该 Map 的浅层纯对象表示（使用 [toJS](#tojs) 进行深拷贝）。
+- `merge(values)`将所提供的`values`(普通的对象、数组或以字符串为键的 ES6 Map )的所有条目复制到该地图中。
+- `replace(values)`用所提供的`values`替换该 Map 的全部内容。
 
-如果 Map 中的值不能被自动转化为 observable，则可使用 `{ deep: false }` 选项对该 Map 进行浅转化。
+如果 Map 中的值不能被自动转化为 observable，则可使用`{ deep: false }`选项对该 Map 进行浅转化。
 
 ### `observable.set`
 
@@ -101,28 +101,29 @@ const person = new Person("Michel", "Weststrate");
 
 根据提供的`initialSet`创建一个新的可观察的 [ES6 Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set)。每当你想创建一个动态集合，并需要观察值的添加和删除，但每个值在整个集合中只能出现一次时，就可以使用它。
 
-如果 Set 中的值不能被自动转化为 observable，则可使用 `{ deep: false }` 选项对该 Set 进行浅转化。
+如果 Set 中的值不能被自动转化为 observable，则可使用`{ deep: false }`选项对该 Set 进行浅转化。
 
 ### `observable.ref`
 
-[**用法**](observable-state.md#可用的注解)：`observable.ref` _（注解）_
+[**用法**](observable-state.md#可用的注解)：`observable.ref`_（注解）_
 
-和 `observable` 注解类似，但只会追踪重新赋值。所赋的值本身并不会被自动转化为 observable。比如你可以在想要在一个可观察字段中储存不可变数据时使用它。
+和`observable`注解类似，但只会追踪重新赋值。所赋的值本身并不会被自动转化为 observable。比如你可以在想要在一个可观察字段中储存不可变数据时使用它。
 
 ### `observable.shallow`
 
-[**用法**](observable-state.md#可用的注解)：`observable.shallow` _（注解）_
+[**用法**](observable-state.md#可用的注解)：`observable.shallow`_（注解）_
 
-和 `observable.ref` 注解类似，但它是用于集合的。所赋的所有集合都会被转为 observable，但是集合本身的内容不会变为 observable。
+和`observable.ref`注解类似，但它是用于集合的。所赋的所有集合都会被转为 observable，但是集合本身的内容不会变为 observable。
+
 ### `observable.struct`
 
-{🚀} [**用法**](observable-state.md#可用的注解)：`observable.struct` _（注解）_
+{🚀} [**用法**](observable-state.md#可用的注解)：`observable.struct`_（注解）_
 
-除了会忽略所赋的值中所有在结构上与当前值相等的值之外，其他方面都和 `observable` 注解类似。
+除了会忽略所赋的值中所有在结构上与当前值相等的值之外，其他方面都和`observable`注解类似。
 
 ### `observable.deep`
 
-{🚀} [**用法**](observable-state.md#可用的注解)：`observable.deep` _（注解）_
+{🚀} [**用法**](observable-state.md#可用的注解)：`observable.deep`_（注解）_
 
 [`observable`](#observable) 注解的别名。
 
@@ -135,23 +136,23 @@ JavaScript 中的所有原始值都是不可变的，因而它们当然也都是
 在少数情况下，如果能有不属于对象的可观察的 _原始值_ 的话会很方便。
 对于这种情况，可以创建一个可观察的 _box_ 来管理这种 _原始值_。
 
-`observable.box(value)` 接受任意值并将其存储在一个 box 中。当前值可以通过 `.get()` 访问到，并使用 `.set(newValue)` 进行更新。
+`observable.box(value)`接受任意值并将其存储在一个 box 中。当前值可以通过`.get()`访问到，并使用`.set(newValue)`进行更新。
 
 ```javascript
-import { observable, autorun } from "mobx"
+import { observable, autorun } from 'mobx';
 
-const cityName = observable.box("Vienna")
+const cityName = observable.box('Vienna');
 
 autorun(() => {
-    console.log(cityName.get())
-})
+  console.log(cityName.get());
+});
 // Prints: 'Vienna'
 
-cityName.set("Amsterdam")
+cityName.set('Amsterdam');
 // Prints: 'Amsterdam'
 ```
 
-如果 box 中的值不能被自动转化为 observable，则可使用 `{ deep: false }` 对该 box 进行浅转化。
+如果 box 中的值不能被自动转化为 observable，则可使用`{ deep: false }`对该 box 进行浅转化。
 
 ---
 
@@ -161,21 +162,21 @@ _Action 就是任何一段修改状态的代码。_
 
 ### `action`
 
-[**用法**](actions.md)：`action(fn)` or `action` _(注解)_
+[**用法**](actions.md)：`action(fn)`或`action`_(注解)_
 
-Use on functions that intend to modify the state.
+在打算修改状态的函数上使用。
 
 ### `runInAction`
 
 {🚀} [**用法**](actions.md#runinaction)：`runInAction(fn)`
 
-Create a one-time action that is immediately invoked.
+创建一个立即被调用的一次性 action。
 
 ### `flow`
 
-[**用法**](actions.md#使用-flow-代替-async--await-)：`flow(fn)` or `flow` _（注解）_
+[**用法**](actions.md#使用-flow-代替-async--await-)：`flow(fn)`or`flow`_（注解）_
 
-MobX friendly replacement for `async` / `await` that supports cancellation.
+对 MobX 友好的`async`/`await`替代品，支持取消。
 
 ### `flowResult`
 
@@ -183,6 +184,8 @@ MobX friendly replacement for `async` / `await` that supports cancellation.
 
 For TypeScript users only. Utility that casts the output of the generator to a promise.
 This is just a type-wise correction for the promise wrapping done by `flow`. At runtime it directly returns the inputted value.
+仅供 TypeScript 用户使用。将生成器的输出转换为承诺的实用程序。
+这只是对 "flow "所做的承诺包装的类型校正。在运行时，它直接返回输入的值。
 
 ---
 
@@ -192,7 +195,7 @@ _Computed values can be used to derive information from other observables._
 
 ### `computed`
 
-[**用法**](computeds.md)：`computed(fn, options?)` or `computed(options?)` _（注解）_
+[**用法**](computeds.md)：`computed(fn, options?)`or `computed(options?)`_（注解）_
 
 Creates an observable value that is derived from other observables, but won't be recomputed unless one of the underlying observables changes.
 
@@ -290,13 +293,13 @@ For more complex (de)serialization scenarios, it is recommended to give classes 
 
 ```javascript
 const obj = mobx.observable({
-    x: 1
-})
+  x: 1
+});
 
-const clone = mobx.toJS(obj)
+const clone = mobx.toJS(obj);
 
-console.log(mobx.isObservableObject(obj)) // true
-console.log(mobx.isObservableObject(clone)) // false
+console.log(mobx.isObservableObject(obj)); // true
+console.log(mobx.isObservableObject(clone)); // false
 ```
 
 ---
@@ -487,20 +490,20 @@ It takes a single, parameterless `worker` function as an argument, and returns a
 Note that `transaction` runs completely synchronously and can be nested. Only after completing the outermost `transaction`, the pending reactions will be run.
 
 ```javascript
-import { observable, transaction, autorun } from "mobx"
+import { observable, transaction, autorun } from 'mobx';
 
-const numbers = observable([])
+const numbers = observable([]);
 
-autorun(() => console.log(numbers.length, "numbers!"))
+autorun(() => console.log(numbers.length, 'numbers!'));
 // Prints: '0 numbers!'
 
 transaction(() => {
-    transaction(() => {
-        numbers.push(1)
-        numbers.push(2)
-    })
-    numbers.push(3)
-})
+  transaction(() => {
+    numbers.push(1);
+    numbers.push(2);
+  });
+  numbers.push(3);
+});
 // Prints: '3 numbers!'
 ```
 
@@ -514,24 +517,24 @@ Runs a piece of code without establishing observers. Like `transaction`, `untrac
 
 ```javascript
 const person = observable({
-    firstName: "Michel",
-    lastName: "Weststrate"
-})
+  firstName: 'Michel',
+  lastName: 'Weststrate'
+});
 
 autorun(() => {
-    console.log(
-        person.lastName,
-        ",",
-        // This untracked block will return the person's
-        // firstName without establishing a dependency.
-        untracked(() => person.firstName)
-    )
-})
+  console.log(
+    person.lastName,
+    ',',
+    // This untracked block will return the person's
+    // firstName without establishing a dependency.
+    untracked(() => person.firstName)
+  );
+});
 // Prints: 'Weststrate, Michel'
 
-person.firstName = "G.K."
+person.firstName = 'G.K.';
 // Doesn't print!
 
-person.lastName = "Chesterton"
+person.lastName = 'Chesterton';
 // Prints: 'Chesterton, G.K.'
 ```
