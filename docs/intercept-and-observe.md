@@ -11,7 +11,7 @@ hide_title: true
 _⚠️ **警告**: 拦截器 和 监听器是低等级方法, 他们不应该被应用在正式的开发中。可以考虑使用 [reaction](reactions.md),因为 `observe` 不遵循事务原则也不支持对深层级的对象变动的监听.使用这种方法是一种反面模式（anti-pattern）. 如果你想使用 `observe`来获取新值和旧的值,  请考虑优先使用[`reaction`](reactions.md#reaction)。 ⚠️_
 
 `observe` 和 `intercept` 可以用来监视单个可被观察的对象的变化，但是它们 **_不适合_** 用来跟踪嵌套的可观察对象。
--   `intercept` 可用于可观察对象发生变更的之前进行拦截，从而做到验证修改，统一变更，取消变更(validating, normalizing or cancelling)。
+-   `intercept` 可用于在对象在发生变更之前进行拦截，从而做到验证修改，统一变更，取消变更(validating, normalizing or cancelling)。
 -   `observe` 允许你在数据发生更改后监听到更改。
 
 ## 拦截器（Intercept）
