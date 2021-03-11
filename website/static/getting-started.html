@@ -180,7 +180,7 @@ observableTodoStore.todos[0].task = "理解 MobX 教程";
                         </textarea>
                             <button onClick="runCode(['#code1', '#code3', '#code4'])" class="btn-run">运行代码</button>
                             <p>
-                                很有意思，对吧？<code>report</code> 的确自动同步而顺畅地打印出来了。如果你仔细查看打印出来的日志，你会看到第五行代码最后并没有再触发一行日志。这是因为 report <em>实际上</em> 并没有因为第五行代码的重命名而发生改变——尽管它背后的数据变了。另一方面，更改第一个待办的名称确实更新了 report，因为 report 正使用着那个新名字。这很好地证明了 <code>autorun</code> 不仅监视着 <code>todos</code> 数组，还监视着待办条目中的各个属性。
+                                很有意思，对吧？<code>report</code> 的确自动同步而顺畅地打印出来了。如果你仔细查看打印出来的日志，你会看到第五行代码最后并没有再触发一行日志。这是因为 report <em>实际上</em> 并没有因为第五行代码的重命名而发生改变——尽管它背后的数据变了。另一方面，更改第一个待办的名称确实更新了 report，因为 report 正使用着那个新名字。这很好地证明了 <code>autorun</code> 不仅监视观察着 <code>todos</code> 数组，还监视着待办条目中的各个属性。
                             </p>
                             <h3 id="reactive-reactjs-components">把 React 变成响应式</h3>
                             <p>
