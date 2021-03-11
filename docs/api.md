@@ -39,7 +39,7 @@ _把事物变得可观察。_
 
 {🚀} 用法：`extendObservable(target, properties, overrides?, options?)`
 
-可用于在`target`对象上引入新属性并立即把它们全都变得可观察。基本上就是`Object.assign(target, properties); makeAutoObservable(target, overrides, options);`的简写。但它不会变动`target`上已有的属性。
+可以用来在`target`对象上引入新属性并立即把它们全都变得可观察。基本上就是`Object.assign(target, properties); makeAutoObservable(target, overrides, options);`的简写。但它不会变动`target`上已有的属性。
 
 老式的构造器函数可以很好跟`extendObservable`结合起来使用:
 
@@ -69,9 +69,9 @@ const person = new Person('Michel', 'Weststrate');
 
 {🚀} 用法：`observable.array(initialValues?, options?)`
 
-根据被传入的`initialValues`创建一个新的可观察的数组。
-如果要把可观察的数组转化回普通的数组，就请使用`.slice()`方法，或者参阅 [toJS](#tojs) 进行递归转化。
-除了语言中内置的所有数组方法之外，可观察的数组中还有以下好东西可用：
+根据被传入的`initialValues`创建一个新的可观察数组。
+如果要把可观察数组转化回普通的数组，就请使用`.slice()`方法，或者参阅 [toJS](#tojs) 进行递归转化。
+除了语言中内置的所有数组方法之外，可观察数组中还有以下好东西可用：
 
 - `clear()` 删除数组中所有现存的元素。
 - `replace(newItems)` 用新元素替换数组中所有现存的元素。
@@ -85,11 +85,11 @@ const person = new Person('Michel', 'Weststrate');
 
 根据被传入的`initialMap`创建一个新的可观察的 [ES6 Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)。
 如果你不仅想对特定值的改变作出反应，还想对其添加和删除做出反应的话，那么它们就会变得非常有用。
-如果你没有[启用代理](configuration.md#代理支持)，那么推荐你使用创建可观察的 Maps 的方式来创建动态键控集合。
+如果你没有[启用代理](configuration.md#代理支持)，那么推荐你使用创建可观察 Maps 的方式来创建动态键控集合。
 
-除了语言内置的所有 Map 方法之外，可观察的 Maps 中还有以下好东西可用：
+除了语言内置的所有 Map 方法之外，可观察 Maps 中还有以下好东西可用：
 
-- `toJSON()`返回该 Map 的浅层纯对象表示（使用 [toJS](#tojs) 进行深拷贝）。
+- `toJSON()`返回该 Map 的浅层普通对象表示（使用 [toJS](#tojs) 进行深拷贝）。
 - `merge(values)`将被传入的`values`(普通的对象、数组或以字符串为键的 ES6 Map )的所有条目复制到该 Map 中。
 - `replace(values)`用被传入的`values`替换该 Map 的全部内容。
 
@@ -113,7 +113,7 @@ const person = new Person('Michel', 'Weststrate');
 
 [**用法**](observable-state.md#可用的注解)：`observable.shallow`_（注解）_
 
-和`observable.ref`注解类似，但它是用于集合的。所赋的所有集合都会被转为 observable，但是集合本身的内容不会变为 observable。
+和`observable.ref`注解类似，但它是用在集合上的。所赋的所有集合都会被转为 observable，但是集合本身的内容不会变为 observable。
 
 ### `observable.struct`
 
@@ -131,10 +131,10 @@ const person = new Person('Michel', 'Weststrate');
 
 {🚀} 用法：`observable.box(value, options?)`
 
-JavaScript 中的所有原始值都是不可变的，因而它们当然也都是不可观察的。
-这一点通常没问题，因为 MobX 可以使包含该值的*属性*变成 observable。
+JavaScript 中的所有原始值都是不可变的，所以它们当然也都是不可观察的。
+这一点通常没什么问题，因为 MobX 可以使包含该值的*属性*变成 observable。
 在少数情况下，如果能有独立于对象的可观察*原始值*的话会很方便。
-对于这种情况，可以创建一个可观察的*box*来管理这种\*原始值\*。
+对于这种情况，可以创建一个可观察的*box*来管理这种*原始值*。
 
 `observable.box(value)`接受任意值并将其存储在一个 box 中。当前值可以通过`.get()`访问到，并使用`.set(newValue)`进行更新。
 
@@ -164,7 +164,7 @@ _Action 就是任何一段修改状态的代码。_
 
 [**用法**](actions.md)：`action(fn)`或`action`_(注解)_
 
-在打算修改状态的函数上使用。
+用于会修改状态的函数。
 
 ### `runInAction`
 
@@ -182,15 +182,14 @@ _Action 就是任何一段修改状态的代码。_
 
 [**用法**](actions.md#使用-flow-代替-async--await-)：`flowResult(flowFunctionResult)`
 
-This is just a type-wise correction for the promise wrapping done by `flow`. At runtime it directly returns the inputted value.
 仅供 TypeScript 用户使用。将 generator 的输出结果转化为 promise 的实用程序。
-这只是一个对于`flow`所做的 promise 包装进行的类型上的更正。它在运行时会直接返回被输入的值。
+这只是一个针对`flow`做的 promise 包装所进行的类型上的更正。它在运行时会直接返回被输入的值。
 
 ---
 
-## 计算值
+## computeds
 
-_计算值可以用来从其他 observables 中派生出数据。_
+_Computeds 可以用来从其他 observables 中派生出数据。_
 
 ### `computed`
 
@@ -206,7 +205,7 @@ _来自`mobx-react`或`mobx-react-lite`包。_
 
 [**用法**](react-integration.md)：`observer(component)`
 
-一个高阶组件，你可以用它使一个函数式或基于类的 React 组件在 observables 发生改变时重新渲染。
+可以用来使一个函数式或基于类的 React 组件在 observables 发生改变时重新渲染的高阶组件。
 
 ### `Observer`
 
@@ -234,7 +233,7 @@ _Reactions 用来对自动发生的副作用进行建模。_
 
 [**用法**](reactions.md#reaction)：`reaction(() => data, data => effect, options?)`
 
-在任何一个被选中的数据发生改变时重新执行一个副作用。
+当任何一个被选中的数据发生改变时重新执行一个副作用。
 
 ### `when`
 
@@ -244,47 +243,46 @@ _Reactions 用来对自动发生的副作用进行建模。_
 
 ---
 
-## Utilities
+## 实用程序
 
-_Utilities that might make working with observable objects or computed values more convenient. Less trivial utilities can also be found in the [mobx-utils](https://github.com/mobxjs/mobx-utils) package._
+_这些实用程序可能会使对可观察对象或 computeds 的处理更加方便。你在 [mobx-utils](https://github.com/mobxjs/mobx-utils) 包中也可以找到更复杂的实用程序。_
 
 ### `onReactionError`
 
 {🚀} 用法：`onReactionError(handler: (error: any, derivation) => void)`
 
-Attaches a global error listener, which is invoked for every error that is thrown from a _reaction_. This can be used for monitoring or test purposes.
+绑定一个全局错误监听函数，每当一个 _reaction_ 抛出错误时都会调用这个监听函数。可以用于监控或测试。
 
 ### `intercept`
 
 {🚀} [**用法**](intercept-and-observe.md#intercept)：`intercept(propertyName|array|object|Set|Map, listener)`
 
-Intercepts changes before they are applied to an observable API. Returns a disposer function that stops the interception.
+在变更被应用到一个可观察的 API 之前对其进行拦截。返回一个阻止拦截的处置函数。
 
 ### `observe`
 
 {🚀} [**用法**](intercept-and-observe.md#observe)：`observe(propertyName|array|object|Set|Map, listener)`
 
-Low-level API that can be used to observe a single observable value. Returns a disposer function that stops the interception.
+可用于追踪单个可观察值的底层 API。返回一个阻止拦截的处置函数。
 
 ### `onBecomeObserved`
 
 {🚀} [**用法**](lazy-observables.md)：`onBecomeObserved(observable, property?, listener: () => void)`
 
-Hook for when something becomes observed.
+在某个值开始被监控时使用的钩子函数。
 
 ### `onBecomeUnobserved`
 
 {🚀} [**用法**](lazy-observables.md)：`onBecomeUnobserved(observable, property?, listener: () => void)`
 
-Hook for when something stops being observed.
+在某个值停止被监控时使用的钩子函数。
 
 ### `toJS`
 
 [**用法**](observable-state.md#把-observables-转化回原生JavaScript集合)：`toJS(value)`
 
-Recursively converts an observable object to a JavaScript _structure_. Supports observable arrays, objects, Maps and primitives.
-Computed values and other non-enumerable properties won't be part of the result.
-For more complex (de)serialization scenarios, it is recommended to give classes a (computed) `toJSON` method, or use a serialization library like [serializr](https://github.com/mobxjs/serializr).
+将一个可观察对象递归转化为一种 JavaScript _数据结构_。支持可观察数组、对象、Maps 和原始值。
+对于更加复杂的（反）序列化使用场景，建议为类添加一个（计算）方法`toJSON`，或者使用一个类似 [serializr](https://github.com/mobxjs/serializr) 的序列化库。
 
 ```javascript
 const obj = mobx.observable({
@@ -299,64 +297,61 @@ console.log(mobx.isObservableObject(clone)); // false
 
 ---
 
-## Configuration
+## 配置
 
-_Fine-tuning your MobX instance._
+_对你的 MobX 实例进行微调。_
 
 ### `configure`
 
-[**用法**](configuration.md)：sets global behavior settings on the active MobX instance.
-Use it to change how MobX behaves as a whole.
+[**用法**](configuration.md)：对正在使用的 MobX 实例进行全局行为设置。用它来改变 MobX 整体的行为方式。
 
 ---
 
-## Collection utilities {🚀}
+## 用于集合的实用程序 {🚀}
 
-_They enable manipulating observable arrays, objects and Maps with the same generic API. This can be useful in [environments without `Proxy` support](configuration.md#没有代理支持的限制), but is otherwise typically not needed._
+_它们可以让我们用同一个通用 API 对可观察数组、对象和 Maps 进行处理。这一点在没有`Proxy`支持的环境中很有用。_
 
 ### `values`
 
 {🚀} [**用法**](collection-utilities.md)：`values(array|object|Set|Map)`
 
-Returns all values in the collection as an array.
+以数组形式返回集合中的所有值。
 
 ### `keys`
 
 {🚀} [**用法**](collection-utilities.md)：`keys(array|object|Set|Map)`
 
-Returns all keys / indices in the collection as an array.
+以数组形式返回集合中所有的键或索引。
 
 ### `entries`
 
 {🚀} [**用法**](collection-utilities.md)：`entries(array|object|Set|Map)`
 
-Returns a `[key, value]` pair of every entry in the collection as an array.
+以数组形式返回集合中每个条目的`[key, value]`对。
 
 ### `set`
 
 {🚀} [**用法**](collection-utilities.md)：`set(array|object|Map, key, value)`
 
-Updates the collection.
+更新集合。
 
 ### `remove`
 
 {🚀} [**用法**](collection-utilities.md)：`remove(array|object|Map, key)`
 
-Removes item from the collection.
+从集合中删除项目。
 
 ### `has`
 
 {🚀} [**用法**](collection-utilities.md)：`has(array|object|Map, key)`
 
-Checks for membership in the collection.
+检查集合中是否存在`key`。
 
 ### `get`
 
 {🚀} [**用法**](collection-utilities.md)：`get(array|object|Map, key)`
 
-Gets value from the collection with key.
-
----
+使用键从集合中获取价值。
 
 ## Introspection utilities {🚀}
 
