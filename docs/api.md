@@ -39,9 +39,9 @@ _把事物变得可观察。_
 
 {🚀} 用法：`extendObservable(target, properties, overrides?, options?)`
 
-可以用来在`target`对象上引入新属性并立即把它们全都变得可观察。基本上就是`Object.assign(target, properties); makeAutoObservable(target, overrides, options);`的简写。但它不会变动`target`上已有的属性。
+可以用来在 `target` 对象上引入新属性并立即把它们全都变得可观察。基本上就是 `Object.assign(target, properties); makeAutoObservable(target, overrides, options);` 的简写。但它不会变动 `target` 上已有的属性。
 
-老式的构造器函数可以很好跟`extendObservable`结合起来使用:
+老式的构造器函数可以很好跟 `extendObservable` 结合起来使用:
 
 ```javascript
 function Person(firstName, lastName) {
@@ -51,75 +51,75 @@ function Person(firstName, lastName) {
 const person = new Person('Michel', 'Weststrate');
 ```
 
-使用`extendObservable`在一个对象实例化之后再为其添加可观察字段也是可以的，但要注意，以这种方式添加可观察属性这一行为本身并不能被观察到。
+使用 `extendObservable` 在一个对象实例化之后再为其添加可观察字段也是可以的，但要注意，以这种方式添加可观察属性这一行为本身并不能被观察到。
 
 ### `observable`
 
-[**用法**](observable-state.md#observable)：`observable(source, overrides?, options?)`或`observable`_（注解）_
+[**用法**](observable-state.md#observable)：`observable(source, overrides?, options?)` 或 `observable`_（注解）_
 
-克隆一个对象并使其可观察。`source`可以是一个普通的对象、数组、Map 或 Set。默认情况下，`observable`会被递归调用。如果遇到的值中有一个是对象或数组，那么那个值也会被传入`observable`。
+克隆一个对象并使其可观察。`source` 可以是一个普通的对象、数组、Map 或 Set。默认情况下， `observable` 会被递归调用。如果遇到的值中有一个是对象或数组，那么那个值也会被传入 `observable`。
 
 ### `observable.object`
 
 {🚀} [**用法**](observable-state.md#observable)：`observable.object(source, overrides?, options?)`
 
-`observable(source, overrides?, options?)`的别名。创建一个被传入对象的副本并使它的所有属性可观察。
+`observable(source, overrides?, options?)` 的别名。创建一个被传入对象的副本并使它的所有属性可观察。
 
 ### `observable.array`
 
 {🚀} 用法：`observable.array(initialValues?, options?)`
 
-根据被传入的`initialValues`创建一个新的可观察数组。
-如果要把可观察数组转化回普通的数组，就请使用`.slice()`方法，或者参阅 [toJS](#tojs) 进行递归转化。
+根据被传入的 `initialValues` 创建一个新的可观察数组。
+如果要把可观察数组转化回普通的数组，就请使用 `.slice()` 方法，或者参阅 [toJS](#tojs) 进行递归转化。
 除了语言中内置的所有数组方法之外，可观察数组中还有以下好东西可用：
 
 - `clear()` 删除数组中所有现存的元素。
 - `replace(newItems)` 用新元素替换数组中所有现存的元素。
-- `remove(value)` 从数组中删除一个值为`value`的元素，在找到并删除该元素后返回`true`。
+- `remove(value)` 从数组中删除一个值为 `value` 的元素，在找到并删除该元素后返回 `true`。
 
-如果数组中的值不能被自动转化为 observable，则可使用`{ deep: false }`选项对该数组进行浅转化。
+如果数组中的值不能被自动转化为 observable，则可使用 `{ deep: false }` 选项对该数组进行浅转化。
 
 ### `observable.map`
 
 {🚀} 用法：`observable.map(initialMap?, options?)`
 
-根据被传入的`initialMap`创建一个新的可观察的 [ES6 Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)。
+根据被传入的 `initialMap` 创建一个新的可观察的 [ES6 Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)。
 如果你不仅想对特定值的改变作出反应，还想对其添加和删除做出反应的话，那么它们就会变得非常有用。
 如果你没有[启用代理](configuration.md#代理支持)，那么推荐你使用创建可观察 Maps 的方式来创建动态键控集合。
 
 除了语言内置的所有 Map 方法之外，可观察 Maps 中还有以下好东西可用：
 
-- `toJSON()`返回该 Map 的浅层普通对象表示（使用 [toJS](#tojs) 进行深拷贝）。
-- `merge(values)`将被传入的`values`(普通的对象、数组或以字符串为键的 ES6 Map )的所有条目复制到该 Map 中。
-- `replace(values)`用被传入的`values`替换该 Map 的全部内容。
+- `toJSON()` 返回该 Map 的浅层普通对象表示（使用 [toJS](#tojs) 进行深拷贝）。
+- `merge(values)` 将被传入的 `values` （普通的对象、数组或以字符串为键的 ES6 Map ）的所有条目复制到该 Map 中。
+- `replace(values)` 用被传入的 `values` 替换该 Map 的全部内容。
 
-如果 Map 中的值不能被自动转化为 observable，则可使用`{ deep: false }`选项对该 Map 进行浅转化。
+如果 Map 中的值不能被自动转化为 observable，则可使用 `{ deep: false }` 选项对该 Map 进行浅转化。
 
 ### `observable.set`
 
 {🚀} 用法：`observable.set(initialSet?, options?)`
 
-根据提供的`initialSet`创建一个新的可观察的 [ES6 Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set)。每当你想创建一个动态集合，并需要观察值的添加和删除，但每个值在整个集合中只能出现一次时，就可以使用它。
+根据提供的 `initialSet` 创建一个新的可观察的 [ES6 Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set)。每当你想创建一个动态集合，并需要观察值的添加和删除，但每个值在整个集合中只能出现一次时，就可以使用它。
 
-如果 Set 中的值不能被自动转化为 observable，则可使用`{ deep: false }`选项对该 Set 进行浅转化。
+如果 Set 中的值不能被自动转化为 observable，则可使用 `{ deep: false }` 选项对该 Set 进行浅转化。
 
 ### `observable.ref`
 
 [**用法**](observable-state.md#可用的注解)：`observable.ref`_（注解）_
 
-和`observable`注解类似，但只会追踪重新赋值。所赋的值本身并不会被自动转化为 observable。比如你可以在想要在一个可观察字段中储存不可变数据时使用它。
+和 `observable` 注解类似，但只会追踪重新赋值。所赋的值本身并不会被自动转化为 observable。比如你可以在你要把不可变的数据储存在一个可观察字段中时使用它。
 
 ### `observable.shallow`
 
 [**用法**](observable-state.md#可用的注解)：`observable.shallow`_（注解）_
 
-和`observable.ref`注解类似，但它是用在集合上的。所赋的所有集合都会被转为 observable，但是集合本身的内容不会变为 observable。
+和 `observable.ref` 注解类似，但它是用在集合上的。所赋的所有集合都会被转为 observable，但是集合本身的内容不会变为 observable。
 
 ### `observable.struct`
 
 {🚀} [**用法**](observable-state.md#可用的注解)：`observable.struct`_（注解）_
 
-除了会忽略所赋的值中所有在结构上与当前值相等的值之外，其他方面都和`observable`注解类似。
+除了会忽略所赋的值中所有在结构上与当前值相等的值之外，其他方面都和 `observable` 注解类似。
 
 ### `observable.deep`
 
@@ -136,7 +136,7 @@ JavaScript 中的所有原始值都是不可变的，所以它们当然也都是
 在少数情况下，如果能有独立于对象的可观察*原始值*的话会很方便。
 对于这种情况，可以创建一个可观察的*box*来管理这种*原始值*。
 
-`observable.box(value)`接受任意值并将其存储在一个 box 中。当前值可以通过`.get()`访问到，并使用`.set(newValue)`进行更新。
+`observable.box(value)` 接受任意值并将其存储在一个 box 中。当前值可以通过 `.get()` 访问到，并使用 `.set(newValue)` 进行更新。
 
 ```javascript
 import { observable, autorun } from 'mobx';
@@ -152,7 +152,7 @@ cityName.set('Amsterdam');
 // Prints: 'Amsterdam'
 ```
 
-如果 box 中的值不能被自动转化为 observable，则可使用`{ deep: false }`对该 box 进行浅转化。
+如果 box 中的值不能被自动转化为 observable，则可使用 `{ deep: false }` 对该 box 进行浅转化。
 
 ---
 
@@ -162,7 +162,7 @@ _Action 就是任何一段修改状态的代码。_
 
 ### `action`
 
-[**用法**](actions.md)：`action(fn)`或`action`_(注解)_
+[**用法**](actions.md)：`action(fn)` 或 `action`_(注解)_
 
 用于会修改状态的函数。
 
@@ -176,30 +176,30 @@ _Action 就是任何一段修改状态的代码。_
 
 [**用法**](actions.md#使用-flow-代替-async--await-)：`flow(fn)`or`flow`_（注解）_
 
-对 MobX 友好的`async`/`await`替代品，支持取消。
+对 MobX 友好的 `async`/`await` 替代品，支持取消。
 
 ### `flowResult`
 
 [**用法**](actions.md#使用-flow-代替-async--await-)：`flowResult(flowFunctionResult)`
 
 仅供 TypeScript 用户使用。将 generator 的输出结果转化为 promise 的实用程序。
-这只是一个针对`flow`做的 promise 包装所进行的类型上的更正。它在运行时会直接返回被输入的值。
+这只是一个针对 `flow` 做的 promise 包装所进行的类型上的更正。它在运行时会直接返回被输入的值。
 
 ---
 
-## computeds
+## 计算值
 
-_Computeds 可以用来从其他 observables 中派生出数据。_
+_计算值可以用来从其他 observables 中派生出数据。_
 
 ### `computed`
 
-[**用法**](computeds.md)：`computed(fn, options?)`or `computed(options?)`_（注解）_
+[**用法**](computeds.md)：`computed(fn, options?)` 或 `computed(options?)`_（注解）_
 
 创建一个从其他 observables 中派生出来的可观察值。但只要底层 observables 不变，就这个值就不会被重新计算。
 
 ## 与 React 的整合
 
-_来自`mobx-react`或`mobx-react-lite`包。_
+_来自 `mobx-react` 或 `mobx-react-lite` 包。_
 
 ### `observer`
 
@@ -217,7 +217,7 @@ _来自`mobx-react`或`mobx-react-lite`包。_
 
 [**用法**](react-integration.md#在观察者组件中使用局部可观察状态)：`useLocalObservable(() => source, annotations?)`
 
-使用`makeObservable`创建一个新的可观察对象，并在组件的整个生命周期内将其保留在组件中。
+使用 `makeObservable` 创建一个新的可观察对象，并在组件的整个生命周期内将其保留在组件中。
 
 ## Reactions
 
@@ -227,7 +227,7 @@ _Reactions 用来对自动发生的副作用进行建模。_
 
 [**用法**](reactions.md#autorun)：`autorun(() => effect, options?)`
 
-每当其追踪的任意一个值发生改变时重新执行一个函数。
+每当其观察的任意一个值发生改变时重新执行一个函数。
 
 ### `reaction`
 
@@ -237,7 +237,7 @@ _Reactions 用来对自动发生的副作用进行建模。_
 
 ### `when`
 
-[**用法**](reactions.md#when)：`when(() => condition, () => effect, options?)` or `await when(() => condition, options?)`
+[**用法**](reactions.md#when)：`when(() => condition, () => effect, options?)` 或 `await when(() => condition, options?)`
 
 在一个可观察条件变为真时将一个副作用执行一次。
 
@@ -245,7 +245,7 @@ _Reactions 用来对自动发生的副作用进行建模。_
 
 ## 实用程序
 
-_这些实用程序可能会使对可观察对象或 computeds 的处理更加方便。你在 [mobx-utils](https://github.com/mobxjs/mobx-utils) 包中也可以找到更复杂的实用程序。_
+_这些实用程序可能会使得对可观察对象或计算值的处理更加方便。你在 [mobx-utils](https://github.com/mobxjs/mobx-utils) 包中也可以找到更复杂的实用程序。_
 
 ### `onReactionError`
 
@@ -263,7 +263,7 @@ _这些实用程序可能会使对可观察对象或 computeds 的处理更加�
 
 {🚀} [**用法**](intercept-and-observe.md#observe)：`observe(propertyName|array|object|Set|Map, listener)`
 
-可用于追踪单个可观察值的底层 API。返回一个阻止拦截的处置函数。
+可用于观察单个可观察值的底层 API。返回一个阻止拦截的处置函数。
 
 ### `onBecomeObserved`
 
@@ -282,7 +282,7 @@ _这些实用程序可能会使对可观察对象或 computeds 的处理更加�
 [**用法**](observable-state.md#把-observables-转化回原生JavaScript集合)：`toJS(value)`
 
 将一个可观察对象递归转化为一种 JavaScript _数据结构_。支持可观察数组、对象、Maps 和原始值。
-对于更加复杂的（反）序列化使用场景，建议为类添加一个（计算）方法`toJSON`，或者使用一个类似 [serializr](https://github.com/mobxjs/serializr) 的序列化库。
+对于更加复杂的（反）序列化使用场景，建议为类添加一个（计算）方法 `toJSON`，或者使用一个类似 [serializr](https://github.com/mobxjs/serializr) 的序列化库。
 
 ```javascript
 const obj = mobx.observable({
@@ -309,7 +309,7 @@ _对你的 MobX 实例进行微调。_
 
 ## 用于集合的实用程序 {🚀}
 
-_它们可以让我们用同一个通用 API 对可观察数组、对象和 Maps 进行处理。这一点在没有`Proxy`支持的环境中很有用。_
+_这些实用程序可以让我们用同一个通用 API 对可观察数组、对象和 Maps 进行处理。这一点在没有 `Proxy` 支持的环境中很有用。_
 
 ### `values`
 
@@ -327,7 +327,7 @@ _它们可以让我们用同一个通用 API 对可观察数组、对象和 Maps
 
 {🚀} [**用法**](collection-utilities.md)：`entries(array|object|Set|Map)`
 
-以数组形式返回集合中每个条目的`[key, value]`对。
+以数组形式返回集合中每个条目的 `[key, value]` 对。
 
 ### `set`
 
@@ -345,7 +345,7 @@ _它们可以让我们用同一个通用 API 对可观察数组、对象和 Maps
 
 {🚀} [**用法**](collection-utilities.md)：`has(array|object|Map, key)`
 
-检查集合中是否存在`key`。
+检查集合中是否存在 `key`。
 
 ### `get`
 
@@ -353,99 +353,99 @@ _它们可以让我们用同一个通用 API 对可观察数组、对象和 Maps
 
 使用键从集合中获取价值。
 
-## Introspection utilities {🚀}
+## 用于检查的实用程序 {🚀}
 
-_Utilities that might come in handy if you want to inspect the internal state of MobX, or want to build cool tools on top of MobX._
+_如果你想检查 MobX 的内部状态或者想在 MobX 的基础上打造酷炫的工具，这些实用程序可能会派上用场。_
 
 ### `isObservable`
 
 {🚀} 用法：`isObservable(array|object|Set|Map)`
 
-Is the object / collection made observable by MobX?
+这个对象或集合有没有被 MobX 转为 observable?
 
 ### `isObservableProp`
 
 {🚀} 用法：`isObservableProp(object, propertyName)`
 
-Is the property observable?
+这个属性是不是可观察的？
 
 ### `isObservableArray`
 
 {🚀} 用法：`isObservableArray(array)`
 
-Is the value an observable array?
+这个值是不是一个可观察数组？
 
 ### `isObservableObject`
 
 {🚀} 用法：`isObservableObject(object)`
 
-Is the value an observable object?
+这个值是不是一个可观察对象？
 
 ### `isObservableSet`
 
 {🚀} 用法：`isObservableSet(set)`
 
-Is the value an observable Set?
+这个值是不是一个可观察 Set？
 
 ### `isObservableMap`
 
 {🚀} 用法：`isObservableMap(map)`
 
-Is the value an observable Map?
+这个值是不是一个可观察 Map？
 
 ### `isBoxedObservable`
 
 {🚀} 用法：`isBoxedObservable(value)`
 
-Is the value an observable box, created using `observable.box`?
+这个值是不是一个用 `observable.box` 创建的可观察 box？
 
 ### `isAction`
 
 {🚀} 用法：`isAction(func)`
 
-Is the function marked as an `action`?
+这个函数有没有被标记为 `action`？
 
 ### `isComputed`
 
 {🚀} 用法：`isComputed(boxedComputed)`
 
-Is this a boxed computed value, created using `computed(() => expr)`?
+这是不是一个用 `computed(() => expr)` 创建的 box 计算值？
 
 ### `isComputedProp`
 
 {🚀} 用法：`isComputedProp(object, propertyName)`
 
-Is this a computed property?
+这是不是一个计算值？
 
 ### `trace`
 
-{🚀} [**用法**](analyzing-reactivity.md)：`trace()`, `trace(true)` _(enter debugger)_ or `trace(object, propertyName, enterDebugger?)`
+{🚀} [**用法**](analyzing-reactivity.md)：`trace()`, `trace(true)` _(enter debugger)_ 或 `trace(object, propertyName, enterDebugger?)`
 
-Should be used inside an observer, reaction or computed value. Logs when the value is invalidated, or sets the debugger breakpoint if called with _true_.
+应该在 observer 、 action 或计算值中使用。会当值无效时打印日志，否则如果用 _true_ 调用，则设置调试器断点。
 
 ### `spy`
 
 {🚀} [**用法**](analyzing-reactivity.md#spy)：`spy(eventListener)`
 
-Registers a global spy listener that listens to all events that happen in MobX.
+注册一个全局 spy 监听函数，这个函数会监听所有在 MobX 内部发生的事件。
 
 ### `getDebugName`
 
-{🚀} [**用法**](analyzing-reactivity.md#getdebugname)：`getDebugName(reaction|array|Set|Map)` or `getDebugName(object|Map, propertyName)`
+{🚀} [**用法**](analyzing-reactivity.md#getdebugname)：`getDebugName(reaction|array|Set|Map)` 或 `getDebugName(object|Map, propertyName)`
 
-Returns the (generated) friendly debug name for an observable or reaction.
+为一个 observable 或 reaction 返回其（被生成出来的）友好的调试名称。
 
 ### `getDependencyTree`
 
 {🚀} [**用法**](analyzing-reactivity.md#getdependencytree)：`getDependencyTree(object, computedPropertyName)`
 
-Returns a tree structure with all observables the given reaction / computation currently depends upon.
+返回一个树形结构，该树形结构包含被传入的 reaction 或计算值当前依赖的所有 observable。
 
 ### `getObserverTree`
 
-{🚀} [**用法**](analyzing-reactivity.md#getobservertree)：`getObserverTree(array|Set|Map)` or `getObserverTree(object|Map, propertyName)`
+{🚀} [**用法**](analyzing-reactivity.md#getobservertree)：`getObserverTree(array|Set|Map)` 或 `getObserverTree(object|Map, propertyName)`
 
-Returns a tree structure with all reactions / computations that are observing the given observable.
+返回一个树形结构，该树形结构包含正在观察所有 reactions 或计算值。
 
 ---
 
@@ -472,7 +472,7 @@ Returns the backing atom.
 
 {🚀} 用法：`transaction(worker: () => any)`
 
-_Transaction is a low-level API. It is recommended to use [`action`](#action) or [`runInAction`](#runinaction) instead._
+_Transaction is a low-level API. It is recommended to use [`action`](#action) 或[`runInAction`](#runinaction) instead._
 
 Used to batch a bunch of updates without notifying any observers until the end of the transaction. Like [`untracked`](#untracked), it is automatically applied by `action`, so usually it makes more sense to use actions than to use `transaction` directly.
 
@@ -501,7 +501,7 @@ transaction(() => {
 
 {🚀} 用法：`untracked(worker: () => any)`
 
-_Untracked is a low-level API. It is recommended to use [`reaction`](#reaction), [`action`](#action) or [`runInAction`](#runinaction) instead._
+_Untracked is a low-level API. It is recommended to use [`reaction`](#reaction), [`action`](#action) 或[`runInAction`](#runinaction) instead._
 
 Runs a piece of code without establishing observers. Like `transaction`, `untracked` is automatically applied by `action`, so usually it makes more sense to use actions than to use `untracked` directly.
 
