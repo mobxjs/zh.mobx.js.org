@@ -45,13 +45,13 @@ _把事物变得可观察。_
 
 ```javascript
 function Person(firstName, lastName) {
-  extendObservable(this, { firstName, lastName });
+    extendObservable(this, { firstName, lastName });
 }
 
-const person = new Person('Michel', 'Weststrate');
+const person = new Person("Michel", "Weststrate");
 ```
 
-使用 `extendObservable` 在一个对象实例化之后再为其添加可观察字段也是可以的，但要注意，以这种方式添加可观察属性这一行为本身并不能被观察到。
+使用 `extendObservable` 在一个对象实例化之后再为其添加可观察字段也是可以的，但要注意，以这种方式添加可观察属性这一行为本身并不能被 MobX 观察到。
 
 ### `observable`
 
@@ -73,9 +73,9 @@ const person = new Person('Michel', 'Weststrate');
 如果要把可观察数组转化回普通的数组，就请使用 `.slice()` 方法，或者参阅 [toJS](#tojs) 进行递归转化。
 除了语言中内置的所有数组方法之外，可观察数组中还有以下好东西可用：
 
-- `clear()` 删除数组中所有现存的元素。
-- `replace(newItems)` 用新元素替换数组中所有现存的元素。
-- `remove(value)` 从数组中删除一个值为 `value` 的元素，在找到并删除该元素后返回 `true`。
+-   `clear()` 删除数组中所有现存的元素。
+-   `replace(newItems)` 用新元素替换数组中所有现存的元素。
+-   `remove(value)` 从数组中删除一个值为 `value` 的元素，在找到并删除该元素后返回 `true`。
 
 如果数组中的值不能被自动转化为 observable，则可使用 `{ deep: false }` 选项对该数组进行浅转化。
 
@@ -89,9 +89,9 @@ const person = new Person('Michel', 'Weststrate');
 
 除了语言内置的所有 Map 方法之外，可观察 Maps 中还有以下好东西可用：
 
-- `toJSON()` 返回该 Map 的浅层普通对象表示（使用 [toJS](#tojs) 进行深拷贝）。
-- `merge(values)` 将被传入的 `values` （普通的对象、数组或以字符串为键的 ES6 Map ）的所有条目复制到该 Map 中。
-- `replace(values)` 用被传入的 `values` 替换该 Map 的全部内容。
+-   `toJSON()` 返回该 Map 的浅层普通对象表示（使用 [toJS](#tojs) 进行深拷贝）。
+-   `merge(values)` 将被传入的 `values` （普通的对象、数组或以字符串为键的 ES6 Map ）的所有条目复制到该 Map 中。
+-   `replace(values)` 用被传入的 `values` 替换该 Map 的全部内容。
 
 如果 Map 中的值不能被自动转化为 observable，则可使用 `{ deep: false }` 选项对该 Map 进行浅转化。
 
@@ -139,16 +139,16 @@ JavaScript 中的所有原始值都是不可变的，所以它们当然也都是
 `observable.box(value)` 接受任意值并将其存储在一个 box 中。当前值可以通过 `.get()` 访问到，并使用 `.set(newValue)` 进行更新。
 
 ```javascript
-import { observable, autorun } from 'mobx';
+import { observable, autorun } from "mobx";
 
-const cityName = observable.box('Vienna');
+const cityName = observable.box("Vienna");
 
 autorun(() => {
-  console.log(cityName.get());
+    console.log(cityName.get());
 });
 // Prints: 'Vienna'
 
-cityName.set('Amsterdam');
+cityName.set("Amsterdam");
 // Prints: 'Amsterdam'
 ```
 
@@ -286,7 +286,7 @@ _这些实用程序可能会使得对可观察对象或计算值的处理更加�
 
 ```javascript
 const obj = mobx.observable({
-  x: 1
+    x: 1,
 });
 
 const clone = mobx.toJS(obj);
@@ -459,8 +459,8 @@ _In the rare case you want to extend MobX itself._
 
 Creates your own observable data structure and hooks it up to MobX. Used internally by all observable data types. Atom exposes two _report_ methods to notify MobX with when:
 
-- `reportObserved()`: the atom has become observed, and should be considered part of the dependency tree of the current derivation.
-- `reportChanged()`: the atom has changed, and all derivations depending on it should be invalidated.
+-   `reportObserved()`: the atom has become observed, and should be considered part of the dependency tree of the current derivation.
+-   `reportChanged()`: the atom has changed, and all derivations depending on it should be invalidated.
 
 ### `getAtom`
 
@@ -480,19 +480,19 @@ It takes a single, parameterless `worker` function as an argument, and returns a
 Note that `transaction` runs completely synchronously and can be nested. Only after completing the outermost `transaction`, the pending reactions will be run.
 
 ```javascript
-import { observable, transaction, autorun } from 'mobx';
+import { observable, transaction, autorun } from "mobx";
 
 const numbers = observable([]);
 
-autorun(() => console.log(numbers.length, 'numbers!'));
+autorun(() => console.log(numbers.length, "numbers!"));
 // Prints: '0 numbers!'
 
 transaction(() => {
-  transaction(() => {
-    numbers.push(1);
-    numbers.push(2);
-  });
-  numbers.push(3);
+    transaction(() => {
+        numbers.push(1);
+        numbers.push(2);
+    });
+    numbers.push(3);
 });
 // Prints: '3 numbers!'
 ```
@@ -507,24 +507,24 @@ Runs a piece of code without establishing observers. Like `transaction`, `untrac
 
 ```javascript
 const person = observable({
-  firstName: 'Michel',
-  lastName: 'Weststrate'
+    firstName: "Michel",
+    lastName: "Weststrate",
 });
 
 autorun(() => {
-  console.log(
-    person.lastName,
-    ',',
-    // This untracked block will return the person's
-    // firstName without establishing a dependency.
-    untracked(() => person.firstName)
-  );
+    console.log(
+        person.lastName,
+        ",",
+        // This untracked block will return the person's
+        // firstName without establishing a dependency.
+        untracked(() => person.firstName)
+    );
 });
 // Prints: 'Weststrate, Michel'
 
-person.firstName = 'G.K.';
+person.firstName = "G.K.";
 // Doesn't print!
 
-person.lastName = 'Chesterton';
+person.lastName = "Chesterton";
 // Prints: 'Chesterton, G.K.'
 ```
