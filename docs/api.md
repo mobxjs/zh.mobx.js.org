@@ -132,9 +132,9 @@ const person = new Person('Michel', 'Weststrate');
 {🚀} 用法：`observable.box(value, options?)`
 
 JavaScript 中的所有原始值都是不可变的，因而它们当然也都是不可观察的。
-这一点通常没问题，因为 MobX 可以使包含该值的 _属性_ 变成 observable。
-在少数情况下，如果能有不属于对象的可观察的 _原始值_ 的话会很方便。
-对于这种情况，可以创建一个可观察的 _box_ 来管理这种 _原始值_。
+这一点通常没问题，因为 MobX 可以使包含该值的*属性*变成 observable。
+在少数情况下，如果能有独立于对象的可观察*原始值*的话会很方便。
+对于这种情况，可以创建一个可观察的*box*来管理这种\*原始值\*。
 
 `observable.box(value)`接受任意值并将其存储在一个 box 中。当前值可以通过`.get()`访问到，并使用`.set(newValue)`进行更新。
 
@@ -206,7 +206,7 @@ _来自`mobx-react`或`mobx-react-lite`包。_
 
 [**用法**](react-integration.md)：`observer(component)`
 
-一个高阶组件，你可以用它来使一个函数式或基于类的 React 组件在 observables 发生改变时重新渲染。
+一个高阶组件，你可以用它使一个函数式或基于类的 React 组件在 observables 发生改变时重新渲染。
 
 ### `Observer`
 
@@ -218,31 +218,29 @@ _来自`mobx-react`或`mobx-react-lite`包。_
 
 [**用法**](react-integration.md#在观察者组件中使用局部可观察状态)：`useLocalObservable(() => source, annotations?)`
 
-用`makeObservable`创建一个新的可观察对象
-
----
+使用`makeObservable`创建一个新的可观察对象，并在组件的整个生命周期内将其保留在组件中。
 
 ## Reactions
 
-_The goal of reactions is to model side effects that happen automatically._
+_Reactions 用来对自动发生的副作用进行建模。_
 
 ### `autorun`
 
 [**用法**](reactions.md#autorun)：`autorun(() => effect, options?)`
 
-Reruns a function every time anything it observes changes.
+每当其追踪的任意一个值发生改变时重新执行一个函数。
 
 ### `reaction`
 
 [**用法**](reactions.md#reaction)：`reaction(() => data, data => effect, options?)`
 
-Reruns a side effect when any selected data changes.
+在任何一个被选中的数据发生改变时重新执行一个副作用。
 
 ### `when`
 
 [**用法**](reactions.md#when)：`when(() => condition, () => effect, options?)` or `await when(() => condition, options?)`
 
-Executes a side effect once when a observable condition becomes true.
+在一个可观察条件变为真时将一个副作用执行一次。
 
 ---
 
