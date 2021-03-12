@@ -113,13 +113,13 @@ console.log(todoStore.report());
                             <button onClick="runCode(['#code1', '#code2'])" class="btn-run">运行代码</button>
                             <h3>变成响应式</h3>
                             <p>
-                                到目前为止，这段代码并没有什么特别之处。但如果我们不用非得刻意调用 <code>report</code>，而可以规定它必须在每次 <em>相关</em> 状态改变时都被调用呢？那样我们就不需要从代码中所有 <em>有可能</em> 对 report 产生影响的地方手动调用 <code>report</code> 了。我们确实想让最新的 report 被打印出来，但并不想因为要手动去组织它而费功夫。
+                                到目前为止，这段代码并没有什么特别之处。但如果我们不是非得刻意调用 <code>report</code>，而是可以规定它必须在每次 <em>相关</em> 状态改变时都被调用呢？那样我们就不需要从代码中所有 <em>有可能</em> 对 report 产生影响的地方手动调用 <code>report</code> 了。我们确实想让最新的 report 被打印出来，但并不想因为要手动去组织它而费功夫。
                             </p>
                             <p>
                                 幸运的是，这正是 MobX 能为我们做到的事情——自动执行只依赖于状态的代码。这样我们的 <code>report</code> 函数就可以自动更新，就像电子表格里的一个图表一样。为了做到这一点，<code>TodoStore</code> 就必须变成 observable，这样 MobX 就可以对所有正在进行的更改进行追踪。为了实现这一点，我们来改一下这个类。
                             </p>
                             <p>
-                                还有，<code>completedTodosCount</code> 属性可以从待办清单中被自动派生出来。通过使用 <code>observable</code> 和 <code>computed</code> 注解，我们可以为一个对象引入 observable 属性。在下面的例子中，我们为了刻意地展示出注解而使用了 <code>makeObservable</code>，但其实我们也可以使用 <code>makeAutoObservable(this)</code> 来简化这个过程。
+                                还有，<code>completedTodosCount</code> 属性可以从待办清单中被自动派生出来。通过使用 <code>observable</code> 和 <code>computed</code> 注解，我们可以为一个对象引入 observable 属性。在下面的例子中，我们为了刻意地展示出注解而使用了 <code>makeObservable</code>，但我们也可以改用 <code>makeAutoObservable(this)</code> 来简化这个过程。
                             </p>
                             <textarea spellcheck="false" class="prettyprint" id="code3" rows="8">
 class ObservableTodoStore {
@@ -297,7 +297,7 @@ peopleStore[0].name = "Michel Weststrate";
                                 这背后的代码真的很简单。我们首先更新 store 中的 <code>pendingRequests</code> 属性好让 UI 反映出当前正在加载的状态。一旦加载完成，我们就更新 store 中的待办事项并减小 <code>pendingRequests</code> 计数器的数值。请比较一下这段代码和之前 <code>TodoList</code> 的定义，看看 <code>pendingRequests</code> 属性是如何被使用的。
                             </p>
                             <p>
-                                请注意，延时函数被包装在了 <code>action</code> 里。我们并不是非得这样做，但这样可以让我们只用一次传输就把两个变化都处理掉，让所有 observers 都只有在两个更新都完成后才收到通知。
+                                请注意，延时函数被包装在了 <code>action</code> 里。我们并不是非得这样做，但这样可以用一个 transaction 把两个变动都处理掉，让所有 observers 都只有在两个更新都完成后才收到通知。
                             <pre>observableTodoStore.pendingRequests++;
 setTimeout(action(() => {
   observableTodoStore.addTodo('随机待办 ' + Math.random());
