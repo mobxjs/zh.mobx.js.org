@@ -14,7 +14,7 @@ hide_title: true
 
 通过  `import { trace } from "mobx"` 导入 `trace`，然后在 `computed` 或 `reaction` 函数内部调用它，它就会打印出当前派生值为什么会重新计算。
 
-`trace` 函数最后一个参数 `enterBreakPoint` 是可选的，如果传入 `true` 则会自动进入调试模式。这样以来引起 `raction` 重新计算的变动还在调用栈中，通常往上回溯大约8个调用栈，请看下图。
+`trace` 函数最后一个参数 `enterBreakPoint` 是可选的，如果传入 `true` 则会自动进入调试模式。这样以来引起 `raction` 重新计算的变动还在调用栈中，通常处于往上回溯大约8个调用栈的位置，请看下图。
 
 在调试模式中，调试信息中会展示出影响当前计算或 `reaction` 的完整的派生树。
 
@@ -68,7 +68,6 @@ trace(user, "fullname")
 
 -   `getDebugName(thing, property?)`
 
-Returns a (generated) friendly debug name of an observable object, property, reaction etc. Used for example by the MobX developer tools(https://github.com/mobxjs/mobx-devtools).
 返回可监听对象，属性，`reaction`等的一个（生成的）便于调试的名字，比如它就被 [MobX developer tools](https://github.com/mobxjs/mobx-devtools)所使用。
 
 ### `getDependencyTree`
@@ -101,10 +100,7 @@ Returns a (generated) friendly debug name of an observable object, property, rea
 
 -   `spy(listener)`
 
-Registers a global spy listener that listens to all events that happen in MobX.
-It is similar to attaching an `observe` listener to _all_ observables at once, but also notifies about running (trans/re)actions and computations.
-Used for example by the [MobX developer tools](https://github.com/mobxjs/mobx-devtools).
-注册一个全局的 spy 监听器来监听 Mobx 里发生的所有事件。类似于一次性给**所有**可监听对象添加了 `observe` 监听器，but also notifies about running (trans/re)actions and computations.
+注册一个全局的 spy 监听器来监听 Mobx 里发生的所有事件，相当于一次性给**所有**可监听对象添加了 `observe` 监听器，但也会通知到运行着的 transaction, reaction 和 计算。
 比如它就被 [MobX developer tools](https://github.com/mobxjs/mobx-devtools)所使用。
 
 这是一个监视所有 action 的例子：
@@ -118,7 +114,7 @@ spy(event => {
 ```
 
 Spy listeners always receive one object, which usually has at least a `type` field. The following events are emitted by default by spy:
-`spy`监听器总是接受一个至少带有`type`字段的对象，下面的事件都是 `spy` 默认触发的。
+`spy`监听器总是收到一个至少带有`type`字段的对象，下面的事件都是 `spy` 默认触发的。
 
 | 类型                             | 可监听类型      | 其他字段                                                        | 是否嵌套 |
 | ------------------------------- | -------------- | -------------------------------------------------------------- | ------ |
