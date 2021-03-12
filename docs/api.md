@@ -50,13 +50,13 @@ function Person(firstName, lastName) {
 const person = new Person("Michel", "Weststrate")
 ```
 
-使用 `extendObservable` 在一个对象实例化之后再为其添加可观察字段也是可以的，但要注意，以这种方式添加可观察属性这一行为本身并不能被观察到。
+使用 `extendObservable` 在一个对象实例化之后再为其添加可观察字段也是可以的，但要注意，以这种方式添加可观察属性这一行为本身并不能被观察。
 
 ### `observable`
 
 [**用法**](observable-state.md#observable)：`observable(source, overrides?, options?)` 或 `observable`_（注解）_
 
-克隆一个对象并使其可观察。`source` 可以是一个普通的对象、数组、Map 或 Set。默认情况下， `observable` 会递归执行。如果遇到的值中有一个是对象或数组，那么那个值也会被传入 `observable`。
+克隆一个对象并使其可观察。`source` 可以是一个普通的对象、数组、Map 或 Set。默认情况下， `observable` 会递归执行。如果遇到的值中有一个是对象或数组，那么该值也会被传入 `observable`。
 
 ### `observable.object`
 
@@ -102,13 +102,13 @@ const person = new Person("Michel", "Weststrate")
 
 [**用法**](observable-state.md#可用的注解)：`observable.ref`_（注解）_
 
-和 `observable` 注解类似，但只会追踪重新赋值。所赋的值本身并不会被自动转化为 observable。比如你可以在你要把不可变的数据储存在一个可观察字段中时使用它。
+和 `observable` 注解类似，但只有重新赋值会被追踪。被赋出的值本身并不会被自动转化为 observable。比如说，你可以在你向一个可观察字段中储存不可变数据时使用它。
 
 ### `observable.shallow`
 
 [**用法**](observable-state.md#可用的注解)：`observable.shallow`_（注解）_
 
-和 `observable.ref` 注解类似，但它是用在集合上的。所赋的所有集合都会被转为 observable，但是集合本身的内容不会变为 observable。
+和 `observable.ref` 注解类似，但它是用在集合上的。任何被赋出的集合都会被转为 observable，但是集合本身的内容不会变为 observable。
 
 ### `observable.struct`
 
@@ -126,9 +126,9 @@ const person = new Person("Michel", "Weststrate")
 
 {🚀} 用法：`observable.box(value, options?)`
 
-JavaScript 中的所有原始值都是不可变的，所以它们当然也都是不可观察的。这一点通常没什么问题，因为 MobX 可以使包含该值的*属性*可观察。在少数情况下，如果能有独立于对象的可观察*原始值*的话会很方便。对于这种情况，可以创建一个可观察的 _box_ 来管理这种*原始值*。
+JavaScript 中的所有原始值都是不可变的，所以它们当然也都是不可观察的。这一点通常没什么问题，因为 MobX 可以使包含该值的*属性*可观察。在少数情况下，如果能有独立于对象的可观察*原始值*的话就会很方便。对于这种情况，可以创建一个可观察的 _box_ 来管理这种*原始值*。
 
-`observable.box(value)` 接受任意值并将其存储在一个 box 中。当前值可以通过 `.get()` 访问到，并使用 `.set(newValue)` 进行更新。
+`observable.box(value)` 接受一个任意值并将其存储在一个 box 中。该当前值可以通过 `.get()` 访问到，并使用 `.set(newValue)` 进行更新。
 
 ```javascript
 import { observable, autorun } from "mobx"
@@ -156,13 +156,13 @@ _Action 就是任何一段修改状态的代码。_
 
 [**用法**](actions.md)：`action(fn)` 或 `action`_(注解)_
 
-用于会修改状态的函数。
+用于意在修改状态的函数。
 
 ### `runInAction`
 
 {🚀} [**用法**](actions.md#runinaction)：`runInAction(fn)`
 
-创建一个立即被调用的一次性 action。
+创建一个被立即调用的一次性 action。
 
 ### `flow`
 
@@ -174,7 +174,7 @@ _Action 就是任何一段修改状态的代码。_
 
 [**用法**](actions.md#使用-flow-代替-async--await-)：`flowResult(flowFunctionResult)`
 
-仅供 TypeScript 用户使用。将 generator 的输出结果转化为 promise 的工具函数。这只是一个针对 `flow` 做的 promise 包装所进行的类型上的更正。它在运行时会直接返回被输入的值。
+仅供 TypeScript 用户使用。将 generator 的输出结果转化为 promise 的工具函数。这只是一个针对 `flow` 做的 promise 包装所进行的类型上的更正。它在运行时会直接返回被传入其中的值。
 
 ---
 
@@ -196,13 +196,13 @@ _来自 `mobx-react` 或 `mobx-react-lite` 包。_
 
 [**用法**](react-integration.md)：`observer(component)`
 
-可以用来使一个函数式或基于类的 React 组件在 observables 发生改变时重新渲染的高阶组件。
+高阶组件，可用来使一个函数式或基于类的 React 组件在 observables 发生改变时重新渲染。
 
 ### `Observer`
 
 [**用法**](react-integration.md#回调组件可能需要观察者)：`<Observer>{() => rendering}</Observer>`
 
-渲染被传入的 render 函数，并在 render 函数使用的 observables 之一发生改变时将其重新渲染。
+渲染被传入的 render 函数，并在 render 函数所使用的 observables 之一发生改变时将函数重新渲染。
 
 ### `useLocalObservable`
 
@@ -218,37 +218,37 @@ _Reactions 用来对自动发生的副作用进行建模。_
 
 [**用法**](reactions.md#autorun)：`autorun(() => effect, options?)`
 
-每当其观察的任意一个值发生改变时重新执行一个函数。
+在其观察的任意一个值发生改变时重新执行一个函数。
 
 ### `reaction`
 
 [**用法**](reactions.md#reaction)：`reaction(() => data, data => effect, options?)`
 
-当任何一个被选中的数据发生改变时重新执行一个副作用。
+在被选中的任何一个数据发生改变时重新执行一个副作用。
 
 ### `when`
 
 [**用法**](reactions.md#when)：`when(() => condition, () => effect, options?)` 或 `await when(() => condition, options?)`
 
-在一个可观察条件变为真时将一个副作用执行一次。
+一旦一个可观察条件为真就立即执行副作用函数。
 
 ---
 
 ## 工具函数
 
-_这些工具函数可能会使得对可观察对象或计算值的处理更加方便。你在 [mobx-utils](https://github.com/mobxjs/mobx-utils) 包中也可以找到更复杂的工具函数。_
+_这些工具函数可能会使得可观察对象或计算值的使用更加方便。你在 [mobx-utils](https://github.com/mobxjs/mobx-utils) 包中也可以找到更复杂的工具函数。_
 
 ### `onReactionError`
 
 {🚀} 用法：`onReactionError(handler: (error: any, derivation) => void)`
 
-绑定一个全局错误监听函数，每当一个 _reaction_ 抛出错误时都会调用该监听函数。可以用于监控或测试。
+绑定一个全局错误监听函数。每当一个 _reaction_ 抛出错误时该监听函数都会被调用。可以用于监控或测试。
 
 ### `intercept`
 
 {🚀} [**用法**](intercept-and-observe.md#intercept)：`intercept(propertyName|array|object|Set|Map, listener)`
 
-在一个可观察的 API 发生改变之前将变化拦截。返回一个阻止拦截的处置函数。
+在一个可观察的 API 发生改变之前将该改变拦截。返回一个阻止拦截的处置函数。
 
 ### `observe`
 
@@ -273,7 +273,7 @@ _这些工具函数可能会使得对可观察对象或计算值的处理更加�
 [**用法**](observable-state.md#把-observables-转化回原生JavaScript集合)：`toJS(value)`
 
 将一个可观察对象递归转化为一种 JavaScript _数据结构_。支持可观察数组、对象、Maps 和原始值。
-对于更加复杂的（反）序列化使用场景，建议为类添加一个（计算）方法 `toJSON`，或者使用一个类似 [serializr](https://github.com/mobxjs/serializr) 的序列化库。
+对于更加复杂的（反）序列化使用场景，建议你为类添加一个（计算）方法 `toJSON`，或使用一个类似 [serializr](https://github.com/mobxjs/serializr) 的序列化库。
 
 ```javascript
 const obj = mobx.observable({
@@ -306,7 +306,7 @@ _这些工具函数可以让我们用同一个通用 API 对可观察数组、�
 
 {🚀} [**用法**](collection-utilities.md)：`values(array|object|Set|Map)`
 
-以数组形式返回集合中的所有值。
+以数组形式返回集合中所有的值。
 
 ### `keys`
 
@@ -352,61 +352,61 @@ _如果你想检查 MobX 的内部状态或者想在 MobX 的基础上打造酷�
 
 {🚀} 用法：`isObservable(array|object|Set|Map)`
 
-该对象或集合有没有被 MobX 转为 observable?
+检查对象或集合是否已被 MobX 转为 observable。
 
 ### `isObservableProp`
 
 {🚀} 用法：`isObservableProp(object, propertyName)`
 
-该属性是否是可观察的？
+检查属性是否是可观察的。
 
 ### `isObservableArray`
 
 {🚀} 用法：`isObservableArray(array)`
 
-该值是否是一个可观察数组？
+检查值是否是一个可观察数组。
 
 ### `isObservableObject`
 
 {🚀} 用法：`isObservableObject(object)`
 
-该值是否是一个可观察对象？
+检查值是否是一个可观察对象。
 
 ### `isObservableSet`
 
 {🚀} 用法：`isObservableSet(set)`
 
-该值是否是一个可观察 Set？
+检查值是否是一个可观察 Set。
 
 ### `isObservableMap`
 
 {🚀} 用法：`isObservableMap(map)`
 
-该值是否是一个可观察 Map？
+检查值是否是一个可观察 Map。
 
 ### `isBoxedObservable`
 
 {🚀} 用法：`isBoxedObservable(value)`
 
-该值是否是一个用 `observable.box` 创建的可观察 box？
+检查值是否是一个用 `observable.box` 创建的可观察 box。
 
 ### `isAction`
 
 {🚀} 用法：`isAction(func)`
 
-该函数是否被标记为 `action`？
+检查函数是否已被标记为 `action`。
 
 ### `isComputed`
 
 {🚀} 用法：`isComputed(boxedComputed)`
 
-该值是否是一个用 `computed(() => expr)` 创建的 box 计算值？
+检查值是否是一个用 `computed(() => expr)` 创建的 box 计算值。
 
 ### `isComputedProp`
 
 {🚀} 用法：`isComputedProp(object, propertyName)`
 
-这是不是一个计算属性？
+检查属性是否是一个计算属性。
 
 ### `trace`
 
@@ -436,13 +436,13 @@ _如果你想检查 MobX 的内部状态或者想在 MobX 的基础上打造酷�
 
 {🚀} [**用法**](analyzing-reactivity.md#getobservertree)：`getObserverTree(array|Set|Map)` 或 `getObserverTree(object|Map, propertyName)`
 
-返回一个树形结构，其中包含正在观察给定 observable 的所有 reactions 或计算值。
+返回一个树形结构，其中包含当前正在观察被传入 observable 的所有 reactions 或计算值。
 
 ---
 
 ## 扩展 MobX {🚀}
 
-_少数情况下，你会想要扩展 MobX 本身。_
+_在少数情况下，你会想要扩展 MobX 本身。_
 
 ### `createAtom`
 
@@ -450,8 +450,8 @@ _少数情况下，你会想要扩展 MobX 本身。_
 
 创建你自己的可观察数据结构并将其接入 MobX。 所有可观察的数据类型内部都使用了该方法。 Atom 暴露了两个 _report_ 方法，用来在以下情况下对 MobX 进行通知：
 
--   `reportObserved()`：该 atom 已经开始被观察，并且应被视为由当前 derivation 的依赖所组成的树状结构的一部分。
--   `reportChanged()`: 该 atom 已经改变，并且依赖于它的所有 derivations 都应作废。
+-   `reportObserved()`：该 atom 已经开始被观察，并且应被视为当前 derivation 的依赖所组成的树状结构的一部分。
+-   `reportChanged()`: 该 atom 已经发生改变，并且所有依赖它的 derivations 都应该失效。
 
 ### `getAtom`
 
@@ -463,11 +463,11 @@ _少数情况下，你会想要扩展 MobX 本身。_
 
 {🚀} 用法：`transaction(worker: () => any)`
 
-_Transaction 是底层 API. 建议改用 [`action`](#action) 或 [`runInAction`](#runinaction)。_
+_Transaction 是底层 API。 建议改用 [`action`](#action) 或 [`runInAction`](#runinaction)。_
 
-用于批处理多个更新，直到该 transaction 结束时再通知所有 observers。 跟 [`untracked`](#untracked) 一样，transaction 会被 `action` 自动执行，所以通常情况下，使用 actions 会比直接使用 `transaction` 更加合理。
+用于批处理多个更新，直到该 transaction 结束时再通知所有 observers。 跟 [`untracked`](#untracked) 一样，transaction 会被 `action` 自动执行，所以通常情况下，使用 actions 比直接使用 `transaction` 更加合理。
 
-它只接受一个没有形参的 `worker` 函数作为实参，并返回其返回的任何值。请注意 `transaction` 是完全同步执行的并且可以被嵌套。只有最外层的 `transaction` 完成之后，等待它的 reactions 才会被执行。
+它只接受一个没有形参的 `worker` 函数作为实参，并返回这个函数返回的任何值。请注意 `transaction` 是完全同步执行的并且可以被嵌套。正在等待的 reactions 只有当最外层的 `transaction` 完成之后才会被执行。
 
 ```javascript
 import { observable, transaction, autorun } from "mobx"
@@ -493,7 +493,7 @@ transaction(() => {
 
 _Untracked 是底层 API。 推荐改用 [`reaction`](#reaction) 、 [`action`](#action) 或 [`runInAction`](#runinaction)。_
 
-在不设置 observers 的情况下执行一段代码。跟 `transaction` 一样，`untracked` 会被 `action` 自动执行，所以通常情况下，使用 actions 会比直接使用 `untracked` 更加合理。
+在不设置 observers 的情况下执行一段代码。跟 `transaction` 一样，`untracked` 会被 `action` 自动执行，所以通常情况下，使用 actions 比直接使用 `untracked` 更加合理。
 
 ```javascript
 const person = observable({
