@@ -8,8 +8,7 @@ hide_title: true
 
 # MobX API 参考
 
-用 {🚀} 标记的函数是进阶部分，通常不需要使用。
-请考虑下载我们的速查表，它用一页篇幅解释了所有重要的 API:
+用 {🚀} 标记的函数是进阶部分，通常不需要使用。请考虑下载我们的速查表，它用一页篇幅解释了所有重要的 API:
 
 <div class="cheat"><a href="https://gum.co/fSocU"><button title="Download the MobX 6 cheat sheet and sponsor the project">下载 MobX 6 速查表</button></a></div>
 
@@ -41,14 +40,14 @@ _把事物变得可观察。_
 
 可以用来在 `target` 对象上引入新属性并立即把它们全都变得可观察。基本上就是 `Object.assign(target, properties); makeAutoObservable(target, overrides, options);` 的简写。但它不会变动 `target` 上已有的属性。
 
-老式的构造器函数可以很好跟 `extendObservable` 结合起来使用:
+老式的构造器函数可以很好地跟 `extendObservable` 结合起来使用:
 
 ```javascript
 function Person(firstName, lastName) {
-    extendObservable(this, { firstName, lastName });
+    extendObservable(this, { firstName, lastName })
 }
 
-const person = new Person("Michel", "Weststrate");
+const person = new Person("Michel", "Weststrate")
 ```
 
 使用 `extendObservable` 在一个对象实例化之后再为其添加可观察字段也是可以的，但要注意，以这种方式添加可观察属性这一行为本身并不能被 MobX 观察到。
@@ -69,9 +68,7 @@ const person = new Person("Michel", "Weststrate");
 
 {🚀} 用法：`observable.array(initialValues?, options?)`
 
-根据被传入的 `initialValues` 创建一个新的可观察数组。
-如果要把可观察数组转化回普通的数组，就请使用 `.slice()` 方法，或者参阅 [toJS](#tojs) 进行递归转化。
-除了语言中内置的所有数组方法之外，可观察数组中还有以下好东西可用：
+根据被传入的 `initialValues` 创建一个新的可观察数组。如果要把可观察数组转化回普通的数组，就请使用 `.slice()` 方法，或者参阅 [toJS](#tojs) 进行递归转化。除了语言中内置的所有数组方法之外，可观察数组中还有以下好东西可用：
 
 -   `clear()` 删除数组中所有现存的元素。
 -   `replace(newItems)` 用新元素替换数组中所有现存的元素。
@@ -83,9 +80,7 @@ const person = new Person("Michel", "Weststrate");
 
 {🚀} 用法：`observable.map(initialMap?, options?)`
 
-根据被传入的 `initialMap` 创建一个新的可观察的 [ES6 Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)。
-如果你不仅想对特定值的改变作出反应，还想对其添加和删除做出反应的话，那么它们就会变得非常有用。
-如果你没有[启用代理](configuration.md#代理支持)，那么推荐你使用创建可观察 Maps 的方式来创建动态键控集合。
+根据被传入的 `initialMap` 创建一个新的可观察的 [ES6 Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)。如果你不仅想对特定值的改变作出反应，还想对其添加和删除做出反应的话，那么它们就会变得非常有用。如果你没有[启用代理](configuration.md#代理支持)，那么推荐你使用创建可观察 Maps 的方式来创建动态键控集合。
 
 除了语言内置的所有 Map 方法之外，可观察 Maps 中还有以下好东西可用：
 
@@ -119,7 +114,7 @@ const person = new Person("Michel", "Weststrate");
 
 {🚀} [**用法**](observable-state.md#可用的注解)：`observable.struct`_（注解）_
 
-除了会忽略所赋的值中所有在结构上与当前值相等的值之外，其他方面都和 `observable` 注解类似。
+忽略所赋的值中所有在结构上与当前值相等的值，除此之外和 `observable` 注解类似。
 
 ### `observable.deep`
 
@@ -131,24 +126,21 @@ const person = new Person("Michel", "Weststrate");
 
 {🚀} 用法：`observable.box(value, options?)`
 
-JavaScript 中的所有原始值都是不可变的，所以它们当然也都是不可观察的。
-这一点通常没什么问题，因为 MobX 可以使包含该值的*属性*变成 observable。
-在少数情况下，如果能有独立于对象的可观察*原始值*的话会很方便。
-对于这种情况，可以创建一个可观察的*box*来管理这种*原始值*。
+JavaScript 中的所有原始值都是不可变的，所以它们当然也都是不可观察的。这一点通常没什么问题，因为 MobX 可以使包含该值的*属性*可观察。在少数情况下，如果能有独立于对象的可观察*原始值*的话会很方便。对于这种情况，可以创建一个可观察的 _box_ 来管理这种*原始值*。
 
 `observable.box(value)` 接受任意值并将其存储在一个 box 中。当前值可以通过 `.get()` 访问到，并使用 `.set(newValue)` 进行更新。
 
 ```javascript
-import { observable, autorun } from "mobx";
+import { observable, autorun } from "mobx"
 
-const cityName = observable.box("Vienna");
+const cityName = observable.box("Vienna")
 
 autorun(() => {
-    console.log(cityName.get());
-});
+    console.log(cityName.get())
+})
 // Prints: 'Vienna'
 
-cityName.set("Amsterdam");
+cityName.set("Amsterdam")
 // Prints: 'Amsterdam'
 ```
 
@@ -182,8 +174,7 @@ _Action 就是任何一段修改状态的代码。_
 
 [**用法**](actions.md#使用-flow-代替-async--await-)：`flowResult(flowFunctionResult)`
 
-仅供 TypeScript 用户使用。将 generator 的输出结果转化为 promise 的实用程序。
-这只是一个针对 `flow` 做的 promise 包装所进行的类型上的更正。它在运行时会直接返回被输入的值。
+仅供 TypeScript 用户使用。将 generator 的输出结果转化为 promise 的实用程序。这只是一个针对 `flow` 做的 promise 包装所进行的类型上的更正。它在运行时会直接返回被输入的值。
 
 ---
 
@@ -195,7 +186,7 @@ _计算值可以用来从其他 observables 中派生出数据。_
 
 [**用法**](computeds.md)：`computed(fn, options?)` 或 `computed(options?)`_（注解）_
 
-创建一个从其他 observables 中派生出来的可观察值。但只要底层 observables 不变，就这个值就不会被重新计算。
+创建一个从其他 observables 中派生出来的可观察值。但只要底层 observables 不变，这个值就不会被重新计算。
 
 ## 与 React 的整合
 
@@ -251,13 +242,13 @@ _这些实用程序可能会使得对可观察对象或计算值的处理更加�
 
 {🚀} 用法：`onReactionError(handler: (error: any, derivation) => void)`
 
-绑定一个全局错误监听函数，每当一个 _reaction_ 抛出错误时都会调用这个监听函数。可以用于监控或测试。
+绑定一个全局错误监听函数，每当一个 _reaction_ 抛出错误时都会调用该监听函数。可以用于监控或测试。
 
 ### `intercept`
 
 {🚀} [**用法**](intercept-and-observe.md#intercept)：`intercept(propertyName|array|object|Set|Map, listener)`
 
-在变更被应用到一个可观察的 API 之前对其进行拦截。返回一个阻止拦截的处置函数。
+在一个可观察的 API 发生改变之前将变化拦截。返回一个阻止拦截的处置函数。
 
 ### `observe`
 
@@ -286,13 +277,13 @@ _这些实用程序可能会使得对可观察对象或计算值的处理更加�
 
 ```javascript
 const obj = mobx.observable({
-    x: 1,
-});
+    x: 1
+})
 
-const clone = mobx.toJS(obj);
+const clone = mobx.toJS(obj)
 
-console.log(mobx.isObservableObject(obj)); // true
-console.log(mobx.isObservableObject(clone)); // false
+console.log(mobx.isObservableObject(obj)) // true
+console.log(mobx.isObservableObject(clone)) // false
 ```
 
 ---
@@ -351,7 +342,7 @@ _这些实用程序可以让我们用同一个通用 API 对可观察数组、�
 
 {🚀} [**用法**](collection-utilities.md)：`get(array|object|Map, key)`
 
-使用键从集合中获取价值。
+使用键从集合中获取值。
 
 ## 用于检查的实用程序 {🚀}
 
@@ -361,73 +352,73 @@ _如果你想检查 MobX 的内部状态或者想在 MobX 的基础上打造酷�
 
 {🚀} 用法：`isObservable(array|object|Set|Map)`
 
-这个对象或集合有没有被 MobX 转为 observable?
+该对象或集合有没有被 MobX 转为 observable?
 
 ### `isObservableProp`
 
 {🚀} 用法：`isObservableProp(object, propertyName)`
 
-这个属性是不是可观察的？
+该属性是否是可观察的？
 
 ### `isObservableArray`
 
 {🚀} 用法：`isObservableArray(array)`
 
-这个值是不是一个可观察数组？
+该值是否是一个可观察数组？
 
 ### `isObservableObject`
 
 {🚀} 用法：`isObservableObject(object)`
 
-这个值是不是一个可观察对象？
+该值是否是一个可观察对象？
 
 ### `isObservableSet`
 
 {🚀} 用法：`isObservableSet(set)`
 
-这个值是不是一个可观察 Set？
+该值是否是一个可观察 Set？
 
 ### `isObservableMap`
 
 {🚀} 用法：`isObservableMap(map)`
 
-这个值是不是一个可观察 Map？
+该值是否是一个可观察 Map？
 
 ### `isBoxedObservable`
 
 {🚀} 用法：`isBoxedObservable(value)`
 
-这个值是不是一个用 `observable.box` 创建的可观察 box？
+该值是否是一个用 `observable.box` 创建的可观察 box？
 
 ### `isAction`
 
 {🚀} 用法：`isAction(func)`
 
-这个函数有没有被标记为 `action`？
+该函数是否被标记为 `action`？
 
 ### `isComputed`
 
 {🚀} 用法：`isComputed(boxedComputed)`
 
-这是不是一个用 `computed(() => expr)` 创建的 box 计算值？
+该值是否是一个用 `computed(() => expr)` 创建的 box 计算值？
 
 ### `isComputedProp`
 
 {🚀} 用法：`isComputedProp(object, propertyName)`
 
-这是不是一个计算值？
+这是不是一个计算属性？
 
 ### `trace`
 
 {🚀} [**用法**](analyzing-reactivity.md)：`trace()`, `trace(true)` _(enter debugger)_ 或 `trace(object, propertyName, enterDebugger?)`
 
-应该在 observer 、 action 或计算值中使用。会当值无效时打印日志，否则如果用 _true_ 调用，则设置调试器断点。
+应在 observer 、 action 或计算值中使用。在被传入的 derivation 失效时打印日志，或者用 _true_ 调用这个方法来设置调试器断点。
 
 ### `spy`
 
 {🚀} [**用法**](analyzing-reactivity.md#spy)：`spy(eventListener)`
 
-注册一个全局 spy 监听函数，这个函数会监听所有在 MobX 内部发生的事件。
+注册一个全局 spy 监听函数，该函数会监听所有在 MobX 内部发生的事件。
 
 ### `getDebugName`
 
@@ -439,61 +430,60 @@ _如果你想检查 MobX 的内部状态或者想在 MobX 的基础上打造酷�
 
 {🚀} [**用法**](analyzing-reactivity.md#getdependencytree)：`getDependencyTree(object, computedPropertyName)`
 
-返回一个树形结构，该树形结构包含被传入的 reaction 或计算值当前依赖的所有 observable。
+返回一个树形结构，其中包含被传入的 reaction 或计算值当前依赖的所有 observable。
 
 ### `getObserverTree`
 
 {🚀} [**用法**](analyzing-reactivity.md#getobservertree)：`getObserverTree(array|Set|Map)` 或 `getObserverTree(object|Map, propertyName)`
 
-返回一个树形结构，该树形结构包含正在观察所有 reactions 或计算值。
+返回一个树形结构，其中包含正在观察给定 observable 的所有 reactions 或计算值。
 
 ---
 
-## Extending MobX {🚀}
+## 扩展 MobX {🚀}
 
-_In the rare case you want to extend MobX itself._
+_少数情况下，你会想要扩展 MobX 本身。_
 
 ### `createAtom`
 
 {🚀} [**用法**](custom-observables.md)：`createAtom(name, onBecomeObserved?, onBecomeUnobserved?)`
 
-Creates your own observable data structure and hooks it up to MobX. Used internally by all observable data types. Atom exposes two _report_ methods to notify MobX with when:
+创建你自己的可观察数据结构并将其接入 MobX。 所有可观察的数据类型内部都使用了该方法。 Atom 暴露了两个 _report_ 方法，用来在以下情况下对 MobX 进行通知：
 
--   `reportObserved()`: the atom has become observed, and should be considered part of the dependency tree of the current derivation.
--   `reportChanged()`: the atom has changed, and all derivations depending on it should be invalidated.
+-   `reportObserved()`：该 atom 已经开始被观察，并且应被视为由当前 derivation 的依赖所组成的树状结构的一部分。
+-   `reportChanged()`: 该 atom 已经改变，并且依赖于它的所有 derivations 都应作废。
 
 ### `getAtom`
 
 {🚀} [**用法**](analyzing-reactivity.md#getatom)：`getAtom(thing, property?)`
 
-Returns the backing atom.
+返回 observable 背后的 atom。
 
 ### `transaction`
 
 {🚀} 用法：`transaction(worker: () => any)`
 
-_Transaction is a low-level API. It is recommended to use [`action`](#action) 或[`runInAction`](#runinaction) instead._
+_Transaction 是底层 API. 建议改用 [`action`](#action) 或 [`runInAction`](#runinaction)。_
 
-Used to batch a bunch of updates without notifying any observers until the end of the transaction. Like [`untracked`](#untracked), it is automatically applied by `action`, so usually it makes more sense to use actions than to use `transaction` directly.
+用于批处理多个更新，直到该 transaction 结束时再通知所有 observers。 跟 [`untracked`](#untracked) 一样，transaction 会被 `action` 自动执行，所以通常情况下，使用 actions 会比直接使用 `transaction` 更加合理。
 
-It takes a single, parameterless `worker` function as an argument, and returns any value that was returned by it.
-Note that `transaction` runs completely synchronously and can be nested. Only after completing the outermost `transaction`, the pending reactions will be run.
+它只接受一个没有形参的 `worker` 函数作为实参，并返回其返回的任何值。请注意 `transaction` 是完全同步执行的并且可以被嵌套。只有最外层的 `transaction` 完成之后，等待它的 reactions 才会被执行。
 
 ```javascript
-import { observable, transaction, autorun } from "mobx";
+import { observable, transaction, autorun } from "mobx"
 
-const numbers = observable([]);
+const numbers = observable([])
 
-autorun(() => console.log(numbers.length, "numbers!"));
+autorun(() => console.log(numbers.length, "numbers!"))
 // Prints: '0 numbers!'
 
 transaction(() => {
     transaction(() => {
-        numbers.push(1);
-        numbers.push(2);
-    });
-    numbers.push(3);
-});
+        numbers.push(1)
+        numbers.push(2)
+    })
+    numbers.push(3)
+})
 // Prints: '3 numbers!'
 ```
 
@@ -501,15 +491,15 @@ transaction(() => {
 
 {🚀} 用法：`untracked(worker: () => any)`
 
-_Untracked is a low-level API. It is recommended to use [`reaction`](#reaction), [`action`](#action) 或[`runInAction`](#runinaction) instead._
+_Untracked 是底层 API。 推荐改用 [`reaction`](#reaction) 、 [`action`](#action) 或 [`runInAction`](#runinaction)。_
 
-Runs a piece of code without establishing observers. Like `transaction`, `untracked` is automatically applied by `action`, so usually it makes more sense to use actions than to use `untracked` directly.
+在不设置 observers 的情况下执行一段代码。跟 `transaction` 一样，`untracked` 会被 `action` 自动执行，所以通常情况下，使用 actions 会比直接使用 `untracked` 更加合理。
 
 ```javascript
 const person = observable({
     firstName: "Michel",
-    lastName: "Weststrate",
-});
+    lastName: "Weststrate"
+})
 
 autorun(() => {
     console.log(
@@ -518,13 +508,13 @@ autorun(() => {
         // This untracked block will return the person's
         // firstName without establishing a dependency.
         untracked(() => person.firstName)
-    );
-});
+    )
+})
 // Prints: 'Weststrate, Michel'
 
-person.firstName = "G.K.";
+person.firstName = "G.K."
 // Doesn't print!
 
-person.lastName = "Chesterton";
+person.lastName = "Chesterton"
 // Prints: 'Chesterton, G.K.'
 ```
