@@ -50,13 +50,13 @@ function Person(firstName, lastName) {
 const person = new Person("Michel", "Weststrate")
 ```
 
-使用 `extendObservable` 在一个对象实例化之后再为其添加可观察字段也是可以的，但要注意，以这种方式添加可观察属性这一行为本身并不能被 MobX 观察到。
+使用 `extendObservable` 在一个对象实例化之后再为其添加可观察字段也是可以的，但要注意，以这种方式添加可观察属性这一行为本身并不能被观察到。
 
 ### `observable`
 
 [**用法**](observable-state.md#observable)：`observable(source, overrides?, options?)` 或 `observable`_（注解）_
 
-克隆一个对象并使其可观察。`source` 可以是一个普通的对象、数组、Map 或 Set。默认情况下， `observable` 会被递归调用。如果遇到的值中有一个是对象或数组，那么那个值也会被传入 `observable`。
+克隆一个对象并使其可观察。`source` 可以是一个普通的对象、数组、Map 或 Set。默认情况下， `observable` 会递归执行。如果遇到的值中有一个是对象或数组，那么那个值也会被传入 `observable`。
 
 ### `observable.object`
 
@@ -68,7 +68,7 @@ const person = new Person("Michel", "Weststrate")
 
 {🚀} 用法：`observable.array(initialValues?, options?)`
 
-根据被传入的 `initialValues` 创建一个新的可观察数组。如果要把可观察数组转化回普通的数组，就请使用 `.slice()` 方法，或者参阅 [toJS](#tojs) 进行递归转化。除了语言中内置的所有数组方法之外，可观察数组中还有以下好东西可用：
+根据被传入的 `initialValues` 创建一个新的可观察数组。如果要把可观察数组转化回普通的数组，就请使用 `.slice()` 方法，或者参阅 [toJS](#tojs) 进行递归转化。除了语言中内置的所有数组方法之外，可观察数组中还有以下好东西可以使用：
 
 -   `clear()` 删除数组中所有现存的元素。
 -   `replace(newItems)` 用新元素替换数组中所有现存的元素。
@@ -82,7 +82,7 @@ const person = new Person("Michel", "Weststrate")
 
 根据被传入的 `initialMap` 创建一个新的可观察的 [ES6 Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)。如果你不仅想对特定值的改变作出反应，还想对其添加和删除做出反应的话，那么它们就会变得非常有用。如果你没有[启用代理](configuration.md#代理支持)，那么推荐你使用创建可观察 Maps 的方式来创建动态键控集合。
 
-除了语言内置的所有 Map 方法之外，可观察 Maps 中还有以下好东西可用：
+除了语言内置的所有 Map 方法之外，可观察 Maps 中还有以下好东西可以使用：
 
 -   `toJSON()` 返回该 Map 的浅层普通对象表示（使用 [toJS](#tojs) 进行深拷贝）。
 -   `merge(values)` 将被传入的 `values` （普通的对象、数组或以字符串为键的 ES6 Map ）的所有条目复制到该 Map 中。
@@ -254,7 +254,7 @@ _这些工具函数可能会使得对可观察对象或计算值的处理更加�
 
 {🚀} [**用法**](intercept-and-observe.md#observe)：`observe(propertyName|array|object|Set|Map, listener)`
 
-可用于观察单个可观察值的底层 API。返回一个阻止拦截的处置函数。
+可以用于观察单个可观察值的底层 API。返回一个阻止拦截的处置函数。
 
 ### `onBecomeObserved`
 
