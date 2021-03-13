@@ -1,6 +1,6 @@
 ---
-title: About MobX
-sidebar_label: About MobX
+title: 关于 MobX
+sidebar_label: 关于 MobX
 hide_title: true
 ---
 
@@ -8,7 +8,7 @@ hide_title: true
 
 # MobX
 
-_简单，可扩展的状态管理库_
+_简单，可扩展的状态管理_
 
 [![Discuss on Github](https://img.shields.io/badge/discuss%20on-GitHub-orange)](https://github.com/mobxjs/mobx/discussions)
 [![npm version](https://badge.fury.io/js/mobx.svg)](https://badge.fury.io/js/mobx)
@@ -18,8 +18,8 @@ _简单，可扩展的状态管理库_
 ---
 
 ## 文档翻译贡献者
-> 旧版文档链接: [MobX 5](https://cn.mobx.js.org)、 [MobX 4 (LTS)](https://github.com/SangKa/MobX-Docs-CN/tree/4.0.0/docs)、[MobX 3](https://github.com/SangKa/MobX-Docs-CN/tree/3.0.0/docs)\
- Mobxjs Team衷心感谢以下参与文档翻译的同学(排名不分先后
+> 不再支持的旧版文档链接可以在这里找到：[MobX 5](https://cn.mobx.js.org)、[MobX 4（LTS）](https://github.com/SangKa/MobX-Docs-CN/tree/4.0.0/docs)、[MobX 3](https://github.com/SangKa/MobX-Docs-CN/tree/3.0.0/docs)。不过请务必[首先阅读当前版本的文档](about-this-documentation.html)。\
+ Mobxjs Team 衷心感谢以下参与文档翻译的同学（排名不分先后）：
 
 <div style="overflow-x: scroll">
     <table style="width: max-content;">
@@ -70,11 +70,11 @@ _简单，可扩展的状态管理库_
     </table>
 </div>
 
-## Mobx项目赞助商
+## Mobx 项目赞助商
 
-MobX is made possible by the generosity of the sponsors below, and many other [individual backers](backers-sponsors.md#backers). Sponsoring directly impacts the longevity of this project.
+MobX 因为以下赞助商和其他许多[独立资助者](backers-sponsors.md#backers)的慷慨相助而成为可能。赞助直接影响着这个项目的长久发展。
 
-**🥇 Gold sponsors (\$3000+ total contribution):** <br/>
+**🥇 黄金赞助商（总赞助 \$3000+）：**<br/>
 <a href="https://mendix.com/"><img src="https://zh.mobx.js.org/assets/mendix-logo.png" align="center" width="100" title="Mendix" alt="Mendix" /></a>
 <a href="https://frontendmasters.com/"><img src="https://zh.mobx.js.org/assets/frontendmasters.jpg" align="center" width="100" title="Frontend Masters" alt="Frontend Masters"></a>
 <a href="https://opensource.facebook.com/"><img src="https://zh.mobx.js.org/assets/fbos.jpeg" align="center" width="100" title="Facebook Open Source" alt="Facebook Open Source" /></a>
@@ -83,14 +83,14 @@ MobX is made possible by the generosity of the sponsors below, and many other [i
 <a href="https://coinbase.com/"><img src="https://zh.mobx.js.org/assets/coinbase.jpeg" align="center" width="100" title="Coinbase" alt="Coinbase" /></a>
 <a href="https://www.canva.com/"><img src="https://zh.mobx.js.org/assets/canva.png" align="center" width="100" title="Canva" alt="Canva" /></a>
 
-**🥈 Silver sponsors (\$100+ pm):**<br/>
+**🥇 白银赞助商（每月 \$100+）：**<br/>
 <a href="https://www.codefirst.co.uk/"><img src="https://zh.mobx.js.org/assets/codefirst.png" align="center" width="100" title="CodeFirst" alt="CodeFirst"/></a>
 <a href="https://www.dcslsoftware.com/"><img src="https://zh.mobx.js.org/assets/dcsl.png" align="center" width="100" title="DCSL Software" alt="DCSL Software"/></a>
 <a href="https://www.bugsnag.com/platforms/react-error-reporting?utm_source=MobX&utm_medium=Website&utm_content=open-source&utm_campaign=2019-community&utm_term=20190913"><img src="https://zh.mobx.js.org/assets/bugsnag.jpg" align="center" width="100" title="Bugsnag" alt="Bugsnag"/></a>
 <a href="https://curology.com/blog/tech"><img src="https://zh.mobx.js.org/assets/curology.png" align="center" width="100" title="Curology" alt="Curology"/></a>
 <a href="https://modulz.app/"><img src="https://zh.mobx.js.org/assets/modulz.png" align="center" width="100" title="Modulz" alt="Modulz"/></a>
 
-**🥉 Bronze sponsors (\$500+ total contributions):**<br/>
+**🥇 黄铜赞助商（总赞助 \$500+）：**<br/>
 <a href="https://mantro.net/jobs/warlock"><img src="https://zh.mobx.js.org/assets/mantro.png" align="center" width="100" title="mantro GmbH" alt="mantro GmbH"></a>
 <a href="https://www.algolia.com/"><img src="https://zh.mobx.js.org/assets/algolia.jpg" align="center" width="100" title="Algolia" alt="Algolia" /></a>
 <a href="https://talentplot.com/"><img src="https://zh.mobx.js.org/assets/talentplot.png" align="center" width="100" title="talentplot" alt="talentplot"></a>
@@ -99,50 +99,45 @@ MobX is made possible by the generosity of the sponsors below, and many other [i
 
 ---
 
-## Introduction
+## 入门
 
-_Anything that can be derived from the application state, should be. Automatically._
+_任何可以从应用状态中派生出来的东西都应该被自动派生出来。_
 
-MobX is a battle tested library that makes state management simple and scalable by transparently applying functional reactive programming (TFRP).
-The philosophy behind MobX is simple:
+MobX 是一个身经百战的库，它通过运用透明的函数式响应编程（Transparent Functional Reactive Programming，TFRP）使状态管理变得简单和可扩展。
 
 <div class="benefits">
     <div>
         <div class="pic">😙</div>
         <div>
-            <h5>Straightforward</h5>
-            <p>Write minimalistic, boilerplate free code that captures your intent.
-            Trying to update a record field? Use the good old JavaScript assignment.
-            Updating data in an asynchronous process? No special tools are required, the reactivity system will detect all your changes and propagate them out to where they are being used.
+            <h5>简单直接</h5>
+            <p>
+                编写没有模板的极简代码来精准描述出你的意图。要更新一个记录字段？用熟悉的 JavaScript 赋值就行。要在异步进程中更新数据？不需要特殊的工具，响应性系统会侦测到你所有的变更并把它们传送到其用武之地。
             </p>
         </div>
     </div>
     <div>
         <div class="pic">🚅</div>
         <div>
-            <h5>Effortless optimal rendering</h5>
+            <h5>轻松实现最优渲染</h5>
             <p>
-                All changes to and uses of your data are tracked at runtime, building a dependency tree that captures all relations between state and output.
-                This guarantees that computations depending on your state, like React components, run only when strictly needed.
-                There is no need to manually optimize components with error-prone and sub-optimal techniques like memoization and selectors.
+                所有对你数据的变更和使用都会在运行时被追踪到，并构成一个对所有状态和输出之间关系进行捕捉的依赖树。这样保证了依赖于你的状态的计算只有在真正需要时才会运行，就像 React 组件一样。而不需要使用记忆化或选择器之类容易出错的次优技巧来对组件进行手动优化。
             </p>
         </div>
     </div>
     <div>
         <div class="pic">🤹🏻‍♂️</div>
         <div>
-            <h5>Architectural freedom</h5>
+            <h5>架构上的自由</h5>
             <p>
-                MobX is unopinionated and allows you to manage your application state outside of any UI framework.
-                This makes your code decoupled, portable, and above all, easily testable.
+                MobX 不会用它自己的规则来限制你，它可以让你在任意 UI 框架之外管理你的应用状态。这样就会使你的代码低耦合、可移植和——最重要的——容易测试。
             </p>
         </div>
     </div>
 </div>
 
-## A quick example
+## 一个简单的例子
 
-So what does code that uses MobX look like?
+那么使用 MobX 的代码是什么样的呢？
 
 ```javascript
 import React from "react"
@@ -150,7 +145,7 @@ import ReactDOM from "react-dom"
 import { makeAutoObservable } from "mobx"
 import { observer } from "mobx-react"
 
-// Model the application state.
+// 对应用状态进行建模。
 class Timer {
     secondsPassed = 0
 
@@ -169,14 +164,14 @@ class Timer {
 
 const myTimer = new Timer()
 
-// Build a "user interface" that uses the observable state.
+// 构建一个使用 observable 状态的“用户界面”。
 const TimerView = observer(({ timer }) => (
-    <button onClick={() => timer.reset()}>Seconds passed: {timer.secondsPassed}</button>
+    <button onClick={() => timer.reset()}>已过秒数：{timer.secondsPassed}</button>
 ))
 
 ReactDOM.render(<TimerView timer={myTimer} />, document.body)
 
-// Update the 'Seconds passed: X' text every second.
+// 每秒更新一次‘已过秒数：X’中的文本。
 setInterval(() => {
     myTimer.increase()
 }, 1000)
@@ -188,7 +183,7 @@ depends on the `timer.secondsPassed` observable, even though this relationship i
 Every event (`onClick` / `setInterval`) invokes an _action_ (`myTimer.increase` / `myTimer.reset`) that updates _observable state_ (`myTimer.secondsPassed`).
 Changes in the observable state are propagated precisely to all _computations_ and _side effects_ (`TimerView`) that depend on the changes being made.
 
-<img alt="MobX unidirectional flow" src="https://zh.mobx.js.org/assets/flow2.png" align="center" />
+<img alt="MobX 单向流" src="https://zh.mobx.js.org/assets/flow.zh.png" align="center" />
 
 This conceptual picture can be applied to the above example, or any other application using MobX.
 

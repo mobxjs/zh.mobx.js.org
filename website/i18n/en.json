@@ -122,8 +122,8 @@
         "sidebar_label": "Reactions {🚀}"
       },
       "README": {
-        "title": "About MobX",
-        "sidebar_label": "About MobX"
+        "title": "关于 MobX",
+        "sidebar_label": "关于 MobX"
       },
       "refguide/action": {
         "title": "Updating state using actions"
