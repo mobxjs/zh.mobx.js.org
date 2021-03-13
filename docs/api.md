@@ -144,7 +144,7 @@ cityName.set("Amsterdam")
 // Prints: 'Amsterdam'
 ```
 
-如果 box 中的值不能被自动转化成 observable，则可使用 `{ deep: false }` 对该 box 进行浅转化。
+如果你不想把 box 中的值自动转化成 observable，则可使用 `{ deep: false }` 对该 box 进行浅转化。
 
 ---
 
