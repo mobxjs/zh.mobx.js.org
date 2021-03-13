@@ -80,9 +80,9 @@ const person = new Person("Michel", "Weststrate")
 
 {🚀} 用法：`observable.map(initialMap?, options?)`
 
-根据被传入的 `initialMap` 创建一个新的 observable  [ES6 Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)。如果你不仅想对特定条目的改变作出反应，还想对其添加和删除做出反应的话，那么它们就会变得非常有用。如果你没有[启用代理](configuration.md#代理支持)，那么推荐使用创建 observable  Maps 的方式来创建动态键控集合。
+根据被传入的 `initialMap` 创建一个新的 observable [ES6 Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)。如果你不仅想对特定条目的改变作出反应，还想对其添加和删除做出反应的话，那么它们就会变得非常有用。如果你没有[启用代理](configuration.md#代理支持)，那么推荐使用创建 observable Maps 的方式来创建动态键控集合。
 
-除了语言中内置的所有 Map 方法之外，observable  Maps 中还有以下好东西可以使用：
+除了语言中内置的所有 Map 方法之外，observable Maps 中还有以下好东西可以使用：
 
 -   `toJSON()` 返回该 Map 的浅层普通对象表示（使用 [toJS](#tojs) 进行深拷贝）。
 -   `merge(values)` 将被传入的 `values` （普通的对象、数组或以字符串为键的 ES6 Map ）的所有条目复制到该 Map 中。
@@ -94,7 +94,7 @@ const person = new Person("Michel", "Weststrate")
 
 {🚀} 用法：`observable.set(initialSet?, options?)`
 
-根据提供的 `initialSet` 创建一个新的 observable  [ES6 Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set)。每当你想创建一个动态集合，并需要观察其内部值的添加和删除，但每个值在整个集合中只能出现一次时，就可以使用它。
+根据提供的 `initialSet` 创建一个新的 observable [ES6 Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set)。每当你想创建一个动态集合，并需要观察其内部值的添加和删除，但每个值在整个集合中只能出现一次时，就可以使用它。
 
 如果你不想把 Set 中的值自动转化成 observable，则可使用 `{ deep: false }` 选项将该 Set 转化成浅层 observable。
 
@@ -126,7 +126,7 @@ const person = new Person("Michel", "Weststrate")
 
 {🚀} 用法：`observable.box(value, options?)`
 
-JavaScript 中的所有原始值都是不可变的，所以它们当然都不是 observable。这一点通常没有问题，因为 MobX 可以把包含该值的*属性*转化成 observable。在极少数情况下，如果能有独立于对象的 observable *原始值*的话就会很方便。对于这种情况，可以创建一个 observable  _box_ 来管理这种*原始值*。
+JavaScript 中的所有原始值都是不可变的，所以它们当然都不是 observable。这一点通常没有问题，因为 MobX 可以把包含该值的*属性*转化成 observable。在极少数情况下，如果能有独立于对象的 observable *原始值*的话就会很方便。对于这种情况，可以创建一个 observable _box_ 来管理这种*原始值*。
 
 `observable.box(value)` 接受一个任意值并将其存储在一个 box 中。我们可以通过 `.get()` 对其当前值进行访问，并使用 `.set(newValue)` 对其进行更新。
 
@@ -248,7 +248,7 @@ _这些工具函数可能会使得 observable 或计算值的使用更加方便�
 
 {🚀} [**用法**](intercept-and-observe.md#intercept)：`intercept(propertyName|array|object|Set|Map, listener)`
 
-在一个 observable  API 发生改变之前将该改变拦截。返回一个阻止拦截的处置函数。
+在一个 observable API 发生改变之前将该改变拦截。返回一个阻止拦截的处置函数。
 
 ### `observe`
 
