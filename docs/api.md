@@ -108,7 +108,7 @@ const person = new Person("Michel", "Weststrate")
 
 [**用法**](observable-state.md#可用的注解)：`observable.shallow`_（注解）_
 
-和 `observable.ref` 注解类似，但它是用在集合上的。任何被赋出的集合都会被转为 observable，但是集合本身的内容不会变为 observable。
+和 `observable.ref` 注解类似，但用于集合。任何被赋出的集合都会被转为 observable，但是集合本身的内容不会变为 observable。
 
 ### `observable.struct`
 
