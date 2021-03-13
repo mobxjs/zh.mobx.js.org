@@ -297,7 +297,7 @@ peopleStore[0].name = "Michel Weststrate";
                                 这背后的代码真的很简单。我们首先更新 store 中的 <code>pendingRequests</code> 属性好让 UI 反映出当前正在加载的状态。一旦加载完成，我们就更新 store 中的待办事项并减小 <code>pendingRequests</code> 计数器的数值。请比较一下这段代码和之前 <code>TodoList</code> 的定义，看看 <code>pendingRequests</code> 属性是如何被使用的。
                             </p>
                             <p>
-                                请注意，延时函数被包装在了 <code>action</code> 里。我们并不是非得这样做，但这样可以用一个 transaction 把两个变动都处理掉，让所有 observers 都只有在两个更新都完成后才收到通知。
+                                请注意，延时函数被包装在了 <code>action</code> 里。我们并不是非得这样做，但这样可以用一个 transaction 把两个变动都处理掉，让所有 observer 都只有在两个更新都完成后才收到通知。
                             <pre>observableTodoStore.pendingRequests++;
 setTimeout(action(() => {
   observableTodoStore.addTodo('随机待办 ' + Math.random());
