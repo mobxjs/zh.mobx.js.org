@@ -10,13 +10,14 @@ hide_title: true
 
 # 使用 `trace` 进行调试
 
-`trace` 是一个可以帮你发现为什么 `computed`, `reaction` 或组件为什么会重新计算的小工具。
+`trace` 是一个可以帮你发现为什么 `computed`, `reaction` 或 component 为什么会重新
+的小工具。
 
 通过  `import { trace } from "mobx"` 导入 `trace`，然后在 `computed` 或 `reaction` 函数内部调用它，它就会打印出当前派生值为什么会重新计算。
 
 `trace` 函数最后一个参数 `enterBreakPoint` 是可选的，如果传入 `true` 则会自动进入调试模式。这样以来引起 `raction` 重新计算的变动还在调用栈中，通常处于往上回溯大约8个调用栈的位置，请看下图。
 
-在调试模式中，调试信息中会展示出影响当前计算或 `reaction` 的完整的派生树。
+在调试模式中，调试信息中会展示出影响当前 computation 或 reaction 的完整的派生树。
 
 ![trace](assets/trace-tips2.png)
 
@@ -76,7 +77,7 @@ trace(user, "fullname")
 
 -   `getDependencyTree(thing, property?)`.
 
-返回指定 `reaction` 或计算当前所依赖的所有可监听值所组成的树结构。
+返回指定 reaction 或 computation 当前所依赖的所有可监听值所组成的树结构。
 
 ### `getObserverTree`
 
@@ -84,7 +85,8 @@ trace(user, "fullname")
 
 -   `getObserverTree(thing, property?)`.
 
-返回正在监听指定可监听对象的所有 `reaction` 和计算所组成的树结构。
+返回正在监听指定可监听对象的所有 `reaction` 和 
+所组成的树结构。
 
 ### `getAtom`
 
@@ -100,7 +102,7 @@ trace(user, "fullname")
 
 -   `spy(listener)`
 
-注册一个全局的 spy 监听器来监听 Mobx 里发生的所有事件，相当于一次性给**所有**可监听对象添加了 `observe` 监听器，但也会通知到运行着的 transaction, reaction 和 计算。
+注册一个全局的 spy 监听器来监听 Mobx 里发生的所有事件，相当于一次性给**所有**可监听对象添加了 `observe` 监听器，但也会通知到运行着的 transaction, reaction 和 computation。
 比如它就被 [MobX developer tools](https://github.com/mobxjs/mobx-devtools)所使用。
 
 这是一个监视所有 action 的例子：
