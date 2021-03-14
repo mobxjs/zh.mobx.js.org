@@ -76,7 +76,7 @@ _简单，可扩展的状态管理_
 
 MobX 因为以下赞助商和其他许多[独立资助者](backers-sponsors.md#backers)的慷慨相助而成为可能。赞助直接影响着这个项目的长久发展。
 
-**🥇 黄金赞助商（总赞助 \$3000+）：**<br/>
+**🥇 金牌赞助商（总赞助 \$3000+）：**<br/>
 <a href="https://mendix.com/"><img src="https://zh.mobx.js.org/assets/mendix-logo.png" align="center" width="100" title="Mendix" alt="Mendix" /></a>
 <a href="https://frontendmasters.com/"><img src="https://zh.mobx.js.org/assets/frontendmasters.jpg" align="center" width="100" title="Frontend Masters" alt="Frontend Masters"></a>
 <a href="https://opensource.facebook.com/"><img src="https://zh.mobx.js.org/assets/fbos.jpeg" align="center" width="100" title="Facebook Open Source" alt="Facebook Open Source" /></a>
@@ -85,14 +85,14 @@ MobX 因为以下赞助商和其他许多[独立资助者](backers-sponsors.md#b
 <a href="https://coinbase.com/"><img src="https://zh.mobx.js.org/assets/coinbase.jpeg" align="center" width="100" title="Coinbase" alt="Coinbase" /></a>
 <a href="https://www.canva.com/"><img src="https://zh.mobx.js.org/assets/canva.png" align="center" width="100" title="Canva" alt="Canva" /></a>
 
-**🥇 白银赞助商（每月 \$100+）：**<br/>
+**🥇 银牌赞助商（每月 \$100+）：**<br/>
 <a href="https://www.codefirst.co.uk/"><img src="https://zh.mobx.js.org/assets/codefirst.png" align="center" width="100" title="CodeFirst" alt="CodeFirst"/></a>
 <a href="https://www.dcslsoftware.com/"><img src="https://zh.mobx.js.org/assets/dcsl.png" align="center" width="100" title="DCSL Software" alt="DCSL Software"/></a>
 <a href="https://www.bugsnag.com/platforms/react-error-reporting?utm_source=MobX&utm_medium=Website&utm_content=open-source&utm_campaign=2019-community&utm_term=20190913"><img src="https://zh.mobx.js.org/assets/bugsnag.jpg" align="center" width="100" title="Bugsnag" alt="Bugsnag"/></a>
 <a href="https://curology.com/blog/tech"><img src="https://zh.mobx.js.org/assets/curology.png" align="center" width="100" title="Curology" alt="Curology"/></a>
 <a href="https://modulz.app/"><img src="https://zh.mobx.js.org/assets/modulz.png" align="center" width="100" title="Modulz" alt="Modulz"/></a>
 
-**🥇 黄铜赞助商（总赞助 \$500+）：**<br/>
+**🥇 铜牌赞助商（总赞助 \$500+）：**<br/>
 <a href="https://mantro.net/jobs/warlock"><img src="https://zh.mobx.js.org/assets/mantro.png" align="center" width="100" title="mantro GmbH" alt="mantro GmbH"></a>
 <a href="https://www.algolia.com/"><img src="https://zh.mobx.js.org/assets/algolia.jpg" align="center" width="100" title="Algolia" alt="Algolia" /></a>
 <a href="https://talentplot.com/"><img src="https://zh.mobx.js.org/assets/talentplot.png" align="center" width="100" title="talentplot" alt="talentplot"></a>
