@@ -232,5 +232,4 @@ setInterval(() => {
 
 MobX 的灵感来源于在电子表格中被发现的响应式编程原则，也来源于 MeteorJS tracker，knockout 和 Vue.js 之类的 MVVM 框架，但 MobX 将透明的函数式响应编程（Transparent Functional Reactive Programming）推向了一个新的高度，并提供了一个独立的实现。它用一种顺畅、同步、可预测又高效的方式实现了 TFRP。
 
-
 我们要特别鸣谢 [Mendix](https://github.com/mendix)，他们为 MobX 的维护提供了灵活性和支持，也给了我们一个机会，在一个真实而又复杂的性能关键型应用中证明了 MobX 的理念。
