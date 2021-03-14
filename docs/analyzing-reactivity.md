@@ -25,7 +25,7 @@ hide_title: true
 
 ## 在线示例
 
-[CodeSandbox `trace` 示例](https://codesandbox.io/s/trace-dnhbz?file=/src/index.js:309-338).
+[CodeSandbox `trace` 示例](https://codesandbox.io/s/trace-dnhbz?file=/src/index.js:309-338)
 
 [这个部署在 now.sh 上的例子](https://csb-nr58ylyn4m-hontnuliaa.now.sh/) 可以用来研究调用堆栈，请确保你使用了 Chrome 调试器的 blackbox 特性。
 【译者注：该示例已经失效，此处提到的 Chrome 调试器的 blackbox 现已更名为 Ignore List，可以在调试时跳过某些库，让调试更有效率】
@@ -125,10 +125,10 @@ Spy listeners always receive one object, which usually has at least a `type` fie
 | reaction                        |                | name                                                           | yes    |
 | error                           |                | name, message, error                                           | no     |
 | add,update,remove,delete,splice |                | 参考 [Intercept & observe {🚀}](intercept-and-observe.md)       | yes    |
-| report-end                      |                | spyReportEnd=true, time? (total execution time in ms)          | no     |
+| report-end                      |                | spyReportEnd=true, time? (毫秒单位的总执行时间)                   | no     |
 
 `report-end` 事件是前一个带有 `spyReportStart: true` 属性的事件的一部分，这个事件表示一个事件的结束，并创建了一个带有子事件的事件组，这个事件也可能会报告总执行时间。
 
 可监听值的 `spy` 事件和传递给 `observe` 的事件相同，在 Mobx 的生产版本中，`spy` API 会被删除，变成一个空函数。
 
-更多信息请参考 [Intercept & observe {🚀}](intercept-and-observe.md#event-overview) 章节.
+更多信息请参考 [Intercept & observe {🚀}](intercept-and-observe.md#event-overview) 章节。
