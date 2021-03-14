@@ -103,7 +103,7 @@ MobX 因为以下赞助商和其他许多[独立资助者](backers-sponsors.md#b
 
 ## 入门
 
-_任何可以从应用状态中派生出来的东西都应该被自动派生出来。_
+_任何可以从应用状态中派生出来的值都应该被自动派生出来。_
 
 MobX 是一个身经百战的库，它通过运用透明的函数式响应编程（Transparent Functional Reactive Programming，TFRP）使状态管理变得简单和可扩展。
 
