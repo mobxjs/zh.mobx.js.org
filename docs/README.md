@@ -122,7 +122,7 @@ MobX 是一个身经百战的库，它通过运用透明的函数式响应编程
         <div>
             <h5>轻松实现最优渲染</h5>
             <p>
-                所有对于你的数据的变更和使用都会在运行时被追踪到，并构成一个对所有状态和输出之间的关系进行捕捉的依赖树。这样保证了那些依赖于你的状态的计算只有在真正需要时才会运行，就像 React 组件一样。无需使用记忆化或选择器之类容易出错的次优技巧来对组件进行手动优化。
+                所有对于你的数据进行的变更和使用都会在运行时被追踪到，并构成一个对所有状态和输出之间的关系进行捕捉的依赖树。这样保证了那些依赖于你的状态的计算只有在真正需要时才会运行，就像 React 组件一样。无需使用记忆化或选择器之类容易出错的次优技巧来对组件进行手动优化。
             </p>
         </div>
     </div>
@@ -180,15 +180,15 @@ setInterval(() => {
 ```
 
 围绕 React 组件 `TimerView` 的 `observer` 包装会自动侦测到依赖于 observable `timer.secondsPassed` 的渲染——即使这种依赖关系没有被明确定义出来。
-响应性系统会负责在未来*恰好那个*字段被更新时将组件重新渲染。
+响应性系统会负责在未来*恰好那个*字段被更新的时候将组件重新渲染。
 
-每个事件（`onClick` 或 `setInterval`）都会调用一个用来更新 *observable 状态* `myTimer.secondsPassed` 的 *action*（`myTimer.create` 或 `myTimer.reset`）。Observable 状态的变更会被精确地传送到 `TimerView` 中所有依赖于它们的*计算*和*副作用*中。
+每个事件（`onClick` 或 `setInterval`）都会调用一个用来更新 *observable 状态* `myTimer.secondsPassed` 的 *action*（`myTimer.create` 或 `myTimer.reset`）。Observable 状态的变更会被精确地传送到 `TimerView` 中所有依赖于它们的*计算*和*副作用*里。
 
 <img alt="MobX 单向流" src="https://zh.mobx.js.org/assets/zh.flow.png" align="center" />
 
 除了适用于上面的例子之外，这个概念图也适用于其他任何使用 MobX 的应用。
 
-如果想通过一个更大的例子了解 MobX 的核心概念，请参阅 [MobX 精要](the-gist-of-mobx.md)部分或查看 [10 分钟交互式入门 MobX 和 React](https://zh.mobx.js.org/getting-started)。这些博客文章 [事后再考虑 UI](https://michel.codes/blogs/ui-as-an-afterthought) 和 [如何解耦状态和 UI （或你不需要 componentWillMount）](https://hackernoon.com/how-to-decouple-state-and-ui-a-k-a-you-dont-need-componentwillmount-cc90b787aa37)也对 MobX 所提供的心智模型做了非常详细的描述。
+如果想通过一个更大的例子来了解 MobX 的核心概念，请参阅 [MobX 精要](the-gist-of-mobx.md)部分或查看 [10 分钟交互式入门 MobX 和 React](https://zh.mobx.js.org/getting-started)。这些博客文章 [事后再考虑 UI](https://michel.codes/blogs/ui-as-an-afterthought) 和 [怎样解耦状态和 UI （又名：你不需要 componentWillMount）](https://hackernoon.com/how-to-decouple-state-and-ui-a-k-a-you-dont-need-componentwillmount-cc90b787aa37)也对 MobX 所提供的心智模型做了非常详细的描述。
 
 <div class="cheat"><a href="https://gum.co/fSocU"><button title="Download the MobX 6 cheat sheet and sponsor the project">下载 MobX 6 速查表</button></a></div>
 
@@ -230,7 +230,7 @@ setInterval(() => {
 
 ## 鸣谢
 
-MobX 的灵感来源于在电子表格中发现的响应式编程原则，也来源于 MeteorJS tracker，knockout 和 Vue.js 之类的 MVVM 框架，但 MobX 将透明的函数式响应编程（Transparent Functional Reactive Programming）推向了新的高度，并提供了一个独立的实现。它用一种顺畅、同步、可预测且高效的方式实现了 TFRP。
+MobX 的灵感来源于在电子表格中被发现的响应式编程原则，也来源于 MeteorJS tracker，knockout 和 Vue.js 之类的 MVVM 框架，但 MobX 将透明的函数式响应编程（Transparent Functional Reactive Programming）推向了一个新的高度，并提供了一个独立的实现。它用一种顺畅、同步、可预测又高效的方式实现了 TFRP。
 
 
-我们要特别鸣谢 [Mendix](https://github.com/mendix)，他们为 MobX 的维护提供了灵活性和支持，也给了我们一个机会，在一个真实、复杂而又重视性能的应用中证明了 MobX 的理念。
+我们要特别鸣谢 [Mendix](https://github.com/mendix)，他们为 MobX 的维护提供了灵活性和支持，也给了我们一个机会，在一个真实而又复杂的性能关键型应用中证明了 MobX 的理念。
