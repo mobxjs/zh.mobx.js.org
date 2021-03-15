@@ -1,51 +1,50 @@
 ---
-title: 分析反应性
-sidebar_label: Analyzing reactivity {🚀}
+title: 分析响应式
+sidebar_label: 分析响应式 {🚀}
 hide_title: true
 ---
 
 <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBD4KQ7&placement=mobxjsorg" id="_carbonads_js"></script>
 
-# Analyzing reactivity {🚀}
+# 分析响应式 {🚀}
 
-# Using `trace` for debugging
+# 使用 `trace` 进行调试
 
-Trace is a small utility that helps you find out why your computed values, reactions or components are re-evaluating.
+`trace` 是一个可以帮你发现为什么 `computed`, `reaction` 或 component 为什么会重新
+的小工具。
 
-It can be used by simply importing `import { trace } from "mobx"`, and then putting it inside a reaction or computed value.
-It will print why it is re-evaluating the current derivation.
+通过  `import { trace } from "mobx"` 导入 `trace`，然后在 `computed` 或 `reaction` 函数内部调用它，它就会打印出当前派生值为什么会重新计算。
 
-Optionally it is possible to automatically enter the debugger by passing `true` as the last argument.
-This way the exact mutation that causes the reaction to re-run will still be in stack, usually ~8 stack frames up. See the image below.
+`trace` 函数最后一个参数 `enterBreakPoint` 是可选的，如果传入 `true` 则会自动进入调试模式。这样以来引起 `raction` 重新计算的变动还在调用栈中，通常处于往上回溯大约8个调用栈的位置，请看下图。
 
-In debugger mode, the debug information will also reveal the full derivation tree that is affecting the current computation / reaction.
+在调试模式中，调试信息中会展示出影响当前 computation 或 reaction 的完整的派生树。
 
 ![trace](assets/trace-tips2.png)
 
 ![trace](assets/trace.gif)
 
-## Live examples
+## 在线示例
 
-Simple [CodeSandbox `trace` example](https://codesandbox.io/s/trace-dnhbz?file=/src/index.js:309-338).
+[CodeSandbox `trace` 示例](https://codesandbox.io/s/trace-dnhbz?file=/src/index.js:309-338)
 
-[Here's a deployed example](https://csb-nr58ylyn4m-hontnuliaa.now.sh/) for exploring the stack.
-Make sure to play with the chrome debugger's blackbox feature!
+[这个部署在 now.sh 上的例子](https://csb-nr58ylyn4m-hontnuliaa.now.sh/) 可以用来研究调用堆栈，请确保你使用了 Chrome 调试器的 blackbox 特性。
+【译者注：该示例已经失效，此处提到的 Chrome 调试器的 blackbox 现已更名为 Ignore List，可以在调试时跳过某些库，让调试更有效率】
 
-## Usage examples
+## 用法示例
 
-There are different ways of calling `trace()`, some examples:
+`trace()` 有几种用法，下面是些例子:
 
 ```javascript
 import { observer } from "mobx-react"
 import { trace } from "mobx"
 
 const MyComponent = observer(() => {
-    trace(true) // Enter the debugger whenever an observable value causes this component to re-run.
+    trace(true) // 当某个可监听值发生变化导致组件重新运行时进入调试模式
     return <div>{this.props.user.name}</name>
 })
 ```
 
-Enable trace by using the `reaction` argument of a reaction / autorun:
+通过 `reaction` 或 `autorun` 函数的参数 `reaction` 来启用 `trace`：
 
 ```javascript
 mobx.autorun("logger", reaction => {
@@ -54,60 +53,59 @@ mobx.autorun("logger", reaction => {
 })
 ```
 
-Pass in the property name of a computed property:
+在 `trace` 函数中传入对象和它的 `computed` 属性名：
 
 ```javascript
 trace(user, "fullname")
 ```
 
-# Introspection APIs
+# 内省 API
 
-The following APIs might come in handy if you want to inspect the internal state of MobX while debugging, or want to build cool tools on top of MobX.
-Also relevant are the various [`isObservable*` APIs](api.md#isobservable).
+如果你在调试时想检查 Mobx 的内部状态，或基于 Mobx 实现一些很酷的工具，下面的这些方法就会派上用场。还有各种相关的[`isObservable*` API](api.md#isobservable).
 
 ### `getDebugName`
 
-Usage:
+用法：
 
 -   `getDebugName(thing, property?)`
 
-Returns a (generated) friendly debug name of an observable object, property, reaction etc. Used for example by the [MobX developer tools](https://github.com/mobxjs/mobx-devtools).
+返回可监听对象，属性，`reaction`等的一个（生成的）便于调试的名字，比如它就被 [MobX developer tools](https://github.com/mobxjs/mobx-devtools)所使用。
 
 ### `getDependencyTree`
 
-Usage:
+用法：
 
 -   `getDependencyTree(thing, property?)`.
 
-Returns a tree structure with all observables the given reaction / computation currently depends upon.
+返回指定 reaction 或 computation 当前所依赖的所有可监听值所组成的树结构。
 
 ### `getObserverTree`
 
-Usage:
+用法：
 
 -   `getObserverTree(thing, property?)`.
 
-Returns a tree structure with all reactions / computations that are observing the given observable.
+返回正在监听指定可监听对象的所有 `reaction` 和 
+所组成的树结构。
 
 ### `getAtom`
 
-Usage:
+用法：
 
 -   `getAtom(thing, property?)`.
 
-Returns the backing _Atom_ of a given observable object, property, reaction etc.
+返回指定可监听对象，属性或 `reaction` 背后的 _Atom_.
 
 # Spy
 
-Usage:
+用法：
 
 -   `spy(listener)`
 
-Registers a global spy listener that listens to all events that happen in MobX.
-It is similar to attaching an `observe` listener to _all_ observables at once, but also notifies about running (trans/re)actions and computations.
-Used for example by the [MobX developer tools](https://github.com/mobxjs/mobx-devtools).
+注册一个全局的 spy 监听器来监听 Mobx 里发生的所有事件，相当于一次性给**所有**可监听对象添加了 `observe` 监听器，但也会通知到运行着的 transaction, reaction 和 computation。
+比如它就被 [MobX developer tools](https://github.com/mobxjs/mobx-devtools)所使用。
 
-Example usage of spying all actions:
+这是一个监视所有 action 的例子：
 
 ```javascript
 spy(event => {
@@ -118,21 +116,19 @@ spy(event => {
 ```
 
 Spy listeners always receive one object, which usually has at least a `type` field. The following events are emitted by default by spy:
+`spy`监听器总是收到一个至少带有`type`字段的对象，下面的事件都是 `spy` 默认触发的。
 
-| Type                            | observableKind | Other fields                                                   | Nested |
+| 类型                             | 可监听类型      | 其他字段                                                        | 是否嵌套 |
 | ------------------------------- | -------------- | -------------------------------------------------------------- | ------ |
 | action                          |                | name, object (scope), arguments[]                              | yes    |
 | scheduled-reaction              |                | name                                                           | no     |
 | reaction                        |                | name                                                           | yes    |
 | error                           |                | name, message, error                                           | no     |
-| add,update,remove,delete,splice |                | Check out [Intercept & observe {🚀}](intercept-and-observe.md) | yes    |
-| report-end                      |                | spyReportEnd=true, time? (total execution time in ms)          | no     |
+| add,update,remove,delete,splice |                | 参考 [Intercept & observe {🚀}](intercept-and-observe.md)       | yes    |
+| report-end                      |                | spyReportEnd=true, time? (毫秒单位的总执行时间)                   | no     |
 
-The `report-end` events are part of an earlier fired event that had `spyReportStart: true`.
-This event indicates the end of an event and this way groups of events with sub-events are created.
-This event might report the total execution time as well.
+`report-end` 事件是前一个带有 `spyReportStart: true` 属性的事件的一部分，这个事件表示一个事件的结束，并创建了一个带有子事件的事件组，这个事件也可能会报告总执行时间。
 
-The spy events for observable values are identical to the events passed to `observe`.
-In production builds, the `spy` API is a no-op as it will be minimized away.
+可监听值的 `spy` 事件和传递给 `observe` 的事件相同，在 Mobx 的生产版本中，`spy` API 会被删除，变成一个空函数。
 
-Check out the [Intercept & observe {🚀}](intercept-and-observe.md#event-overview) section for an extensive overview.
+更多信息请参考 [Intercept & observe {🚀}](intercept-and-observe.md#event-overview) 章节。
