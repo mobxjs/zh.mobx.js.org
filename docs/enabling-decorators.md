@@ -6,12 +6,12 @@ hide_title: true
 
 <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBD4KQ7&placement=mobxjsorg" id="_carbonads_js"></script>
 
-# Enabling decorators {🚀}
+# 启用装饰器语法 {🚀}
 
-MobX before version 6 encouraged the use of ES.next decorators to mark things as `observable`, `computed` and `action`. However, decorators are currently not an ES standard, and the process of standardization is taking a long time. It also looks like the standard will be different from the way decorators were implemented previously. In the interest of compatibility we have chosen to move away from them in MobX 6, and recommend the use of [`makeObservable` / `makeAutoObservable`](observable-state.md) instead.
+在版本6之前，Mobx鼓励使用ES.next中的decorators,将某个对象标记为`observable`, `computed` 和 `action`。然而，装饰器语法尚未定案以及未被纳入ES标准，标准化的过程还需要很长时间，且未来制定的标准可能与当前的装饰器实现方案有所不同。出于兼容性的考虑，我们在MobX 6中放弃了它们，并建议使用[`makeObservable` / `makeAutoObservable`](observable-state.md)代替。
 
-But many existing codebases use decorators, and a lot of the documentation and tutorial material online uses them as well. The rule is that anything you can use as an annotation to `makeObservable`, such as `observable`, `action` and `computed`, you can also use as a decorator. So let's examine what that looks like:
-
+鉴于目前仍有很多代码库，在线文档和教程在使用decorator，我们的规则是，任何可以使用`observable`, `action` 和 `computed`等注解的地方，你也可以使用decorator。 下面是示例：
+ 
 ```javascript
 import { makeObservable, observable, computed, action } from "mobx"
 
@@ -44,17 +44,15 @@ class TodoList {
 }
 ```
 
-MobX before version 6 did not require the `makeObservable(this)` call in the constructor, but because it makes the implementation of decorator simpler and more compatible, it now does. This instructs MobX to make the instances observable following the information in the decorators -- the decorators take the place of the second argument to `makeObservable`.
+版本6之前的Mobx,不需要在构造函数中调用`makeObservable(this)`。在版本6中，为了让装饰器的实现更简单以及保证装饰器的兼容性，必须在构造函数中调用`makeObservable(this)`。Mobx可以根据 `makeObservable`第二个参数提供的装饰器信息，将实例设置为observable。
 
-We intend to continue to support decorators in this form.
-Any existing MobX 4/5 codebase can be migrated to use `makeObservable` calls by our [code-mod](https://www.npmjs.com/package/mobx-undecorate).
-When migrating from MobX 4/5 to 6, we recommend to always run the code-mod, to make sure the necessary `makeObservable` calls are generated.
+我们打算以这种方式来继续支持decorators。通过使用[代码转换工具](https://www.npmjs.com/package/mobx-undecorate) ,你可以将任何现有的 MobX 4/5 项目，转换成使用`makeObservable`的项目。 当你将你的项目从 MobX4/5 迁移到 MobX6 时，我们建议你始终运行[代码转换工具](https://www.npmjs.com/package/mobx-undecorate) ，以确保生成了必要的`makeObservable`。
 
-Check out the [Migrating from MobX 4/5 {🚀}](migrating-from-4-or-5.md) section.
+查看 [MobX 4/5 升级指南 {🚀}](migrating-from-4-or-5.md) 
 
 ## 将`observer` 作为装饰器使用
 
-`mobx-react`中的除了可以作为函数来使用，`observer`也可以作为装饰器，用来修饰类组件：
+`mobx-react`中的`observer`除了可以作为函数来使用，也可以作为装饰器，用来修饰类组件：
 
 ```javascript
 @observer
@@ -65,7 +63,7 @@ class Timer extends React.Component {
 
 ## 启用装饰器语法支持
 
-We do not recommend new codebases that use MobX use decorators until the point when they become an official part of the language, but you can still use them. It does require setup for transpilation so you have to use Babel or TypeScript.
+在装饰器语法被正式纳入JavaScript官方规范之前，我们不建议你在使用MobX的项目里使用它。如果要使用装饰器语法，你必须使用Babel或Typescript对它进行转译。
 
 ### TypeScript
 
@@ -80,14 +78,14 @@ We do not recommend new codebases that use MobX use decorators until the point w
     "plugins": [
         ["@babel/plugin-proposal-decorators", { "legacy": true }],
         ["@babel/plugin-proposal-class-properties", { "loose": false }]
-        // In contrast to MobX 4/5, "loose" must be false!    ^
+        // 与MobX 4/5不同的是, "loose" 必须为 false!    ^
     ]
 }
 ```
 
 ### 装饰器语法 和 Create React App (v2)
 
-Decorators are only supported out of the box when using TypeScript in `create-react-app@^2.1.1` and newer. In older versions or when using vanilla JavaScript use eject, or the [customize-cra](https://github.com/arackaf/customize-cra) package.
+只有使用`create-react-app@^2.1.1`及更新版本创建的Typescript项目，才开箱即用地支持装饰器语法。如果你的项目是使用旧版本`create-react-app`创建的或者是创建的Javascript项目，可以使用`eject`命令或者使用[customize-cra](https://github.com/arackaf/customize-cra) 。
 
 ## 免责声明: 装饰器语法的局限:
 
