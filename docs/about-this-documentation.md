@@ -21,7 +21,7 @@ hide_title: true
 
 ## 指引
 
-要全面了解如何将 MobX 与 React 一起使用，请通读当前的 _Introduction_ 标题，特别是 [MobX 部分的要点](the-gist-of-mobx.md)。它将向您介绍最重要的原则、API以及它们之间的关系。阅读本文后，您应该已经准备好使用 MobX 了！
+要全面了解如何将 MobX 与 React 一起使用，请通读当前的 _Introduction_ 标题，特别是 [MobX 的要点](the-gist-of-mobx.md)。它将向您介绍最重要的原则、API以及它们之间的关系。看完这个，你应该就可以使用 MobX 了！
 
 以下是有关接下来要检查的一些建议：
 
