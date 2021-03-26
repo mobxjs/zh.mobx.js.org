@@ -35,7 +35,7 @@ hide_title: true
 
 -   [computeds](computeds.md) 基本知识
 
--   阅读 [`autorun`](reactions.md#autorun)， 如果只是因为在示例中使用了它
+-   阅读有关 [`autorun`](reactions.md#autorun) 的内容，即使只是因为示例中用到了它
 
 -   要了解如何组织应用程序的数据存储，请查看 [数据存储定义](defining-data-stores.md)
 
