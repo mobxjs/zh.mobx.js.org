@@ -17,7 +17,7 @@ hide_title: true
 
 你可以把文档摘要下载为速查表：
 
-<div class="cheat"><a href="https://gum.co/fSocU"><button title="下载 MobX 6 备忘单和赞助这个项目">下载 MobX 6 备忘单</button></a></div>
+<div class="cheat"><a href="https://gum.co/fSocU"><button title="下载 MobX 6 速查表并赞助本项目">下载 MobX 6 速查表</button></a></div>
 
 ## 指引
 
