@@ -12,7 +12,7 @@ hide_title: true
 
 我们用 {🚀} 记号标记了更高级的部分和概念。除非您有特殊的用例，否则您可能不必了解它们，并且您可以在不了解它们的情况下非常高效地使用 MobX。请随意跳过它们，继续阅读接下来的部分！
 
-MobX 6 的文档已重写。对于旧版本的 MobX，可以在[此处](https://github.com/mobxjs/mobx/tree/mobx4and5/docs)找到。所有原理都是相同的，API 也基本相同。主要区别在于，在 MobX 6 之前，[修饰符](https://github.com/mobxjs/mobx/blob/mobx4and5/docs/best/decorators.md) 是编写 MobX 增强类的推荐语法。
+我们为了 MobX 6 对文档进行了重写。旧版本的 MobX 文档可以在[此处](https://github.com/mobxjs/mobx/tree/mobx4and5/docs)找到。所有原理都是相同的，API 也基本相同。主要区别在于，在 MobX 6 之前，[修饰符](https://github.com/mobxjs/mobx/blob/mobx4and5/docs/best/decorators.md) 是编写 MobX 强化型类的推荐语法。
 
 
 文档摘要可以作为备忘单下载：
