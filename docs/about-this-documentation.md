@@ -19,7 +19,7 @@ hide_title: true
 
 <div class="cheat"><a href="https://gum.co/fSocU"><button title="下载 MobX 6 速查表并赞助本项目">下载 MobX 6 速查表</button></a></div>
 
-## 指引
+## 导览
 
 要全面了解如何将 MobX 与 React 一起使用，请通读当前的 _Introduction_ 标题，特别是 [MobX 的要点](the-gist-of-mobx.md)。它将向您介绍最重要的原则、API以及它们之间的关系。看完这个，你应该就可以使用 MobX 了！
 
