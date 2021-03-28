@@ -77,13 +77,13 @@ function runCodePerLine() {
     }
 
     if (!runLineHandle) {
-        $("#runline-btn").text("Pause")
+        $("#runline-btn").text("暂停")
         runNext()
         runLineHandle = setInterval(runNext, 2000)
     } else {
         clearInterval(runLineHandle)
         runLineHandle = null
-        $("#runline-btn").text("Continue")
+        $("#runline-btn").text("继续")
     }
 }
 
