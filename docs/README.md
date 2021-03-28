@@ -21,16 +21,16 @@ _简单，可扩展的状态管理_
 
 > 不再支持的旧版文档链接可以在这里找到：[MobX 5](https://cn.mobx.js.org)、[MobX 4（LTS）](https://github.com/SangKa/MobX-Docs-CN/tree/4.0.0/docs)、[MobX 3](https://github.com/SangKa/MobX-Docs-CN/tree/3.0.0/docs)。\
 > 不过请务必[首先阅读当前版本的文档](about-this-documentation.html)。\
->  Mobxjs Team 衷心感谢以下参与文档翻译的同学（排名不分先后）
+> Mobxjs Team 衷心感谢以下参与文档翻译的同学（排名不分先后）
 
 <div style="overflow-x: scroll">
     <table style="width: max-content;">
         <tr>  
             <td align="center">
-                <a href="https://github.com/mobxjs/zh.mobx.js.org" target="_blank">
-                    <img src="img/placeholder.svg" width="50px">
+                <a href="https://github.com/Neo42" target="_blank">
+                    <img src="https://avatars.githubusercontent.com/u/22409868?s=100&v=4" width="50px">
                     <br />
-                    <sup style="font-size: 12px">虚位以待</sup>
+                    <sup style="font-size: 12px">Neo42</sup>
                 </a>
             </td>
             <td align="center">
@@ -207,7 +207,7 @@ setInterval(() => {
 ## 延伸资源和文档
 
 -   [MobX 速查表 (也赞助了本项目)](https://gum.co/fSocU)
--   [十分钟交互式入门 MobX 和 React](https://zh.mobx.js.org/getting-started)
+-   [十分钟交互式入门 MobX 和 React](https://zh.mobx.js.org/getting-started.html)
 -   [Egghead.io 课程，基于 MobX 3](https://egghead.io/courses/manage-complex-state-in-react-apps-with-mobx)
 
 ### MobX 书
