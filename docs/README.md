@@ -34,10 +34,10 @@ _简单，可扩展的状态管理_
                 </a>
             </td>
             <td align="center">
-                <a href="https://github.com/mobxjs/zh.mobx.js.org" target="_blank">
-                    <img src="img/placeholder.svg" width="50px">
+                <a href="https://github.com/BlackHole1" target="_blank">
+                    <img src="https://avatars.githubusercontent.com/u/8198408?v=4" width="50px">
                     <br />
-                    <sup style="font-size: 12px">虚位以待</sup>
+                    <sup style="font-size: 12px">Black-Hole</sup>
                 </a>
             </td>
             <td align="center">
