@@ -13,25 +13,25 @@ hide_title: true
 最重要的注解如下：
 
 -   `observable` 定义一个存储 state 的可追踪字段。
--   `action` 将一个可以修改 state 的方法标记为 action。
--   `computed` 标记一个可以由 state 派生处新的值并且缓存输出的 getter。
+-   `action` 将一个方法标记为可以修改 state 的 action。
+-   `computed` 标记一个可以由 state 派生出新的值并且缓存其输出的 getter。
 
-像数组，Maps 和 Sets 这样的集合都可以被自动地转化为可观察对象。
+像数组，Maps 和 Sets 这样的集合都将被自动转化为可观察对象。
 
 ## `makeObservable`
 
-使用：
+用法：
 
 -   `makeObservable(target, annotations?, options?)`
 
-这个函数可以捕获_已经存在_的对象属性并且使得他们可观察。任何 JavaScript 对象（包括类的实例）都可以作为 `target` 被传递给这个函数。
-一般情况下，在类的构建函数中调用 `makeObservable` 函数，并且将 `this` 作为其第一个参数。
+这个函数可以捕获_已经存在_的对象属性并且使得它们可观察。任何 JavaScript 对象（包括类的实例）都可以作为 `target` 被传递给这个函数。
+一般情况下，`makeObservable` 是在类的构造函数中调用的，并且它的第一个参数是 `this` 。
 `annotations` 参数将会为每一个成员映射 [注解](#available-annotations)。需要注意的是，当使用 [装饰器](enabling-decorators.md) 时，`annotations` 参数将会被忽略。
 
-派生额外信息和接受参数的方法（例如：`findUsersOlderThan(age: number): User[]`）不需要任何注解。
-它们的读取操作被其他副作用调用时仍然会被跟踪，但是它们输出出于避免内存泄漏的目的将不会被记录。更详细的信息可以查看 [MobX-utils computedFn {🚀}](https://github.com/mobxjs/mobx-utils#computedfn)。
+派生数据并且接受参数的方法（例如：`findUsersOlderThan(age: number): User[]`）不需要任何注解。
+当我们从一个 reaction 中调用它们时，它们的读取操作仍然会被跟踪，但是为了避免内存泄漏，它们的输出将不会被记忆化。更详细的信息可以查看 [MobX-utils computedFn {🚀}](https://github.com/mobxjs/mobx-utils#computedfn)。
 
-通过 `override` 注解 [支持的子类有一些限制](subclassing.md)。
+Mobx 通过 `override` 注解 [支持子类的使用，但会有一些局限性](subclassing.md)。
 
 <!--DOCUSAURUS_CODE_TABS-->
 <!--class + makeObservable-->
@@ -88,8 +88,8 @@ function createDoubler(value) {
 }
 ```
 
-注意，类也可以利用 `makeAutoObservable`。
-示例中的差异仅说明如何将 MobX 应用于不同的编程风格。
+注意，类也可以跟 `makeAutoObservable` 合用。
+示例中的差异就展示了将 MobX 应用于不同编程风格的方法。
 
 <!--observable-->
 
@@ -112,7 +112,7 @@ const tags = observable(["high prio", "medium prio", "low prio"])
 tags.push("prio: for fun")
 ```
 
-与第一个例子中的 `makeObservable` 不同，`observable` 支持向对象添加（和删除）字段。
+与第一个例子中的 `makeObservable` 不同，`observable` 支持为对象添加（和删除）字段。
 这使得 `observable` 非常适合用于动态对象、Array、Maps、Sets 之类的集合。
 
 <!--END_DOCUSAURUS_CODE_TABS-->
@@ -123,29 +123,29 @@ tags.push("prio: for fun")
 
 -   `makeAutoObservable(target, overrides?, options?)`
 
-`makeAutoObservable` 类似于 `makeObservable`，在默认情况下它将推断所有的属性。你仍然可以使用 `overrides` 重写某些注解的默认行为。
-特别的，`false` 可用于在自动处理中排除一个属性或方法。
-查看上面的代码获取示例。
+`makeAutoObservable` 就像是加强版的 `makeObservable`，在默认情况下它将推断所有的属性。你仍然可以使用 `overrides` 重写某些注解的默认行为。
+具体来说，`false` 可用于从自动处理中排除一个属性或方法。
+查看上面的代码分页获取示例。
 与使用 `makeObservable` 相比，`makeAutoObservable` 函数更紧凑，也更容易维护，因为新成员不需要显式地提及。
-然而，`makeAutoObservable` 不能被用于具有 super 的 [子类](subclassing.md)。
+然而，`makeAutoObservable` 不能被用于带有 super 的类或 [子类](subclassing.md)。
 
 推断规则：
 
--   任何（包含继承的）是 `function` 的成员都将使用 `autoAction` 注解标记。
+-   任何包含一个 `function` 值的成员（包括继承来的）都将使用 `autoAction` 注解标记。
 -   任何 `get`ter 都将使用 `computed` 注解标记。
 -   任何其他的_自有_字段都将使用 `observable` 注解标记。
--   任何（包含继承的）的 generator 函数都将使用 `flow` 注解标记。（需要注意，在某些编译器配置中无法检测到 generator 函数，如果 flow 不能正常运行，请明确的指定 `flow` 注解。）
+-   任何是 generator 函数的成员（包括继承来的）都将使用 `flow` 注解标记。（需要注意，generator 函数在某些编译器配置中无法被检测到，如果 flow 没有正常运行，请务必明确地指定 `flow` 注解。）
 -   在 `overrides` 参数中标记为 `false` 的成员将不会被添加注解。例如，将其用于像标识符这样的只读字段。
 
 ## `observable`
 
-使用：
+用法：
 
 -   `observable(source, overrides?, options?)`
 
-`observable` 注解可以作为一个函数进行调用，从而将整个对象立刻变成可观察的。
+`observable` 注解可以作为一个函数进行调用，从而一次性将整个对象变成可观察的。
 `source` 对象将会被克隆并且所有的成员都将会成为可观察的，类似于 `makeAutoObservable` 做的那样。
-同样的，`overrides` 对象可以为特定的对象提供特定的注解。
+同样，你可以传入一个 `overrides` 对象来为特定的成员提供特定的注解。
 查看上面的代码获取示例。
 
 由 `observable` 返回的对象将会使用 Proxy 包装，这意味着之后被添加到这个对象中的属性也将被侦测并使其转化为可观察对象（除非禁用 [proxy](configuration.md#proxy-support)）。
@@ -155,7 +155,7 @@ tags.push("prio: for fun")
 <details id="observable-array"><summary>**例子：** 可观察数组<a href="#observable-array" class="tip-anchor"></a></summary>
 
 下面的例子创建了一个可观察对象并且使用 [`autorun`](reactions.md#autorun) 观察它。
-处理 Map 和 Set 集合的工作原理类似。
+使用 Map 和 Set 集合时，用法和这里类似。
 
 ```javascript
 import { observable, autorun } from "mobx"
@@ -186,33 +186,33 @@ todos.shift()
 // 打印: 'Remaining: Make coffee, Take a nap'
 ```
 
-可观察的数组还有一些额外的使用函数：
+可观察的数组还有一些特别好用的实用函数：
 
 -   `clear()` 从数组中清除所有元素。
--   `replace(newItems)` 将数组中现有的成员全部替换成 newItems。
+-   `replace(newItems)` 将数组中现有的元素全部替换成 newItems。
 -   `remove(value)` 根据 value 从数组中删除一个元素。如果找到并删除了元素，返回  `true`。
 
 </details>
 
 <details id="non-convertibles"><summary>**注意：** 原始值和类的实例永远不会被转化为可观察对象<a href="#non-convertibles" class="tip-anchor"></a></summary>
 
-MobX 无法使原始值可观察，因为他们在 JavaScript 中是不可变的（但是可以将他们 [包装](api.md#observablebox)）。
-尽管在通常情况下不会在 MobX 的外部使用这样的机制。
+MobX 无法使原始值可观察，因为它们在 JavaScript 中是不可变的（但是 Mobx 可以将它们 [包装](api.md#observablebox)起来）。
+尽管在我们不使用库时通常不会用到这样的机制。
 
-即使将类的实例传递给 `observable` 或者将其分配给一个 `observable` 属性，类的实例也永远不会成为可观察对象。
-在类的构造函数中使得类成员成为可观察对象。
+我们永远无法通过把类的实例传入 `observable` 或用其给一个 `observable` 属性赋值来将其自动转化成可观察对象。
+一般认为应该由类构造函数负责将类成员转化成可观察对象。
 
 </details>
 
-<details id="avoid-proxies"><summary>{🚀} **提示：** observable（proxied）与 makeObservable（unproxied）<a href="#avoid-proxies" class="tip-anchor"></a></summary>
+<details id="avoid-proxies"><summary>{🚀} **提示：** observable（使用代理）与 makeObservable（不使用代理）<a href="#avoid-proxies" class="tip-anchor"></a></summary>
 
-`make(Auto)Observable` 和 `observable` 之间最主要的区别在于，`make(Auto)Observable` 修改你在第一个参数位传递的对象，而 `observable` 创建一个可观察的 _clone_ 对象。
+`make(Auto)Observable` 和 `observable` 之间最主要的区别在于，`make(Auto)Observable` 会修改你作为第一个参数传入的对象，而 `observable` 会创建一个可观察的 _副本_ 对象。
 
-第二个区别是，`observable` 创建一个 [`Proxy`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) 对象，以便在将该对象用作动态查找图时能够捕获将要添加的属性。
-如果你想让可观察的对象具有一个常规的结构，其中所有的成员都是事先已知的，我们建议使用 `makeObservable`，因为非代理对象速度更快，而且它们更容易在 `debugger` 和 `console.log` 中检查。
+第二个区别是，`observable` 会创建一个 [`Proxy`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) 对象，以便能够在你将该对象当作动态查询映射使用时捕获将要添加的属性。
+如果你想把一个对象转化为可观察对象，而这个对象具有一个常规结构，其中所有的成员都是事先已知的，那么我们建议使用 `makeObservable`，因为非代理对象的速度稍快一些，而且它们在调试器和 `console.log` 中更容易检查。
 
 因此，`make(Auto)Observable` 推荐在工厂函数中使用。
-值得一提的是，可以将 `{ proxy: false }` 作为 option 传递给 `observable` 获取非代理的克隆。
+值得一提的是，可以将 `{ proxy: false }` 作为 option 传入 `observable` 获取非代理副本。
 
 </details>
 
@@ -220,21 +220,21 @@ MobX 无法使原始值可观察，因为他们在 JavaScript 中是不可变的
 
 | 注解                               | 描述                                                         |
 | ---------------------------------- | ------------------------------------------------------------ |
-| `observable`<br/>`observable.deep` | 定义一个存储 state 的可跟踪字段。如果可能，任何被声明为 `observable` 的字段都将是递归可观察的。也就是说，当且仅当值是纯对象，数组，Map 和 Set 时是递归可观察的。 |
-| `observable.ref`                   | 类似于 `observable`，但是仅会跟踪重新分配空间的变化。分配的值本身将不会自动变为可观察的。例如，你打算将不可变数据存储在可观察字段中，请使用这个注解。 |
-| `observable.shallow`               | 类似于 `observable.ref` 但是是针对集合的。任何集合的声明都会是可观察的，但是他们内容的并不会成为可观察的。 |
-| `observable.struct`                | 类似于 `observable`，除了结构上与当前值相同的值，其他的值都将被忽略。 |
-| `action`                           | 使得函数成为可以修改 state 的 action。查看 [actions](actions.md) 获取更多信息。不可写。 |
+| `observable`<br/>`observable.deep` | 定义一个存储 state 的可跟踪字段。任何被赋给 `observable` 字段的值在其可以被转化时（也就是说，当且仅当该值是纯对象，数组，Map 或 Set 时）都将被递归转化为可观察值。 |
+| `observable.ref`                   | 类似于 `observable`，但只有重新赋值才会被追踪。所赋的值本身并不会被自动转化为可观察值。比方说，在你打算将不可变数据存储在可观察字段中时，可以使用这个注解。 |
+| `observable.shallow`               | 类似于 `observable.ref` 但是是用于集合的。任何所赋的集合都会被转化为可观察值，但是其内部的值并不会变为可观察值。 |
+| `observable.struct`                | 类似于 `observable`，但是会忽略所赋的值中所有在结构上与当前值相同的值。 |
+| `action`                           | 把一个函数标记为会修改 state 的 action。查看 [actions](actions.md) 获取更多信息。不可写。 |
 | `action.bound`                     | 类似于 action，但是会将 action 绑定到实例，因此将始终设置 `this`。不可写。 |
-| `computed`                         | 可以作为 [getter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get) 使用，将其声明为可缓存的派生值。查看 [computeds](computeds.md) 获取更多信息。 |
-| `computed.struct`                  | 类似于 `computed`，除了计算之后结果在结构上相当于之前的结果，否则不会通知观察者。 |
+| `computed`                         | 可以用在 [getter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get) 上，用来将其声明为可缓存的派生值。查看 [computeds](computeds.md) 获取更多信息。 |
+| `computed.struct`                  | 类似于 `computed`，但如果重新计算后的结果在结构上与之前的结果相等，那么观察者将不会收到通知。 |
 | `true`                             | 推断最佳注解。查看 [makeAutoObservable](#makeautoobservable) 获取更多信息。 |
-| `false`                            | 不使用注解注释此属性。                                       |
-| `flow`                             | 创建一个 `flow` 管理一部进程。查看 [flow](actions.md#using-flow-instead-of-async--await-) 获取更多信息。需要注意的是，在 TypeScript 中的返回类型推断可能无效。 不可写。 |
+| `false`                            | 刻意不为该属性指定注解。                                       |
+| `flow`                             | 创建一个 `flow` 管理异步进程。查看 [flow](actions.md#using-flow-instead-of-async--await-) 获取更多信息。需要注意的是，推断出来的 TypeScript 返回类型可能会出错。 不可写。 |
 | `override`                         | [用于子类覆盖继承的 `action`，`flow`，`computed`，`action.bound`](subclassing.md)。 |
-| `autoAction`                       | 不应显式使用，而应由 `makeAutoObservable` 自动调用，以根据调用上下文将方法标识为 action 或者派生值。 |
+| `autoAction`                       | 不应被显式调用，但 `makeAutoObservable` 内部会对其进行调用，以便根据调用上下文将方法标识为 action 或者派生值。 |
 
-## 限制
+## 局限性
 
 1. `make(Auto)Observable` 仅支持已经定义的属性。确保你的 [**编译器选项**是正确的](installation.md#use-spec-compliant-transpilation-for-class-properties)，或者在使用 `make(Auto)Observable` 之前确保已经为所有属性分配了值。如果没有正确的配置，已经声明但是没有初始化的值（例如：`class X { y; }`）将不能被自动侦测到。
 1. `makeObservable` 只能注解类定义本身声明的属性。如果在子类或者超类中引入了可观察字段，则必需为那些属性本身调用 `makeObservable`。
@@ -292,5 +292,5 @@ MobX 原则上对此没有限制，并且可能有许多使用普通对象的 Mo
 但是，使用类的一个好处是更容易被索引以实现自动补全等功能，例如使用 TypeScript。
 另外，`instanceof` 非常强大，可以方便的用于类型推断，并且类实例不会被包装在 `Proxy` 对象中，从而提供更好的调试体验。
 最后，使用类可以从引擎优化中受益，因为它们是可预测的并且方法在原型上是共享的。
-但是，繁重的继承很容易成为军火库，因此如果使用类，请尽量使其保持简单。
+但是，复杂的继承模式很容易给您自己带来不必要的麻烦，因此如果您想使用类，请尽量使其保持简单。
 因此，尽管稍微倾向于使用类，但如果有更适合您的，我们肯定会鼓励您偏离这种风格。
