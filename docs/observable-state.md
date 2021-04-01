@@ -9,7 +9,7 @@ hide_title: true
 # 创建可观察状态
 
 属性，完整的对象，数组，Maps 和 Sets 都可以被转化为可观察对象。
-使得对象可观察的关键是使用 `makeObservable` 为每个属性指定特殊的注解。
+使得对象可观察的基本方法是使用 `makeObservable` 为每个属性指定一个注解。
 最重要的注解如下：
 
 -   `observable` 定义一个存储在 state 中的可追踪字段。
