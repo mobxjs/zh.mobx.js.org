@@ -12,7 +12,7 @@ hide_title: true
 使得对象可观察的基本方法是使用 `makeObservable` 为每个属性指定一个注解。
 最重要的注解如下：
 
--   `observable` 定义一个存储在 state 中的可追踪字段。
+-   `observable` 定义一个存储 state 的可追踪字段。
 -   `action` 将一个可以修改 state 的方法标记为 action。
 -   `computed` 标记一个可以由 state 派生处新的值并且缓存输出的 getter。
 
