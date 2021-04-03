@@ -1,17 +1,16 @@
 ---
-title: 分析响应式
-sidebar_label: 分析响应式 {🚀}
+title: 分析响应性
+sidebar_label: 分析响应性 {🚀}
 hide_title: true
 ---
 
 <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBD4KQ7&placement=mobxjsorg" id="_carbonads_js"></script>
 
-# 分析响应式 {🚀}
+# 分析响应性 {🚀}
 
 # 使用 `trace` 进行调试
 
-`trace` 是一个可以帮你发现为什么 `computed`, `reaction` 或 component 为什么会重新
-的小工具。
+`trace` 是一个可以帮你发现 `computed`, `reaction` 或 component 为什么会重新计算的小工具。
 
 通过  `import { trace } from "mobx"` 导入 `trace`，然后在 `computed` 或 `reaction` 函数内部调用它，它就会打印出当前派生值为什么会重新计算。
 
@@ -115,8 +114,7 @@ spy(event => {
 })
 ```
 
-Spy listeners always receive one object, which usually has at least a `type` field. The following events are emitted by default by spy:
-`spy`监听器始终接收一个对象，这个对象一般至少带有一个`type`字段。下面的事件都是 `spy` 默认触发的。
+`spy`监听器始终接收一个对象，这个对象一般至少带有一个`type`字段。下面的事件都是 `spy` 默认触发的：
 
 | 类型                             | 可监听类型      | 其他字段                                                        | 是否嵌套 |
 | ------------------------------- | -------------- | -------------------------------------------------------------- | ------ |
