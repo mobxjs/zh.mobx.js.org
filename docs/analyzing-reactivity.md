@@ -69,7 +69,7 @@ trace(user, "fullname")
 
 -   `getDebugName(thing, property?)`
 
-返回可监听对象，属性，`reaction`等的一个（生成的）便于调试的名字，比如它就被 [MobX developer tools](https://github.com/mobxjs/mobx-devtools)所使用。
+为可监听对象，属性，`reaction`等返回一个（生成的）便于调试的名字。比如，这个方法就被 [MobX 开发者工具](https://github.com/mobxjs/mobx-devtools)所使用。
 
 ### `getDependencyTree`
 
