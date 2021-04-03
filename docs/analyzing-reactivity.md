@@ -116,7 +116,7 @@ spy(event => {
 ```
 
 Spy listeners always receive one object, which usually has at least a `type` field. The following events are emitted by default by spy:
-`spy`监听器总是收到一个至少带有`type`字段的对象，下面的事件都是 `spy` 默认触发的。
+`spy`监听器始终接收一个对象，这个对象一般至少带有一个`type`字段。下面的事件都是 `spy` 默认触发的。
 
 | 类型                             | 可监听类型      | 其他字段                                                        | 是否嵌套 |
 | ------------------------------- | -------------- | -------------------------------------------------------------- | ------ |
