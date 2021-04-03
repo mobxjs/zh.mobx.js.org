@@ -103,7 +103,7 @@ trace(user, "fullname")
 -   `spy(listener)`
 
 注册一个全局的 spy 监听器来监听 Mobx 里发生的所有事件，相当于一次性给**所有**可监听对象添加了 `observe` 监听器，但也会通知到运行着的 transaction, reaction 和 computation。
-比如它就被 [MobX developer tools](https://github.com/mobxjs/mobx-devtools)所使用。
+比如，这个方法就被 [MobX 开发者工具](https://github.com/mobxjs/mobx-devtools)所使用。
 
 这是一个监视所有 action 的例子：
 
