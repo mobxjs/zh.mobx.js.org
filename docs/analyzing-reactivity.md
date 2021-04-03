@@ -27,7 +27,7 @@ hide_title: true
 
 [CodeSandbox `trace` 示例](https://codesandbox.io/s/trace-dnhbz?file=/src/index.js:309-338)
 
-[这个部署在 now.sh 上的例子](https://csb-nr58ylyn4m-hontnuliaa.now.sh/) 可以用来研究调用堆栈，请确保你使用了 Chrome 调试器的 blackbox 特性。
+[这个部署在 now.sh 上的例子](https://csb-nr58ylyn4m-hontnuliaa.now.sh/) 可以用来研究调用堆栈，请务必尝试一下 Chrome 调试器的 blackbox 特性！
 【译者注：该示例已经失效，此处提到的 Chrome 调试器的 blackbox 现已更名为 Ignore List，可以在调试时跳过某些库，让调试更有效率】
 
 ## 用法示例
