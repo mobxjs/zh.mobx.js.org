@@ -59,7 +59,7 @@ mobx.autorun("logger", reaction => {
 trace(user, "fullname")
 ```
 
-# 内省 API
+# 内部检查 API
 
 如果你在调试时想检查 Mobx 的内部状态，或基于 Mobx 实现一些很酷的工具，下面的这些方法就会派上用场。还有各种相关的[`isObservable*` API](api.md#isobservable).
 
