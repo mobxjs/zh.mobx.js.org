@@ -127,7 +127,7 @@ Spy listeners always receive one object, which usually has at least a `type` fie
 | add,update,remove,delete,splice |                | 参考 [Intercept & observe {🚀}](intercept-and-observe.md)       | yes    |
 | report-end                      |                | spyReportEnd=true, time? (毫秒单位的总执行时间)                   | no     |
 
-`report-end` 事件是前一个带有 `spyReportStart: true` 属性的事件的一部分，这个事件表示一个事件的结束，并创建了一个带有子事件的事件组，这个事件也可能会报告总执行时间。
+`report-end` 事件是一个先前触发的、带有 `spyReportStart: true` 属性的事件的一部分，这个事件表示一个事件的结束，而这样一来，几个由若干子事件组成的事件组就被创建出来了。这个事件也可能会报告总执行时间。
 
 可监听值的 `spy` 事件和传递给 `observe` 的事件相同。在 Mobx 的生产版本中，`spy` API 会在压缩过程中被删除，因而变成一个 no-op 语句。
 
