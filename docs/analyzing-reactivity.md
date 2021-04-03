@@ -15,7 +15,7 @@ hide_title: true
 
 通过  `import { trace } from "mobx"` 导入 `trace`，然后在 `computed` 或 `reaction` 函数内部调用它，它就会打印出当前派生值为什么会重新计算。
 
-`trace` 函数最后一个参数 `enterBreakPoint` 是可选的，如果传入 `true` 则会自动进入调试模式。这样以来引起 `raction` 重新计算的变动还在调用栈中，通常处于往上回溯大约8个调用栈的位置，请看下图。
+你也可以选择把 `true` 作为最后一个参数传入 `trace` 从而自动进入调试模式。这样以来引起 `reaction` 重新计算的那个变动就还会停留在调用栈中，通常处于往上大约 8 个栈帧的位置，请看下图。
 
 在调试模式中，调试信息中会展示出影响当前 computation 或 reaction 的完整的派生树。
 
