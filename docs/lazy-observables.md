@@ -14,7 +14,7 @@ Usage:
 -   `onBecomeUnobserved(observable, property?, listener: () => void): (() => void)`
 
 `onBecomeObserved`和`onBecomeUnobserved`方法可以给现有的可观察对象附加惰性行为或副作用。它们是MobX可观察系统的钩子并且
-当可观察对象_开始_和_停止_被观察时，它们会得到通知。它们都返回一个用来取消_监听器_的_disposer_函数。
+当可观察对象_开始_和_停止_被观察时，它们会得到通知。它们都返回一个用来取消_listener_的_disposer_函数。
 
 在下面的示例中，我们只在实际使用被观察值时才使用它们来执行网络获取。
 
