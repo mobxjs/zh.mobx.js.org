@@ -1,5 +1,5 @@
 ---
-title: Creating lazy observables
+title: 创建惰性 observables
 sidebar_label: Lazy observables {🚀}
 hide_title: true
 ---
