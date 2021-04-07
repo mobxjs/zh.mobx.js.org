@@ -1,21 +1,22 @@
 ---
 title: 创建惰性 observables
-sidebar_label: Lazy observables {🚀}
+sidebar_label: 惰性 observables {🚀}
 hide_title: true
 ---
 
 <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBD4KQ7&placement=mobxjsorg" id="_carbonads_js"></script>
 
-# Creating lazy observables {🚀}
+# 创建惰性 observables {🚀}
 
 Usage:
 
 -   `onBecomeObserved(observable, property?, listener: () => void): (() => void)`
 -   `onBecomeUnobserved(observable, property?, listener: () => void): (() => void)`
 
-Functions `onBecomeObserved` and `onBecomeUnobserved` can be used to attach lazy behavior or side effects to existing observables. They are hooks into the observability system of MobX and get notified when the observables _start_ and _stop_ becoming observed. They both return a _disposer_ function that detaches the _listener_.
+`onBecomeObserved`和`onBecomeUnobserved`方法可以给现有的可观察对象附加惰性行为或副作用。它们是MobX可观察系统的钩子并且
+当可观察对象_开始_和_停止_被观察时，它们会得到通知。它们都返回一个用来取消_监听器_的_disposer_函数。
 
-In the example below we use them to perform network fetches only when the observed value is actually in use.
+在下面的示例中，我们只在实际使用被观察值时才使用它们来执行网络获取。
 
 ```javascript
 export class City {
@@ -29,7 +30,7 @@ export class City {
             suspend: false
         })
         this.location = location
-        // Only start data fetching if temperature is actually used!
+        // 只有在实际使用温度时才开始获取数据!
         onBecomeObserved(this, "temperature", this.resume)
         onBecomeUnobserved(this, "temperature", this.suspend)
     }
@@ -46,7 +47,7 @@ export class City {
     }
 
     fetchTemperature = flow(function* () {
-        // Data fetching logic...
+        // 数据获取逻辑...
     })
 }
 ```
