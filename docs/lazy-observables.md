@@ -47,7 +47,7 @@ export class City {
     }
 
     fetchTemperature = flow(function* () {
-        // 数据获取逻辑...
+        // 获取数据的逻辑...
     })
 }
 ```
