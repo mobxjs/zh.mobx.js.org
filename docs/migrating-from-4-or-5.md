@@ -27,7 +27,7 @@ _⚠️ **警告**: 根据你的代码库的大小和复杂性、MobX使用模�
     - (可选) 在MobX 6中，decorators已经变为可选项。 如果你不想再使用decorators，在你的TypeScript配置中移除或者禁用`experimentalDecorators`。 查看 [Enabling decorators {🚀}](enabling-decorators.md) 章节以了解更多细节。
 6. MobX默认配置变得更加严格。 我们建议在完成升级后采用新的默认值，查看 [Configuration {🚀}](configuration.md) 章节。 在迁移过程中，我们建议以v4/v5开箱即用的相同方式配置MobX: `import {configure} from "mobx"; configure({ enforceActions: "never" });`。 在完成整个迁移过程并确认您的项目按预期工作之后，请考虑启用`computedRequiresReaction`、`reactionRequiresObservable`和`observableRequiresReaction`以及`enforceActions: "observed"`来编写更符合MobX习惯的代码。
 
-## Upgrading classes to use `makeObservable` 升级类以使用`makeObservable`
+## 升级类以使用`makeObservable`
 
 由于标准化的JavaScript在如何构造类字段方面的限制，MobX不再可能通过装饰器或`decorate`工具来改变类字段的行为。作为代替，字段必须通过`constructor`定义为observable。有三种不同的实现方式:
 
@@ -40,11 +40,11 @@ _⚠️ **警告**: 根据你的代码库的大小和复杂性、MobX使用模�
 需要注意的一些细节:
 
 1. 在每个声明MobX的基础成员的类定义中都需要使用`makeObservable` / `makeAutoObservable`。 因此，如果子类和超类都引入了observable成员，它们都必须调用`makeObservable`。
-2. `makeAutoObservable`将使用新的decorator`autoAction`标记方法，只有当`action`不在派生上下文中时，它才会应用`action`。这使得从计算属性中调用自动装饰的方法也很安全。
+2. `makeAutoObservable`将使用新的装饰器`autoAction`标记方法，只有当方法不在派生上下文中时，它才会应用`action`。这使得从计算属性中调用自动装饰的方法也很安全。
 
 迁移带有许多类的大型代码库可能是令人生畏的。但是不用担心，有一个code-mod可以自动完成上述过程!!
 
-## 使用`mobx-undecorate`codemod 升级你的代码
+## 使用`mobx-undecorate` codemod 升级你的代码
 
 如果你是一个现有的MobX用户，你的代码使用了许多decorators，或者对`decorate`的等效调用。
 
