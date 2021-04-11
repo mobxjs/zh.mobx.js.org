@@ -10,7 +10,7 @@ hide_title: true
 
 MobX 6与MobX 5有很大的不同。这一页涵盖了从MobX 4/5到6的迁移指南和所有更改的详细列表。
 
-为了更好地理解，请查看MobX 6.0[CHANGELOG](https://github.com/mobxjs/mobx/blob/main/packages/mobx/CHANGELOG.md#600).
+为了更好地理解，请查看MobX 6.0 [CHANGELOG](https://github.com/mobxjs/mobx/blob/main/packages/mobx/CHANGELOG.md#600).
 
 _⚠️ **警告**: 根据你的代码库的大小和复杂性、MobX使用模式和自动化测试的质量等因素，本迁移指南可能会耗费你一小时到几天的时间。如果你对你的持续集成没有信心或者无法有足够的QA /测试应对任何意外的故障，请避免升级。意想不到的行为变化可能是由于MobX本身的变化或者Babel / TypeScript构建配置的变化引起的。 ⚠️_
 
@@ -20,7 +20,7 @@ _⚠️ **警告**: 根据你的代码库的大小和复杂性、MobX使用模�
 2. 将`mobx`更新到版本6。
 3. 如果你从Mobx 4升级，并且需要兼容不支持Proxy的IE / React Native，请在应用初始化时引入`import { configure } from "mobx"; configure({ useProxies: "never" })`以禁用Proxy实现。 查看 [Proxy Support](configuration.md#proxy-support) 章节以了解更多细节
 4. 对于babel用户:
-    - 如果你正在使用Babel并启用了类属性，那么请禁用loose字段支持: `["@babel/plugin-proposal-class-properties", { "loose": false }]`
+    - 如果你正在使用Babel并启用了类属性，那么请禁用loose字段: `["@babel/plugin-proposal-class-properties", { "loose": false }]`
     - (可选) 在MobX 6中，decorators已经变为可选项。如果你不想再使用decorators，从你的babel配置和dependencies中移除`plugin-proposal-decorators`。 查看 [Enabling decorators {🚀}](enabling-decorators.md) 章节以了解更多细节。
 5. 对于Typescript用户:
     - 在你的编译器配置中添加`"useDefineForClassFields": true`。
