@@ -13,6 +13,7 @@ Mobx 通常会像你所期待的那样对确定的一些事物做出响应，这
 面对这些情况，理解 Mobx 如何确定要对哪些事物做出响应是十分重要的。
 
 > MobX reacts to any _existing_ **observable** _property_ that is read during the execution of a tracked function.
+
 > Mobx 会对跟踪函数执行时读取的任何 _存在的_ **可观测的** _属性_ 做出响应。
 
 -   _"reading"_ is dereferencing an object's property, which can be done through "dotting into" it (eg. `user.name`) or using the bracket notation (eg. `user['name']`, `todos[3]`).
@@ -117,8 +118,9 @@ It is also possible to get the internal dependency (or observer) tree by using `
 import { getDependencyTree } from "mobx"
 
 // Prints the dependency tree of the reaction coupled to the disposer.
+// 打印耦合到 disposer 中的响应的依赖树
 console.log(getDependencyTree(disposer))
-// Outputs:
+// 打印出：
 // { name: 'Autorun@2', dependencies: [ { name: 'Message@1.title' } ] }
 ```
 
@@ -401,7 +403,7 @@ This will **not** react because during the execution of the `autorun` no observa
 
 Check out the [Asynchronous actions](actions.md#asynchronous-actions) section as well.
 
-看看[异步行为](actions.md#asynchronous-actions)章节获得更多理解。
+看看 [异步行为](actions.md#asynchronous-actions) 章节获得更多理解。
 
 #### Using non-observable object properties
 
