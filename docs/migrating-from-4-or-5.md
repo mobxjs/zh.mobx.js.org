@@ -48,7 +48,7 @@ _⚠️ **警告**: 根据你的代码库的大小和复杂性、MobX使用模�
 
 如果你是一个现有的MobX用户，你的代码使用了许多decorators，或者对`decorate`的等效调用。
 
-[`mobx-undecorate`](https://www.npmjs.com/package/mobx-undecorate) 包提供了一个codemod可以自动更新你的代码，使其更加符合MobX 6。此包无需安装;你只需要下载并使用[`npx`](https://www.npmjs.com/package/npx) 工具，如果你还没有npx工具你必须安装。
+[`mobx-undecorate`](https://www.npmjs.com/package/mobx-undecorate) 包提供了一个codemod可以自动更新你的代码，使其更加符合MobX 6。此包无需安装;你只需要下载并使用[`npx`](https://www.npmjs.com/package/npx) 工具，如果没有npx工具你必须首先安装。
 
 如果要弃用所有MobX装饰器的使用，并将它们替换为等效的`makeObservable`调用，请转到包含源代码的目录并运行:
 
