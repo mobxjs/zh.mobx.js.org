@@ -36,7 +36,7 @@ Mobx 通常会像你所期待的那样对确定的一些事物做出响应，这
 
 To elaborate on the above rules with an example, suppose that you have the following observable instance:
 
-为了用一个例子详细说明上述规则，我们假设您有以下可观察的实例：
+为了用一个例子详细说明上述规则，我们假设你有以下可观察的实例：
 
 ```javascript
 class Message {
@@ -60,20 +60,22 @@ let message = new Message("Foo", { name: "Michel" }, ["Joe", "Sara"])
 
 In memory this looks as follows. The green boxes indicate _observable_ properties. Note that the _values_ themselves are not observable!
 
-在内存中这个例子将会像下面这样，绿色的块代表的是 **可观察的** 属性，注意 **值本身** 并不是可观察的！
+在内存中这个例子将会像下图所示的这样，绿色的块代表的是 **可观察的** 属性，注意 **值本身** 并不是可观察的！
 
 ![MobX reacts to changing references](assets/observed-refs.png)
 
 What MobX basically does is recording which _arrows_ you use in your function. After that, it will re-run whenever one of these _arrows_ changes; when they start to refer to something else.
 
-简单来说，MobX 所做的就是记录下你在函数所使用的属性的箭头指向（就像上图中的箭头那样）。在此之后，当这些箭头中的任何一个发生变化（比如该箭头从一个值指向另一个值）时，MobX 都会响应变化，并重新执行相应的跟踪函数。
+简单来说，MobX 所做的就是记录下你在跟踪函数中所使用的属性的箭头指向（就像上图中的箭头那样）。在此之后，当这些箭头中的任何一个发生变化（比如该箭头从一个值指向另一个值）时，MobX 都会响应变化，并重新执行相应的跟踪函数。
 
 ## Examples
 ## 实例
 
 Let's show that with a bunch of examples (based on the `message` variable defined above):
 
-让我们通过一组实例还说明上述的内容。（下面的实例还继续使用到上面定义的 `message` 变量）
+让我们通过一组实例来说明上述的内容。
+
+下面的实例会继续使用到上面定义的 `message` 变量。
 
 #### Correct: dereference inside the tracked function
 
@@ -203,7 +205,7 @@ The first change will be picked up, `message.author` and `author` are the same o
 However, the second change is **not** picked up, because the `message.author` relation is not tracked by the `autorun`. Autorun is still using the "old" `author`.
 
 第一个改变将会被捕捉，`message.author` 和 `author` 是同一个对象，属性 `.name` 在 autorun 中被使用了，可以触发响应。
-但是，第二个改变并 **不会** 被捕捉，因为 `message.author` 并没有被 `autorun` 跟踪，`autorun` 跟踪的是 `author.name`，Autorun 依然会继续使用之前定义的“老的” `author`。（这里 `message.author` 被赋予了一个新对象，且和 `author` 不是同一个对象）
+但是，第二个改变并 **不会** 被捕捉，因为 `message.author` 并没有被 `autorun` 跟踪，`autorun` 跟踪的是 `author.name`，autorun 依然会继续使用之前定义的“老的” `author`。（这里 `message.author` 被赋予了一个新对象，且和 `author` 不是同一个对象）
 
 #### Common pitfall: console.log
 
@@ -332,7 +334,7 @@ This will **not** react. Simply because the `likes` array itself is not being us
 So in contrast, `messages.likes = ["Jennifer"]` would be picked up; that statement does not modify the array, but the `likes` property itself.
 
 这将不会引发响应，仅仅是因为 `likes` 数组本身并没有被 `autorun` 使用，使用的仅仅是该数组的引用。
-相比之下，`messages.likes = ['Jennifer']` 将会被捕捉并响应，该语句不修改likes数组，修改的是 `likes` 数组本身。
+相比之下，`messages.likes = ['Jennifer']` 将会被捕捉并响应，该语句不修改 `likes` 数组，修改的是 `likes` 属性本身。
 
 #### Correct: using not yet existing map entries
 
@@ -358,10 +360,11 @@ You can check for the existence of an entry first by using `twitterUrls.has("Sar
 So in an environment without Proxy support for dynamically keyed collections always use observable maps. If you do have Proxy support you can use observable maps as well,
 but you also have the option to use plain objects.
 
-这 **会引发** 响应。可观察字典（map）支持观察可能还不存在键值对。
+这 **会引发** 响应。可观察字典（map）支持跟踪可能还不存在键值对。
+
 注意：当不存在时得到的值是 undefined。
 你也可以通过使用 `twitterUrls.has("Sara")` 检查键值对在字典中是否存在。
-因此，在没有代理支持的情况中，动态的键值对集合总是使用可观察字典来实现。如果你有代理，也可以使用可观察字典，当然你也可以选择使用普通对象。
+因此，在没有代理支持的情况下，动态的键值对集合总是使用可观察字典来实现。如果你有代理，也可以使用可观察字典，当然你也可以选择使用普通对象。
 
 #### MobX does not track asynchronously accessed data
 
@@ -383,7 +386,7 @@ runInAction(() => {
 
 This will react. Even though `author.name` is not dereferenced by the function passed to `autorun` itself, MobX will still track the dereferencing that happens in `upperCaseAuthorName`, because it happens _during_ the execution of the autorun.
 
-这将会引发响应。尽管 `author.name` 并没有被接收了 `upperCaseAuthorName` 的 `autorun` 函数所使用，MobX 依然会跟踪发生在 `upperCaseAuthorName` 中的使用，因为这个使用发生在 autorun 的执行过程中。
+这将会引发响应。尽管 `author.name` 并没有被接收了 `upperCaseAuthorName` 的 `autorun` 函数直接使用，MobX 依然会跟踪发生在 `upperCaseAuthorName` 中的使用，因为这个使用发生在 autorun 的执行过程中。
 
 ---
 
@@ -423,7 +426,8 @@ This **will** react if you run React in an environment that supports Proxy.
 Note that this is only done for objects created with `observable` or `observable.object`. New properties on class instances will not be made observable automatically.
 
 当你在一个支持代理的环境中运行 React 时，这 **会引发** 响应
-注意：这仅适用于使用 `observable` 或 `observable.object` 创建的对象。类实例上后面增加的新属性将不会自动成为可观察的。
+
+注意：这仅适用于使用 `observable` 或 `observable.object` 创建的对象。类实例对象上后面增加的新属性将不会自动成为可观察的。
 
 _Environments without Proxy support_
 
