@@ -40,7 +40,7 @@ _⚠️ **警告**: 根据你的代码库的大小和复杂性、MobX使用模�
 需要注意的一些细节:
 
 1. 在每个声明MobX的基础成员的类定义中都需要使用`makeObservable` / `makeAutoObservable`。 因此，如果子类和超类都引入了observable成员，它们都必须调用`makeObservable`。
-2. `makeAutoObservable`将使用新的装饰器`autoAction`标记方法，只有当方法不在派生上下文中时，它才会应用`action`。这使得从计算属性中调用自动装饰的方法也很安全。
+2. `makeAutoObservable`将使用新的装饰器`autoAction`标记方法，只有当方法不在 derivation context 时，它才会应用`action`。这使得从计算属性中调用自动装饰的方法也很安全。
 
 迁移带有许多类的大型代码库可能是令人生畏的。但是不用担心，有一个code-mod可以自动完成上述过程!!
 
@@ -50,19 +50,19 @@ _⚠️ **警告**: 根据你的代码库的大小和复杂性、MobX使用模�
 
 [`mobx-undecorate`](https://www.npmjs.com/package/mobx-undecorate) 包提供了一个codemod可以自动更新你的代码，使其更加符合MobX 6。此包无需安装;你只需要下载并使用[`npx`](https://www.npmjs.com/package/npx) 工具，如果没有npx工具你必须首先安装。
 
-如果要弃用所有MobX装饰器的使用，并将它们替换为等效的`makeObservable`调用，请转到包含源代码的目录并运行:
+如果要弃用所有MobX装饰器的使用，并将它们替换为等效的`makeObservable`调用，请转到包含源代码的目录并运行：
 
 ```shell
 npx mobx-undecorate
 ```
 
-MobX会继续支持装饰器语法 -- 因此若你想保留它们并只在需要的地方引入`makeObservable(this)`，你可以使用`--keepDecorators`选项:
+MobX会继续支持装饰器语法 -- 因此若你想保留它们并只在需要的地方引入`makeObservable(this)`，你可以使用`--keepDecorators`选项：
 
 ```shell
 npx mobx-undecorate --keepDecorators
 ```
 
-查看 [documentation](https://www.npmjs.com/package/mobx-undecorate) 以了解更多选项.
+查看 [documentation](https://www.npmjs.com/package/mobx-undecorate) 以了解更多选项。
 
 ### `mobx-undecorate`的局限性
 
