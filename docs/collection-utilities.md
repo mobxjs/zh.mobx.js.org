@@ -25,7 +25,7 @@ Access:
 Mutation:
 
 -   `set(collection, key, value)` 或 `set(collection, { key: value })` 使用提供的键值更新集合。
--   `remove(collection, key)` 从集合中删除指定子元素. Splicing is used for arrays。
+-   `remove(collection, key)` 从集合中删除指定子元素。
 -   `has(collection, key)` 如果集合具有指定的可观察属性，则返回`true`。
 -   `get(collection, key)` 返回指定的子元素。
 
