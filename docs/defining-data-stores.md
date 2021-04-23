@@ -1,76 +1,73 @@
 ---
-title: Defining data stores
-sidebar_label: Defining data stores
+title: 定义数据存储
+sidebar_label: 定义数据存储
 hide_title: true
 ---
 
 <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBD4KQ7&placement=mobxjsorg" id="_carbonads_js"></script>
 
-# Defining data stores
+# 定义数据存储
 
-This section contains some of the best practices for building large scale maintainable projects we discovered at Mendix while working with MobX.
-This section is opinionated and you are in no way forced to apply these practices.
-There are many ways of working with MobX and React, and this is just one of them.
+本章是我们在 Mendix 使用 MobX 工作时，发现的一些构建大规模可维护项目的最佳实践。
+这一章是出于个人见解，你完全不必强行应用这些实践。有很多种使用 MobX 和 React 的方式，这里写出的仅仅只是其中一个。
 
-This section focuses on an unobtrusive way of working with MobX, which works well in existing codebases, or with classic MVC patterns. Alternative, more opinionated ways of organizing stores are [mobx-state-tree](https://github.com/mobxjs/mobx-state-tree) and [mobx-keystone](https://mobx-keystone.js.org/). Both ship with cool features such as structurally shared snapshots, action middlewares, JSON patch support etc. out of the box.
+本章主要介绍一种不唐突的使用 MobX 的方式，它可以和已有的代码库或者经典的 MVC 模式配合得很好。或者，还有一种组织 stores 更专用的方式：使用 [mobx-state-tree](https://github.com/mobxjs/mobx-state-tree) 和 [mobx-keystone](https://mobx-keystone.js.org/)，它们都自带一些很酷的功能: 结构共享快照、action 中间件、JSON 补丁支持等等，开箱即用。
 
 ## Stores
 
-Stores can be found in any Flux architecture and can be compared a bit with controllers in the MVC pattern.
-The main responsibility of stores is to move _logic_ and _state_ out of your components into a standalone testable unit that can be used in both frontend and backend JavaScript.
+Stores 可以在任何 Flux 架构中找到，并且可以和 MVC 模式中的 controllers 做类比。
+Stores 的主要职责是将 _逻辑_ 和 _状态_ 从组件中移至一个可独立测试的单元，并能同时在前后端的 JavaScript 中使用。
 
-Most applications benefit from having at least two stores: one for the _domain state_ and another one for the _UI state_. The advantage of separating those two is you can reuse and test _domain state_ universally, and you might very well reuse it in other applications.
+大多数应用都可以从定义这两个 stores 中得到好处：一个用于 _领域状态_，另一个用于 _UI 状态_。区分这两类的好处是：你可以跨前后端重用和测试 _领域状态_，并且可以很好地在其他应用中重用它。
 
-## Domain Stores
+## 领域 Stores
 
-Your application will contain one or multiple _domain_ stores.
-These stores store the data your application is all about.
-Todo items, users, books, movies, orders, you name it.
-Your application will most probably have at least one domain store.
+你的应用可以包含一个或多个 _领域_ stores。
+这些 stores 存储着应用的所有数据。
+待办事项、用户、书籍、电影、订单、还有各种你能叫出名字来的东西。
+大多数时候，你的应用至少有一个领域 store。
 
-A single domain store should be responsible for a single concept in your application. A single store is often organized as a tree structure with
-multiple domain objects inside.
+领域 store 应该和应用中的业务概念一一对应。一个 store 通常被组织成一个树状结构，里面有多个领域对象。
 
-For example: one domain store for your products, and one for your orders and orderlines.
-As a rule of thumb: if the nature of the relationship between two items is containment, they should typically be in the same store.
-So a store just manages _domain objects_.
+举例来说：你的产品对应一个领域 store，订单和订单线对应另一个。根据经验：如果两个东西之间是包含关系，它们通常应该在一个 store 里。
+因此，store 只是在管理 _领域对象_。
 
-These are the responsibilities of a store:
+Store 的职责:
 
--   Instantiate domain objects. Make sure domain objects know the store they belong to.
--   Make sure there is only one instance of each of your domain objects.
-    The same user, order or todo should not be stored twice in memory.
-    This way you can safely use references and also be sure you are looking at the latest instance, without ever having to resolve a reference.
-    This is fast, straightforward and convenient when debugging.
--   Provide backend integration. Store data when needed.
--   Update existing instances if updates are received from the backend.
--   Provide a standalone, universal, testable component of your application.
--   To make sure your store is testable and can be run server-side, you will probably move doing actual websocket / http requests to a separate object so that you can abstract over your communication layer.
--   There should be only one instance of a store.
+-   实例化领域对象，确保领域对象知道它们所属的 store。
+-   确保每个领域对象只有一个实例。
+    同一个用户、订单或者待办事项不应该在内存中存储两次。
+    这样，你可以可以安全地使用引用，并确保正在查看的实例是最新的，而无需解析引用。
+    这一点在调试的时候十分快速、简单、方便。
+-   提供后端集成，当需要时存储数据。
+-   如果从后端接收到更新，则更新现有实例。
+-   为应用提供一个独立、通用、可测试的组件。
+-   要确保 store 是可测试的并且可以在服务端运行，你可能需要将实际的 websocket / http 请求移到单独的对象中，以便你可以抽象出通信层。
+-   Store 应该只有一个实例。
 
-### Domain objects
+### 领域对象
 
-Each domain object should be expressed using its own class (or constructor function).
-There is no need to treat your client-side application state as some kind of database.
-Real references, cyclic data structures and instance methods are powerful concepts in JavaScript.
-Domain objects are allowed to refer directly to domain objects from other stores.
-Remember: we want to keep our actions and views as simple as possible and needing to manage references and doing garbage collection yourself might be a step backward.
-Unlike many Flux architectures such as Redux, with MobX there is no need to normalize your data, and this makes it a lot simpler to build the _essentially_ complex parts of your application:
-your business rules, actions and user interface.
+每个领域对象都应该用它自己的类（或构造函数）来表达。
+没有必要把客户端应用的状态当作某种数据库。
+真实引用、循环数据结构和实例方法是 JavaScript 中强大的概念。
+领域对象可以直接引用其他 store 中的领域对象。
+请记住：我们想让我们的操作和视图尽可能的简单，需要管理引用和自己做垃圾回收可能是一种退步。
+与 Redux 等许多 Flux 架构不同，MobX 不需要对你的数据进行标准化处理，这使得业务规则、操作和用户界面这些在构建应用时 _本质上_ 最复杂的部分变得简单得多。
 
-Domain objects can delegate all their logic to the store they belong to if that suits your application well.
-It is possible to express your domain objects as plain objects, but classes have some important advantages over plain objects:
 
--   They can have methods.
-    This makes your domain concepts easier to use standalone and reduces the amount of contextual awareness that is needed in your application.
-    Just pass objects around.
-    You don't have to pass stores around, or have to figure out which actions can be applied to an object if they are just available as instance methods.
-    This is especially important in large applications.
--   They offer fine grained control over the visibility of attributes and methods.
--   Objects created using a constructor function can freely mix observable properties and methods, and non-observable properties and methods.
--   They are easily recognizable and can be strictly type-checked.
+只要适合你的应用，领域对象可以将它们的所有逻辑委托给 store。
+将领域对象表达为普通对象是可能的，但相比普通对象，类有一些重要的优势：
 
-### Example domain store
+-   它们可以有方法。
+    这使得领域概念更容易独立使用，并减少应用所需感知的上下文的数量。
+    只传递对象。
+    不需要到处传递 store。如果它们只是作为实例方法可用，那你也不需要弄清楚哪些操作可以在对象上使用。
+    这一点在大型应用中尤为重要。
+-   它们对属性和方法的可见性提供精细的控制。
+-   使用构造函数创建的对象可以自由地混合 observable 属性和函数、以及非 observable 属性和函数。
+-   它们很容易辨认，并且可以进行严格的类型检查。
+
+### 领域 store 示例
 
 ```javascript
 import { makeAutoObservable, autorun, runInAction } from "mobx"
@@ -84,15 +81,15 @@ export class TodoStore {
 
     constructor(transportLayer, authorStore) {
         makeAutoObservable(this)
-        this.authorStore = authorStore // Store that can resolve authors.
-        this.transportLayer = transportLayer // Thing that can make server requests.
+        this.authorStore = authorStore // 可以提供 author 的 store
+        this.transportLayer = transportLayer // 可以发起服务端请求的东西
         this.transportLayer.onReceiveTodoUpdate(updatedTodo =>
             this.updateTodoFromServer(updatedTodo)
         )
         this.loadTodos()
     }
 
-    // Fetches all Todos from the server.
+    // 从服务端拉取所有的 todo 数据
     loadTodos() {
         this.isLoading = true
         this.transportLayer.fetchTodos().then(fetchedTodos => {
@@ -103,9 +100,9 @@ export class TodoStore {
         })
     }
 
-    // Update a Todo with information from the server. Guarantees a Todo only
-    // exists once. Might either construct a new Todo, update an existing one,
-    // or remove a Todo if it has been deleted on the server.
+    // 用来自服务器的信息更新一个 Todo。保证一个 Todo 只存在一次
+    // 可以构建一个新的 Todo，更新一个现有的 Todo
+    // 如果一个 Todo 在服务器上被删除，则删除该 Todo
     updateTodoFromServer(json) {
         let todo = this.todos.find(todo => todo.id === json.id)
         if (!todo) {
@@ -119,29 +116,29 @@ export class TodoStore {
         }
     }
 
-    // Creates a fresh Todo on the client and the server.
+    // 在客户端和服务器上创建一个新的 Todo
     createTodo() {
         const todo = new Todo(this)
         this.todos.push(todo)
         return todo
     }
 
-    // A Todo was somehow deleted, clean it from the client memory.
+    // 一个 Todo 被删除了，就从客户端内存中清除掉
     removeTodo(todo) {
         this.todos.splice(this.todos.indexOf(todo), 1)
         todo.dispose()
     }
 }
 
-// Domain object Todo.
+// Todo 的领域对象
 export class Todo {
-    id = null // Unique id of this Todo, immutable.
+    id = null // todo 的唯一 id, 不可改变。
     completed = false
     task = ""
-    author = null // Reference to an Author object (from the authorStore).
+    author = null // 引用一个 author 对象 (来自 authorStore)
     store = null
-    autoSave = true // Indicator for submitting changes in this Todo to the server.
-    saveHandler = null // Disposer of the side effect auto-saving this Todo (dispose).
+    autoSave = true // 指示此对象的更改是否应提交到服务器
+    saveHandler = null // 为自动保存 Todo 的副作用提供的清理方法 (dispose)
 
     constructor(store, id = uuid.v4()) {
         makeAutoObservable(this, {
@@ -155,9 +152,9 @@ export class Todo {
         this.id = id
 
         this.saveHandler = reaction(
-            () => this.asJson, // Observe everything that is used in the JSON.
+            () => this.asJson, // 观察在 JSON 中使用了的任何东西:
             json => {
-                // If autoSave is true, send JSON to the server.
+                // 如果 autoSave 为 true, 把 json 发送到服务端
                 if (this.autoSave) {
                     this.store.transportLayer.saveTodo(json)
                 }
@@ -165,7 +162,7 @@ export class Todo {
         )
     }
 
-    // Remove this Todo from the client and the server.
+    // 在客户端和服务端中删除此 Todo
     delete() {
         this.store.transportLayer.deleteTodo(this.id)
         this.store.removeTodo(this)
@@ -180,16 +177,16 @@ export class Todo {
         }
     }
 
-    // Update this Todo with information from the server.
+    // 使用服务端信息更新此 Todo
     updateFromJson(json) {
-        this.autoSave = false // Prevent sending of our changes back to the server.
+        this.autoSave = false // 确保变更不会保存到服务器
         this.completed = json.completed
         this.task = json.task
         this.author = this.store.authorStore.resolveAuthor(json.authorId)
         this.autoSave = true
     }
 
-    // Clean up the observer.
+    // 清理 observer
     dispose() {
         this.saveHandler()
     }
@@ -198,33 +195,32 @@ export class Todo {
 
 ## UI stores
 
-The _ui-state-store_ is often very specific for your application, but usually very simple as well.
-This store typically doesn't have much logic in it, but will store a plethora of loosely coupled pieces of information about the UI.
-This is ideal as most applications will change the UI state often during the development process.
+_UI 状态 store_ 通常对应用来说非常具体，但一般也很简单。这类 store 通常没有太多的逻辑，但会存储大量关于 UI 的松散耦合的信息。
+这一点很棒，因为大多数应用在开发过程中会经常改变 UI 状态。
 
-Things you will typically find in UI stores:
+通常可以在 UI stores 中找到:
 
--   Session information
--   Information about how far your application has loaded
--   Information that will not be stored in the backend
--   Information that affects the UI globally
-    -   Window dimensions
-    -   Accessibility information
-    -   Current language
-    -   Currently active theme
--   User interface state as soon as it affects multiple, further unrelated components:
-    -   Current selection
-    -   Visibility of toolbars, etc.
-    -   State of a wizard
-    -   State of a global overlay
+-   Session 信息
+-   应用加载阶段的信息
+-   不会存储到后端的信息
+-   影响全局 UI 的信息
+    -   Window 尺寸
+    -   可访问性信息
+    -   当前语言
+    -   当前主题
+-   会影响多个无关组件的界面状态：
+    -   当前选中项
+    -   工具栏可见性等等
+    -   向导的状态
+    -   全局遮罩层的状态
 
-It might very well be that these pieces of information start as internal state of a specific component (for example the visibility of a toolbar), but after a while you discover that you need this information somewhere else in your application.
-Instead of pushing state in such a case upwards in the component tree, like you would do in plain React apps, you just move that state to the _ui-state-store_.
+这些信息很可能一开始只是某个组件的内部状态（例如一个工具条的可见性），但过了一段时间，你发现在应用的其他地方也需要这些信息。
+在这种情况下，你不需要像在普通的 React 应用中那样，把状态往组件树的上级移动，只需要把状态移到 _UI 状态 store_ 中。
 
-For isomorphic applications you might also want to provide a stub implementation of this store with sane defaults so that all components render as expected.
-You might distribute the _ui-state-store_ through your application by passing it as React context.
+对于同构应用，你可能还想为 store 提供一个默认值，以便组件能正常渲染。
+你可以通过 React context 把 _UI 状态 store_ 在应用中传递下去。
 
-Example of a store (using ES6 syntax):
+store 示例（使用 ES6 语法）：
 
 ```javascript
 import { makeAutoObservable, observable, computed, asStructure } from "mobx"
@@ -233,8 +229,7 @@ export class UiState {
     language = "en_US"
     pendingRequestCount = 0
 
-    // .struct makes sure observer won't be signaled unless the
-    // dimensions object changed in a deepEqual manner.
+    // .struct 确保对象只有以 deepEqual 的方式更新时，才会触发 observer
     windowDimensions = {
         width: window.innerWidth,
         height: window.innerHeight
@@ -253,17 +248,17 @@ export class UiState {
 }
 ```
 
-## Combining multiple stores
+## 组合多个 stores
 
-An often asked question is how to combine multiple stores without using singletons. How will they know about each other?
+一个经常被问到的问题是：如何在不使用单例的情况下组合多个 stores，stores 之间如何相互通信？
 
-An effective pattern is to create a `RootStore` that instantiates all stores, and share references. The advantage of this pattern is:
+创建一个 `RootStore` 是解决这个问题的有效模式：把所有 stores 实例化，并共享引用。这种模式的优点如下：
 
-1. Simple to set up.
-2. Supports strong typing well.
-3. Makes complex unit tests easy as you just have to instantiate a root store.
+1. 易于设置
+2. 支持强类型
+3. 因为只需要实例化一个 root store，复杂的单元测试会变得简单一点
 
-Example:
+示例：
 
 ```javascript
 class RootStore {
@@ -279,7 +274,7 @@ class UserStore {
     }
 
     getTodos(user) {
-        // Access todoStore through the root store.
+        // 通过 root store 来访问 todoStore
         return this.rootStore.todoStore.todos.filter(todo => todo.author === user)
     }
 }
@@ -295,4 +290,4 @@ class TodoStore {
 }
 ```
 
-When using React, this root store is typically inserted into the component tree by using React context.
+使用 React 时，root store 一般通过 React context 插入到组件树中。
