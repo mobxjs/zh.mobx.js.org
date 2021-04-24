@@ -6,7 +6,7 @@ hide_title: true
 
 <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBD4KQ7&placement=mobxjsorg" id="_carbonads_js"></script>
 
-# 创建一个自定义的 observables {}
+# 创建一个自定义的 observables {🚀}
 
 ## Atoms （原子化设计）
 
