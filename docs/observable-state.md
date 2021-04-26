@@ -113,7 +113,7 @@ tags.push("prio: for fun")
 ```
 
 与第一个例子中的 `makeObservable` 不同，`observable` 支持为对象添加（和删除）字段。
-这使得 `observable` 非常适合用于动态对象、Array、Maps、Sets 之类的集合。
+这使得 `observable` 非常适合用于像动态键控的对象、数组、Maps 和 Sets 之类的集合。
 
 <!--END_DOCUSAURUS_CODE_TABS-->
 
@@ -236,45 +236,45 @@ MobX 无法使原始值可观察，因为它们在 JavaScript 中是不可变的
 
 ## 局限性
 
-1. `make(Auto)Observable` 仅支持已经定义的属性。确保你的 [**编译器选项**是正确的](installation.md#use-spec-compliant-transpilation-for-class-properties)，或者在使用 `make(Auto)Observable` 之前确保已经为所有属性分配了值。如果没有正确的配置，已经声明但是没有初始化的值（例如：`class X { y; }`）将不能被自动侦测到。
-1. `makeObservable` 只能注解类定义本身声明的属性。如果在子类或者超类中引入了可观察字段，则必需为那些属性本身调用 `makeObservable`。
-1. `options` 参数只能提供一次。传递的 `options` 是 _“sticky”_ 的，以后不能被更改（例如，在 [子类](subclassing.md) 中）。
+1. `make(Auto)Observable` 仅支持已经定义的属性。请确保你的 [**编译器选项**是正确的](installation.md#use-spec-compliant-transpilation-for-class-properties)，或者，作为权宜之计，确保在你使用 `make(Auto)Observable` 之前已经为所有属性赋了值。如果没有正确的配置，已经声明而未初始化的字段（例如：`class X { y; }`）将无法被正确侦测到。
+1. `makeObservable` 只能注解由其本身所在的类定义声明出来的属性。如果一个子类或超类引入了可观察字段，那么该子类或超类就必须自己为那些属性调用 `makeObservable`。
+1. `options` 参数只能提供一次。被传入的 `options` 是 _“有粘性”_ 的，之后无法更改（例如，在 [子类](subclassing.md) 中）。
 1. **每个字段只能被注解一次**（`override` 除外）。字段注解和配置不能在 [子类](subclassing.md) 中改变。
-1. 非纯对象（**classes**）的 **所有注解** 字段都是 **不可配置的**。<br>
+1. 非普通对象（**类**）中的 **所有被注解过的** 字段都是 **不可配置的**。<br>
    [可以通过 `configure({ safeDescriptors: false })` 来禁用 {🚀☣️} ](configuration.md#safedescriptors-boolean)。
 1. **所有不可观察**（stateless）字段（`action`，`flow`）都是 **不可写的**。<br>
    [可以通过 `configure({ safeDescriptors: false })` 来禁用 {🚀☣️} ](configuration.md#safedescriptors-boolean)。
 1. [只有定义在**原型**上的 **`action`，`computed`，`flow`，`action.bound`** 可以在子类中被 **overriden**](subclassing.md)。
-1. 默认情况下 _TypeScript_ 不允许注解 **private** 字段。可以通过将相关私有字段显式传递为参数来解决，例如： `makeObservable<MyStore, "privateField" | "privateField2">(this, { privateField: observable, privateField2: observable })`。
-1. **优先调用 `make(Auto)Observable`** 并提供注解，这样可以缓存推测结果。
+1. 默认情况下 _TypeScript_ 不会允许你注解**私有**字段。这个问题可以通过将相关私有字段作为泛型参数显式传入来解决，就像这样： `makeObservable<MyStore, "privateField" | "privateField2">(this, { privateField: observable, privateField2: observable })`。
+1. **make(Auto)Observable**的调用和注解的提供必须无条件地进行，因为这样才可能对推断结果进行缓存。
 1. **不支持** 在调用 **`make(Auto)Observable`** 之后 **修改原型**。
-1. _EcmaScript_ 的 **private** 字段（**`#field`**）**不受支持**。当使用 _TypeScript_ 时，推荐使用 `private` 修饰符。
-1. **不支持** 在单个继承链中 **混合使用注解和装饰器** - 例如，在超类中使用了装饰器，不能再子类中使用注解。
-1. `makeObservable`，`extendObservable` 不能再其它内置可观察类型上使用（`ObservableMap`，`ObservableSet`，`ObservableArray` 等）。
-1. `makeObservable(Object.create(prototype))` 将属性从 `prototype` 拷贝到新创建的对象并且使得其是可观察的。此行为是错误的、不可预测的，因此将会在将来的版本中被 **废弃**。不要使用它。
+1. **不支持** _EcmaScript_ 中的**私有**字段（**`#field`**）。使用 _TypeScript_ 时，推荐改用 `private` 修饰符。
+1. **不支持** 在单个继承链中 **混合使用注解和装饰器** - 例如，在超类中使用了装饰器，就不能再在子类中使用注解。
+1. `makeObservable`，`extendObservable` 不能在其它内置可观察类型上使用（`ObservableMap`，`ObservableSet`，`ObservableArray` 等）。
+1. `makeObservable(Object.create(prototype))` 将属性从 `prototype` 拷贝到新创建的对象并且使得其是可观察的。此行为是错误的、不可预测的，因此已经**不推荐使用**，并可能会在未来有所变动。不要使用它。
 
 ## Options {🚀}
 
-上面的 API 都有一个可选的 `options` 参数，该参数是包含一下字段的对象：
+上面的 API 都有一个可选的 `options` 参数，该参数是一个对象，支持以下选项：
 
--   **`autoBind: true`** 默认使用 `action.bound`，而不使用 `action`。不影响显式注释的成员。
--   **`deep: false`** 默认使用 `observable.ref`，而不使用 `observable`。不影响显式注释的成员。
--   **`name: <string>`** 为对象提供一个调试名称，该名称将打印在错误消息和 reflection API 中。在生产中将被忽略。
--   **`proxy: false`** 强制 `observable(thing)` 使用非 [**proxy**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) 的实现。如果对象的结构不会随着时间变化，这是一个很好的选择，因为非代理对象更容易调试并且具有更快的是速度。请参见 [避免代理](#avoid-proxies)。
+-   **`autoBind: true`** 默认使用 `action.bound`，而不使用 `action`。不影响被显式注释过的成员。
+-   **`deep: false`** 默认使用 `observable.ref`，而不使用 `observable`。不影响被显式注释过的成员。
+-   **`name: <string>`** 为对象提供一个调试名称，该名称将被打印在错误消息和 reflection API 中。在生产环境中将被忽略。
+-   **`proxy: false`** 迫使 `observable(thing)` 使用非 [**proxy**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) 的实现。如果对象的结构不会随着时间变化，那么这就是一个很好的选择，因为非代理对象更容易调试并且速度更快。请参见 [避免代理](#avoid-proxies)。
 
-<details id="one-options-per-target"><summary>**注意：** options 是 *sticky* 并且只能被提供一次<a href="#one-options-per-target" class="tip-anchor"></a></summary>
-`options` 参数可以在 `target` 还不是可观察对象时提供。<br>
+<details id="one-options-per-target"><summary>**注意：** options 是*粘性的*并且只能被提供一次<a href="#one-options-per-target" class="tip-anchor"></a></summary>
+`options` 参数可以只被提供给还不是可观察对象的 `target`。<br>
 一旦可观察对象被初始化，将无法更改 options。<br>
-options 被保存在 target 上并且在之后的 `makeObservable`/`extendObservable` 调用中将会被保持。<br>
-你不能在 [子类](subclassing.md) 中传递不同的 options。
+options 会被保存在 target 中并且不会被之后的 `makeObservable`/`extendObservable` 调用干扰。<br>
+你不能在 [子类](subclassing.md) 中传入不同的 options。
 </details>
 
 ## 将 observable 转换回普通的 JavaScript 集合
 
-有时有必要将可观察的数据结构转换回原始的数据结构。
-例如，当将可观察对象传递到无法跟踪可观察对象的 React 组件时，或这想要获得将来不会改变的数据的克隆时。
+有时有必要将可观察的数据结构转换回原生的数据结构。
+例如，将可观察对象传入一个无法跟踪可观察对象的 React 组件时，或者想要获取一个不会再被更改的副本时。
 
-要进行浅转换，一些常用的 JavaScript 语法糖会非常有用：
+要进行浅转换，用常用的 JavaScript 操作就可以做到：
 
 ```javascript
 const plainObject = { ...observableObject }
@@ -283,14 +283,14 @@ const plainMap = new Map(observableMap)
 ```
 
 要将数据树递归地转换为普通对象，可使用 [`toJS`](api.md#tojs) 工具函数。
-对于类，建议实现一个 `toJSON()` 方法，将会由 `JSON.stringify`调用。
+对于类，建议实现一个 `toJSON()` 方法，因为这样会被 `JSON.stringify` 识别出来。
 
 ## 关于类的说明
 
 到目前为止，以上大多数示例都倾向于使用类进行构建。
-MobX 原则上对此没有限制，并且可能有许多使用普通对象的 MobX 用户。
+MobX 原则上对此没有限制，而且可能有同样多的MobX 用户使用的是普通对象。
 但是，使用类的一个好处是更容易被索引以实现自动补全等功能，例如使用 TypeScript。
-另外，`instanceof` 非常强大，可以方便的用于类型推断，并且类实例不会被包装在 `Proxy` 对象中，从而提供更好的调试体验。
-最后，使用类可以从引擎优化中受益，因为它们是可预测的并且方法在原型上是共享的。
+另外，`instanceof` 检查对于类型推断来说非常强大，并且类实例不会被包装在 `Proxy` 对象中，这一点给了它们更好的调试体验。
+最后，使用类会从引擎优化中受益良多，因为它们的形态是可预测的并且方法在原型上是共享的。
 但是，复杂的继承模式很容易给您自己带来不必要的麻烦，因此如果您想使用类，请尽量使其保持简单。
-因此，尽管稍微倾向于使用类，但如果有更适合您的，我们肯定会鼓励您偏离这种风格。
+因此，尽管稍微倾向于使用类，但如果有更适合您的，我们肯定会鼓励您不采用这种风格。
