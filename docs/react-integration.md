@@ -233,7 +233,7 @@ ReactDOM.render(<TimerView />, document.body)
 
 `observer` 是使用修饰模式增强你的组件, 而不是它调用你的组件. 所以通常所有的组件都应该用 `observer`. 但是不要担心, 它不会导致性能损失。从另一个角度讲, 更多的 `observer` 组件可以使渲染更高效，因为它们更新数据的颗粒度更细。
 
-### 小贴士: 尽可能晚的获取值
+### 小贴士: 尽可能让Mobx获得值
 
 `observer` 只要你传递引用就可以很好的运作, 只要获取到内部的属性，基于 `observer` 的组件 就会渲染到 DOM / low-level components（DOM一般是浏览器环境，low-level components 一般是RN环境·译者注）。
 
@@ -248,15 +248,15 @@ const TimerView = observer(({ secondsPassed }) => <span>Seconds passed: {seconds
 React.render(<TimerViewer secondPassed={myTimer.secondsPassed} />, document.body)
 ```
 
-Note that this is a different mindset from other libraries like `react-redux`, where it is a good practice to dereference early and pass primitives down, to better leverage memoization.
-If the problem is not entirely clear, make sure to check out the [Understanding reactivity](understanding-reactivity.md) section.
+需要注意的一点是它不同于其它的观念模式库像是 `react-redux`那样, redux 中强调尽可能早的获取和传递原始值已获得更好的副作用响应。
+如果你还是没有理解, 可以先阅读 [理解响应式（Understanding reactivity）](understanding-reactivity.md) 这篇文章。
 
-### Don't pass observables into components that aren't `observer`
+### 不要将可观察对象传递到 不是`observer`的组件中（Don't pass observables into components that aren't `observer`）
 
-Components wrapped with `observer` _only_ subscribe to observables used during their _own_ rendering of the component. So if observable objects / arrays / maps are passed to child components, those have to be wrapped with `observer` as well.
-This is also true for any callback based components.
+通过`observer`包裹的组件 _仅仅_ 订阅 在 _他们自己_ 渲染的期间的可观察对象. 如果要将可观察对象 objects / arrays / maps 传递到子组件中, 他们必须被 `observer` 包裹。
+通过callback回调的组件也是一样.
 
-If you want to pass observables to a component that isn't an `observer`, either because it is a third-party component, or because you want to keep that component MobX agnostic, you will have to [convert the observables to plain JavaScript values or structures](observable-state.md#converting-observables-back-to-vanilla-javascript-collections) before passing them on.
+如果你非要传递可观察对象到未被`observer`包裹的组件中, 要么是因为它是第三方组件,或者你需要组件对Mobx无感知,你必须 [转换可观察对象为显式convert the observables to plain JavaScript values or structures](observable-state.md#converting-observables-back-to-vanilla-javascript-collections) 在传递前阅读这篇文章.
 
 To elaborate on the above,
 take the following example observable `todo` object, a `TodoView` component (observer) and an imaginary `GridRow` component that takes a column / value mapping, but which isn't an `observer`:
