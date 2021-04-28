@@ -258,8 +258,8 @@ React.render(<TimerViewer secondPassed={myTimer.secondsPassed} />, document.body
 
 如果你非要传递可观察对象到未被`observer`包裹的组件中, 要么是因为它是第三方组件,或者你需要组件对Mobx无感知,你必须 [转换可观察对象为显式convert the observables to plain JavaScript values or structures](observable-state.md#converting-observables-back-to-vanilla-javascript-collections) 在传递前阅读这篇文章.
 
-To elaborate on the above,
-take the following example observable `todo` object, a `TodoView` component (observer) and an imaginary `GridRow` component that takes a column / value mapping, but which isn't an `observer`:
+关于上述的详细描述,
+可以看一下下面的使用 `todo` 对象的例子, 一个 `TodoView` (observer)组件  和一个虚构的接受一组对象映射的不是`observer`的`GridRow`组件:
 
 ```javascript
 class Todo {
@@ -272,69 +272,68 @@ class Todo {
 }
 
 const TodoView = observer(({ todo }: { todo: Todo }) =>
-   // WRONG: GridRow won't pick up changes in todo.title / todo.done
-   //        since it isn't an observer.
+   // 错误: GridRow 不能获取到 todo.title/ todo.done 的变更
+   //        因为他不是一个观察者（observer）.
    return <GridRow data={todo} />
 
-   // CORRECT: let `TodoView` detect relevant changes in `todo`,
-   //          and pass plain data down.
+   // 正确:在 `TodoView` 中显式的声明相关的`todo` ,
+   //         到data中.
    return <GridRow data={{
        title: todo.title,
        done: todo.done
    }} />
 
-   // CORRECT: using `toJS` works as well, but being explicit is typically better.
+   // 正确: 使用 `toJS`也是可以的, 并且是更清晰明白的方式.
    return <GridRow data={toJS(todo)} />
 )
 ```
 
-### Callback components might require `<Observer>`
+###  回调组件可能会需要`<Observer>`（ Callback components might require `<Observer>`）
 
-Imagine the same example, where `GridRow` takes an `onRender` callback instead.
-Since `onRender` is part of the rendering cycle of `GridRow`, rather than `TodoView`'s render (even though that is where it syntactically appears), we have to make sure that the callback component uses an `observer` component.
-Or, we can create an in-line anonymous observer using [`<Observer />`](https://github.com/mobxjs/mobx-react#observer):
+想象一下在同样的例子中,  `GridRow` 携带一个 `onRender`回调函数。
+`onRender` 是 `GridRow`渲染生命周期的一部分, 而不是 `TodoView` 的render (甚至在语法层面都能看出来), 我们不得不保证回调组件是一个 `observer` 组件.
+或者, 我们可以使用 [`<Observer />`](https://github.com/mobxjs/mobx-react#observer)创建一个匿名观察者:
 
 ```javascript
 const TodoView = observer(({ todo }: { todo: Todo }) => {
-    // WRONG: GridRow.onRender won't pick up changes in todo.title / todo.done
-    //        since it isn't an observer.
+    // 错误: GridRow.onRender 不能获得 todo.title / todo.done 中的改变
+    //        因为它不是一个观察者（observer） .
     return <GridRow onRender={() => <td>{todo.title}</td>} />
 
-    // CORRECT: wrap the callback rendering in Observer to be able to detect changes.
+    // 正确: 将回调组件通过Observer包裹将会正确的获得变化。
     return <GridRow onRender={() => <Observer>{() => <td>{todo.title}</td>}</Observer>} />
 })
 ```
 
-## Tips
+## 小贴士
 
-<details id="static-rendering"><summary>Server Side Rendering (SSR)<a href="#static-rendering" class="tip-anchor"></a></summary>
-If `observer` is used in server side rendering context; make sure to call `enableStaticRendering(true)`, so that `observer` won't subscribe to any observables used, and no GC problems are introduced.
+<details id="static-rendering"><summary>服务器渲染 (SSR)<a href="#static-rendering" class="tip-anchor"></a></summary>
+如果 `observer` 是服务器渲染的 rendering context; 请确保调用 `enableStaticRendering(true)`, 这样 `observer` 将不会订阅任何可观察对象, 并且就不会有 GC 问题产生了.
 </details>
 
-<details id="react-vs-lite"><summary>**Note:** mobx-react vs. mobx-react-lite<a href="#react-vs-lite" class="tip-anchor"></a></summary>
-In this documentation we used `mobx-react-lite` as default.
-[mobx-react](https://github.com/mobxjs/mobx-react/) is it's big brother, which uses `mobx-react-lite` under the hood.
-It offers a few more features which are typically not needed anymore in greenfield projects. The additional things offered by mobx-react:
+<details id="react-vs-lite"><summary>**注意:** mobx-react vs. mobx-react-lite<a href="#react-vs-lite" class="tip-anchor"></a></summary>
+在本文中我们使用 `mobx-react-lite` 作为默认包.
+[mobx-react](https://github.com/mobxjs/mobx-react/) 是他的大兄弟, 它里面也引用了 `mobx-react-lite` 包.
+它提供了很多在新项目中不在需要的特性， mobx-react附加的特性有:
 
-1. Support for React class components.
-1. `Provider` and `inject`. MobX's own React.createContext predecessor which is not needed anymore.
-1. Observable specific `propTypes`.
+1. 对于React class components的支持.
+1. `Provider` 和`inject`. MobX的这些东西在有 React.createContext 替代后变得不必要了.
+1. 特殊的观察对象 `propTypes`.
 
-Note that `mobx-react` fully repackages and re-exports `mobx-react-lite`, including functional component support.
-If you use `mobx-react`, there is no need to add `mobx-react-lite` as a dependency or import from it anywhere.
+要注意 `mobx-react` 是全量包，也会暴露 `mobx-react-lite`包中的任何方法,其中包含对函数组件的支持.
+如果你使用 `mobx-react`, 那就不要添加 `mobx-react-lite` 的依赖和引用了.
 
 </details>
 
-<details id="observer-vs-memo"><summary>**Note:** `observer` or `React.memo`?<a href="#observer-vs-memo" class="tip-anchor"></a></summary>
-`observer` automatically applies `memo`, so `observer` components never need to be wrapped in `memo`.
-`memo` can be applied safely to observer components because mutations (deeply) inside the props will be picked up by `observer` anyway if relevant.
+<details id="observer-vs-memo"><summary>**注意:** `observer` or `React.memo`?<a href="#observer-vs-memo" class="tip-anchor"></a></summary>
+`observer` 会自动的使用 `memo`, 所以 `observer` 不需要再包裹 `memo`.
+`memo` 会被 observer 组件安全的使用 ，因为任何在props中的改变(很深的) 都会被`observer`响应。
 </details>
 
-<details id="class-comp"><summary>**Tip:** `observer` for class based React components<a href="#class-comp" class="tip-anchor"></a>
+<details id="class-comp"><summary>**提示:** 应用`observer` 到基于class的组件<a href="#class-comp" class="tip-anchor"></a>
 </summary>
-As stated above, class based components are only supported through `mobx-react`, and not `mobx-react-lite`.
-Briefly, you can wrap class-based components in `observer` just like
-you can wrap function components:
+如上所述, class 组件只在`mobx-react`包中得到支持, `mobx-react-lite`并不支持。
+简而言之,你可以和函数式组件一样使用 `observer`包裹class 组件 :
 
 ```javascript
 import React from "React"
@@ -349,27 +348,27 @@ const TimerView = observer(
 )
 ```
 
-Check out [mobx-react docs](https://github.com/mobxjs/mobx-react#api-documentation) for more information.
+可以阅读 [mobx-react 文档](https://github.com/mobxjs/mobx-react#api-documentation) 获得更详细的信息.
 
 </details>
 
-<details id="displayname"><summary>**Tip:** nice component names in React DevTools<a href="#displayname" class="tip-anchor"></a>
+<details id="displayname"><summary>**提示:** 给组件起个好名字，方便在React DevTools中查看<a href="#displayname" class="tip-anchor"></a>
 </summary>
-[React DevTools](https://reactjs.org/blog/2019/08/15/new-react-devtools.html) uses the display name information of components to properly display the component hierarchy.
+[React DevTools](https://reactjs.org/blog/2019/08/15/new-react-devtools.html) 使用组件名称信息正确显示组件层次结构。
 
-If you use:
+如果你使用:
 
 ```javascript
 export const MyComponent = observer(props => <div>hi</div>)
 ```
 
-then no display name will be visible in the DevTools.
+这样会没有名称在DevTools中可以显示.
 
-![devtools-noname](assets/devtools-noDisplayName.png)
+![devtools没有显示名字（devtools-noname）](assets/devtools-noDisplayName.png)
 
-The following approaches can be used to fix this:
+以下的手段可以修复这问题:
 
--   use `function` with a name instead of an arrow function. `mobx-react` infers component name from the function name:
+-   不要使用箭头函数而要使用带有命名的 `function` . `mobx-react` 会根据函数名推断组件名称:
 
     ```javascript
     export const MyComponent = observer(function MyComponent(props) {
@@ -377,45 +376,44 @@ The following approaches can be used to fix this:
     })
     ```
 
--   Transpilers (like Babel or TypeScript) infer component name from the variable name:
+-   调换变量名与组件名，达到通过变量名能推导出组件名的目的 (像是在 Babel 或者 TypeScript中):
 
     ```javascript
     const _MyComponent = props => <div>hi</div>
     export const MyComponent = observer(_MyComponent)
     ```
 
--   Infer from the variable name again, using default export:
+-   使用default export 导出, 会通过变量名称推断 :
 
     ```javascript
     const MyComponent = props => <div>hi</div>
     export default observer(MyComponent)
     ```
 
--   [**Broken**] Set `displayName` explicitly:
+-   [**破坏性方法**] 显式的声明 `displayName`:
 
     ```javascript
     export const MyComponent = observer(props => <div>hi</div>)
     MyComponent.displayName = "MyComponent"
     ```
 
-    This is broken in React 16 at the time of writing; mobx-react `observer` uses a React.memo and runs into this bug: https://github.com/facebook/react/issues/18026, but it will be fixed in React 17.
+    这种写法在React 16是有问题的， mobx-react `observer` 使用 React.memo 会出现这个 bug: https://github.com/facebook/react/issues/18026,但是在 React 17 会被修复.
 
-Now you can see component names:
+现在你将看见组件名称:
 
 ![devtools-withname](assets/devtools-withDisplayName.png)
 
 </details>
 
-<details id="wrap-order"><summary>{🚀} **Tip:** when combining `observer` with other higher-order-components, apply `observer` first<a href="#wrap-order" class="tip-anchor"></a></summary>
+<details id="wrap-order"><summary>{🚀} **提示:** 当你想要将`observer` 和其他高阶组件（HOC·译者注）一起使用, 需要首先调用 `observer` <a href="#wrap-order" class="tip-anchor"></a></summary>
 
-When `observer` needs to be combined with other decorators or higher-order-components, make sure that `observer` is the innermost (first applied) decorator;
-otherwise it might do nothing at all.
+当 `observer` 需要和装饰器或者其他高阶组件（HOC）一起使用时, 请确保 `observer` 是最内层的 (最先调用) 装饰器，否则的话它可能不会工作。
 
 </details>
 
-<details id="computed-props"><summary>{🚀} **Tip:** deriving computeds from props<a href="#computed-props" class="tip-anchor"></a></summary>
-In some cases the computed values of your local observables might depend on some of the props your component receives.
-However, the set of props that a React component receives is in itself not observable, so changes to the props won't be reflected in any computed values. You have to manually update local observable state in order to properly derive computed values from latest data.
+<details id="computed-props"><summary>{🚀} **提示:** 从 props导出计算属性<a href="#computed-props" class="tip-anchor"></a></summary>
+在某些情况下你的全局可观察对象（local observables）的计算属性可能依赖于一些你组件接受到的参数（props）.
+但是,这一系列从React组件接收到的参数（props）本身并不是可观察对象 , 所以更改这些组件的属性（props）并不会使得计算属性响应.你可能需要手动的从最新的数据来更新全局可观察对象的状态来触发计算属性更新。
 
 ```javascript
 import { observer, useLocalObservable } from "mobx-react-lite"
@@ -429,16 +427,16 @@ const TimerView = observer(({ offset }) => {
             this.secondsPassed++
         },
         get offsetTime() {
-            return this.secondsPassed - this.offset // Not 'offset' from 'props'!
+            return this.secondsPassed - this.offset // 'props'没有'偏差'  !
         }
     }))
 
     useEffect(() => {
-        // Sync the offset from 'props' into the observable 'timer'
+        //同步来自 'props' 的偏差到可观察对象 'timer'
         timer.offset = offset
     }, [offset])
 
-    // Effect to set up a timer, only for demo purposes.
+    //作为demo用途，初始化一个定时器.
     useEffect(() => {
         const handle = setInterval(timer.increaseTimer, 1000)
         return () => {
@@ -452,18 +450,18 @@ const TimerView = observer(({ offset }) => {
 ReactDOM.render(<TimerView />, document.body)
 ```
 
-In practice you will rarely need this pattern, since
+在实际项目中你可能很少需要这种写法, 因为
 `return <span>Seconds passed: {timer.secondsPassed - offset}</span>`
-is a much simpler, albeit slightly less efficient solution.
+更加简单, 虽然是稍微低效率的解决方案。
 
 </details>
 
-<details id="useeffect"><summary>{🚀} **Tip:** useEffect and observables<a href="#useeffect" class="tip-anchor"></a></summary>
+<details id="useeffect"><summary>{🚀} **Tip:** useEffect 与 可观察对象<a href="#useeffect" class="tip-anchor"></a></summary>
 
-`useEffect` can be used to set up side effects that need to happen, and which are bound to the life-cycle of the React component.
-Using `useEffect` requires specifying dependencies.
-With MobX that isn't really needed, since MobX has already a way to automatically determine the dependencies of an effect, `autorun`.
-Combining `autorun` and coupling it to the life-cycle of the component using `useEffect` is luckily straightforward:
+`useEffect` 可以被用于触发需要发生的副作用, 它将会被约束在React 组建的生命周期中.
+使用 `useEffect`需要指定详细的依赖.
+对于 MobX 却不是必须的, 因为 MobX 拥有一种真正的能检查到依赖发发生的方法, `autorun`.
+结合 `autorun`可以很轻松的在生命周期组件中使用`useEffect`:
 
 ```javascript
 import { observer, useLocalObservable, useAsObservableSource } from "mobx-react-lite"
@@ -477,7 +475,7 @@ const TimerView = observer(({ offset }) => {
         }
     }))
 
-    // Effect that triggers upon observable changes.
+    // 在Effect方法之上触发可观察对象变化.
     useEffect(
         () =>
             autorun(() => {
@@ -486,7 +484,7 @@ const TimerView = observer(({ offset }) => {
         []
     )
 
-    // Effect to set up a timer, only for demo purposes.
+    // 作为demo用途在Effect里定义一个定时器.
     useEffect(() => {
         const handle = setInterval(timer.increaseTimer, 1000)
         return () => {
@@ -500,29 +498,29 @@ const TimerView = observer(({ offset }) => {
 ReactDOM.render(<TimerView />, document.body)
 ```
 
-Note that we return the disposer created by `autorun` from our effect function.
-This is important, since it makes sure the `autorun` gets cleaned up once the component unmounts!
+需要注意的是我们在effect方法返回了一个创建自`autorun` 的清除方法。
+这一点是非常重要的, 因为他确保了 `autorun` 在组件卸载的时候被清除了!
 
-The dependency array can typically be left empty, unless a non-observable value should trigger a re-run of the autorun, in which case you will need to add it there.
-To make your linter happy, you can define `timer` (in the above example) as a dependency.
-That is safe and has no further effect, since the reference will never actually change.
+依赖数组可以保持为空, 除非是一个不可观察对象的值需要触发autorun重新运行, 你才需要将它添加到这里面。
+请确保你的格式正确,你可以创建一个`定时器（timer）` (上面的例子中) 作为依赖。
+这是安全并且无副作用的, 因为它引用的依赖根本不会改变。
 
-If you'd rather explicitly define which observables should trigger the effect, use `reaction` instead of `autorun`, beyond that the pattern remains identical.
+如果你不想显式的在Effect中定义可观察对象请使用`reaction`而不是`autorun`，他们的传参是完全相同的。
 
 </details>
 
-### How can I further optimize my React components?
+### 我如何能进一步的优化的我的React组件？（How can I further optimize my React components?）
 
-Check out the [React optimizations {🚀}](react-optimizations.md) section.
+请查看[React的优化（React optimizations {🚀}） ](react-optimizations.md) 这篇文章 .
 
-## Troubleshooting
+## 疑难解答
 
-Help! My component isn't re-rendering...
+Help!我的组件没有进行重绘...
 
-1. Make sure you didn't forget `observer` (yes, this is the most common mistake).
-1. Verify that the thing you intend to react to is indeed observable. Use utilities like [`isObservable`](api.md#isobservable), [`isObservableProp`](api.md#isobservableprop) if needed to verify this at runtime.
-1. Check the console logs in the browsers for any warnings or errors.
-1. Make sure you grok how tracking works in general. Check out the [Understanding reactivity](understanding-reactivity.md) section.
-1. Read the common pitfalls as described above.
-1. [Configure](configuration.md#linting-options) MobX to warn you of unsound usage of mechanisms and check the console logs.
-1. Use [trace](analyzing-reactivity.md) to verify that you are subscribing to the right things or check what MobX is doing in general using [spy](analyzing-reactivity.md#spy) / the [mobx-logger](https://github.com/winterbe/mobx-logger) package.
+1. 请确保你没有遗漏 `observer` (是的，这是最常见的错误).
+1. 请检查你传入的对象确定是可观察对象. 可以使用 [`isObservable`](api.md#isobservable)这个工具函数, 如果需要在运行时检查可以使用这个工具函数[`isObservableProp`](api.md#isobservableprop).
+1. 请检查在浏览器控制台中的任何错误或者警告.
+1. 请确保你大体上是理解Mobx的调用栈. 详细请阅读 [理解响应式（Understanding reactivity）](understanding-reactivity.md) 这篇文章.
+1. 请阅读上面提示的常见错误.
+1. [配置（Configure）](configuration.md#linting-options) MobX 如何警告你的机制和输出日志.
+1. 使用 [追踪（trace）](analyzing-reactivity.md) 来确保你传递给Mobx了正确的东西 ，或者是否正确使用了Mobx的 [spy](analyzing-reactivity.md#spy) /  [mobx-logger](https://github.com/winterbe/mobx-logger) 包.
