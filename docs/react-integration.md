@@ -1,14 +1,14 @@
 ---
-title: 集成React
-sidebar_label: 集成React
+title: 集成React（react-integration）
+sidebar_label: 集成React（react-integration）
 hide_title: true
 ---
 
 <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBD4KQ7&placement=mobxjsorg" id="_carbonads_js"></script>
 
-# 集成React
+# 集成React（react-integration）
 
-用例:
+用法:
 
 ```javascript
 import { observer } from "mobx-react-lite" // Or "mobx-react".
@@ -16,9 +16,9 @@ import { observer } from "mobx-react-lite" // Or "mobx-react".
 const MyComponent = observer(props => ReactElement)
 ```
 
-虽然 MobX 可以独立于 React 运行, 但是他们通常是在一起使用, 在 [Mobx的宗旨（The gist of MobX）](the-gist-of-mobx.md) 一文中你会经常看见集成React最重要的一部分:用于包裹React Component的 `observer` [HOC](https://reactjs.org/docs/higher-order-components.html)方法.
+MobX 可以独立于 React 运行, 但是他们通常是结合在一起使用, 在 [Mobx的宗旨（The gist of MobX）](the-gist-of-mobx.md) 一文中你会经常看见集成React最重要的一部分：用于包裹React Component的 `observer` [HOC](https://reactjs.org/docs/higher-order-components.html)方法.
 
-`observer` 是由你选择的，[在安装时（during installation）](installation.md#installation)独立提供的 React bindings 包。 在下面的例子中,我们将使用更加轻量的[`mobx-react-lite` 包](https://github.com/mobxjs/mobx-react-lite).
+`observer` 是你可以自主选择的，[在安装时（during installation）](installation.md#installation)独立提供的 React bindings 包。 在下面的例子中,我们将使用更加轻量的[`mobx-react-lite` 包](https://github.com/mobxjs/mobx-react-lite).
 
 ```javascript
 import React from "react"
@@ -195,7 +195,7 @@ const TimerView = observer(() => {
 ReactDOM.render(<TimerView />, document.body)
 ```
 
-<!--`useLocalObservable` hook-->
+<!-- useLocalObservable hook -->
 
 `const [store] = useState(() => observable({ /* something */}))` 是非常通用的一套写法. 为了简化这个写法我们可以调用`mobx-react-lite` 包中的 [`useLocalObservable`](https://github.com/mobxjs/mobx-react#uselocalobservable-hook) hook ,可以将上面的例子简化成：
 
@@ -253,13 +253,13 @@ React.render(<TimerViewer secondPassed={myTimer.secondsPassed} />, document.body
 
 ### 不要将可观察对象传递到 不是`observer`的组件中（Don't pass observables into components that aren't `observer`）
 
-通过`observer`包裹的组件 _仅仅_ 订阅 在 _他们自己_ 渲染的期间的可观察对象. 如果要将可观察对象 objects / arrays / maps 传递到子组件中, 他们必须被 `observer` 包裹。
+通过`observer`包裹的组件 _只可以_ 订阅到在 _他们自己_ 渲染的期间的可观察对象. 如果要将可观察对象 objects / arrays / maps 传递到子组件中, 他们必须被 `observer` 包裹。
 通过callback回调的组件也是一样.
 
 如果你非要传递可观察对象到未被`observer`包裹的组件中, 要么是因为它是第三方组件,要么你需要组件对Mobx无感知,那你必须 [转换可观察对象为显式 （convert the observables to plain JavaScript values or structures）](observable-state.md#converting-observables-back-to-vanilla-javascript-collections) 在传递前阅读这篇文章.
 
 关于上述的详细描述,
-可以看一下下面的使用 `todo` 对象的例子, 一个 `TodoView` (observer)组件  和一个虚构的接受一组对象映射入参的不是`observer`的`GridRow`组件:
+可以看一下下面的使用 `todo` 对象的例子, 一个 `TodoView` (observer)组件  和一个虚构的接收一组对象映射入参的不是`observer`的`GridRow`组件:
 
 ```javascript
 class Todo {
@@ -283,7 +283,7 @@ const TodoView = observer(({ todo }: { todo: Todo }) =>
        done: todo.done
    }} />
 
-   // 正确: 使用 `toJS`也是可以的, 并且是更清晰明白的方式.
+   // 正确: 使用 `toJS`也是可以的, 并且是更清晰直白的方式.
    return <GridRow data={toJS(todo)} />
 )
 ```
