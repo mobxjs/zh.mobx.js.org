@@ -1,6 +1,6 @@
 ---
-title: 拦截与监听（Intercept & Observe）
-sidebar_label: 拦截与监听（Intercept & Observe） {🚀}
+title: 拦截与观察（Intercept & Observe）
+sidebar_label: 拦截与观察（Intercept & Observe） {🚀}
 hide_title: true
 ---
 
@@ -26,7 +26,7 @@ _请避免使用此API。 大体上讲它提供了一种面向切面编程的方
 
 `intercept` 必须告诉MobX如何对当前要发生的变更进行处理。因此，它应该具有下列操作中的一种：
 
-1. 直接返回回调函数的入参`change`对象，这种情况下变更会被接受。
+1. 直接返回回调函数的入参`change`对象，这种情况下发生的变更会被接受。
 2. 修改回调函数的入参 `change` 对象并返回它, 比如你可以格式化数据。并非所有的数据都是可以修改的，可以参照下面的代码样例。
 3. 返回 `null`, 这意味着变更不会发生，而是会被忽略，这是一个非常强大的概念。他意味着你可以让你的对象变得完全不可变（immutable）。
 4. 当发生的变更不符合你的要求的时候，你可以抛出一些异常。
@@ -71,7 +71,7 @@ _参阅上述声明, 请避免使用此API 并改用 [`reaction`](reactions.md#r
 
 -   `target`: 可被观察到的对象。
 -   `propertyName`: 可选参数，用于指定要观察的特定的对象属性。请注意，这里 `observe(user.name, listener)` 与 `observe(user, "name", listener)`有本质上的不同,
-第一种尝试将监听添加到 _当前的_  `value` 而不是 `user.name`, 这可能导致`user.name` 的变化根本无法被监听到。后者则是对`user`的`name`属性进行观察。
+第一种尝试将监听添加到 _当前的_  `value` 而不是 `user.name`, 这可能导致`user.name` 的变化根本无法被监听到。因为后者是对`user`的`name`属性进行监听。
 -   `listener`: 回调函数，在可观察对象  _每次 _ 发生变更都会被调用。入参是一个描述具体发生了什么变更的对象。包装对象（boxed observables）除外，它会调用回调函数的两个参数： `newValue, oldValue`
 -   `invokeImmediately`: 默认值为 _false_ 。如果你想让监听 `observe` 的 `listener`回调函数立即执行， 而不是等待观察到第一次变化后触发， 可以将它设置为 _true_ 。
 目前（现在）所有的观察对象类型都不支持。
@@ -123,7 +123,7 @@ const disposer2 = observe(person, "lastName", change => {
 
 这些是每种类型其他可用的字段:
 
-| 可观察的对象类型              | 事件类型 | 属性     | 描述                                                                                       | Available during intercept | Can be modified by intercept |
+| 可观察的对象类型              | 事件类型 | 属性     | 描述                                                                                       | 在（intercept）阶段是否可用 | 在拦截阶段是否可被修改 |
 | ---------------------------- | ---------- | ------------ | ------------------------------------------------------------------------------------------------- | -------------------------- | ---------------------------- |
 | Object                       | add        | name         | 要添加的属性的名称                                                                                  | √                          |                              |
 |                              |            | newValue     | 将要变更成为的新值                                                                                  | √                          | √                            |
