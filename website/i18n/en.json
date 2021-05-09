@@ -41,8 +41,8 @@
         "sidebar_label": "Collection utilities {🚀}"
       },
       "computeds-with-args": {
-        "title": "Computeds with arguments",
-        "sidebar_label": "Computeds with arguments {🚀}"
+        "title": "含参数的计算值",
+        "sidebar_label": "含参数的计算值 {🚀}"
       },
       "computeds": {
         "title": "Deriving information with computeds",
