@@ -1,6 +1,6 @@
 ---
 title: 创建一个自定义 observables
-sidebar_label: 自定义 observables {}
+sidebar_label: 自定义 observables {🚀}
 hide_title: true
 ---
 
