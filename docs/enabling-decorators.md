@@ -1,17 +1,17 @@
 ---
-title: Enabling decorators
-sidebar_label: Enabling decorators {🚀}
+title: 启用装饰器语法
+sidebar_label: 启用装饰器语法 {🚀}
 hide_title: true
 ---
 
 <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBD4KQ7&placement=mobxjsorg" id="_carbonads_js"></script>
 
-# Enabling decorators {🚀}
+# 启用装饰器语法 {🚀}
 
-MobX before version 6 encouraged the use of ES.next decorators to mark things as `observable`, `computed` and `action`. However, decorators are currently not an ES standard, and the process of standardization is taking a long time. It also looks like the standard will be different from the way decorators were implemented previously. In the interest of compatibility we have chosen to move away from them in MobX 6, and recommend the use of [`makeObservable` / `makeAutoObservable`](observable-state.md) instead.
+在版本6之前，Mobx鼓励使用ES.next中的decorators,将某个对象标记为`observable`, `computed` 和 `action`。然而，装饰器语法尚未定案以及未被纳入ES标准，标准化的过程还需要很长时间，且未来制定的标准可能与当前的装饰器实现方案有所不同。出于兼容性的考虑，我们在MobX 6中放弃了它们，并建议使用[`makeObservable` / `makeAutoObservable`](observable-state.md)代替。
 
-But many existing codebases use decorators, and a lot of the documentation and tutorial material online uses them as well. The rule is that anything you can use as an annotation to `makeObservable`, such as `observable`, `action` and `computed`, you can also use as a decorator. So let's examine what that looks like:
-
+鉴于目前仍有很多代码库，在线文档和教程在使用decorator，我们的规则是，任何可以使用`observable`, `action` 和 `computed`等注解的地方，你也可以使用decorator。 下面是示例：
+ 
 ```javascript
 import { makeObservable, observable, computed, action } from "mobx"
 
@@ -44,17 +44,15 @@ class TodoList {
 }
 ```
 
-MobX before version 6 did not require the `makeObservable(this)` call in the constructor, but because it makes the implementation of decorator simpler and more compatible, it now does. This instructs MobX to make the instances observable following the information in the decorators -- the decorators take the place of the second argument to `makeObservable`.
+版本6之前的Mobx,不需要在构造函数中调用`makeObservable(this)`。在版本6中，为了让装饰器的实现更简单以及保证装饰器的兼容性，必须在构造函数中调用`makeObservable(this)`。Mobx可以根据 `makeObservable`第二个参数提供的装饰器信息，将实例设置为observable。
 
-We intend to continue to support decorators in this form.
-Any existing MobX 4/5 codebase can be migrated to use `makeObservable` calls by our [code-mod](https://www.npmjs.com/package/mobx-undecorate).
-When migrating from MobX 4/5 to 6, we recommend to always run the code-mod, to make sure the necessary `makeObservable` calls are generated.
+我们打算以这种方式来继续支持decorators。通过使用[代码转换工具](https://www.npmjs.com/package/mobx-undecorate) ,你可以将任何现有的 MobX 4/5 项目，转换成使用`makeObservable`的项目。 当你将你的项目从 MobX4/5 迁移到 MobX6 时，我们建议你始终运行[代码转换工具](https://www.npmjs.com/package/mobx-undecorate) ，以确保生成了必要的`makeObservable`。
 
-Check out the [Migrating from MobX 4/5 {🚀}](migrating-from-4-or-5.md) section.
+查看 [MobX 4/5 升级指南 {🚀}](migrating-from-4-or-5.md) 
 
-## Using `observer` as decorator
+## 将`observer` 作为装饰器使用
 
-The `observer` function from `mobx-react` is both a function and a decorator that can be used on class components:
+`mobx-react`中的`observer`除了可以作为函数来使用，也可以作为装饰器，用来修饰类组件：
 
 ```javascript
 @observer
@@ -63,42 +61,39 @@ class Timer extends React.Component {
 }
 ```
 
-## How to enable decorator support
+## 启用装饰器语法支持
 
-We do not recommend new codebases that use MobX use decorators until the point when they become an official part of the language, but you can still use them. It does require setup for transpilation so you have to use Babel or TypeScript.
+在装饰器语法被正式纳入JavaScript官方规范之前，我们不建议你在使用MobX的项目里使用它。如果要使用装饰器语法，你必须使用Babel或Typescript对它进行转译。
 
 ### TypeScript
 
-Enable the compiler option `"experimentalDecorators": true` and `"useDefineForClassFields": true` in your `tsconfig.json`.
+在`tsconfig.json`中启用编译器选项 `"experimentalDecorators": true` 和 `"useDefineForClassFields": true`。
 
 ### Babel 7
 
-Install support for decorators: `npm i --save-dev @babel/plugin-proposal-class-properties @babel/plugin-proposal-decorators`. And enable it in your `.babelrc` file (note that the order is important):
+安装支持装饰器所需要的依赖：`npm i --save-dev @babel/plugin-proposal-class-properties @babel/plugin-proposal-decorators`，并在 `.babelrc`文件中启用（注意，插件的顺序很重要）：
 
 ```javascript
 {
     "plugins": [
         ["@babel/plugin-proposal-decorators", { "legacy": true }],
         ["@babel/plugin-proposal-class-properties", { "loose": false }]
-        // In contrast to MobX 4/5, "loose" must be false!    ^
+        // 与MobX 4/5不同的是, "loose" 必须为 false!    ^
     ]
 }
 ```
 
-### Decorator syntax and Create React App (v2)
+### 装饰器语法 和 Create React App (v2)
 
-Decorators are only supported out of the box when using TypeScript in `create-react-app@^2.1.1` and newer. In older versions or when using vanilla JavaScript use eject, or the [customize-cra](https://github.com/arackaf/customize-cra) package.
+只有使用`create-react-app@^2.1.1`及更新版本创建的Typescript项目，才开箱即用地支持装饰器语法。如果你的项目是使用旧版本`create-react-app`创建的或者是创建的Javascript项目，可以使用`eject`命令或者使用[customize-cra](https://github.com/arackaf/customize-cra) 。
 
-## Disclaimer: Limitations of decorator syntax:
+## 免责声明: 装饰器语法的局限:
 
-_The current transpiler implementations of decorator syntax are quite limited and don't behave exactly the same.
-Also, many compositional patterns are currently not possible with decorators, until the stage-2 proposal has been implemented by all transpilers.
-For this reason the scope of decorator syntax support in MobX is currently scoped to make sure that the supported features
-behave consistently accross all environments._
+_当前编译器所实现的装饰器语法是有一些限制的，而且与实际的装饰器语法表现并非完全一致。 此外，在所有编译器都实现第二阶段的提议之前，许多组合模式目前都无法与装饰器一起使用。 由于这个原因，目前在 MobX 中对装饰器语法支持的范围进行了限定，以确保支持的特性在所有环境中始终保持一致。_
 
-The following patterns are not officially supported by the MobX community:
+MobX 社区并没有正式支持以下模式：
 
--   Redefining decorated class members in inheritance trees
--   Decorating static class members
--   Combining decorators provided by MobX with other decorators
--   Hot module reloading (HMR) / React-hot-loader might not work as expected
+-   重新定义继承树中的装饰类成员
+-   装饰静态类成员
+-   将 MobX 提供的装饰器与其他装饰器组合
+-   热更新 (HMR) / React-hot-loader 可能不能正常运行
