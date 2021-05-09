@@ -14,9 +14,9 @@ hide_title: true
 通过使用原子的概念来实现这一点非常简单。
 可以使用Atoms向MobX发出信号，表示某些可观察数据源已经被观察到或已经更改，而MobX将在atom被使用或不再使用时，向atom发出信号。
 
-_**Tip**:
+_**Tip**_:
 在许多情况下，你可以避免创造自己的Atoms，我们只需要创建一个普通的observable就行了，
-当MobX开始跟踪它（observable）时，[' onBecomeObserved '](lazy-observables.md)工具有相关提示
+当MobX开始跟踪它（observable）时，[`onBecomeObserved`](lazy-observables.md)工具有相关提示
 
 下面的例子演示了如何创建一个名为‘Clock’的observable，它返回当前的日期-时间，然后可以在响应式函数中使用它。
 
