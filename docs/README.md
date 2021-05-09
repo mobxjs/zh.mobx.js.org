@@ -48,10 +48,54 @@ _简单，可扩展的状态管理_
                 </a>
             </td>
             <td align="center">
-                <a href="https://github.com/mobxjs/zh.mobx.js.org" target="_blank">
-                    <img src="img/placeholder.svg" width="50px">
+                <a href="https://github.com/njueyupeng" target="_blank">
+                    <img src="https://avatars.githubusercontent.com/u/13177502?v=4&s=100" width="50px">
                     <br />
-                    <sup style="font-size: 12px">虚位以待</sup>
+                    <sup style="font-size: 12px">njueyupeng</sup>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/ai-xiaihai" target="_blank">
+                    <img src="https://avatars.githubusercontent.com/u/12586770?v=4&s=100" width="50px">
+                    <br />
+                    <sup style="font-size: 12px">ai-xiaihai</sup>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/ObservedObservers" target="_blank">
+                    <img src="https://avatars.githubusercontent.com/u/22167673?s=100&v=4" width="50px">
+                    <br />
+                    <sup style="font-size: 12px">ObservedObserver</sup>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td align="center">
+                <a href="https://github.com/berber1016 " target="_blank">
+                    <img src="https://avatars.githubusercontent.com/u/31471551?s=100&v=4" width="50px">
+                    <br />
+                    <sup style="font-size: 12px">berber1016</sup>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/BM-laoli" target="_blank">
+                    <img src="https://avatars.githubusercontent.com/u/60060313?v=4&s=100" width="50px">
+                    <br />
+                    <sup style="font-size: 12px">BM-laoli</sup>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/wangjq4214" target="_blank">
+                    <img src="https://avatars.githubusercontent.com/u/35188480?v=4&s=100" width="50px">
+                    <br />
+                    <sup style="font-size: 12px">wangjq4214</sup>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/WanderWang" target="_blank">
+                    <img src="https://avatars.githubusercontent.com/u/2238280?v=4&s=100" width="50px">
+                    <br />
+                    <sup style="font-size: 12px">WanderWang</sup>
                 </a>
             </td>
             <td align="center">
@@ -68,7 +112,7 @@ _简单，可扩展的状态管理_
                     <sup style="font-size: 12px">立即参与翻译 ↗️</sup>
                 </a>
             </td>  
-            </tr>
+        </tr>
     </table>
 </div>
 
