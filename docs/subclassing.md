@@ -1,27 +1,27 @@
 ---
-title: Subclassing
-sidebar_label: Subclassing
+title: 使用子类
+sidebar_label: 使用子类
 hide_title: true
 ---
 
 <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBD4KQ7&placement=mobxjsorg" id="_carbonads_js"></script>
 
-# Subclassing
+# 使用子类
 
-Subclassing is supported with [limitations](#limitations). Most notably you can only **override actions/flows/computeds on prototype** - you cannot override _[field declarations](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#field_declarations)_. Use `override` annotation for methods/getters overriden in subclass - see example below. Try to keep things simple and prefer composition over inheritance.
+对使用子类的支持是有[限制](#limitations)的。 最值得注意的一点是你只能**重新定义原型中的 actions/flows/computeds**——你不能重新定义_[字段声明](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#field_declarations)_。 在子类中请使用 `override` 注释被重新定义的methods/getters - 见下例。 请凡事从简，并优先考虑组合（而非继承）。
 
 ```javascript
 import { makeObservable, observable, computed, action } from "mobx"
 
 class Parent {
-    // Annotated instance fields are NOT overridable
+    // 被注释的实例字段不可被重新定义
     observable = 0
     arrowAction = () => {}
 
-    // Non-annotated instance fields are overridable
+    // 未被注释的实例字段可以被重新定义
     overridableArrowAction = action(() => {})
 
-    // Annotated prototype methods/getters are overridable
+    // 被注释的原型methods/getters可以被重新定义
     action() {}
     actionBound() {}
     get computed() {}
@@ -38,20 +38,20 @@ class Parent {
 }
 
 class Child extends Parent {
-    /* --- INHERITED --- */
-    // THROWS - TypeError: Cannot redefine property
+    /* --- 继承来的定义 --- */
+    // 抛出 - TypeError: Cannot redefine property
     // observable = 5
     // arrowAction = () = {}
 
-    // OK - not annotated
+    // OK - 未被注释的
     overridableArrowAction = action(() => {})
 
-    // OK - prototype
+    // OK - 原型
     action() {}
     actionBound() {}
     get computed() {}
 
-    /* --- NEW --- */
+    /* --- 新的定义 --- */
     childObservable = 0;
     childArrowAction = () => {}
     childAction() {}
@@ -61,11 +61,11 @@ class Child extends Parent {
     constructor(value) {
         super()
         makeObservable(this, {
-            // inherited
+            // 继承来的
             action: override,
             actionBound: override,
             computed: override,
-            // new
+            // 新的
             childObservable: observable,
             childArrowAction: action
             childAction: action,
@@ -78,19 +78,19 @@ class Child extends Parent {
 
 ## Limitations
 
-1. Only `action`, `computed`, `flow`, `action.bound` defined **on prototype** can be **overriden** by subclass.
-1. Field can't be re-annotated in subclass, except with `override`.
-1. `makeAutoObservable` does not support subclassing.
-1. Extending builtins (`ObservableMap`, `ObservableArray`, etc) is not supported.
-1. You can't provide different options to `makeObservable` in subclass.
-1. You can't mix annotations/decorators in single inheritance chain.
-1. [All other limitations apply as well](observable-state.html#limitations)
+1. 只有定义在**原型**上的 `action`, `computed`, `flow`, `action.bound` 可以在子类中被**重新定义**。
+1. 不能在子类中重新注释字段（`override` 除外）。
+1. `makeAutoObservable` 不支持在子类中使用。
+1. 不支持扩展内置数据结构（ObservableMap, ObservableArray, 等）。
+1. 你不能在子类中给`makeObservable`提供不同选项。
+1. 你不能在单个继承链中混合使用注解/装饰器。
+1. [所有其他限制均在此适用](observable-state.html#limitations)。
 
 ### `TypeError: Cannot redefine property`
 
-If you see this, you're probably trying to **override arrow function** in subclass `x = () => {}`. That's not possible because **all annotated** fields of classes are **non-configurable** ([see limitations](observable-state.md#limitations)). You have two options:
+如果你遇到这一错误, 你可能正在子类中**重新定义箭头函数**`x = () => {}`。 其不可行的原因是**一切被注释的**类字段都是**不可配置的**([详见限制](observable-state.md#limitations))。 你有以下这两个选择:
 
-<details><summary>1. Move function to prototype and use `action.bound` annotation instead</summary>
+<details><summary>1. 将函数移至原型并使用`action.bound`注释</summary>
 
 ```javascript
 class Parent {
@@ -117,7 +117,7 @@ class Child {
 ```
 
 </details>
-<details><summary>2. Remove `action` annotation and wrap the function in action manually: `x = action(() => {})`</summary>
+<details><summary>2. 移除`action`注释并手动将函数包装于action里：`x = action(() => {})`</summary>
 
 ```javascript
 class Parent {
@@ -126,7 +126,7 @@ class Parent {
     action = action(() => {})
 
     constructor() {
-        makeObservable(this, {}) // <-- annotation removed
+        makeObservable(this, {}) // <-- 注释已被移除
     }
 }
 class Child {
@@ -134,7 +134,7 @@ class Child {
 
     constructor() {
         super()
-        makeObservable(this, {}) // <-- annotation removed
+        makeObservable(this, {}) // <-- 注释已被移除
     }
 }
 ```
