@@ -252,7 +252,7 @@ class Child {
 <!--DOCUSAURUS_CODE_TABS-->
 <!--Wrap handlers in `action`-->
 
-Promise 的处理程序是内联的，但是会在原始的 action 执行完成之后运行，因此需要使用 `action` 进行包装：
+Promise 的决议处理程序是我们以内联的方式处理的，但是会在一开始的 action 执行完成之后运行，因此需要使用 `action` 对它们进行包装：
 
 ```javascript
 import { action, makeAutoObservable } from "mobx"
@@ -396,11 +396,11 @@ const projects = await flowResult(store.fetchProjects())
 
 `flow` 包装器是一个可选的 `async` / `await` 替代方案，它让 MobX action 使用起来更加容易。
 
-`flow` 将 [generator 函数](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator) 作为唯一输入。
+`flow` 将一个 [generator 函数](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator) 作为唯一输入。
 在 generator 内部，你可以使用 yield 串联 Promise（使用 `yield somePromise` 代替 `await somePromise`）。
 flow 机制将会确保 generator 在 Promise resolve 之后继续运行或者抛出错误。
 
-所以 `flow` 是 `async` / `await` 的一个替代方法，它不需要 `action` 的包装。它可以按照下面的方式工作：
+所以 `flow` 是 `async` / `await` 的一个替代方案，不需要再用 `action` 进行包装。它可以按照下面的方式使用：
 
 1. 使用 `flow` 包装你的异步函数。
 2. 使用 `function *` 代替 `async`。
@@ -408,13 +408,13 @@ flow 机制将会确保 generator 在 Promise resolve 之后继续运行或者�
 
 以上 [`flow` + generator 函数](#asynchronous-actions) 的示例展示了实际情况中的用法。
 
-需要注意的是，当使用 TypeScript 时才需要使用 `flowResult` 函数。
+注意，使用 TypeScript 时才会需要 `flowResult` 函数。
 由于使用 `flow` 包装方法，他将把返回的 generator 包裹在 Promise 中。
-然而，TypeScript 并不知道这种转换，因此使用 `flowResult` 确保 TypeScript 可以知道这种类型的改变。
+然而，TypeScript 并不会意识到这种转换，因此 `flowResult` 会确保 TypeScript 意识到这种类型的改变。
 
-`makeAutoObservable` 将自动推断 generators 为 `flow`。带有 `flow` 注解的成员是不可枚举的。
+`makeAutoObservable` 和它的小伙伴们会把 generators 自动推断成 `flow`。带有 `flow` 注解的成员是不可枚举的。
 
-<details id="flow-wrap"><summary>{🚀} **注意：** 将 flow 作为对象字段<a href="#flow-wrap" class="tip-anchor"></a></summary>
+<details id="flow-wrap"><summary>{🚀} **注意：** 将 flow 用于对象字段<a href="#flow-wrap" class="tip-anchor"></a></summary>
 像 `action` 一样，`flow` 也可以直接作为包装函数使用。上面的例子可以改写成下面的样子：
 
 ```typescript
@@ -443,7 +443,7 @@ const store = new Store()
 const projects = await store.fetchProjects()
 ```
 
-这样做的好处是我们不再需要 `flowResult` 了，但是需要传入 `this` 来确保正确的类型推断。
+这样做的好处是我们不再需要 `flowResult` 了，坏处是需要指定 `this` 的类型，以便确保它的类型会被正确推断出来。
 
 </details>
 
@@ -451,11 +451,11 @@ const projects = await store.fetchProjects()
 
 flow 的另一个好处就是它可以被取消。
 `flow` 的返回值是一个 Promise，在 generator 函数运行完成时它将会被 resolve。
-返回的 Promise 中有一个额外的 `cancel()` 方法，该方法可以中断正在运行的 generator 并取消它。
-`try` / `finally` 字句仍将运行。
+返回的 Promise 中还有一个 `cancel()` 方法，该方法可以打断正在运行的 generator 并取消它。
+所有 `try` / `finally` 语句仍然会被运行。
 
-## 关闭强制使用 action {🚀}
+## 禁用强制性 action {🚀}
 
-默认情况下，MobX 6 和更高版本要求您使用 action 来更改 state。
-然而，你可以配置 MobX 来关闭这个行为。查看 [`enforceActions`](configuration.md#enforceactions)。
-例如，这在单元测试中非常有用，因为警告并不总是有价值的。
+默认情况下，MobX 6 和更高版本会要求您使用 action 来更改 state。
+然而，你可以配置 MobX 来禁用这个行为。查看 [`enforceActions`](configuration.md#enforceactions)。
+例如，这在单元测试场景中非常有用，因为警告并不总是很有价值。
