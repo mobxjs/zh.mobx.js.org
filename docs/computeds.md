@@ -14,18 +14,18 @@ hide_title: true
 -   `computed(options)` _（注解）_
 -   `computed(fn, options?)`
 
-计算值可以从其他可观察对象中派生信息。
-计算值采用惰性求值，缓存输出，并且只有当依赖的可观察对象被改变时才会重新计算。
-如果它们没有被任何观察者使用，计算将完全停止。
+计算值可以用来从其他可观察对象中派生信息。
+计算值采用惰性求值，会缓存其输出，并且只有当其依赖的可观察对象被改变时才会重新计算。
+它们在不被任何值观察时会被暂时停用。
 
-从概念上讲，它们和电子表格中的公式非常相似，并且作用强大不可估量。它们减少了必需存储的状态量，并进行了高度的优化。请尽量使用它们。
+从概念上讲，它们和电子表格中的公式非常相似，并且作用强大、不可被低估。它们可以协助减少你需要存储的状态的数量，并且是被高度优化过的。请尽可能使用它们。
 
 ## 例子
 
-可以在 JavaScript 中的 [getters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get) 上添加 `computed` 注解来创建计算值。
-使用 `makeObservable` 将 getter 声明为 computed。如果你需要自动将所有的 getters 声明为 `computed`，可以使用 `makeAutoObservable`，`observable` 或者 `extendObservable`。
+计算值可以通过在 JavaScript [getters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get) 上添加 `computed` 注解来创建。
+使用 `makeObservable` 将 getter 声明为 computed。或者如果你希望所有的 getters 被自动声明为 `computed`，可以使用 `makeAutoObservable`，`observable` 或者 `extendObservable`。
 
-为了辅助说明计算值的意义，下面的示例依赖于 [Reactions {🚀}](reactions.md) 高级部分中的 [`autorun`](reactions.md#autorun)。
+下面的示例依靠 [Reactions {🚀}](reactions.md) 高级部分中的 [`autorun`](reactions.md#autorun) 来辅助说明计算值的意义。
 
 ```javascript
 import { makeObservable, observable, computed, autorun } from "mobx"
@@ -54,7 +54,7 @@ const order = new OrderLine(0)
 const stop = autorun(() => {
     console.log("Total: " + order.total)
 })
-// 计算...
+// 计算中...
 // Total: 0
 
 console.log(order.total)
@@ -62,11 +62,11 @@ console.log(order.total)
 // 0
 
 order.amount = 5
-// 计算...
+// 计算中...
 // (无需 autorun)
 
 order.price = 2
-// 计算...
+// 计算中...
 // Total: 10
 
 stop()
@@ -75,11 +75,11 @@ order.price = 3
 // 计算值和 autorun 都不会被重新计算.
 ```
 
-上面的例子很好的展示了 `计算值` 的好处，它充当了缓存的角色。
+上面的例子很好地展示了 `计算值` 的好处，它充当了缓存点的角色。
 即使我们改变了 `amount`，进而触发了 `total` 的重新计算，
 也不会触发 `autorun`，因为 `total` 将会检测到其输出未发生任何改变，所以也不需要更新 `autorun`。
 
-我们做一个对比，如果不对 `total` 进行注解，则 `autorun` 将会运行 3 次，
+相比之下，如果 `total` 没有被注解，那么 `autorun` 会把副作用运行 3 次，
 因为它将直接依赖于 `total` 和 `amount`。[自己试一下吧](https://codesandbox.io/s/computed-3cjo9?file=/src/index.tsx)。
 
 ![computed graph](assets/computed-example.png)
@@ -90,12 +90,12 @@ order.price = 3
 
 使用计算值时，请遵循下面的最佳实践：
 
-1. 它们不应该由副作用或者更新其他可观察对象。
+1. 它们不应该有副作用或者更新其他可观察对象。
 2. 避免创建和返回新的可观察对象。
 
 ## 提示
 
-<details id="computed-suspend"><summary>**提示：** 如果_没有_被观察者使用，计算值将会被挂起<a href="#computed-suspend" class="tip-anchor"></a></summary>
+<details id="computed-suspend"><summary>**提示：** 如果_没有_被观察，计算值将会被暂时停用<a href="#computed-suspend" class="tip-anchor"></a></summary>
 
 有时这会使新接触 MobX 的人感到困惑，它们可能习惯于使用像 [Reselect](https://github.com/reduxjs/reselect) 这样的库，如果你创建了一个计算属性但是你没有在任何的 reaction 中使用它，他将不会被缓存并且会出现超出必要的频繁的计算。
 例如，我们在上面的例子后面加上两次对 `console.log(order.total)` 的调用，在调用了 `stop()` 之后，`total` 仍然会被重新计算两次。
