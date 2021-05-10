@@ -152,20 +152,20 @@ const ResetButton = ({ formState }) => (
 
 <details id="actions-are-untracked"><summary>**注意：** actions 不会被追踪<a href="#actions-are-untracked" class="tip-anchor"></a></summary>
 
-actions 的另一个特征是它们是 [不可追踪](api.md#untracked) 的。当从副作用或者计算值（非常罕见）中调用 action 时，该 action 读取的可观察对象将不会计入依赖项。
+actions 的另一个特征是它们是 [不可追踪](api.md#untracked) 的。当从副作用或者计算值（非常罕见）中调用 action 时，该 action 读取的可观察对象将不会算作该 derivation 的依赖项。
 
-`makeAutoObservable`，`extendObservable` 和 `observable` 使用一种特殊的 `action` 叫做  `autoAction`，
-这样做将会在运行时确定函数是 derivation 还是 action。
+`makeAutoObservable`，`extendObservable` 和 `observable` 使用一种特殊的 `action`， 叫做  `autoAction`，
+它会在运行时确定函数是 derivation 还是 action。
 
 </details>
 
 ## `action.bound`
 
-使用：
+用法：
 
 -   `action.bound` _（注解）_
 
-`action.bound` 注解可用于将方法自动绑定到正确的实例，因此 `this` 总是正确地绑定在函数内部。
+`action.bound` 注解可用于将方法自动绑定到正确的实例，这样 `this` 会始终被正确绑定在函数内部。
 
 <details id="auto-bind"><summary>**提示：** 使用 `makeAutoObservable(o, {}, { autoBind: true })` 自动绑定所有的 actions<a href="#avoid-bound" class="tip-anchor"></a></summary>
 
@@ -190,16 +190,16 @@ class Doubler {
 
 ## `runInAction`
 
-使用：
+用法：
 
 -   `runInAction(fn)`
 
-使用这个工具函数可以创建一个立即调用的临时 action。在异步代码中非常有用。
+使用这个工具函数来创建一个会被立即调用的临时 action。在异步进程中非常有用。
 请查看 [上面代码块](#examples) 中的实例。
 
 ## Actions 和继承
 
-只有定义在 **prototype** 上的函数可以被子类 **overriden**：
+只有定义在**原型**上的函数可以被子类**覆盖**：
 
 ```javascript
 class Parent {
@@ -237,17 +237,17 @@ class Child {
 }
 ```
 
-为了将单个的 _action_ **绑定** 到 `this`，可以使用 `action.bound` 代替箭头函数。<br>
+想要将单个的 _action_ **绑定** 到 `this`，可以使用 `action.bound` 代替箭头函数。<br>
 查看 [**subclassing**](subclassing.md) 获取更多信息。
 
 ## 异步 actions
 
 从本质上讲，异步进程在 MobX 中不需要任何特殊处理，因为不论是何时引发的所有 reactions 都将会自动更新。
-而且因为可观察对象是可变的，因此在 action 过程中保持对它们的引用一般是安全的。
+而且因为可观察对象是可变的，因此在 action 执行过程中保持对它们的引用一般是安全的。
 然而，在异步进程中更新可观察对象的每个步骤（tick）都应该被标识为 `action`。
-这一点可以利用上述的 API 以多种方式实现，如下所示。
+我们可以通过利用上述的 API 以多种方式实现这一点，如下所示。
 
-例如，在处理 Promise 时，更新 state 的处理程序应该使用 `action` 进行包装或者其本身就是 actions，如下所示。
+例如，在处理 Promise 时，更新 state 的处理程序应该被 `action` 包装起来，或者被标记为 actions，如下所示。
 
 <!--DOCUSAURUS_CODE_TABS-->
 <!--Wrap handlers in `action`-->
@@ -317,8 +317,8 @@ class Store {
 
 <!--async/await + runInAction-->
 
-`await` 之后的任何操作都不在同一个 tick 中，因此它们需要使用 action 包装。
-在这里，我们利用了 `runInAction`：
+`await` 之后的任何操作都不与其同在一个 tick 中，因此它们需要使用 action 包装。
+在这里，我们可以利用 `runInAction`：
 
 ```javascript
 import { runInAction, makeAutoObservable } from "mobx"
@@ -389,12 +389,12 @@ const projects = await flowResult(store.fetchProjects())
 
 ## 使用 flow 代替 async / await {🚀}
 
-使用：
+用法：
 
 -   `flow` _（注解）_
 -   `flow(function* (args) { })`
 
-`flow` 包装器是 `async` / `await` 的替代方案，它使使用 MobX 的 action 更加容易。
+`flow` 包装器是一个可选的 `async` / `await` 替代方案，它让 MobX action 使用起来更加容易。
 
 `flow` 将 [generator 函数](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator) 作为唯一输入。
 在 generator 内部，你可以使用 yield 串联 Promise（使用 `yield somePromise` 代替 `await somePromise`）。
@@ -406,7 +406,7 @@ flow 机制将会确保 generator 在 Promise resolve 之后继续运行或者�
 2. 使用 `function *` 代替 `async`。
 3. 使用 `yield` 代替 `await`。
 
-上面的 [`flow` + generator 函数](#asynchronous-actions) 的示例展示了实际情况中的用法。
+以上 [`flow` + generator 函数](#asynchronous-actions) 的示例展示了实际情况中的用法。
 
 需要注意的是，当使用 TypeScript 时才需要使用 `flowResult` 函数。
 由于使用 `flow` 包装方法，他将把返回的 generator 包裹在 Promise 中。
