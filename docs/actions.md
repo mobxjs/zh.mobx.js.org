@@ -22,7 +22,7 @@ hide_title: true
 
 2. 默认情况下，不允许在 actions 之外改变 state。这有助于在代码中清楚地对状态更新发生的位置进行定位。
 
-`action` 注解应仅用于_修改_ state 的函数。派生其他信息（执行查询或者过滤数据）的函数_不应该_被标记为 actions，以允许 MobX 跟踪其调用。 带有 `action` 注解的成员是不可枚举的。
+`action` 注解应该仅用于会_修改_ state 的函数。派生其他信息（执行查询或者过滤数据）的函数_不应该_被标记为 actions，以便 MobX 可以对它们的调用进行跟踪。 带有 `action` 注解的成员是不可枚举的。
 
 ## 例子
 
@@ -409,13 +409,13 @@ flow 机制将会确保 generator 在 Promise resolve 之后继续运行或者�
 以上 [`flow` + generator 函数](#asynchronous-actions) 的示例展示了实际情况中的用法。
 
 注意，使用 TypeScript 时才会需要 `flowResult` 函数。
-由于使用 `flow` 包装方法，他将把返回的 generator 包裹在 Promise 中。
+它会因为使用 `flow` 装饰了一个方法而把返回的 generator 包裹在 Promise 中。
 然而，TypeScript 并不会意识到这种转换，因此 `flowResult` 会确保 TypeScript 意识到这种类型的改变。
 
 `makeAutoObservable` 和它的小伙伴们会把 generators 自动推断成 `flow`。带有 `flow` 注解的成员是不可枚举的。
 
 <details id="flow-wrap"><summary>{🚀} **注意：** 将 flow 用于对象字段<a href="#flow-wrap" class="tip-anchor"></a></summary>
-像 `action` 一样，`flow` 也可以直接作为包装函数使用。上面的例子可以改写成下面的样子：
+像 `action` 一样，`flow` 也可以直接用来包装函数。上面的例子本来还可以改写成下面的样子：
 
 ```typescript
 import { flow } from "mobx"
