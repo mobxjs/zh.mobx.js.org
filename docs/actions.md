@@ -8,19 +8,19 @@ hide_title: true
 
 # 使用 actions 更新 state
 
-使用：
+用法：
 
 -   `action` _（注解）_
 -   `action(fn)`
 -   `action(name, fn)`
 
-所有的应用程序都有 actions。actions 是一些修改 state 的代码。原则上，actions 总是为了响应事件而发生的。例如，点击了一个按钮，一些输入被改变，一个 websocket 消息被送达，等等。 
+所有的应用程序都有 actions。action 就是任意一段修改 state 的代码。原则上，actions 总会为了对一个事件做出响应而发生。例如，点击了一个按钮，一些输入被改变了，一个 websocket 消息被送达了，等等。 
 
-尽管 [`makeAutoObservable`](observable-state.md#makeautoobservable) 可以自动完成许多工作，但是 MobX 还是要求你声明你的 actions。Actions 可以帮助你更好的组织你的代码并提供一些性能优势：
+尽管 [`makeAutoObservable`](observable-state.md#makeautoobservable) 可以自动帮你声明一部分 actions，但是 MobX 还是要求你声明你的 actions。Actions 可以帮助你更好的组织你的代码并提供以下性能优势：
 
-1. 他们在 [transactions](api.md#transaction) 内部运行。在最外层的 action 完成之前，不会更新任何的可观察对象，从而确保在 action 完成之前，action 中产生的中间值或不完整的值对应用程序是不可见的。
+1. 它们在 [transactions](api.md#transaction) 内部运行。任何可观察对象在最外层的 action 完成之前都不会被更新，这一点保证了在 action 完成之前，action 执行期间生成的中间值或不完整的值对应用程序的其余部分都是不可见的。
 
-2. 默认情况下，不允许在 actions 之外改变 state。这有助于在代码中清楚的定位状态更新发生的位置。
+2. 默认情况下，不允许在 actions 之外改变 state。这有助于在代码中清楚地对状态更新发生的位置进行定位。
 
 `action` 注解应仅用于_修改_ state 的函数。派生其他信息（执行查询或者过滤数据）的函数_不应该_被标记为 actions，以允许 MobX 跟踪其调用。 带有 `action` 注解的成员是不可枚举的。
 
@@ -92,7 +92,7 @@ class Doubler {
 
 const doubler = new Doubler()
 
-// 这样调用增量是安全的, 因为它已经绑定.
+// 这样调用 increment 是安全的, 因为它已经被绑定了。
 setInterval(doubler.increment, 1000)
 ```
 
