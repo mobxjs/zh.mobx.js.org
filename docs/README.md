@@ -62,7 +62,7 @@ _简单，可扩展的状态管理_
                 </a>
             </td>
             <td align="center">
-                <a href="https://github.com/ObservedObservers" target="_blank">
+                <a href="https://github.com/ObservedObserver" target="_blank">
                     <img src="https://avatars.githubusercontent.com/u/22167673?s=100&v=4" width="50px">
                     <br />
                     <sup style="font-size: 12px">ObservedObserver</sup>
