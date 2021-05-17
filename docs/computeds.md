@@ -97,7 +97,7 @@ order.price = 3
 
 <details id="computed-suspend"><summary>**提示：** 如果_没有_被观察，计算值将会被暂时停用<a href="#computed-suspend" class="tip-anchor"></a></summary>
 
-有时这会使新接触 MobX 的人感到困惑，它们可能习惯于使用像 [Reselect](https://github.com/reduxjs/reselect) 这样的库，如果你创建了一个计算属性但是你没有在任何的 reaction 中使用它，他将不会被缓存并且会出现超出必要的频繁的计算。
+如果你创建了一个计算属性但是并没有在任何 reaction 中使用它，那么它将不会被记忆化，并且其重新计算看起来会发生得更加频繁，而不是只发生在必要时。这有时会使新接触 MobX 的人感到困惑，他们也许习惯于使用像 [Reselect](https://github.com/reduxjs/reselect) 这样的库。
 例如，我们在上面的例子后面加上两次对 `console.log(order.total)` 的调用，在调用了 `stop()` 之后，`total` 仍然会被重新计算两次。
 
 MobX 将会自动挂起不活动的计算值
@@ -105,28 +105,28 @@ MobX 将会自动挂起不活动的计算值
 
 虽然直接操作计算属性这会导致效率下降，但是如果你在项目中使用 `observer`，`autorun` 等，它们会非常高效。
 
-下面的代码展示了这个问题：
+下面的代码说明了这个问题：
 
 ```javascript
 // OrderLine 拥有一个计算属性 `total`.
 const line = new OrderLine(2.0)
 
-// 如果你在 reaction 之外访问 `line.total`, 每次都会重新计算.
+// 如果你在 reaction 之外访问 `line.total`, 那么它每次都会被重新计算.
 setInterval(() => {
     console.log(line.total)
 }, 60)
 ```
 
 可以通过使用 `keepAlive` 选项来设置注解（[自己试一下吧](https://codesandbox.io/s/computed-3cjo9?file=/src/index.tsx)）或者创建一个不带任何选项的 `autorun(() => { someObject.someComputed })`，之后可以根据需要进行清理。
-请注意，这两种方式都有造成内存泄漏的风险。在此时更改默认行为是一种反模式。
+请注意，这两种解决方案都有造成内存泄漏的风险。更改这里的默认行为是一种反模式。
 
-MobX 还可以使用 [`computedRequiresReaction`](configuration.md#computedrequiresreaction-boolean) 选项进行配置，当你在 reaction 之外访问计算属性时将会报错。
+MobX 还可以使用 [`computedRequiresReaction`](configuration.md#computedrequiresreaction-boolean) 选项进行配置，以便在你从响应式上下文之外访问计算属性时报错。
 
 </details>
 
 <details id="computed-setter"><summary>**提示：** 计算值可以有 setters<a href="#computed-setter" class="tip-anchor"></a></summary>
 
-你可以未计算值定义一个 [setter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/set)。需要注意的是，这些 setters 不能直接更改计算属性的值，
+你也可以为计算值定义一个 [setter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/set)。需要注意的是，这些 setters 不能直接更改计算属性的值，
 但是它们可以作用于计算属性的依赖项。setters 会被自动标记为 actions。例如：
 
 ```javascript
