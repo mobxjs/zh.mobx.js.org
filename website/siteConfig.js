@@ -37,7 +37,7 @@ const siteConfig = {
     cname: "zh.mobx.js.org", // needed for github pages to work under a domain
     // Used for publishing and more
 
-    projectName: "zh.mobx.js.org",
+    projectName: "mobx",
     organizationName: "mobxjs",
 
     // URL for editing docs, usage example: editUrl + 'en/doc1.md'.
