@@ -221,17 +221,17 @@ class Box {
 
 MobX 提供了四种内置的 `comparer` 方法，这些方法满足 `computed` 的 `equals` 选项的大多数需求：
 
--   `comparer.identity` 使用三等 （`===`）号确定两个值是否相同。
+-   `comparer.identity` 使用全等 （`===`）运算符确定两个值是否相同。
 -   `comparer.default` 与 `comparer.identity` 相同，但是其认为 `NaN` 等于 `NaN`。
 -   `comparer.structural` 执行深层的结构比较以确定两个值是否相同。
 -   `comparer.shallow` 执行浅层的结构比较以确定两个值是否相同。
 
-你可以从`MobX` 导入 `comparer` 来访问这些方法。它们也可以用于 `reaction`。
+你可以从 `MobX` 导入 `comparer` 来访问这些方法。它们也可以用于 `reaction`。
 
 ### `requiresReaction`
 
-对于非常昂贵的计算值，推荐将其设置为 `true`。如果你试图在 reaction 的上下文之外读取计算值，在这种情况下，可能不会对其进行缓存，这将导致计算值抛出错误，而不是进行昂贵的重新计算。
+推荐在非常昂贵的计算值中将这个选项设置为 `true`。如果你试图在响应式上下文之外读取这样的计算值——这种情况下，它可能不会被缓存起来——就会导致计算值抛出错误，而不是进行昂贵的重新计算。
 
 ### `keepAlive`
 
-这样会避免在没有观察者调用时将其挂起（可以查看上面的解释）。与 [reactions](reactions.md#always-dispose-of-reactions) 的讨论类似，这可能会招致内存泄漏。
+这个选项会避免计算值在未被观察时被暂时停用（可以查看上面的解释）。这可能会导致内存泄漏，这种内存泄漏与我们在 [reactions](reactions.md#always-dispose-of-reactions) 中讨论到的类似。
