@@ -117,7 +117,7 @@ setInterval(() => {
 }, 60)
 ```
 
-可以通过使用 `keepAlive` 选项来设置注解（[自己试一下吧](https://codesandbox.io/s/computed-3cjo9?file=/src/index.tsx)）或者创建一个不带任何选项的 `autorun(() => { someObject.someComputed })`，之后可以根据需要进行清理。
+我们可以通过用 `keepAlive` 选项设置的注解对其进行覆盖（[自己试一下吧](https://codesandbox.io/s/computed-3cjo9?file=/src/index.tsx)），或者用 `autorun(() => { someObject.someComputed })` 创建一个 no-op 指令，稍后如果需要的话，我们可以轻松地把它清理掉。
 请注意，这两种解决方案都有造成内存泄漏的风险。更改这里的默认行为是一种反模式。
 
 MobX 还可以使用 [`computedRequiresReaction`](configuration.md#computedrequiresreaction-boolean) 选项进行配置，以便在你从响应式上下文之外访问计算属性时报错。
@@ -176,20 +176,20 @@ class Box {
 
 默认请款下，`computed` 的输出比较引用。因为上面例子中的 `topRight` 将始终产生一个新的结果对象，因此永远不会认为其等同于先前的输出。除非使用 `computed.struct`。
 
-然而，上面的例子中_我们实际上并不需要 `computed.struct`_！
+然而，在上面的例子中，_我们实际上并不需要 `computed.struct`_！
 计算值通常会在它依赖的值改变时重新计算。
-这就是为什么 `topRight` 只对 `width` 或者 `height` 的变化做出反应。
-一旦发生了这些变化，我们总会得到一个不同的 `topRight`。`computed.struct` 将永远也不会命中缓存并且还会造成无效的计算，因此我们并不需要它。
+这就是为什么 `topRight` 只会对 `width` 或者 `height` 的变化做出反应。
+因为如果这些值发生了变化，我们总会得到一个不同的 `topRight` 坐标。`computed.struct` 将永远也不会命中缓存并且还会造成无效的计算，因此我们并不需要它。
 
 在实践中，`computed.struct` 的作用远不如其听起来那么大。仅仅当依赖的可观察变量改变会出现相同的输出时才使用它。例如，我们会对坐标进行四舍五入，那么即使依赖的基础值不同，最终的坐标也可能等于先前的坐标。
 
-查看 [`equals`](#equals) 选项自定义如何判断输出是否改变。
+查看 [`equals`](#equals) 选项来了解更多对判断输出是否已经改变的方式进行自定义的方法。
 
 </details>
 
 <details id="computed-with-args"><summary>{🚀} **提示：** 计算值可以拥有参数<a href="#computed-with-args" class="tip-anchor"></a></summary>
 
-虽然 getters 不使用任何参数，但是在 [此处](computeds-with-args.md) 讨论了几种需要处理参数才可以派生值的策略。
+虽然 getters 不接受任何参数，但是[这里](computeds-with-args.md)讨论了几种需要参数的派生值的使用策略。
 
 </details>
 
@@ -211,9 +211,10 @@ class Box {
 
 ### `equals`
 
-默认设置为 `comparer.default`。它作为比较函数比较之前的值和下一个值，如果该函数认为它们相等，那么将不会重新计算。
+默认设置为 `comparer.default`。它充当一个比较函数，用于比较上一个值和下一个值。如果该函数认为两个值相等，那么观察者们将不会被重新计算。
 
-在处理其他库的数据和类型时，这个选项很有用。例如，一个计算 [moment](https://momentjs.com/) 的示例可以使用 `(a, b) => a.isSame(b)` 来进行比较。如果要使用结构比较或者浅对比来确定新值是否与之前的值不同，可以分别使用 `comparer.structural` 和 `comparer.shallow`，从而将结果通知观察者。
+在处理其他库的结构性数据和类型时，这个选项会很有用。例如，`(a, b) => a.isSame(b)`可以被用在一个 [moment](https://momentjs.com/) 计算实例上。如果你想使用结构比较或者浅比较来确定新值是否与之前的值不同，
+`comparer.structural` 和 `comparer.shallow` 就会派上用场，最后还会通知观察者。
 
 查看上面的 [`computed.struct`](#computed-struct) 部分。
 
