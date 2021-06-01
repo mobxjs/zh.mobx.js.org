@@ -1,47 +1,46 @@
 ---
-title: MobX API Reference
-sidebar_label: MobX API Reference
+title: MobX API 参考
+sidebar_label: MobX API 参考
 hide_title: true
 ---
 
 <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBD4KQ7&placement=mobxjsorg" id="_carbonads_js"></script>
 
-# MobX API Reference
+# MobX API 参考
 
-Functions marked with {🚀} are considered advanced, and should typically not be needed.
-Consider downloading our handy cheat sheet that explains all important APIs on a single page:
+用 {🚀} 标记的函数被视为进阶部分，通常不需要使用。请考虑下载我们的速查表，它用一页篇幅解释了所有重要的 API:
 
-<div class="cheat"><a href="https://gum.co/fSocU"><button title="Download the MobX 6 cheat sheet and sponsor the project">Download the MobX 6 cheat sheet</button></a></div>
+<div class="cheat"><a href="https://gum.co/fSocU"><button title="下载 MobX 6 速查表赞助本项目">下载 MobX 6 速查表</button></a></div>
 
-## Core APIs
+## 核心 API
 
-_These are the most important MobX APIs._
+_这些是 MobX 中最重要的 API。_
 
-> Understanding [`observable`](#observable), [`computed`](#computed), [`reaction`](#reaction) and [`action`](#action) is enough to master and use MobX in your applications!
+> 理解 [`observable`](#observable)、[`computed`](#computed)、[`reaction`](#reaction) 和 [`action`](#action) 就足够你掌握 MobX 并在你的应用中使用它了！
 
-## Creating observables
+## 创建 observable
 
-_Making things observable._
+_把事物转化成 observable。_
 
 ### `makeObservable`
 
-[**Usage**](observable-state.md#makeobservable): `makeObservable(target, annotations?, options?)`
+[**用法**](observable-state.md#makeobservable)：`makeObservable(target, annotations?, options?)`
 
-Properties, entire objects, arrays, Maps and Sets can all be made observable.
+属性、整个对象、数组、Maps 和 Sets 都可以被转化成 obervable。
 
 ### `makeAutoObservable`
 
-[**Usage**](observable-state.md#makeautoobservable): `makeAutoObservable(target, overrides?, options?)`
+[**用法**](observable-state.md#makeautoobservable)：`makeAutoObservable(target, overrides?, options?)`
 
-Automatically make properties, objects, arrays, Maps and Sets observable.
+自动把属性、对象、数组、Maps 和 Sets 转化成 observable。
 
 ### `extendObservable`
 
-{🚀} Usage: `extendObservable(target, properties, overrides?, options?)`
+{🚀} 用法：`extendObservable(target, properties, overrides?, options?)`
 
-Can be used to introduce new properties on the `target` object and make them observable immediately. Basically a shorthand for `Object.assign(target, properties); makeAutoObservable(target, overrides, options);`. However, existing properties on `target` won't be touched.
+可以用来在 `target` 对象上引入新属性并立即把它们全部转化成 observable。基本上就是 `Object.assign(target, properties); makeAutoObservable(target, overrides, options);` 的简写。但它不会变动 `target` 上已有的属性。
 
-Old-fashioned constructor functions can nicely leverage `extendObservable`:
+老式的构造器函数可以很好地跟 `extendObservable` 结合起来使用:
 
 ```javascript
 function Person(firstName, lastName) {
@@ -51,92 +50,85 @@ function Person(firstName, lastName) {
 const person = new Person("Michel", "Weststrate")
 ```
 
-It is possible to use `extendObservable` to add observable fields to an existing object after instantiation, but be careful that adding an observable property this way is in itself not a fact that can be observed.
+使用 `extendObservable` 在一个对象实例化之后再为其添加 observable 字段也是可以的，但要注意，以这种方式添加 observable 属性这一行为本身并不能被观察。
 
 ### `observable`
 
-[**Usage**](observable-state.md#observable): `observable(source, overrides?, options?)` or `observable` _(annotation)_
+[**用法**](observable-state.md#observable)：`observable(source, overrides?, options?)` 或 `observable`_（注解）_
 
-Clones an object and makes it observable. Source can be a plain object, array, Map or Set. By default, `observable` is applied recursively. If one of the encountered values is an object or array, that value will be passed through `observable` as well.
+克隆一个对象并把它转化成 observable。`source` 可以是一个普通的对象、数组、Map 或 Set。默认情况下，`observable` 会递归执行。如果遇到的值中有一个是对象或数组，那么该值也会被传入 `observable`。
 
 ### `observable.object`
 
-{🚀} [**Usage**](observable-state.md#observable): `observable.object(source, overrides?, options?)`
+{🚀} [**用法**](observable-state.md#observable)：`observable.object(source, overrides?, options?)`
 
-Alias for `observable(source, overrides?, options?)`. Creates a clone of the provided object and makes all of its properties observable.
+`observable(source, overrides?, options?)` 的别名。创建一个被传入对象的副本并使它的所有属性 observable。
 
 ### `observable.array`
 
-{🚀} Usage: `observable.array(initialValues?, options?)`
+{🚀} 用法：`observable.array(initialValues?, options?)`
 
-Creates a new observable array based on the provided `initialValues`.
-To convert observable arrays back to plain arrays, use the `.slice()` method, or check out [toJS](#tojs) to convert them recursively.
-Besides all the language built-in array functions, the following goodies are available on observable arrays as well:
+基于所提供的 `initialValues` 创建一个新的 observable 数组。如果要把 observable 数组转化回普通的数组，就请使用 `.slice()` 方法，或者参阅 [toJS](#tojs) 进行递归转化。除了语言中内置的所有数组方法之外，observable 数组中还有以下好用的工具函数供你使用：
 
--   `clear()` removes all current entries from the array.
--   `replace(newItems)` replaces all existing entries in the array with new ones.
--   `remove(value)` removes a single item by value from the array and returns `true` if the item was found and removed.
+-   `clear()` 删除数组中所有现存的元素。
+-   `replace(newItems)` 用新元素替换数组中所有现存的元素。
+-   `remove(value)` 从数组中删除一个值为 `value` 的元素，在找到并删除该元素后返回 `true`。
 
-If the values in the array should not be turned into observables automatically, use the `{ deep: false }` option to make the array shallowly observable.
+如果你不想把数组中的值自动转化成 observable，则可使用 `{ deep: false }` 选项将该数组转化成浅层 observable。
 
 ### `observable.map`
 
-{🚀} Usage: `observable.map(initialMap?, options?)`
+{🚀} 用法：`observable.map(initialMap?, options?)`
 
-Creates a new observable [ES6 Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) based on the provided `initialMap`.
-They are very useful if you don't want to react just to the change of a specific entry, but also to their addition and removal.
-Creating observable Maps is the recommended approach for creating dynamically keyed collections if you don't have [enabled Proxies](configuration.md#proxy-support).
+基于所提供的 `initialMap` 创建一个新的 observable [ES6 Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)。如果你不仅想对特定条目的改变作出反应，还想对其添加和删除做出反应的话，那么它们就会变得非常有用。如果你没有[启用代理](configuration.md#代理支持)，那么推荐使用创建 observable Maps 的方式来创建动态键控集合。
 
-Besides all the language built-in Map functions, the following goodies are available on observable Maps as well:
+除了语言中内置的所有 Map 方法之外，observable Maps 中还有以下好用的工具函数供你使用：
 
--   `toJSON()` returns a shallow plain object representation of this Map (use [toJS](#tojs) for a deep copy).
--   `merge(values)` copies all entries from the provided `values` (plain object, array of entries or a string-keyed ES6 Map) into this Map.
--   `replace(values)` replaces the entire contents of this Map with the provided `values`.
+-   `toJSON()` 返回该 Map 的浅层普通对象表示（使用 [toJS](#tojs) 进行深拷贝）。
+-   `merge(values)` 将所提供的 `values` （普通的对象、数组或以字符串为键的 ES6 Map ）的所有条目复制到该 Map 中。
+-   `replace(values)` 用所提供的 `values` 替换该 Map 的全部内容。
 
-If the values in the Map should not be turned into observables automatically, use the `{ deep: false }` option to make the Map shallowly observable.
+如果你不想把 Map 中的值自动转化成 observable，则可使用 `{ deep: false }` 选项将该 Map 转化成浅层 observable。
 
 ### `observable.set`
 
-{🚀} Usage: `observable.set(initialSet?, options?)`
+{🚀} 用法：`observable.set(initialSet?, options?)`
 
-Creates a new observable [ES6 Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set) based on the provided `initialSet`. Use it whenever you want to create a dynamic set where the addition and removal of values needs to be observed, but where values can appear only once in the entire collection.
+根据所提供的 `initialSet` 创建一个新的 observable [ES6 Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set)。每当你想创建一个动态集合，并需要观察其内部值的添加和删除，但每个值在整个集合中只能出现一次时，就可以使用它。
 
-If the values in the Set should not be turned into observables automatically, use the `{ deep: false }` option to make the Set shallowly observable.
+如果你不想把 Set 中的值自动转化成 observable，则可使用 `{ deep: false }` 选项将该 Set 转化成浅层 observable。
 
 ### `observable.ref`
 
-[**Usage**](observable-state.md#available-annotations): `observable.ref` _(annotation)_
+[**用法**](observable-state.md#可用的注解)：`observable.ref`_（注解）_
 
-Like the `observable` annotation, but only reassignments will be tracked. The assigned values themselves won't be made observable automatically. For example, use this if you intend to store immutable data in an observable field.
+和 `observable` 注解类似，但只有重新赋值会被追踪。所赋的值本身并不会被自动转化成 observable。比如说，你可以在你向一个 observable 字段中储存不可变数据时使用它。
 
 ### `observable.shallow`
 
-[**Usage**](observable-state.md#available-annotations): `observable.shallow` _(annotation)_
+[**用法**](observable-state.md#可用的注解)：`observable.shallow`_（注解）_
 
-Like the `observable.ref` annotation, but for collections. Any collection assigned will be made observable, but the contents of the collection itself won't become observable.
+和 `observable.ref` 注解类似，但用于集合。任何所赋的集合都会被转化成 observable，但是集合本身的内容不会被转化成 observable。
 
 ### `observable.struct`
 
-{🚀} [**Usage**](observable-state.md#available-annotations): `observable.struct` _(annotation)_
+{🚀} [**用法**](observable-state.md#可用的注解)：`observable.struct`_（注解）_
 
-Like the `observable` annotation, except that any assigned value that is structurally equal to the current value will be ignored.
+和 observable 注解类似, 但是与现有值结构相等的任何赋值都会被忽略。
 
 ### `observable.deep`
 
-{🚀} [**Usage**](observable-state.md#available-annotations): `observable.deep` _(annotation)_
+{🚀} [**用法**](observable-state.md#可用的注解)：`observable.deep`_（注解）_
 
-Alias for the [`observable`](#observable) annotation.
+[`observable`](#observable) 注解的别名。
 
 ### `observable.box`
 
-{🚀} Usage: `observable.box(value, options?)`
+{🚀} 用法：`observable.box(value, options?)`
 
-All primitive values in JavaScript are immutable and hence per definition not observable.
-Usually that is fine, as MobX can just make the _property_ that contains the value observable.
-In rare cases, it can be convenient to have an observable _primitive_ that is not owned by an object.
-For such cases, it is possible to create an observable _box_ that manages such a _primitive_.
+JavaScript 中的所有原始值都是不可变的，所以它们当然都不是 observable。这一点通常没有问题，因为 MobX 可以把包含该值的*属性*转化成 observable。在极少数情况下，如果能有独立于对象的 observable *原始值*的话就会很方便。对于这种情况，可以创建一个 observable _box_ 来管理这种*原始值*。
 
-`observable.box(value)` accepts any value and stores it inside a box. The current value can be accessed through `.get()` and updated using `.set(newValue)`.
+`observable.box(value)` 接受一个任意值并将其存储在一个 box 中。我们可以通过 `.get()` 对其当前值进行访问，并使用 `.set(newValue)` 对其进行更新。
 
 ```javascript
 import { observable, autorun } from "mobx"
@@ -152,142 +144,141 @@ cityName.set("Amsterdam")
 // Prints: 'Amsterdam'
 ```
 
-If the values in the box should not be turned into observables automatically, use the `{ deep: false }` option to make the box shallowly observable.
+如果你不想把 box 中的值自动转化成 observable，则可使用 `{ deep: false }` 将该 box 转化成浅层 observable。
 
 ---
 
 ## Actions
 
-_An action is any piece of code that modifies the state._
+_Action 就是任何一段修改状态的代码。_
 
 ### `action`
 
-[**Usage**](actions.md): `action(fn)` or `action` _(annotation)_
+[**用法**](actions.md)：`action(fn)` 或 `action`_(注解)_
 
-Use on functions that intend to modify the state.
+用于意在修改状态的函数。
 
 ### `runInAction`
 
-{🚀} [**Usage**](actions.md#runinaction): `runInAction(fn)`
+{🚀} [**用法**](actions.md#runinaction)：`runInAction(fn)`
 
-Create a one-time action that is immediately invoked.
+创建一个被立即调用的一次性 action。
 
 ### `flow`
 
-[**Usage**](actions.md#using-flow-instead-of-async--await-): `flow(fn)` or `flow` _(annotation)_
+[**用法**](actions.md#使用-flow-代替-async--await-)：`flow(fn)`or`flow`_（注解）_
 
-MobX friendly replacement for `async` / `await` that supports cancellation.
+对 MobX 友好的 `async`/`await` 替代品，支持取消。
 
 ### `flowResult`
 
-[**Usage**](actions.md#using-flow-instead-of-async--await-): `flowResult(flowFunctionResult)`
+[**用法**](actions.md#使用-flow-代替-async--await-)：`flowResult(flowFunctionResult)`
 
-For TypeScript users only. Utility that casts the output of the generator to a promise.
-This is just a type-wise correction for the promise wrapping done by `flow`. At runtime it directly returns the inputted value.
+仅供 TypeScript 用户使用。将 generator 的输出结果转化成 promise 的工具函数。这只是一个针对 `flow` 做的 promise 包装进行的类型上的更正。它在运行时会直接返回被传入其中的值。
 
 ---
 
-## Computeds
+## 计算值
 
-_Computed values can be used to derive information from other observables._
+_计算值可以用来从其他 observable 中派生出数据。_
 
 ### `computed`
 
-[**Usage**](computeds.md): `computed(fn, options?)` or `computed(options?)` _(annotation)_
+[**用法**](computeds.md)：`computed(fn, options?)` 或 `computed(options?)`_（注解）_
 
-Creates an observable value that is derived from other observables, but won't be recomputed unless one of the underlying observables changes.
+创建一个从其他 observable 中派生出来的 observable。但只要底层 observable 不变，这个值就不会被重新计算。
 
 ---
 
-## React integration
+## 与 React 的整合
 
-_From the `mobx-react` / `mobx-react-lite` packages._
+_来自 `mobx-react` 或 `mobx-react-lite` 包。_
 
 ### `observer`
 
-[**Usage**](react-integration.md): `observer(component)`
+[**用法**](react-integration.md)：`observer(component)`
 
-A higher order component you can use to make a functional or class based React component re-render when observables change.
+一个高阶组件，可用来在 observable 发生改变时将一个 React 函数组件或类组件重新渲染。
 
 ### `Observer`
 
-[**Usage**](react-integration.md#callback-components-might-require-observer): `<Observer>{() => rendering}</Observer>`
+[**用法**](react-integration.md#回调组件可能需要观察者)：`<Observer>{() => rendering}</Observer>`
 
-Renders the given render function, and automatically re-renders it once one of the observables used in the render function changes.
+渲染所提供的 render 函数，并在 render 函数所使用的 observable 之一发生改变时自动将函数重新渲染。
 
 ### `useLocalObservable`
 
-[**Usage**](react-integration.md#using-local-observable-state-in-observer-components): `useLocalObservable(() => source, annotations?)`
+[**用法**](react-integration.md#在观察者组件中使用局部可观察状态)：`useLocalObservable(() => source, annotations?)`
 
-Creates a new observable object using `makeObservable`, and keeps it around in the component for the entire life-cycle of the component.
+使用 `makeObservable` 创建一个新的 observable，并在组件的整个生命周期内将其保留在组件中。
 
 ---
 
 ## Reactions
 
-_The goal of reactions is to model side effects that happen automatically._
+_Reactions 用来对自动发生的副作用进行建模。_
 
 ### `autorun`
 
-[**Usage**](reactions.md#autorun): `autorun(() => effect, options?)`
+[**用法**](reactions.md#autorun)：`autorun(() => effect, options?)`
 
-Reruns a function every time anything it observes changes.
+在被其观察的任意一个值发生改变时重新执行一个函数。
 
 ### `reaction`
 
-[**Usage**](reactions.md#reaction): `reaction(() => data, data => effect, options?)`
+[**用法**](reactions.md#reaction)：`reaction(() => data, data => effect, options?)`
 
-Reruns a side effect when any selected data changes.
+在所选的任一数据发生改变时重新执行一个副作用。
 
 ### `when`
 
-[**Usage**](reactions.md#when): `when(() => condition, () => effect, options?)` or `await when(() => condition, options?)`
+[**用法**](reactions.md#when)：`when(() => condition, () => effect, options?)` 或 `await when(() => condition, options?)`
 
-Executes a side effect once when a observable condition becomes true.
+一旦一个 observable 条件为真就立即执行一次副作用函数。
 
 ---
 
-## Utilities
+## 工具函数
 
-_Utilities that might make working with observable objects or computed values more convenient. Less trivial utilities can also be found in the [mobx-utils](https://github.com/mobxjs/mobx-utils) package._
+_这些工具函数可能会使得 observable 或计算值的使用更加方便。你在 [mobx-utils](https://github.com/mobxjs/mobx-utils) 包中也可以找到更复杂的工具函数。_
 
 ### `onReactionError`
 
-{🚀} Usage: `onReactionError(handler: (error: any, derivation) => void)`
+{🚀} 用法：`onReactionError(handler: (error: any, derivation) => void)`
 
-Attaches a global error listener, which is invoked for every error that is thrown from a _reaction_. This can be used for monitoring or test purposes.
+绑定一个全局错误监听函数。每当一个 _reaction_ 抛出错误时，该监听函数都会被调用。可用于监控或测试。
 
 ### `intercept`
 
-{🚀} [**Usage**](intercept-and-observe.md#intercept): `intercept(propertyName|array|object|Set|Map, listener)`
+{🚀} [**用法**](intercept-and-observe.md#intercept)：`intercept(propertyName|array|object|Set|Map, listener)`
 
-Intercepts changes before they are applied to an observable API. Returns a disposer function that stops the interception.
+在一个 observable API 发生改变之前将改变拦截。返回一个可以用来中止拦截的 `disposer` 函数。
 
 ### `observe`
 
-{🚀} [**Usage**](intercept-and-observe.md#observe): `observe(propertyName|array|object|Set|Map, listener)`
+{🚀} [**用法**](intercept-and-observe.md#observe)：`observe(propertyName|array|object|Set|Map, listener)`
 
-Low-level API that can be used to observe a single observable value. Returns a disposer function that stops the interception.
+底层 API，可用于观察单个 observable。返回一个可以用来中止拦截的 `disposer` 函数。
 
 ### `onBecomeObserved`
 
-{🚀} [**Usage**](lazy-observables.md): `onBecomeObserved(observable, property?, listener: () => void)`
+{🚀} [**用法**](lazy-observables.md)：`onBecomeObserved(observable, property?, listener: () => void)`
 
-Hook for when something becomes observed.
+可以在某个值开始被观察时使用的钩子函数。
 
 ### `onBecomeUnobserved`
 
-{🚀} [**Usage**](lazy-observables.md): `onBecomeUnobserved(observable, property?, listener: () => void)`
+{🚀} [**用法**](lazy-observables.md)：`onBecomeUnobserved(observable, property?, listener: () => void)`
 
-Hook for when something stops being observed.
+可以在某个值停止被观察时使用的钩子函数。
 
 ### `toJS`
 
-[**Usage**](observable-state.md#converting-observables-back-to-vanilla-javascript-collections): `toJS(value)`
+[**用法**](observable-state.md#把-observables-转化回原生JavaScript集合)：`toJS(value)`
 
-Recursively converts an observable object to a JavaScript _structure_. Supports observable arrays, objects, Maps and primitives.
-Computed values and other non-enumerable properties won't be part of the result.
-For more complex (de)serialization scenarios, it is recommended to give classes a (computed) `toJSON` method, or use a serialization library like [serializr](https://github.com/mobxjs/serializr).
+将一个 observable 对象递归转化成一种 JavaScript _数据结构_。支持 observable 数组、对象、Maps 和原始值。
+结果不包含计算值和其他不可枚举的属性。
+对于更加复杂的（反）序列化使用场景，推荐为类添加一个（计算）方法 `toJSON`，或使用一个类似 [serializr](https://github.com/mobxjs/serializr) 的序列化库。
 
 ```javascript
 const obj = mobx.observable({
@@ -302,190 +293,188 @@ console.log(mobx.isObservableObject(clone)) // false
 
 ---
 
-## Configuration
+## 配置
 
-_Fine-tuning your MobX instance._
+_对你的 MobX 实例进行微调。_
 
 ### `configure`
 
-[**Usage**](configuration.md): sets global behavior settings on the active MobX instance.
-Use it to change how MobX behaves as a whole.
+[**用法**](configuration.md)：对正在使用的 MobX 实例进行全局行为设置。用它来改变 MobX 整体的行为方式。
 
 ---
 
-## Collection utilities {🚀}
+## 用于集合的工具函数 {🚀}
 
-_They enable manipulating observable arrays, objects and Maps with the same generic API. This can be useful in [environments without `Proxy` support](configuration.md#limitations-without-proxy-support), but is otherwise typically not needed._
+_这些工具函数可以让我们用同一个通用 API 对 observable 数组、对象和 Maps 进行处理。这一点在没有 `Proxy` 支持的环境中很有用。_
 
 ### `values`
 
-{🚀} [**Usage**](collection-utilities.md): `values(array|object|Set|Map)`
+{🚀} [**用法**](collection-utilities.md)：`values(array|object|Set|Map)`
 
-Returns all values in the collection as an array.
+以数组形式返回集合中所有的值。
 
 ### `keys`
 
-{🚀} [**Usage**](collection-utilities.md): `keys(array|object|Set|Map)`
+{🚀} [**用法**](collection-utilities.md)：`keys(array|object|Set|Map)`
 
-Returns all keys / indices in the collection as an array.
+以数组形式返回集合中所有的键或索引。
 
 ### `entries`
 
-{🚀} [**Usage**](collection-utilities.md): `entries(array|object|Set|Map)`
+{🚀} [**用法**](collection-utilities.md)：`entries(array|object|Set|Map)`
 
-Returns a `[key, value]` pair of every entry in the collection as an array.
+以数组形式返回集合中每个条目的 `[key, value]` 对。
 
 ### `set`
 
-{🚀} [**Usage**](collection-utilities.md): `set(array|object|Map, key, value)`
+{🚀} [**用法**](collection-utilities.md)：`set(array|object|Map, key, value)`
 
-Updates the collection.
+更新集合。
 
 ### `remove`
 
-{🚀} [**Usage**](collection-utilities.md): `remove(array|object|Map, key)`
+{🚀} [**用法**](collection-utilities.md)：`remove(array|object|Map, key)`
 
-Removes item from the collection.
+从集合中删除项目。
 
 ### `has`
 
-{🚀} [**Usage**](collection-utilities.md): `has(array|object|Map, key)`
+{🚀} [**用法**](collection-utilities.md)：`has(array|object|Map, key)`
 
-Checks for membership in the collection.
+检查该集合中是否存在 `key`。
 
 ### `get`
 
-{🚀} [**Usage**](collection-utilities.md): `get(array|object|Map, key)`
-
-Gets value from the collection with key.
+{🚀} [**用法**](collection-utilities.md)：`get(array|object|Map, key)`
 
 ---
 
-## Introspection utilities {🚀}
+使用键从集合中获取值。
 
-_Utilities that might come in handy if you want to inspect the internal state of MobX, or want to build cool tools on top of MobX._
+## 用于检查的工具函数 {🚀}
+
+_如果你想检查 MobX 的内部状态或者想在 MobX 的基础上打造酷炫的工具，这些工具函数可能会派上用场。_
 
 ### `isObservable`
 
-{🚀} Usage: `isObservable(array|object|Set|Map)`
+{🚀} 用法：`isObservable(array|object|Set|Map)`
 
-Is the object / collection made observable by MobX?
+检查该对象或集合是否已被 MobX 转化成 observable。
 
 ### `isObservableProp`
 
-{🚀} Usage: `isObservableProp(object, propertyName)`
+{🚀} 用法：`isObservableProp(object, propertyName)`
 
-Is the property observable?
+检查该属性是否是 observable。
 
 ### `isObservableArray`
 
-{🚀} Usage: `isObservableArray(array)`
+{🚀} 用法：`isObservableArray(array)`
 
-Is the value an observable array?
+检查该值是否是一个 observable 数组。
 
 ### `isObservableObject`
 
-{🚀} Usage: `isObservableObject(object)`
+{🚀} 用法：`isObservableObject(object)`
 
-Is the value an observable object?
+检查该值是否是一个 observable 对象。
 
 ### `isObservableSet`
 
-{🚀} Usage: `isObservableSet(set)`
+{🚀} 用法：`isObservableSet(set)`
 
-Is the value an observable Set?
+检查该值是否是一个 observable Set。
 
 ### `isObservableMap`
 
-{🚀} Usage: `isObservableMap(map)`
+{🚀} 用法：`isObservableMap(map)`
 
-Is the value an observable Map?
+检查该值是否是一个 observable Map。
 
 ### `isBoxedObservable`
 
-{🚀} Usage: `isBoxedObservable(value)`
+{🚀} 用法：`isBoxedObservable(value)`
 
-Is the value an observable box, created using `observable.box`?
+检查该值是否是一个用 `observable.box` 创建的 observable box。
 
 ### `isAction`
 
-{🚀} Usage: `isAction(func)`
+{🚀} 用法：`isAction(func)`
 
-Is the function marked as an `action`?
+检查该函数是否已被标记为 `action`。
 
 ### `isComputed`
 
-{🚀} Usage: `isComputed(boxedComputed)`
+{🚀} 用法：`isComputed(boxedComputed)`
 
-Is this a boxed computed value, created using `computed(() => expr)`?
+检查该值是否是一个用 `computed(() => expr)` 创建的 box 计算值。
 
 ### `isComputedProp`
 
-{🚀} Usage: `isComputedProp(object, propertyName)`
+{🚀} 用法：`isComputedProp(object, propertyName)`
 
-Is this a computed property?
+检查该属性是否是一个计算属性。
 
 ### `trace`
 
-{🚀} [**Usage**](analyzing-reactivity.md): `trace()`, `trace(true)` _(enter debugger)_ or `trace(object, propertyName, enterDebugger?)`
+{🚀} [**用法**](analyzing-reactivity.md)：`trace()`、`trace(true)` _(enter debugger)_ 或 `trace(object, propertyName, enterDebugger?)`
 
-Should be used inside an observer, reaction or computed value. Logs when the value is invalidated, or sets the debugger breakpoint if called with _true_.
+应在 observer、action 或计算值中使用。在所提供的 derivation 失效时打印日志，或者用 _true_ 调用这个方法来设置调试器断点。
 
 ### `spy`
 
-{🚀} [**Usage**](analyzing-reactivity.md#spy): `spy(eventListener)`
+{🚀} [**用法**](analyzing-reactivity.md#spy)：`spy(eventListener)`
 
-Registers a global spy listener that listens to all events that happen in MobX.
+注册一个全局 spy 监听函数，该函数会监听所有在 MobX 内部发生的事件。
 
 ### `getDebugName`
 
-{🚀} [**Usage**](analyzing-reactivity.md#getdebugname): `getDebugName(reaction|array|Set|Map)` or `getDebugName(object|Map, propertyName)`
+{🚀} [**用法**](analyzing-reactivity.md#getdebugname)：`getDebugName(reaction|array|Set|Map)` 或 `getDebugName(object|Map, propertyName)`
 
-Returns the (generated) friendly debug name for an observable or reaction.
+为一个 observable 或 reaction 返回其（被生成出来的）友好的调试名称。
 
 ### `getDependencyTree`
 
-{🚀} [**Usage**](analyzing-reactivity.md#getdependencytree): `getDependencyTree(object, computedPropertyName)`
+{🚀} [**用法**](analyzing-reactivity.md#getdependencytree)：`getDependencyTree(object, computedPropertyName)`
 
-Returns a tree structure with all observables the given reaction / computation currently depends upon.
+返回一个树形结构，其中包含给定的 reaction 或计算值当前依赖的所有 observable。
 
 ### `getObserverTree`
 
-{🚀} [**Usage**](analyzing-reactivity.md#getobservertree): `getObserverTree(array|Set|Map)` or `getObserverTree(object|Map, propertyName)`
+{🚀} [**用法**](analyzing-reactivity.md#getobservertree)：`getObserverTree(array|Set|Map)` 或 `getObserverTree(object|Map, propertyName)`
 
-Returns a tree structure with all reactions / computations that are observing the given observable.
+返回一个树形结构，其中包含当前正在观察给定 observable 的所有 reactions 或计算值。
 
 ---
 
-## Extending MobX {🚀}
+## 扩展 MobX {🚀}
 
-_In the rare case you want to extend MobX itself._
+_在极少数情况下，你需要扩展 MobX 本身。_
 
 ### `createAtom`
 
-{🚀} [**Usage**](custom-observables.md): `createAtom(name, onBecomeObserved?, onBecomeUnobserved?)`
+{🚀} [**用法**](custom-observables.md)：`createAtom(name, onBecomeObserved?, onBecomeUnobserved?)`
 
-Creates your own observable data structure and hooks it up to MobX. Used internally by all observable data types. Atom exposes two _report_ methods to notify MobX with when:
+创建你自己的 observable 数据结构并将其接入 MobX。所有 observable 数据类型内部都使用了该方法。Atom 暴露了两个 _report_ 方法，用来在以下情况下对 MobX 进行通知：
 
--   `reportObserved()`: the atom has become observed, and should be considered part of the dependency tree of the current derivation.
--   `reportChanged()`: the atom has changed, and all derivations depending on it should be invalidated.
+-   `reportObserved()`：该 atom 已经开始被观察，并且应被视为当前 derivation 的依赖所组成的树状结构的一部分。
+-   `reportChanged()`: 该 atom 已经发生改变，并且所有依赖它的 derivations 都应失效。
 
 ### `getAtom`
 
-{🚀} [**Usage**](analyzing-reactivity.md#getatom): `getAtom(thing, property?)`
+{🚀} [**用法**](analyzing-reactivity.md#getatom)：`getAtom(thing, property?)`
 
-Returns the backing atom.
+返回 observable 背后的 atom。
 
 ### `transaction`
 
-{🚀} Usage: `transaction(worker: () => any)`
+{🚀} 用法：`transaction(worker: () => any)`
 
-_Transaction is a low-level API. It is recommended to use [`action`](#action) or [`runInAction`](#runinaction) instead._
+_Transaction 是底层 API。推荐改用 [`action`](#action) 或 [`runInAction`](#runinaction)。_
 
-Used to batch a bunch of updates without notifying any observers until the end of the transaction. Like [`untracked`](#untracked), it is automatically applied by `action`, so usually it makes more sense to use actions than to use `transaction` directly.
+用于批量处理多个更新，直到该 transaction 结束时再通知所有 observer。跟 [`untracked`](#untracked) 一样，transaction 会被 `action` 自动执行，所以通常情况下，使用 actions 比直接使用 `transaction` 更加合理。
 
-It takes a single, parameterless `worker` function as an argument, and returns any value that was returned by it.
-Note that `transaction` runs completely synchronously and can be nested. Only after completing the outermost `transaction`, the pending reactions will be run.
+它只接受一个没有形参的 `worker` 函数作为实参，并返回这个函数返回的任何值。请注意 `transaction` 是完全同步执行的并且可以被嵌套。正在等待的 reactions 只有当最外层的 `transaction` 完成之后才会被执行。
 
 ```javascript
 import { observable, transaction, autorun } from "mobx"
@@ -507,11 +496,11 @@ transaction(() => {
 
 ### `untracked`
 
-{🚀} Usage: `untracked(worker: () => any)`
+{🚀} 用法：`untracked(worker: () => any)`
 
-_Untracked is a low-level API. It is recommended to use [`reaction`](#reaction), [`action`](#action) or [`runInAction`](#runinaction) instead._
+_Untracked 是底层 API。推荐改用 [`reaction`](#reaction)、[`action`](#action) 或 [`runInAction`](#runinaction)。_
 
-Runs a piece of code without establishing observers. Like `transaction`, `untracked` is automatically applied by `action`, so usually it makes more sense to use actions than to use `untracked` directly.
+在不设置 observer 的情况下执行一段代码。跟 `transaction` 一样，`untracked` 会被 `action` 自动执行，所以通常情况下，使用 actions 比直接使用 `untracked` 更加合理。
 
 ```javascript
 const person = observable({

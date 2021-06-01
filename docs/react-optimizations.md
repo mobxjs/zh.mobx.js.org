@@ -1,31 +1,29 @@
 ---
-title: Optimizing React component rendering
-sidebar_label: React optimizations {🚀}
+title: 优化React组件渲染
+sidebar_label: React 优化 {🚀}
 hide_title: true
 ---
 
 <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBD4KQ7&placement=mobxjsorg" id="_carbonads_js"></script>
 
-# Optimizing React component rendering {🚀}
+# 优化React组件渲染 {🚀}
 
-MobX is very fast, [often even faster than Redux](https://twitter.com/mweststrate/status/718444275239882753), but here are some tips to get most out of React and MobX. Most apply to React in general and are not specific to MobX.
-Note that while it's good to be aware of these patterns, usually your application
-will be fast enough even if you don't worry about them at all.
+MobX非常快, [通常比 Redux 更快](https://twitter.com/mweststrate/status/718444275239882753), 但本章节提供一些小贴士，以便充分利用 React 和 MobX。 请注意，大多数小贴士都适用于一般的 React，而非 MobX 特有的。
+需要注意的是，虽然这些模式都很好, 但通常应用程序速度都足够快，即使您什么都没有做。
 
-Prioritize performance only when it's an actual issue!
+仅当性能存在实际问题时才优先考虑！
 
-## Use many small components
+## 使用大量的小组件
 
-`observer` components will track all values they use and re-render if any of them changes.
-So the smaller your components are, the smaller the change they have to re-render. It means that more parts of your user interface have the possibility to render independently of each other.
+`observer` 组件将跟踪他们使用的值，并且当它们中任何一个值发生时重新渲染。所以你的组件越小，它们重新渲染产生的变化就越小。这意味着用户界面的更多部分具备彼此独立渲染的可能性。
 
-## Render lists in dedicated components
+## 专用组件去渲染列表
 
-The above is especially true when rendering big collections.
-React is notoriously bad at rendering large collections as the reconciler has to evaluate the components produced by a collection on each collection change.
-It is therefore recommended to have components that just map over a collection and render it, and render nothing else.
+这点在渲染大量数据时格外重要。 
+React 在渲染大量数据时表现非常糟糕，因为协调器必须评估每个集合变化的集合所产生的组件。 
+因此，建议使用专门的组件来映射集合并渲染这个组件，且不再渲染其他组件。
 
-Bad:
+不好的:
 
 ```javascript
 const MyComponent = observer(({ todos, user }) => (
@@ -40,9 +38,9 @@ const MyComponent = observer(({ todos, user }) => (
 ))
 ```
 
-In the above listing React will unnecessarily need to reconcile all `TodoView` components when the `user.name` changes. They won't re-render, but the reconcile process is expensive in itself.
+在上面的示例中，当 `user.name` 改变时，React 会不必要地协调所有的 `TodoView` 组件。尽管 `TodoView` 组件不会重新渲染，但是协调的过程本身是非常昂贵的。
 
-Good:
+好的:
 
 ```javascript
 const MyComponent = observer(({ todos, user }) => (
@@ -61,34 +59,33 @@ const TodosView = observer(({ todos }) => (
 ))
 ```
 
-## Don't use array indexes as keys
+## 不要使用数组的索引作为 key
 
-Don't use array indexes or any value that might change in the future as key. Generate ids for your objects if needed.
-Check out this [blog post](https://medium.com/@robinpokorny/index-as-a-key-is-an-anti-pattern-e0349aece318).
+不用使用数组索引或者任何将来可能会改变的值作为 key 。如果需要的话为你的对象生成 ids。 还可以参见这篇 [博客](https://medium.com/@robinpokorny/index-as-a-key-is-an-anti-pattern-e0349aece318)。
 
-## Dereference values late
+## 晚一点使用间接引用值
 
-When using `mobx-react` it is recommended to dereference values as late as possible.
-This is because MobX will re-render components that dereference observable values automatically.
-If this happens deeper in your component tree, less components have to re-render.
 
-Slower:
+使用 `mobx-react` 时，推荐尽可能晚的使用间接引用值。
+这是因为当使用 observable 间接引用值时 MobX 会自动重新渲染组件。
+如果间接引用值发生在组件树的层级越深，那么需要重新渲染的组件就越少。
+
+慢的:
 
 ```javascript
 <DisplayName name={person.name} />
 ```
 
-Faster:
+快的:
 
 ```javascript
 <DisplayName person={person} />
 ```
+在这个快的示例中, 改变 `name` 属性只会触发 `DisplayName` 重新渲染, 在慢的示例中，组件的所有者也必须重新渲染。 前者这没有错, 如果组件的拥有者渲染的足够快(通常是这样!)，这种方式也能很好的运行。
 
-In the faster example, a change in the `name` property triggers only `DisplayName` to re-render, while in the slower one the owner of the component has to re-render as well. There is nothing wrong with that, and if rendering of the owning component is fast enough (usually it is!), then this approach works well.
+### 尽早绑定函数 {🚀} 
 
-### Function props {🚀}
-
-You may notice that to dereference values late, you have to create lots of small observer components where each is customized to render a different part of data, for example:
+为了获得最佳的性能，你不得不创建大量小的 observer 组件，它们每个都用来渲染特定数据的不同部分，例如：
 
 ```javascript
 const PersonNameDisplayer = observer(({ person }) => <DisplayName name={person.name} />)
@@ -100,13 +97,13 @@ const ManufacturerNameDisplayer = observer({ car}) => (
 )
 ```
 
-This quickly becomes tedious if you have lots of data of different shape. An alternative is to use a function that returns the data that you want your `*Displayer` to render:
+如果你拥有很多不同的数据，这种快速的方式就会变得很冗长。另一种方式是使用使用函数来返回想要渲染 `Displayer` 的数据。
 
 ```javascript
 const GenericNameDisplayer = observer(({ getName }) => <DisplayName name={getName()} />)
 ```
 
-Then, you can use the component like this:
+然后，你可以这样来使用组件:
 
 ```javascript
 const MyComponent = ({ person, car }) => (
@@ -117,6 +114,4 @@ const MyComponent = ({ person, car }) => (
     </>
 )
 ```
-
-This approach will allow `GenericNameDisplayer` to be reused throughout your application to render any name, and you still keep component re-rendering
-to a minimum.
+这种方式允许 `GenericNameDisplayer` 渲染任何名称的组件，你依然可以保持组件渲染在最低的限度。

@@ -31,10 +31,10 @@ const siteConfig = {
     // For github.io type URLs, you would set the url and baseUrl like:
     //   url: 'https://facebook.github.io',
     //   baseUrl: '/test-site/',
-    url: "https://mobx.js.org", // Your website URL
+    url: "https://zh.mobx.js.org", // Your website URL
     baseUrl: "/", // Base URL for your project */
     docsUrl: "", // trim 'docs/ prefix
-    cname: "mobx.js.org", // needed for github pages to work under a domain
+    cname: "zh.mobx.js.org", // needed for github pages to work under a domain
     // Used for publishing and more
 
     projectName: "mobx",
@@ -51,8 +51,8 @@ const siteConfig = {
 
     // For no header links in the top nav bar -> headerLinks: [],
     headerLinks: [
-        { doc: "api", label: "API查询" },
-        { href: "https://mobx.js.org", label: "英文文档" },
+        { doc: "api", label: "API 参考" },
+        { href: "https://mobx.js.org", label: "English Doc" },
         { doc: "backers-sponsors", label: "赞助商" },
         { href: "https://github.com/mobxjs/mobx", label: "GitHub" }
     ],
@@ -96,7 +96,7 @@ const siteConfig = {
     ogImage: "img/undraw_online.svg",
     twitterImage: "img/undraw_tweetstorm.svg",
 
-    gaTrackingId: "UA-65632006-1",
+    gaTrackingId: "UA-197655897-1",
 
     // Show documentation's last contributor's name.
     // enableUpdateBy: true,

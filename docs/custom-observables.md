@@ -1,26 +1,27 @@
 ---
-title: Creating custom observables
-sidebar_label: Custom observables {🚀}
+title: 创建一个自定义 observables
+sidebar_label: 自定义 observables {🚀}
 hide_title: true
 ---
 
 <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBD4KQ7&placement=mobxjsorg" id="_carbonads_js"></script>
 
-# Creating custom observables {🚀}
+# 创建一个自定义的 observables {🚀}
 
-## Atoms
+## Atoms （原子化设计）
 
-At some point you might want to have more data structures or other things (like streams) that can be used in reactive computations.
-Achieving this is pretty simple by using the concept of atoms.
-Atoms can be used to signal MobX that some observable data source has been observed or changed, and MobX will signal the atom whenever it is used or no longer in use.
+在某些情况下，您可能希望有更多的数据结构或其他东西(如流)，用于响应式计算。
+通过使用原子的概念来实现这一点非常简单。
+可以使用Atoms向MobX发出信号，表示某些可观察数据源已经被观察到或已经更改，而MobX将在atom被使用或不再使用时，向atom发出信号。
 
-_**Tip**: in many cases you can avoid the need to create your own atoms just by creating a normal observable, and using
-the [`onBecomeObserved`](lazy-observables.md) utility to be notified when MobX starts tracking it._
+_**Tip**_:
+在许多情况下，你可以避免创造自己的Atoms，我们只需要创建一个普通的observable就行了，
+当MobX开始跟踪它（observable）时，[`onBecomeObserved`](lazy-observables.md)工具有相关提示
 
-The following example demonstrates how you can create an observable `Clock` that returns the current date-time, which can then be used in reactive functions.
-This clock will only actually tick if it is being observed by someone.
+下面的例子演示了如何创建一个名为‘Clock’的observable，它返回当前的日期-时间，然后可以在响应式函数中使用它。
 
-The complete API of the `Atom` class is demonstrated by this example.
+这个时钟只有在被观察到时，才会滴答作响。
+此示例演示了"Atom"类的完整 API。
 
 ```javascript
 import { createAtom, autorun } from "mobx"
@@ -31,48 +32,44 @@ class Clock {
     currentDateTime
 
     constructor() {
-        // Creates an atom to interact with the MobX core algorithm.
+        // 创建一个atom来与MobX进行交互
+        
         this.atom = createAtom(
-            // 1st parameter:
-            // - Atom's name, for debugging purposes.
+            // 第一个参数是:
+            // - Atom的名称 用于在程序debug时便于观察.
             "Clock",
-            // 2nd (optional) parameter:
-            // - Callback for when this atom transitions from unobserved to observed.
+            // 第二个参数是（可选）:
+            // - 在unobserved 变到 observed时的回调函数
             () => this.startTicking(),
-            // 3rd (optional) parameter:
-            // - Callback for when this atom transitions from observed to unobserved.
+            // 第三个参数是（可选）:
+            // -  在observed 变到 unobserved时的回调函数
             () => this.stopTicking()
-            // The same atom transitions between these two states multiple times.
+            // 同一个atom在多个状态之间来回变化
         )
     }
 
     getTime() {
-        // Let MobX know this observable data source has been used.
+        // 通知MobX这个observable 数据源已经被使用。
         //
-        // reportObserved will return true if the atom is currently being observed
-        // by some reaction. If needed, it will also trigger the startTicking
-        // onBecomeObserved event handler.
+        // 如果atom当前状态是 正在被观察（observed），reportObserved将返回true
+        // 通过 reaction.在需要时，它会被切换成“startTicking”（开始计时）
+        // onBecomeObserved处理函数.
         if (this.atom.reportObserved()) {
             return this.currentDateTime
         } else {
-            // getTime was called, but not while a reaction was running, hence
-            // nobody depends on this value, and the startTicking onBecomeObserved
-            // handler won't be fired.
-            //
-            // Depending on the nature of your atom it might behave differently
-            // in such circumstances, like throwing an error, returning a default
-            // value, etc.
+            // 调用了getTime函数，但此时没有任何reaction在运行，隐藏没有人依赖此值。所以并且不会触发startTicking和onBecomeObserved处理程序。
+            // 在这种情况下，根据atom的性质，其行为可能会有所不同，例如引发错误，返回默认值等。
             return new Date()
         }
     }
 
     tick() {
         this.currentDateTime = new Date()
-        this.atom.reportChanged() // Let MobX know that this data source has changed.
+        this.atom.reportChanged() // 通知MobX这个数据源已经更改。
     }
 
     startTicking() {
-        this.tick() // Initial tick.
+        this.tick() // 初始化 tick
         this.intervalHandler = setInterval(() => this.tick(), 1000)
     }
 
@@ -85,8 +82,8 @@ class Clock {
 const clock = new Clock()
 
 const disposer = autorun(() => console.log(clock.getTime()))
-// Prints the time every second.
+// 控制台打印输出运行中的“每一秒”
 
-// Stop printing. If nobody else uses the same `clock`, it will stop ticking as well.
+// 如果没有其他人使用同样的“clock”，它也会停止滴答作响。并且停止在控制的输出
 disposer()
 ```

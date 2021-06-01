@@ -18,8 +18,8 @@
         "sidebar_label": "Analyzing reactivity {🚀}"
       },
       "api": {
-        "title": "MobX API Reference",
-        "sidebar_label": "MobX API Reference"
+        "title": "MobX API 参考",
+        "sidebar_label": "MobX API 参考"
       },
       "backers-sponsors": {
         "title": "MobX Backers and Sponsors"
@@ -41,8 +41,8 @@
         "sidebar_label": "Collection utilities {🚀}"
       },
       "computeds-with-args": {
-        "title": "Computeds with arguments",
-        "sidebar_label": "Computeds with arguments {🚀}"
+        "title": "含参数的计算值",
+        "sidebar_label": "含参数的计算值 {🚀}"
       },
       "computeds": {
         "title": "Deriving information with computeds",
@@ -122,8 +122,8 @@
         "sidebar_label": "Reactions {🚀}"
       },
       "README": {
-        "title": "About MobX",
-        "sidebar_label": "About MobX"
+        "title": "关于 MobX",
+        "sidebar_label": "关于 MobX"
       },
       "refguide/action": {
         "title": "Updating state using actions"
@@ -184,8 +184,8 @@
       }
     },
     "links": {
-      "API查询": "API查询",
-      "英文文档": "英文文档",
+      "API 参考": "API 参考",
+      "English Doc": "English Doc",
       "赞助商": "赞助商",
       "GitHub": "GitHub"
     },
