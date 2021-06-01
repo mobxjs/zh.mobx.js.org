@@ -1,6 +1,6 @@
 ---
-title: 拦截与观察（Intercept & Observe）
-sidebar_label: 拦截与观察（Intercept & Observe） {🚀}
+title: 拦截与观察
+sidebar_label: 拦截与观察 {🚀}
 hide_title: true
 ---
 
