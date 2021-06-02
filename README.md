@@ -48,6 +48,7 @@ mobx是一个流行的状态管理库，在全世界有很多用户。mobx中文
     <td align="center"><a href="https://github.com/YuFengDing"><img src="https://avatars.githubusercontent.com/u/23763023?v=4&s=100" width="100px;" alt=""/><br /><sub><b>YuFengDing</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3AYuFengDing" title="PR">💻</a></td>
   </tr>
   <tr>
+    <td align="center"><a href="https://github.com/Rain120"><img src="https://avatars.githubusercontent.com/u/20939839?v=4&s=100" width="100px;" alt=""/><br /><sub><b>Rain120</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3ARain120" title="PR">💻</a></td>
     <td align="center"><a href="https://github.com/mobxjs/zh.mobx.js.org"><img src="https://zh.mobx.js.org/assets/placeholder.svg" width="100px;" alt=""/><br /><sub><b>Next Contributor</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls" title="PR">💻</a></td>
     <td align="center"><a href="https://github.com/mobxjs/zh.mobx.js.org"><img src="https://zh.mobx.js.org/assets/placeholder.svg" width="100px;" alt=""/><br /><sub><b>Next Contributor</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls" title="PR">💻</a></td>
   </tr>
