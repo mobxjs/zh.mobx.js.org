@@ -106,10 +106,10 @@ _简单，可扩展的状态管理_
                 </a>
             </td>
             <td align="center">
-                <a href="https://github.com/mobxjs/zh.mobx.js.org" target="_blank">
-                    <img src="img/placeholder.svg" width="50px">
+                <a href="https://github.com/wuxyman" target="_blank">
+                    <img src="https://avatars.githubusercontent.com/u/34463605?v=4&s=100" width="50px">
                     <br />
-                    <sup style="font-size: 12px">虚位以待</sup>
+                    <sup style="font-size: 12px">wuxyman</sup>
                 </a>
             </td>
         </tr>
