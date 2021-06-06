@@ -127,7 +127,7 @@ MobX 还可以使用 [`computedRequiresReaction`](configuration.md#computedrequi
 <details id="computed-setter"><summary>**提示：** 计算值可以有 setters<a href="#computed-setter" class="tip-anchor"></a></summary>
 
 你也可以为计算值定义一个 [setter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/set)。需要注意的是，这些 setters 不能直接更改计算属性的值，
-但是它们可以作用于计算属性的依赖项。setters 会被自动标记为 actions。例如：
+但是它们可以被当作派生的“逆操作”使用。setters 会被自动标记为 actions。例如：
 
 ```javascript
 class Dimension {
@@ -150,7 +150,7 @@ class Dimension {
 
 <details id="computed-struct"><summary>{🚀} **提示：** `computed.struct` 比较输出的结构<a href="#computed-struct" class="tip-anchor"></a></summary>
 
-如果在结构上等同于先前的计算结构就不需要通知观察者的，则可以使用 `computed.struct`。在通知观察者之前，它将会对结构进行比较而不是检查具体的引用是否相同。例如：
+如果一个计算值在结构上等同于上一次的计算结果并且其输出不需要通知观察者，那么你可以使用 `computed.struct`。在通知观察者之前，它将会对结构进行比较而不是检查具体的引用是否相同。例如：
 
 ```javascript
 class Box {
@@ -174,14 +174,14 @@ class Box {
 }
 ```
 
-默认请款下，`computed` 的输出比较引用。因为上面例子中的 `topRight` 将始终产生一个新的结果对象，因此永远不会认为其等同于先前的输出。除非使用 `computed.struct`。
+默认请况下，`computed` 的输出会被通过引用进行比较。因为上面例子中的 `topRight` 将始终生成一个新的结果对象，因此它永远不会被视为与先前的输出相等的值。除非你使用 `computed.struct`。
 
 然而，在上面的例子中，_我们实际上并不需要 `computed.struct`_！
 计算值通常会在它依赖的值改变时重新计算。
 这就是为什么 `topRight` 只会对 `width` 或者 `height` 的变化做出反应。
 因为如果这些值发生了变化，我们总会得到一个不同的 `topRight` 坐标。`computed.struct` 将永远也不会命中缓存并且还会造成无效的计算，因此我们并不需要它。
 
-在实践中，`computed.struct` 的作用远不如其听起来那么大。仅仅当依赖的可观察变量改变会出现相同的输出时才使用它。例如，我们会对坐标进行四舍五入，那么即使依赖的基础值不同，最终的坐标也可能等于先前的坐标。
+在实践中，`computed.struct` 的作用并没有它听起来那么大。只有在所依赖的可观察变量的改变依旧可以导致相同的输出时再使用它。例如，我们当时先对坐标进行了取整，那么即使所依赖的基础值不相等，经过取整的的坐标也可能等于先前经过取整的坐标。
 
 查看 [`equals`](#equals) 选项来了解更多对判断输出是否已经改变的方式进行自定义的方法。
 
