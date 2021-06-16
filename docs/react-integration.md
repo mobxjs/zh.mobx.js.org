@@ -162,12 +162,12 @@ ReactDOM.render(<TimerView />, document.body)
 ```javascript
 useEffect(() => {
     const handle = setInterval(() => {
-        myTimer.increaseTimer()
+        timer.increaseTimer()
     }, 1000)
     return () => {
         clearInterval(handle)
     }
-}, [myTimer])
+}, [timer])
 ```
 
 <!-- useState 与全局可观察对象-->
