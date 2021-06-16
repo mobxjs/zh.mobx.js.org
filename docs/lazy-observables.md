@@ -59,3 +59,5 @@ setTimeout(() => {
   disposer()
 }, 3000)
 ```
+
+在线可运行实例：https://codepen.io/sjzcxc/pen/YzZBXZg
