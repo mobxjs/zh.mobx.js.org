@@ -115,6 +115,13 @@ _简单，可扩展的状态管理_
         </tr>
         <tr>
             <td align="center">
+                <a href="https://github.com/newraina" target="_blank">
+                    <img src="https://avatars.githubusercontent.com/u/10708802?v=4&s=100" width="50px">
+                    <br />
+                    <sup style="font-size: 12px">newraina</sup>
+                </a>
+            </td>
+            <td align="center">
                 <a href="https://github.com/mobxjs/zh.mobx.js.org" target="_blank">
                     <img src="img/placeholder.svg" width="50px">
                     <br />
