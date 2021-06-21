@@ -16,7 +16,7 @@ hide_title: true
 ## Stores
 
 Stores 可以在任何 Flux 架构中找到，并且可以和 MVC 模式中的 controllers 做类比。
-Stores 的主要职责是将 _逻辑_ 和 _状态_ 从组件中移至一个可独立测试的单元，并能同时在前后端的 JavaScript 中使用。
+Stores 的主要职责是将 _逻辑（logic）_ 和 _状态(state)_ 从组件中移至一个可独立测试的单元，并能同时在前后端的 JavaScript 中使用。
 
 大多数应用都可以从定义这两个 stores 中得到好处：一个用于 _领域状态_，另一个用于 _UI 状态_。区分这两类的好处是：你可以跨前后端重用和测试 _领域状态_，并且可以很好地在其他应用中重用它。
 
@@ -47,7 +47,7 @@ Store 的职责:
 
 ### 领域对象
 
-每个领域对象都应该用它自己的类（或构造函数）来表达。
+每个领域对象都应该声明它自己的类（或构造函数）。
 没有必要把客户端应用的状态当作某种数据库。
 真实引用、循环数据结构和实例方法是 JavaScript 中强大的概念。
 领域对象可以直接引用其他 store 中的领域对象。
@@ -132,7 +132,7 @@ export class TodoStore {
 
 // Todo 的领域对象
 export class Todo {
-    id = null // todo 的唯一 id, 不可改变。
+    id = null // todo 的唯一 id, 不可改变（immutable）。
     completed = false
     task = ""
     author = null // 引用一个 author 对象 (来自 authorStore)
