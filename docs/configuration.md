@@ -202,7 +202,7 @@ configure({ isolateGlobalState: true })
 
 设置一个新的函数来执行所有MobX中的`reactions`。
 在默认情况下`reactionScheduler`只会执行`f`函数而不发生其他行为。
-这对于基础的debug需求或者减慢`reactions`来优先建立应用视图更新来说非常有用。**默认值`f => f()`**
+这对于基础的debug需求或者减慢`reactions`来优先建立应用视图更新来说非常有用。**默认值:`f => f()`**
 
 ```javascript
 configure({
