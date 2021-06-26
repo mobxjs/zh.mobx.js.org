@@ -1,6 +1,6 @@
 ---
-title: 创建可观察状态
-sidebar_label: 可观察状态
+title: Creating observable state
+sidebar_label: Observable state
 hide_title: true
 ---
 
