@@ -1,23 +1,22 @@
 ---
 title: Configuration
-sidebar_label: Configuration {🚀}
+sidebar_label: 配置 {🚀}
 hide_title: true
 ---
 
 <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBD4KQ7&placement=mobxjsorg" id="_carbonads_js"></script>
 
-# Configuration {🚀}
+# 配置 {🚀}
 
-MobX has several configurations depending on how you prefer to use it, which JavaScript engines you want to target, and whether you want MobX to hint at best practices.
-Most configuration options can be set by using the `configure` method.
+根据你的使用偏好，目标JavaScript引擎以及是否需要MobX达到最佳表现，MobX提供了一系列的配置项。绝大部分配置项都可以使用 `configure`方法控制。
 
-## Proxy support
+## Proxy 选项
 
-By default, MobX uses proxies to make arrays and plain objects observable. Proxies provide the best performance and most consistent behavior across environments.
-However, if you are targetting an environment that doesn't support proxies, proxy support has to be disabled.
-Most notably this is the case when targetting Internet Explorer or React Native without using the Hermes engine.
+默认情况下，MobX 使用 `Proxy` 代理方式来让数组以及纯对象可观察。`Proxy` 能够提供最佳的性能表现以及在不同环境下大多数行为的一致性。
+但是如过你的目标环境不支持 `Proxy`，你也可以通过配置将 Proxy 支持关闭。
+这种情况大部分是由于你需要支持IE或在没有使用`Hermes`引擎的React Native环境中开发。
 
-Proxy support can be disabled by using `configure`:
+使用`configure`方法来关闭Proxy支持
 
 ```typescript
 import { configure } from "mobx"
@@ -27,31 +26,31 @@ configure({
 })
 ```
 
-Accepted values for the `useProxies` configuration are:
+`useProxies`属性可被设置的值如下:
 
--   `"always"` (**default**): MobX expects to run only in environments with [`Proxy` support](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) and it will error if such an environment is not available.
--   `"never"`: Proxies are not used and MobX falls back on non-proxy alternatives. This is compatible with all ES5 environments, but causes various [limitations](#limitations-without-proxy-support).
--   `"ifavailable"` (experimental): Proxies are used if they are available, and otherwise MobX falls back to non-proxy alternatives. The benefit of this mode is that MobX will try to warn if APIs or language features that wouldn't work in ES5 environments are used, triggering errors when hitting an ES5 limitation running on a modern environment.
+-   `"always"` (**默认值**): MobX 只能运行在支持 [`Proxy`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)的环境中，如果环境不支持 `Proxy` 将报错。
+-   `"never"`: `Proxy`将不会被使用，MobX降级到`non-proxy`替代方案。 兼容 ES5 环境， 但是会带来一些限制 [limitations](#limitations-without-proxy-support).
+-   `"ifavailable"` (实验阶段): 如果环境支持则启用 `Proxy`，否则 降级到`non-proxy`替代方案。这个模式的优势是:MobX将对不能在ES5环境中使用的API以及语言特性发出警告，触发ES5标准限制时抛出错误。
 
-**Note:** before MobX 6, one had to pick either MobX 4 for older engines, or MobX 5 for new engines. However, MobX 6 supports both, although polyfills for certain APIs like Map will be required when targetting older JavaScript engines.
-Proxies cannot be polyfilled. Even though polyfills do exist, they don't support the full spec and are unsuitable for MobX. Don't use them.
+**注意:** 在MobX 6 之前，你需要面临 MobX 4（兼容历史老旧引擎） 还是 MobX 5(支持现代引擎)的选择，然而现在MobX 6 将根据你的引擎环境引入特定API的 `polyfill`，（比如在只支持ES5标准的环境中使用map方法)。`Proxy` 不能被 polyfilled，虽然目前确实已经有这样的垫片了，但是他们并不能支持所有的场景，因此也不适用于 MobX，不要使用他们。
 
-### Limitations without Proxy support
+### 关闭 Proxy 支持情况下的使用限制
 
-1.  Observable arrays are not real arrays, so they won't pass the `Array.isArray()` check. The practical consequence is that you often need to `.slice()` the array first (to get a shallow copy of the real array) before passing it to third party libraries. For example, concatenating observable arrays doesn't work as expected, so `.slice()` them first.
-2.  Adding or deleting properties of existing observable plain objects after creation is not automatically picked up. If you intend to use objects as index based lookup maps, in other words, as dynamic collections of things, use observable Maps instead.
+1.可观察的数组不再是真正的数组，因此使用 `Array.isArray`方法时将会返回 `false`。实际场景中，你在传递数组给其他模块时需要先使用`.slice()`操作来为原始数组创建一份浅拷贝，举个例子，`concat`操作在可观察数组上时将不会生效，因此你需要先使用`.slice(）`。
 
-It is possible to dynamically add properties to objects, and detect their additions, even when Proxies aren't enabled.
-This can be achieved by using the [Collection utilities {🚀}](collection-utilities.md). Make sure that (new) properties are set using the `set` utility, and that the objects are iterated using one of the `values` / `keys` or `entries` utilities, rather than the built-in JavaScript mechanisms.
-But, since this is really easy to forget, we instead recommend using observable Maps if possible.
+2.在创建可观察的纯对象之后，对其进行添加/删除的属性操作自动观察将不会生效。如果你想通过index类数组下标的方式访问对象或者其他动态集合请使用可观察`maps`来替代。
 
-## Decorator support
+在不支持Proxy情况下，也是有方法使这些（add/delete）动态操作观察生效的。那就是通过[Collection utilities {🚀}](collection-utilities.md)工具集。你需要确保新属性的添加是通过工具集的`set`方法，使用工具集的 `values`/`keys`/`entries`来迭代对象，而不是 JavaScript内置方法。
+但是由于这经常会被忘记，所以我们还是推荐尽量使用可观察的`maps`来替代。
 
-For enabling experimental decorator support check out the [Enabling decorators {🚀}](enabling-decorators.md) section.
+## 装饰器支持
 
-## Linting options
+开启装饰器支持(实验性功能)请查看 [Enabling decorators {🚀}](enabling-decorators.md) 章节。
 
-To help you adopt the patterns advocated by MobX, a strict separation between actions, state and derivations, MobX can _"lint"_ your coding patterns at runtime by hinting at smells. To make sure MobX is as strict as possible, adopt the following settings and read on for their explanations:
+## 代码Lint选项
+
+为了帮助你更好地接受MobX所倡导的代码规范：严格地区分 `actions`，`state`以及`derivations`，当你的代码触发某些规则时，MobX可以在运行时对其进行"格式化"。
+请确保你的MobX代码规范尽可能严格，采取下面的设置并仔细阅读对应说明。
 
 ```typescript
 import { configure } from "mobx"
@@ -65,35 +64,30 @@ configure({
 })
 ```
 
-At some point you will discover that this level of strictness can be pretty annoying.
-It is fine to disable these rules to gain productivity once you are sure you (and your colleagues) grokked the mental model of MobX.
+有时你会发现这个级别的严格程度会带来一些困扰，出于提高生产力的目的，在确保你(或者你的团队，公司)足够了解MobX的心智模型之后，适当禁用某些规则也是可以的。
 
-Also, occassionally you will have a case where you have to supress the warnings triggered by these rules (for example by wrapping in `runInAction`).
-That is fine, there are good exceptions to these recommendations.
-Don't be fundamentalistic about them.
+也有一些情况之下，你想要去除这些规则带来的警告（比如当你的代码包含于`runInAction`时），对于推荐规范来说这也是没问题的。
+不用过于死板。
 
 #### `enforceActions`
 
-The goal of _enforceActions_ is that you don't forget to wrap event handlers in [`action`](actions.md).
+_enforceActions_ 配置的目的是让你不会忘记使用 [`action`](actions.md) 包裹事件处理函数。
 
-Possible options:
+可供选择的配置:
 
--   `"observed"` (**default**): All state that is observed _somewhere_ needs to be changed through actions. This is the default, and the recommended strictness mode in non-trivial applications.
--   `"never"`: State can be changed from anywhere.
--   `"always"`: State always needs to be changed through actions, which in practice also includes creation.
+-   `"observed"` (**默认值**): 可观察状态必须通过`actions`来修改。 这是默认选项，对于有一定复杂度的应用来说这是推荐的严格模式。
+-   `"never"`: 状态可以在任何地方被修改。
+-   `"always"`: 任何状态都能只能通过`actions`来修改，在实际开发中也包括新建状态。
 
-The benefit of `"observed"` is that it allows you to create observables outside of actions and modify them freely, as long as they aren't used anywhere yet.
-
-Since state should in principle always be created from some event handlers, and event handlers should be wrapped, `"always"` captures this the best. But you probably don't want to use this mode in unit tests.
-
-In the rare case where you create observables lazily, for example in a computed property, you can wrap the creation ad-hoc in an action using `runInAction`.
+`"observed"`带来的好处是它允许你可以在`actions`外部创建可观察的对象然后自由地修改，即使这些对象还没有被使用。
+由于状态在原则上总是被一些事件处理函数所创建，并且事件处理函数总是要被另外一个函数再包一层，因此设置本字段为`always`是理论上最优的。但是，你大概率不会想在单元测试中使用它。
+在极少数情况下，你可能惰性创建了某些可被观察的对象，比如说在一个计算属性中，你可以使用`runInAction`将创建可观察对象的高阶`ad-hoc`函数包起来。
 
 #### `computedRequiresReaction: boolean`
 
-Forbids the direct access of any unobserved computed value from outside an action or reaction.
-This guarantees you aren't using computed values in a way where MobX won't cache them. **Default: `false`**.
-
-In the following example, MobX won't cache the computed value in the first code block, but will cache the result in the second and third block:
+禁止在`action`或者`reaction`之外，直接获取未被观察的计算属性的值。
+这保证你将不会使用某个MobX未缓存的响应计算的值。**默认值: `false`**。
+在下面这个例子中，MobX在第一个代码块中将不会缓存响应计算的值，但是会在第二以及第三个代码块中缓存结果：
 
 ```javascript
 class Clock {
@@ -133,20 +127,20 @@ const clock = new Clock()
 
 #### `observableRequiresReaction: boolean`
 
-Warns about any unobserved observable access.
-Use this if you want to check whether you are using observables without a "MobX context".
-This is a great way to find any missing `observer` wrappers, for example in React components. But it will find missing actions as well. **Default: `false`**
+当未被观察对象以可观察方式访问时发出警告。
+这可以帮助你检测是否在“MobX 上下文”中使用可观察对象。
+这是一个非常好的方式去发现被遗忘的`observer`包裹函数 ，比如在一个React组件中。此外它也会发现那些缺少可观察对象的`actions`。**默认值: `false`**
 
 ```javascript
 configure({ observableRequiresReaction: true })
 ```
 
-**Note:** using propTypes on components that are wrapped with `observer` might trigger false positives for this rule.
+**注意:** 当使用`observer`处理组件`propTypes`时，这条规则可能会带来一些副作用。
 
 #### `reactionRequiresObservable: boolean`
 
-Warns when a reaction (e.g. `autorun`) is created without accessing any observables.
-Use this to check whether you are unnecessarily wrapping React components with `observer`, wrapping functions with `action`, or find cases where you simply forgot to make some data structures or properties observable. **Default: `false`**
+当一个`reaction`(比如:`autorun`)被创建时不包含任何`observable`对象发出警告。
+使用和这个设置可以帮助你检查是否有必要用`observer`包裹React组件，用`action`包裹函数，以及发现那些单纯忘记将某些数据结构或者对象属性`observer`化的场景。 **默认着: `false`**
 
 ```javascript
 configure({ reactionRequiresObservable: true })
@@ -154,11 +148,11 @@ configure({ reactionRequiresObservable: true })
 
 #### `disableErrorBoundaries: boolean`
 
-By default, MobX will catch and re-throw exceptions happening in your code to make sure that a reaction in one exception does not prevent the scheduled execution of other, possibly unrelated, reactions. This means exceptions are not propagated back to the original causing code and therefore you won't be able to catch them using try/catch.
+默认情况下，MobX会捕获并重新抛出那些发生在你代码中的异常来确保一个异常中的`reaction`不会阻止其他调度的执行，大多数情况下是指不相关的其他`reaction`。这意味着这些异常无法追溯到源代码，因此你无法通过try/catch的方式来捕获它们。
 
-By disabling error boundaries, exceptions can escape derivations. This might ease debugging, but might leave MobX and by extension your application in an unrecoverable broken state. **Default: `false`**.
+通过禁用错误边界处理，异常能够逃逸被捕获，这也许有利于debug，但是可能会使你MobX进一步扩展到你的应用到一个无法复原的错误状态。**默认值: `false`**。
 
-This option is great for unit tests, but remember to call `_resetGlobalState` after each test, for example by using `afterEach` in jest, for example:
+这个选项对于单元测试来说是非常好的，但是在每一个测试case之后记得调用`_resetGlobalState`，比如说在jest中使用`afterEach`:
 
 ```js
 import { _resetGlobalState, observable, autorun, configure } from "mobx"
@@ -182,22 +176,23 @@ afterEach(() => {
 
 #### `safeDescriptors: boolean`
 
-MobX makes some fields **non-configurable** or **non-writable** to prevent you from doing things that are not supported or would most likely break your code. However this can also prevent **spying/mocking/stubbing** in your tests.
-`configure({ safeDescriptors: false })` disables this safety measure, making everything **configurable** and **writable**.
-Note it doesn't affect existing observables, only the ones created after it's been configured.
-<span style="color:red">**Use with caution**</span> and only when needed - do not turn this off globally for all tests, otherwise you risk false positives (passing tests with broken code). **Default: `true`**
+MobX让某些字段不可枚举(**non-configurable** )或不可写(**non-writable**)来阻止你做一些不支持的可能会导致代码问题的行为。
+但是这也阻止了你测试中的**spying/mocking/stubbing**。
+`configure({ safeDescriptors: false })`这样设置可以禁用安全策略，使得所有对象都是可枚举(**configurable**)和可写的(**writable**)。
+需要注意的是这个配置更改并不会影响已有的`observable`，仅针对配置过后被创建的`observable`。
+<span style="color:red">**使用须知**</span> 除非必要，在你的测试用例中请不要全局关闭这个配置，否则你将有面对错误情况的风险(明明代码有问题却通过了测试用例)。**默认值: `true`**
 
 ```javascript
 configure({ safeDescriptors: false })
 ```
 
-## Further configuration options
+## 更多配置
 
 #### `isolateGlobalState: boolean`
 
-Isolates the global state of MobX when there are multiple instances of MobX active in the same environment. This is useful when you have an encapsulated library that is using MobX, living in the same page as the app that is using MobX. The reactivity inside the library will remain self-contained when you call `configure({ isolateGlobalState: true })` from it.
-
-Without this option, if multiple MobX instances are active, their internal state will be shared. The benefit is that observables from both instances work together, the downside is that the MobX versions have to match. **Default: `false`**
+当有多个活跃的MobX实例在同一个运行环境时，分离MboX的全局状态。在同一个应用的同一个页面，如果你的页面使用了MobX，而且还包含了一个同样使用了MobX的第三方模块，这这种情况下本配置会非常有用。
+当你使用`configure({ isolateGlobalState: true })`时，第三方模块的可响应`reactivity`部分是自洽的不会影响外部。
+使用这个选项，如果有多个活跃的MobX实例同时存在，他们的内部状态是被共享的。这样的好处是，来自不同实例的`observable`可以共同使用，负面影响是你必须确保这些实例的MobX版本是一致的。**默认值: `false`**
 
 ```javascript
 configure({ isolateGlobalState: true })
@@ -205,9 +200,9 @@ configure({ isolateGlobalState: true })
 
 #### `reactionScheduler: (f: () => void) => void`
 
-Sets a new function that executes all MobX reactions.
-By default `reactionScheduler` just runs the `f` reaction without any other behavior.
-This can be useful for basic debugging, or slowing down reactions to visualize application updates. **Default: `f => f()`**
+设置一个新的函数来执行所有MobX中的`reactions`。
+在默认情况下`reactionScheduler`只会执行`f`函数而不发生其他行为。
+这对于基础的debug需求或者减慢`reactions`来优先建立应用视图更新来说非常有用。**默认值:`f => f()`**
 
 ```javascript
 configure({
