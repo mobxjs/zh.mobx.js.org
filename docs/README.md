@@ -122,6 +122,13 @@ _简单，可扩展的状态管理_
                 </a>
             </td>
             <td align="center">
+                <a href="https://github.com/YuFengDing" target="_blank">
+                    <img src="https://avatars.githubusercontent.com/u/23763023?v=4&s=100" width="50px">
+                    <br />
+                    <sup style="font-size: 12px">YuFengDing</sup>
+                </a>
+            </td>
+            <td align="center">
                 <a href="https://github.com/mobxjs/zh.mobx.js.org" target="_blank">
                     <img src="img/placeholder.svg" width="50px">
                     <br />
