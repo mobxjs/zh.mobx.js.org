@@ -4,6 +4,7 @@
 
 _简单，可扩展的状态管理库_
 
+[![GitHub deployments](https://img.shields.io/github/deployments/mobxjs/zh.mobx.js.org/production?label=vercel&logo=vercel)](https://vercel.com/mobxjs/zh-mobx-js-org)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/2cc625ca-4c31-4bcd-9ccf-ba49184cf1de/deploy-status)](https://app.netlify.com/sites/zh-mobx-js-org/deploys)
 [![npm version](https://badge.fury.io/js/mobx.svg)](https://badge.fury.io/js/mobx)
 [![OpenCollective](https://opencollective.com/mobx/backers/badge.svg)](docs/backers-sponsors.md#backers)
