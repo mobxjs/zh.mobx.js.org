@@ -245,7 +245,7 @@ ReactDOM.render(<TimerView />, document.body)
 ```javascript
 const TimerView = observer(({ secondsPassed }) => <span>Seconds passed: {secondsPassed}</span>)
 
-React.render(<TimerViewer secondPassed={myTimer.secondsPassed} />, document.body)
+React.render(<TimerViewer secondsPassed={myTimer.secondsPassed} />, document.body)
 ```
 
 需要注意的一点是它不同于其它的观念模式库像是 `react-redux`那样, redux 中强调尽可能早的获取和传递原始值以获得更好的副作用响应。
