@@ -233,7 +233,7 @@ ReactDOM.render(<TimerView />, document.body)
 
 `observer` 是使用修饰模式增强你的组件, 而不是它调用你的组件. 所以通常所有的组件都可能用了 `observer`，但是不要担心， 它不会导致性能损失。从另一个角度讲, 更多的 `observer` 组件可以使渲染更高效，因为它们更新数据的颗粒度更细。
 
-### 小贴士: 尽可能让Mobx获得值
+### 小贴士: 尽可能晚让Mobx获得值
 
 只要你传递引用，`observer` 就可以很好的工作。只要获取到内部的属性，基于 `observer` 的组件 就会渲染到 DOM / low-level components（DOM一般是浏览器环境，low-level components 一般是RN环境·译者注）。
 
