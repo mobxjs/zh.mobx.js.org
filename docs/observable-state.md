@@ -131,10 +131,11 @@ tags.push("prio: for fun")
 
 推断规则：
 
--   任何包含一个 `function` 值的成员（包括继承来的）都将使用 `autoAction` 注解标记。
--   任何 `get`ter 都将使用 `computed` 注解标记。
--   任何其他的_自有_字段都将使用 `observable` 注解标记。
--   任何是 generator 函数的成员（包括继承来的）都将使用 `flow` 注解标记。（需要注意，generator 函数在某些编译器配置中无法被检测到，如果 flow 没有正常运行，请务必明确地指定 `flow` 注解。）
+-   所有 _自有_ 属性都成为 `observable`。
+-   所有 `get`ters 都成为 `computed`。
+-   所有 `set`ters 都成为 `action`。
+-   所有 _prototype 中的 functions_ 都成为 `autoAction`。
+-   所有 _prototype 中的 generator functions_ 都成为 `flow`。（需要注意，generators 函数在某些编译器配置中无法被检测到，如果 flow 没有正常运行，请务必明确地指定 `flow` 注解。）
 -   在 `overrides` 参数中标记为 `false` 的成员将不会被添加注解。例如，将其用于像标识符这样的只读字段。
 
 ## `observable`
@@ -220,8 +221,8 @@ MobX 无法使原始值可观察，因为它们在 JavaScript 中是不可变的
 
 | 注解                               | 描述                                                         |
 | ---------------------------------- | ------------------------------------------------------------ |
-| `observable`<br/>`observable.deep` | 定义一个存储 state 的可跟踪字段。任何被赋给 `observable` 字段的值在其可以被转化时（也就是说，当且仅当该值是纯对象，数组，Map 或 Set 时）都将被递归转化为可观察值。 |
-| `observable.ref`                   | 类似于 `observable`，但只有重新赋值才会被追踪。所赋的值本身并不会被自动转化为可观察值。比方说，在你打算将不可变数据存储在可观察字段中时，可以使用这个注解。 |
+| `observable`<br/>`observable.deep` | 定义一个存储 state 的可跟踪字段。如果可能，任何被赋值给 `observable` 的字段都会基于它自己的类型被（深度）转化为`observable`、`autoAction` 或 `flow`。只有 `plain object`、`array`、`Map`、`Set`、`function`、`generator function` 可以转换，类实例和其他实例不会被影响。 |
+| `observable.ref`                   | 类似于 `observable`，但只有重新赋值才会被追踪。所赋的值会被完全忽略，并且将不会主动转化为 `observable`/`autoAction`/`flow`。比方说，在你打算将不可变数据存储在可观察字段中时，可以使用这个注解。 |
 | `observable.shallow`               | 类似于 `observable.ref` 但是是用于集合的。任何所赋的集合都会被转化为可观察值，但是其内部的值并不会变为可观察值。 |
 | `observable.struct`                | 类似于 `observable`，但是会忽略所赋的值中所有在结构上与当前值相同的值。 |
 | `action`                           | 把一个函数标记为会修改 state 的 action。查看 [actions](actions.md) 获取更多信息。不可写。 |
@@ -231,6 +232,7 @@ MobX 无法使原始值可观察，因为它们在 JavaScript 中是不可变的
 | `true`                             | 推断最佳注解。查看 [makeAutoObservable](#makeautoobservable) 获取更多信息。 |
 | `false`                            | 刻意不为该属性指定注解。                                       |
 | `flow`                             | 创建一个 `flow` 管理异步进程。查看 [flow](actions.md#using-flow-instead-of-async--await-) 获取更多信息。需要注意的是，推断出来的 TypeScript 返回类型可能会出错。 不可写。 |
+| `flow.bound`                       | 类似于 flow, 但是会将 flow 绑定到实例，因此将始终设置 `this`。 不可写。    |       
 | `override`                         | [用于子类覆盖继承的 `action`，`flow`，`computed`，`action.bound`](subclassing.md)。 |
 | `autoAction`                       | 不应被显式调用，但 `makeAutoObservable` 内部会对其进行调用，以便根据调用上下文将方法标识为 action 或者派生值。 |
 
@@ -257,9 +259,9 @@ MobX 无法使原始值可观察，因为它们在 JavaScript 中是不可变的
 
 上面的 API 都有一个可选的 `options` 参数，该参数是一个对象，支持以下选项：
 
--   **`autoBind: true`** 默认使用 `action.bound`，而不使用 `action`。不影响被显式注释过的成员。
+-   **`autoBind: true`** 默认使用 `action.bound`/`flow.bound`，而不使用 `action`/`flow`。不影响被显式注释过的成员。
 -   **`deep: false`** 默认使用 `observable.ref`，而不使用 `observable`。不影响被显式注释过的成员。
--   **`name: <string>`** 为对象提供一个调试名称，该名称将被打印在错误消息和 reflection API 中。在生产环境中将被忽略。
+-   **`name: <string>`** 为对象提供一个调试名称，该名称将被打印在错误消息和 reflection API 中。
 -   **`proxy: false`** 迫使 `observable(thing)` 使用非 [**proxy**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) 的实现。如果对象的结构不会随着时间变化，那么这就是一个很好的选择，因为非代理对象更容易调试并且速度更快。请参见 [避免代理](#avoid-proxies)。
 
 <details id="one-options-per-target"><summary>**注意：** options 是*粘性的*并且只能被提供一次<a href="#one-options-per-target" class="tip-anchor"></a></summary>
