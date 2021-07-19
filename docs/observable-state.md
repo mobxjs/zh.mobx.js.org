@@ -259,9 +259,9 @@ MobX 无法使原始值可观察，因为它们在 JavaScript 中是不可变的
 
 上面的 API 都有一个可选的 `options` 参数，该参数是一个对象，支持以下选项：
 
--   **`autoBind: true`** 默认使用 `action.bound`，而不使用 `action`。不影响被显式注释过的成员。
+-   **`autoBind: true`** 默认使用 `action.bound`/`flow.bound`，而不使用 `action`/`flow`。不影响被显式注释过的成员。
 -   **`deep: false`** 默认使用 `observable.ref`，而不使用 `observable`。不影响被显式注释过的成员。
--   **`name: <string>`** 为对象提供一个调试名称，该名称将被打印在错误消息和 reflection API 中。在生产环境中将被忽略。
+-   **`name: <string>`** 为对象提供一个调试名称，该名称将被打印在错误消息和 reflection API 中。
 -   **`proxy: false`** 迫使 `observable(thing)` 使用非 [**proxy**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) 的实现。如果对象的结构不会随着时间变化，那么这就是一个很好的选择，因为非代理对象更容易调试并且速度更快。请参见 [避免代理](#avoid-proxies)。
 
 <details id="one-options-per-target"><summary>**注意：** options 是*粘性的*并且只能被提供一次<a href="#one-options-per-target" class="tip-anchor"></a></summary>
