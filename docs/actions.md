@@ -167,7 +167,7 @@ actions 的另一个特征是它们是 [不可追踪](api.md#untracked) 的。�
 
 `action.bound` 注解可用于将方法自动绑定到正确的实例，这样 `this` 会始终被正确绑定在函数内部。
 
-<details id="auto-bind"><summary>**提示：** 使用 `makeAutoObservable(o, {}, { autoBind: true })` 自动绑定所有的 actions<a href="#avoid-bound" class="tip-anchor"></a></summary>
+<details id="auto-bind"><summary>**提示：** 使用 `makeAutoObservable(o, {}, { autoBind: true })` 自动绑定所有的 actions 和 flows <a href="#avoid-bound" class="tip-anchor"></a></summary>
 
 ```javascript
 import { makeAutoObservable } from "mobx"
@@ -176,12 +176,17 @@ class Doubler {
     value = 0
 
     constructor(value) {
-        makeAutoObservable(this)
+        makeAutoObservable(this, {}, { autoBind: true })
     }
 
-    increment = () => {
+    increment() {
         this.value++
         this.value++
+    }
+    
+    *flow() {
+        const response = yield fetch("http://example.com/value")
+        this.value = yield response.json()
     }
 }
 ```
@@ -218,7 +223,7 @@ class Parent {
         })
     }
 }
-class Child {
+class Child extends Parent {
     // THROWS: TypeError: Cannot redefine property: arrowAction
     arrowAction = () => {}
 
@@ -446,6 +451,15 @@ const projects = await store.fetchProjects()
 这样做的好处是我们不再需要 `flowResult` 了，坏处是需要指定 `this` 的类型，以便确保它的类型会被正确推断出来。
 
 </details>
+
+## `flow.bound`
+
+用法：
+
+-   `flow.bound` _（注解）_
+
+`flow.bound` 注解可用于将方法自动绑定到正确的实例，这样 `this` 会始终被正确绑定在函数内部。
+与 actions 一样，flows 默认可以使用 [`autoBind` 选项](#auto-bind)。
 
 ## 取消 flows {🚀}
 
