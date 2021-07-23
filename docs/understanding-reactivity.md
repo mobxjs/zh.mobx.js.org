@@ -91,7 +91,6 @@ Hello
 ```javascript
 import { getDependencyTree } from "mobx"
 
-// Prints the dependency tree of the reaction coupled to the disposer.
 // 打印耦合到 disposer 中的响应的依赖树
 console.log(getDependencyTree(disposer))
 // 打印出：
@@ -352,7 +351,8 @@ extendObservable(message.author, {
 })
 ```
 
-这将 **不会** 引发响应，MobX 不会在跟踪开始时对不存在的可观察属性做出响应。如果这两个语句被交换，或者任何其他可观察的语句导致 `autorun` 重新运行，`autorun` 也将开始跟踪 `age`。
+这将 **不会** 引发响应，MobX 不会在跟踪开始时对不存在的可观察属性做出响应。
+如果这两个语句被交换，或者任何其他可观察的语句导致 `autorun` 重新运行，`autorun` 也将开始跟踪 `age`。
 
 #### [无代理支持] 正确的做法：使用 MobX 实用工具读/写对象
 
