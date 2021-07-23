@@ -409,7 +409,7 @@ export const MyComponent = observer(props => <div>hi</div>)
 </details>
 
 <details id="computed-props"><summary>{🚀} **提示：** 从 props导出计算属性<a href="#computed-props" class="tip-anchor"></a></summary>
-在某些情况下你的全局可观察对象（local observables）的计算属性可能依赖于一些你组件接受到的参数（props）。
+在某些情况下你的组件本地可观察对象（local observables）的计算属性可能依赖于一些你组件接受到的参数（props）。
 但是,这一系列从React组件接收到的参数（props）本身并不是可观察对象，所以更改这些组件的属性（props）并不会使得计算属性响应。你可能需要手动的从最新的数据来更新全局可观察对象的状态来触发计算属性更新。
 
 ```javascript
@@ -418,13 +418,13 @@ import { useEffect } from "react"
 
 const TimerView = observer(({ offset }) => {
     const timer = useLocalObservable(() => ({
-        offset, // The initial offset value
+        offset, // 初始化offset
         secondsPassed: 0,
         increaseTimer() {
             this.secondsPassed++
         },
         get offsetTime() {
-            return this.secondsPassed - this.offset // 'props'没有'偏差'！
+            return this.secondsPassed - this.offset // 这里的'offset'不是'props'传入的那个
         }
     }))
 
