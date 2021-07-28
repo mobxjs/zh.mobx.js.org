@@ -6,28 +6,26 @@ hide_title: true
 
 <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBD4KQ7&placement=mobxjsorg" id="_carbonads_js"></script>
 
-# The gist of MobX
+# Mobx 核心思想
 
-## Concepts
+## 核心概念
 
-MobX distinguishes between the following three concepts in your application:
+Mobx 为你的应用引入了以下三个概念：
 
-1. State
-2. Actions
-3. Derivations
+1. 状态（State）
+2. 行为（Actions）
+3. 派生（Derivations）
 
-Let's take a closer look at these concepts below, or alternatively, in the [10 minute introduction to MobX and React](https://mobx.js.org/getting-started), where you can interactively dive deeper into these concepts step by step and build a simple Todo list app.
+接下里让我们来更详细地了解一下这几个概念，或者，你可以阅读 [10 分钟介绍 Mobx 和 React](https://mobx.js.org/getting-started) 。通过这份教程，你可以交互式地逐步深入了解这些概念并构建一个简单的待办事项列表应用程序。
 
-### 1. Define state and make it observable
+### 1. 定义状态并使它变成可观察的（`observable`）
 
-_State_ is the data that drives your application.
-Usually, there is _domain specific state_ like a list of todo items, and there is _view state_, such as the currently selected element.
-State is like spreadsheet cells that hold a value.
+**状态**是指驱动你的应用的数据。通常，有**特定于域的状态**，例如待办事项列表，还有**视图**状态，例如当前选择的（页面）元素。
+状态就像是电子表格中用于保存值的单元格。
 
-Store state in any data structure you like: plain objects, arrays, classes, cyclic data structures or references. It doesn't matter for the workings of MobX.
-Just make sure that all properties you want to change over time are marked as `observable` so MobX can track them.
+Mobx并不关注你如何维护你的状态，你可以将它们存储在任何你喜欢的数据结构中：普通对象、数组、类、循环数据结构或引用。你唯一需要确保的是所有这些需要随时间而变化的属性都被标记为 `observable` ，以便 MobX 可以跟踪它们。
 
-Here is a simple example:
+一个简单的例子：
 
 ```javascript
 import { makeObservable, observable, action } from "mobx"
@@ -52,44 +50,40 @@ class Todo {
 }
 ```
 
-**Hint**: this example can be shortened using [`makeAutoObservable`](observable-state.md), but by being explicit we can showcase the different concepts in greater detail.
+**提示**：这个例子可以使用 [`makeAutoObservable`](observable-state.md) 来简化，但是通过明确的定义我们可以更详细地展示不同的概念。
 
-Using `observable` is like turning a property of an object into a spreadsheet cell.
-But unlike spreadsheets, these values can not only be primitive values, but also references, objects and arrays.
+使用 `observable` 就像将对象的属性转换为电子表格的单元格。但与电子表格不同的是，这些值不仅可以是原始值（译者注：既 JavaScrip 中的基础类型），还可以是引用、对象和数组。
 
-But what about `toggle`, which we marked as `action`?
+但是我们标记为 `action` 的 `toggle` 又是什么呢？
 
-### 2. Update state using actions
+### 2. 使用行为来更新状态
 
-An _action_ is any piece of code that changes the _state_. User events, backend data pushes, scheduled events, etc.
-An action is like a user that enters a new value into a spreadsheet cell.
+一个**行为**代表着任何一段会改变某个**状态**的代码。例如用户事件、后端数据推送、预定事件等。一个行为就像是用户向一个电子表格的单元格中输入新的值。
 
-In the `Todo` model above you can see that we have a `toggle` method that changes the value of `finished`. `finished` is marked as `observable`. It is recommended that you mark any piece of code that changes `observable`'s as an [`action`](actions.md). That way MobX can automatically apply transactions for effortless optimal performance.
+在上面的 `Todo` 模型中，你可以看到我们有一个更改 `finished` 值的 `toggle` 方法。而 `finished` 被标记为了 `observable`。我们建议你将任何更改 `observable` 的代码都标记为 [`action`](actions.md)。这样 MobX 就可以自动应用事务以轻松达到其最佳性能。
 
-Using actions helps you structure your code and prevents you from inadvertently changing state when you don't intend to.
-Methods that modify state are called _actions_ in MobX terminology. In contrast to _views_, which compute new information based on the current state.
-Every method should serve at most one of those two goals.
+使用操作可帮助你构建代码并防止你意外更改状态。在 Mobx 术语中，会修改状态的方法被称作 **actions**，这与 **views** 形成对比，后者根据当前状态计算新信息。一个方法应最多只服务于这两个目的中的一个。
 
-### 3. Create derivations that automatically respond to state changes
+### 3. 创建派生以自动响应状态变化
 
-_Anything_ that can be derived from the _state_ without any further interaction is a derivation.
-Derivations exist in many forms:
+**任何**可以从**状态**中派生而出而无需进一步交互的东西就成为一个派生（Derivation）。
 
--   The _user interface_
--   _Derived data_, such as the number of remaining `todos`
--   _Backend integrations_, e.g. sending changes to the server
+在很多场景中都存在派生：
 
-MobX distinguishes between two kinds of derivations:
+-   用户接口
+-   **派生的数据**，例如剩余 `代办` 数量
+-   与后端基层，例如将更改后的数据发送到服务器
 
--   _Computed values_, which can always be derived from the current observable state using a pure function
--   _Reactions_, side effects that need to happen automatically when the state changes (bridge between imperative and reactive programming)
+Mobx 将派生分为两类：
 
-When starting with MobX, people tend to overuse reactions.
-The golden rule is, always use `computed` if you want to create a value based on the current state.
+-   **计算值**（Computed Value），这类派生始终可以使用纯函数从当前可观察状态导出
+-   **反馈**（Reaction），这类派生指当状态改变时需要自动发生的副作用（命令式和响应式编程之间的桥梁）
 
-#### 3.1. Model derived values using computed
+当用户刚开始使用 Mobx 时，他们通常倾向于过度使用反馈。关于何时使用这两者有一个黄金法则，即如果您想根据当前状态创建值，请始终使用 `计算值`。
 
-To create a _computed_ value, define a property using a JS getter function `get` and mark it as `computed` with `makeObservable`.
+#### 3.1. 在数据层使用 `computed` 处理派生值
+
+要创建**计算值**，请使用 JS getter 函数 `get` 定义一个属性，并使用 `makeObservable` 将其标记为 `computed`。
 
 ```javascript
 import { makeObservable, observable, computed } from "mobx"
@@ -109,27 +103,23 @@ class TodoList {
 }
 ```
 
-MobX will ensure that `unfinishedTodoCount` is updated automatically when a todo is added or when one of the `finished` properties is modified.
+当新增一个待办或者修改某个待办的 ` finished` 属性时，Mobx 将会确保 `unfinishedTodoCount` 被自动更新。
 
-These computations resemble formulas in spreadsheet programs like MS Excel. They update automatically, but only when required. That is, if something is interested in their outcome.
+这些计算类似于 MS Excel 等电子表格程序中的公式。它们会自动更新，但仅在需要时更新。也就是说，如果某处需要这个计算值时，才会去执行更新。
 
-#### 3.2. Model side effects using reactions
+#### 3.2. 使用反馈处理副作用
 
-For you as a user to be able to see a change in state or computed values on the screen, a _reaction_ that repaints a part of the GUI is needed.
+为了让你作为用户能够在屏幕上看到状态或计算值的变化，此时需要一个用于需要局部重绘 GUI 的**反馈**（Reaction）。
 
-Reactions are similar to computed values, but instead of producing information, they produce side effects like printing to the console, making network requests, incrementally updating React component tree to patch the DOM, etc.
+反馈与计算值类似，但它们不会产生信息，而是产生副作用，例如打印到控制台、发出网络请求、增量更新 React 组件树以修补 DOM 等。
 
-In short, reactions bridge the worlds of [reactive](https://en.wikipedia.org/wiki/Reactive_programming) and [imperative](https://en.wikipedia.org/wiki/Imperative_programming) programming.
+简而言之，反馈连通了 [响应式编程](https://en.wikipedia.org/wiki/Reactive_programming) 和 [命令式编程](https://en.wikipedia.org/wiki/Imperative_programming)。
 
-By far the most used form of reactions are UI components.
-Note that it is possible to trigger side effects from both actions and reactions.
-Side effects that have a clear, explicit origin from which they can be triggered, such
-as making a network request when submitting a form, should be triggered explicitly from the relevant event handler.
+到目前为止，最用到反馈的场景是 UI 组件。但也应注意到，行为（Action）和反馈中都可能触发副作用。那些具有明确来源，并且知道它们可能在哪儿被触发的副作用应该能从与之相关的事件处理程序中显式触发，例如通过网络请求提交表单。
 
-#### 3.3. Reactive React components
+#### 3.3 响应式的 React 组件
 
-If you are using React, you can make your components reactive by wrapping them with the [`observer`](react-integration.md) function from the bindings package you've [chosen during installation](installation.md#installation). In this example, we're going to use the more lightweight `mobx-react-lite` package.
-
+如果你正在使用 React，你可以通过使用你 [在安装时选择](installation.md#installation) 的包中的 [`observer`](react-integration.md) 函数将组件包装起来，从而使您的组件具有反应性。在下面这个例子中，我们将使用更轻量级的 `mobx-react-lite` 包。
 ```javascript
 import * as React from "react"
 import { render } from "react-dom"
@@ -157,55 +147,49 @@ const store = new TodoList([new Todo("Get Coffee"), new Todo("Write simpler code
 render(<TodoListView todoList={store} />, document.getElementById("root"))
 ```
 
-`observer` converts React components into derivations of the data they render.
-When using MobX there are no smart or dumb components.
-All components render smartly, but are defined in a dumb manner. MobX will simply make sure the components are always re-rendered whenever needed, and never more than that.
+`observer` 将 React 组件转换为它们所渲染的数据的派生。当使用 MobX 时，不再有智能组件或愚蠢组件之分。所有组件都能智能地渲染，但以原始的方式定义。 MobX 只是简单地确保组件在总能按需重渲染，仅此而已。
 
-So the `onClick` handler in the above example will force the proper `TodoView` component to re-render as it uses the `toggle` action, but will only cause the `TodoListView` component to re-render if the number of unfinished tasks has changed.
-And if you would remove the `Tasks left` line (or put it into a separate component), the `TodoListView` component would no longer re-render when ticking a task.
+因此，上例中的 `onClick` 事件函数因为使用了 `toggle` 行为，所以能够强制触发正确的 `TodoView` 组件重渲染。但当未完成的任务数量改变时，它只会触发 `TodoListView` 组件的重渲染。并且如果你想要删除 `Tasks left` 行（或将其放入单独的组件中），则在勾选任务时 `TodoListView` 组件将不再重渲染。
 
-To learn more about how React works with MobX, check out the [React integration](react-integration.md) section.
+如果你想要更多地了解 React 是如何和 Mobx 协同工作的，请阅读 [React integration](react-integration.md) 部分。
 
-#### 3.4. Custom reactions
+#### 3.4. 自定义反馈
 
-You will need them rarely, but they can be created using the [`autorun`](reactions.md#autorun),
-[`reaction`](reactions.md#reaction) or [`when`](reactions.md#when) functions to fit your specific situations.
-For example, the following `autorun` prints a log message every time the amount of `unfinishedTodoCount` changes:
+您很少需要它们，但可以使用 `autorun`、`reaction` 或 `when` 函数创建自定义反馈以适应你的特殊场景。例如，下面的 `autorun` 会在每次 `unfinishedTodoCount` 的数量发生变化时打印一条日志消息：
 
 ```javascript
-// A function that automatically observes the state.
+// 一个自动观察这个状态的函数
 autorun(() => {
     console.log("Tasks left: " + todos.unfinishedTodoCount)
 })
 ```
 
-Why does a new message get printed every time the `unfinishedTodoCount` is changed? The answer is this rule of thumb:
+为什么每次更改 unfinishedTodoCount 时都会打印一条新消息？答案是一个这样的经验法则：
 
-_MobX reacts to any existing observable property that is read during the execution of a tracked function._
+MobX 会对在执行跟踪函数时读取的任何现有的 observable 属性做出响应。
 
-To learn more about how MobX determines which observables need to be reacted to, check out the [Understanding reactivity](understanding-reactivity.md) section.
+如果你想要了解 Mobx 是如何定义哪些可观察对象（译者注：原文为 `observables`，此处译为 `可观察对象`，与对象类型数据（object）无关 ）需要被响应，请阅读 [理解响应式](understanding-reactivity.md) 部分
 
-## Principles
+## 原则
 
-MobX uses a uni-directional data flow where _actions_ change the _state_, which in turn updates all affected _views_.
+Mobx 遵循『单向数据流』，即**行为**改变**状态**，进而翻过来更新所有受影响的**视图**。
 
 ![Action, State, View](assets/action-state-view.png)
 
-1. All _derivations_ are updated **automatically** and **atomically** when the _state_ changes. As a result, it is never possible to observe intermediate values.
+1. 当**状态**改变时，所有的**派生**都会**自动地**和**逐个地**（atomically）更新。因此，永远不可能观察到中间值。
 
-2. All _derivations_ are updated **synchronously** by default. This means that, for example, _actions_ can safely inspect a computed value directly after altering the _state_.
+2. 所有的派生默认是**同步**更新的。这意味着，例如，**行为** 可以更改**state**后直接且安全的访问一个计算值。
 
-3. _Computed values_ are updated **lazily**. Any computed value that is not actively in use will not be updated until it is needed for a side effect (I/O).
-   If a view is no longer in use it will be garbage collected automatically.
+3. **计算值**是懒更新的。任何未主动使用的计算值在某个副作用 (I/O) 需要它之前都不会更新。如果某个视图不再使用它，它​​将自动被 GC。
 
-4. All _computed values_ should be **pure**. They are not supposed to change _state_.
+4. 所有的**计算值**都应该是纯函数，且不应去修改**状态**
 
-To learn more about the background context, check out [the fundamental principles behind MobX](https://hackernoon.com/the-fundamental-principles-behind-mobx-7a725f71f3e8).
+如果你想要更多地了解这背后的逻辑，请阅读 [MobX 背后的基本原则](https://hackernoon.com/the-fundamental-principles-behind-mobx-7a725f71f3e8) 部分。
 
-## Try it out!
+## 尝试一下
 
-You can play with the above examples yourself on [CodeSandbox](https://codesandbox.io/s/concepts-principles-il8lt?file=/src/index.js:1161-1252).
+你可以在 [CodeSandbox](https://codesandbox.io/s/concepts-principles-il8lt?file=/src/index.js:1161-1252) 上自行尝试上面这个例子。
 
-## Linting
+## 静态检查
 
-If you find it hard to adopt the mental model of MobX, configure it to be very strict and warn you at runtime whenever you deviate from these patterns. Check out the [linting MobX](configuration.md#linting-options) section.
+如果你发现很难适应 MobX 的思维模型，请将其配置得非常严格，这样一旦你偏离这些模式，它就会在运行时警告你。请查看 [linting MobX](configuration.md#linting-options) 部分。
