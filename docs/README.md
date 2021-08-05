@@ -143,13 +143,29 @@ _简单，可扩展的状态管理_
                 </a>
             </td>
             <td align="center">
+                <a href="https://github.com/PiersZhang" target="_blank">
+                    <img src="https://avatars.githubusercontent.com/u/17962458?v=4s=100" width="50px">
+                    <br />
+                    <sup style="font-size: 12px">PiersZhang</sup>
+                </a>
+            </td>
+            <td align="center">
                 <a href="https://github.com/mobxjs/zh.mobx.js.org" target="_blank">
                     <img src="img/placeholder.svg" width="50px">
                     <br />
                     <sup style="font-size: 12px">虚位以待</sup>
                 </a>
             </td>
-            <td align="center">
+        </tr>
+        <tr>
+             <td align="center">
+                <a href="https://github.com/mobxjs/zh.mobx.js.org" target="_blank">
+                    <img src="img/placeholder.svg" width="50px">
+                    <br />
+                    <sup style="font-size: 12px">虚位以待</sup>
+                </a>
+            </td>
+             <td align="center">
                 <a href="https://github.com/mobxjs/zh.mobx.js.org" target="_blank">
                     <img width="50px" src="https://zh.mobx.js.org/assets/mobx.png">
                     <br />
