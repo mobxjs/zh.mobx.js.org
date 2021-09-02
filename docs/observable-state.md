@@ -67,7 +67,7 @@ class Doubler {
 }
 ```
 
-**所有带注释** 的字段都是 **不可配置的**。<br>
+**所有带注解** 的字段都是 **不可配置的**。<br>
 **所有的不可观察**（无状态）的字段（`action`, `flow`）都是 **不可写的**。
 
 <!--factory function + makeAutoObservable-->
