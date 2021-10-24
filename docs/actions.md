@@ -411,7 +411,7 @@ flow 机制将会确保 generator 在 Promise resolve 之后继续运行或者�
 2. 使用 `function *` 代替 `async`。
 3. 使用 `yield` 代替 `await`。
 
-以上 [`flow` + generator 函数](#asynchronous-actions) 的示例展示了实际情况中的用法。
+以上 [`flow` + generator function](#异步-actions) 的示例展示了实际情况中的用法。
 
 注意，使用 TypeScript 时才会需要 `flowResult` 函数。
 它会因为使用 `flow` 装饰了一个方法而把返回的 generator 包裹在 Promise 中。

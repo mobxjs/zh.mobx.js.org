@@ -54,7 +54,7 @@ const order = new OrderLine(0)
 const stop = autorun(() => {
     console.log("Total: " + order.total)
 })
-// 计算中...
+// Computing...
 // Total: 0
 
 console.log(order.total)
@@ -62,11 +62,11 @@ console.log(order.total)
 // 0
 
 order.amount = 5
-// 计算中...
+// Computing...
 // (无需 autorun)
 
 order.price = 2
-// 计算中...
+// Computing...
 // Total: 10
 
 stop()

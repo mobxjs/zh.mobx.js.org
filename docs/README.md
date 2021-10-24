@@ -299,7 +299,7 @@ setInterval(() => {
 
 除了适用于上面的例子之外，这个概念图也适用于其他任何使用 MobX 的应用。
 
-如果想通过一个更大的例子来了解 MobX 的核心概念，请参阅 [MobX 精要](the-gist-of-mobx.md)部分或查看 [10 分钟交互式入门 MobX 和 React](https://zh.mobx.js.org/getting-started)。这些博客文章 [事后再考虑 UI](https://michel.codes/blogs/ui-as-an-afterthought) 和 [怎样解耦状态和 UI （又名：你不需要 componentWillMount）](https://hackernoon.com/how-to-decouple-state-and-ui-a-k-a-you-dont-need-componentwillmount-cc90b787aa37)也对 MobX 所提供的心智模型做了非常详细的描述。
+如果想通过一个更大的例子来了解 MobX 的核心概念，请参阅 [MobX 精要](the-gist-of-mobx.md)部分或查看 [10 分钟交互式入门 MobX 和 React](https://zh.mobx.js.org/getting-started.html)。这些博客文章 [事后再考虑 UI](https://michel.codes/blogs/ui-as-an-afterthought) 和 [怎样解耦状态和 UI （又名：你不需要 componentWillMount）](https://hackernoon.com/how-to-decouple-state-and-ui-a-k-a-you-dont-need-componentwillmount-cc90b787aa37)也对 MobX 所提供的心智模型做了非常详细的描述。
 
 <div class="cheat"><a href="https://gum.co/fSocU"><button title="Download the MobX 6 cheat sheet and sponsor the project">下载 MobX 6 速查表</button></a></div>
 

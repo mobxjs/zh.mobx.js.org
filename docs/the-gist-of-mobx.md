@@ -18,7 +18,7 @@ MobX区分了应用程序中的以下三个概念：
 
 
 
-让我们仔细看看下面的这些概念，或者在[10分钟的MobX和React简介](https://mobx.js.org/getting-started)中，您可以通过交互方式逐步深入了解这些概念，并构建一个简单的待办事项列表(Todo List)应用程序。
+让我们仔细看看下面的这些概念，或者在[10分钟的MobX和React简介](https://zh.mobx.js.org/getting-started.html)中，您可以通过交互方式逐步深入了解这些概念，并构建一个简单的待办事项列表(Todo List)应用程序。
 
 
 ### 1. 定义 State 并使其可观察
@@ -201,7 +201,7 @@ autorun(() => {
 
 _MobX对在执行跟踪函数期间读取的任何现有可观察属性作出响应_。
 
-要了解更多关于MobX如何确定需要对哪些可观察对象作出响应的信息，请查看 [理解反应](understanding-reactivity.md) 章节。
+要了解更多关于MobX如何确定需要对哪些可观察对象作出响应的信息，请查看 [理解响应性](understanding-reactivity.md) 章节。
 
 ## 原则
 
