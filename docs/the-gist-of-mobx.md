@@ -225,5 +225,5 @@ Mobx 使用单向数据流，利用 _action_ 改变 _state_ ，进而更新所�
 
 ## 提示
 
-如果您发现很难适应 MobX 的心智模型，请将其配置为严格模式，在运行时偏离这些模式的情况下将会发出警告。更多信息请查看[linting MobX](configuration.md#linting-options)章节。
+如果您发现很难适应 MobX 的心智模型，请将其配置为严格模式，在运行时偏离这些模式的情况下将会发出警告。更多信息请查看[linting MobX](configuration.md#代码lint选项)章节。
 
