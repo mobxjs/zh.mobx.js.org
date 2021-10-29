@@ -253,7 +253,7 @@ React.render(<TimerView secondsPassed={myTimer.secondsPassed} />, document.body)
 通过`observer`包裹的组件 _只可以_ 订阅到在 _他们自己_ 渲染的期间的可观察对象. 如果要将可观察对象 objects / arrays / maps 传递到子组件中, 他们必须被 `observer` 包裹。
 通过callback回调的组件也是一样。
 
-如果你非要传递可观察对象到未被`observer`包裹的组件中， 要么是因为它是第三方组件，要么你需要组件对Mobx无感知，那你必须 [转换可观察对象为显式 （convert the observables to plain JavaScript values or structures）](observable-state.md#converting-observables-back-to-vanilla-javascript-collections) 在传递前阅读这篇文章。
+如果你非要传递可观察对象到未被`observer`包裹的组件中， 要么是因为它是第三方组件，要么你需要组件对Mobx无感知，那你必须在传递前 [转换可观察对象为显式 （convert the observables to plain JavaScript values or structures）](observable-state.md#将-observable-转换回普通的-javascript-集合) 。
 
 关于上述的详细描述,
 可以看一下下面的使用 `todo` 对象的例子， 一个 `TodoView` (observer)组件和一个虚构的接收一组对象映射入参的不是`observer`的`GridRow`组件：

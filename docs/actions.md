@@ -200,7 +200,7 @@ class Doubler {
 -   `runInAction(fn)`
 
 使用这个工具函数来创建一个会被立即调用的临时 action。在异步进程中非常有用。
-请查看 [上面代码块](#examples) 中的实例。
+请查看 [上面代码块](#例子) 中的实例。
 
 ## Actions 和继承
 
