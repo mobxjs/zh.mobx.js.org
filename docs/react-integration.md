@@ -311,7 +311,7 @@ const TodoView = observer(({ todo }: { todo: Todo }) => {
 <details id="react-vs-lite"><summary>**注意:** mobx-react vs. mobx-react-lite<a href="#react-vs-lite" class="tip-anchor"></a></summary>
 在本文中我们使用 `mobx-react-lite` 作为默认包。
 [mobx-react](https://github.com/mobxjs/mobx-react/) 是他的大兄弟，它里面也引用了 `mobx-react-lite` 包。
-它提供了很多在新项目中不在需要的特性， mobx-react附加的特性有：
+它提供了很多在新项目中不再需要的特性， mobx-react附加的特性有：
 
 1. 对于React class components的支持。
 1. `Provider` 和`inject`. MobX的这些东西在有 React.createContext 替代后变得不必要了。
@@ -394,7 +394,7 @@ export const MyComponent = observer(props => <div>hi</div>)
     MyComponent.displayName = "MyComponent"
     ```
 
-    这种写法在React 16是有问题的， mobx-react `observer` 使用 React.memo 会出现这个 bug: https://github.com/facebook/react/issues/18026,但是在 React 17 会被修复。
+    这种写法在React 16是有问题的， mobx-react `observer` 使用 React.memo 会出现这个 bug: https://github.com/facebook/react/issues/18026, 但是在 React 17 会被修复。
 
 现在你应该可以看见组件名了：
 
