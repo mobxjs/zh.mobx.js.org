@@ -106,10 +106,54 @@ _简单，可扩展的状态管理_
                 </a>
             </td>
             <td align="center">
-                <a href="https://github.com/mobxjs/zh.mobx.js.org" target="_blank">
-                    <img src="img/placeholder.svg" width="50px">
+                <a href="https://github.com/wuxyman" target="_blank">
+                    <img src="https://avatars.githubusercontent.com/u/34463605?v=4&s=100" width="50px">
                     <br />
-                    <sup style="font-size: 12px">虚位以待</sup>
+                    <sup style="font-size: 12px">wuxyman</sup>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td align="center">
+                <a href="https://github.com/newraina" target="_blank">
+                    <img src="https://avatars.githubusercontent.com/u/10708802?v=4&s=100" width="50px">
+                    <br />
+                    <sup style="font-size: 12px">newraina</sup>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/YuFengDing" target="_blank">
+                    <img src="https://avatars.githubusercontent.com/u/23763023?v=4&s=100" width="50px">
+                    <br />
+                    <sup style="font-size: 12px">YuFengDing</sup>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/TheFirstSunday" target="_blank">
+                    <img src="https://avatars.githubusercontent.com/u/20334663?v=4&s=100" width="50px">
+                    <br />
+                    <sup style="font-size: 12px">TheFirstSunday</sup>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/Cufoon" target="_blank">
+                    <img src="https://avatars.githubusercontent.com/u/65291826?v=4&s=100" width="50px">
+                    <br />
+                    <sup style="font-size: 12px">Cufoon</sup>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/PiersZhang" target="_blank">
+                    <img src="https://avatars.githubusercontent.com/u/17962458?v=4s=100" width="50px">
+                    <br />
+                    <sup style="font-size: 12px">PiersZhang</sup>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/Rain120" target="_blank">
+                    <img src="https://avatars.githubusercontent.com/u/20939839?v=4s=100" width="50px">
+                    <br />
+                    <sup style="font-size: 12px">Rain120</sup>
                 </a>
             </td>
         </tr>
@@ -121,14 +165,14 @@ _简单，可扩展的状态管理_
                     <sup style="font-size: 12px">虚位以待</sup>
                 </a>
             </td>
-            <td align="center">
+             <td align="center">
                 <a href="https://github.com/mobxjs/zh.mobx.js.org" target="_blank">
                     <img src="img/placeholder.svg" width="50px">
                     <br />
                     <sup style="font-size: 12px">虚位以待</sup>
                 </a>
             </td>
-            <td align="center">
+             <td align="center">
                 <a href="https://github.com/mobxjs/zh.mobx.js.org" target="_blank">
                     <img width="50px" src="https://zh.mobx.js.org/assets/mobx.png">
                     <br />
@@ -255,7 +299,7 @@ setInterval(() => {
 
 除了适用于上面的例子之外，这个概念图也适用于其他任何使用 MobX 的应用。
 
-如果想通过一个更大的例子来了解 MobX 的核心概念，请参阅 [MobX 精要](the-gist-of-mobx.md)部分或查看 [10 分钟交互式入门 MobX 和 React](https://zh.mobx.js.org/getting-started)。这些博客文章 [事后再考虑 UI](https://michel.codes/blogs/ui-as-an-afterthought) 和 [怎样解耦状态和 UI （又名：你不需要 componentWillMount）](https://hackernoon.com/how-to-decouple-state-and-ui-a-k-a-you-dont-need-componentwillmount-cc90b787aa37)也对 MobX 所提供的心智模型做了非常详细的描述。
+如果想通过一个更大的例子来了解 MobX 的核心概念，请参阅 [MobX 精要](the-gist-of-mobx.md)部分或查看 [10 分钟交互式入门 MobX 和 React](https://zh.mobx.js.org/getting-started.html)。这些博客文章 [事后再考虑 UI](https://michel.codes/blogs/ui-as-an-afterthought) 和 [怎样解耦状态和 UI （又名：你不需要 componentWillMount）](https://hackernoon.com/how-to-decouple-state-and-ui-a-k-a-you-dont-need-componentwillmount-cc90b787aa37)也对 MobX 所提供的心智模型做了非常详细的描述。
 
 <div class="cheat"><a href="https://gum.co/fSocU"><button title="Download the MobX 6 cheat sheet and sponsor the project">下载 MobX 6 速查表</button></a></div>
 

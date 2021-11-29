@@ -21,13 +21,13 @@ hide_title: true
 
 ## 导览
 
-要全面了解如何将 MobX 与 React 一起使用，请通读当前的 _Introduction_ 标题，特别是 [MobX 的要点](the-gist-of-mobx.md)。它将向您介绍最重要的原则、API以及它们之间的关系。看完这个，你应该就可以使用 MobX 了！
+要全面了解如何将 MobX 与 React 一起使用，请通读当前的 _Introduction_ 标题，特别是 [MobX 主旨](the-gist-of-mobx.md)。它将向您介绍最重要的原则、API以及它们之间的关系。看完这个，你应该就可以使用 MobX 了！
 
 接着，你可以看看这里的推荐内容：
 
 -   尝试 [10 分钟的 Mobx 和 React 交互式介绍](https://mobx.js.org/getting-started)
 
--   [React 集成](react-integration.md)
+-   [集成 React](react-integration.md)
 
 -   [`makeObservable` / `makeAutoObservable`](observable-state.md)
 
@@ -37,10 +37,10 @@ hide_title: true
 
 -   阅读有关 [`autorun`](reactions.md#autorun) 的内容，即使只是因为示例中用到了它
 
--   要了解如何组织应用程序的数据存储，请查看 [数据存储定义](defining-data-stores.md)
+-   要了解如何组织应用程序的数据存储，请查看 [定义数据存储](defining-data-stores.md)
 
--   如果您对 MobX 的行为感到困惑，那么[了解 reactivity](understanding-reactivity.md) 将会很有用
+-   如果您对 MobX 的行为感到困惑，那么[理解响应性](understanding-reactivity.md) 将会很有用
 
--   获取 [API 的快速概述](api.md)，也可在顶部导航栏中进行查看
+-   获取 [API 参考](api.md)，也可在顶部导航栏中进行查看
 
 这应该使您对 MobX 的日常使用有了很好的了解。您可以在闲暇时阅读更多的内容。

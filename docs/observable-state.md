@@ -1,6 +1,6 @@
 ---
-title: 创建可观察状态
-sidebar_label: 可观察状态
+title: Creating observable state
+sidebar_label: Observable state
 hide_title: true
 ---
 
@@ -26,7 +26,7 @@ hide_title: true
 
 这个函数可以捕获_已经存在_的对象属性并且使得它们可观察。任何 JavaScript 对象（包括类的实例）都可以作为 `target` 被传递给这个函数。
 一般情况下，`makeObservable` 是在类的构造函数中调用的，并且它的第一个参数是 `this` 。
-`annotations` 参数将会为每一个成员映射 [注解](#available-annotations)。需要注意的是，当使用 [装饰器](enabling-decorators.md) 时，`annotations` 参数将会被忽略。
+`annotations` 参数将会为每一个成员映射 [注解](#可用的注解)。需要注意的是，当使用 [装饰器](enabling-decorators.md) 时，`annotations` 参数将会被忽略。
 
 派生数据并且接受参数的方法（例如：`findUsersOlderThan(age: number): User[]`）不需要任何注解。
 当我们从一个 reaction 中调用它们时，它们的读取操作仍然会被跟踪，但是为了避免内存泄漏，它们的输出将不会被记忆化。更详细的信息可以查看 [MobX-utils computedFn {🚀}](https://github.com/mobxjs/mobx-utils#computedfn)。
@@ -67,7 +67,7 @@ class Doubler {
 }
 ```
 
-**所有带注释** 的字段都是 **不可配置的**。<br>
+**所有带注解** 的字段都是 **不可配置的**。<br>
 **所有的不可观察**（无状态）的字段（`action`, `flow`）都是 **不可写的**。
 
 <!--factory function + makeAutoObservable-->
@@ -131,10 +131,11 @@ tags.push("prio: for fun")
 
 推断规则：
 
--   任何包含一个 `function` 值的成员（包括继承来的）都将使用 `autoAction` 注解标记。
--   任何 `get`ter 都将使用 `computed` 注解标记。
--   任何其他的_自有_字段都将使用 `observable` 注解标记。
--   任何是 generator 函数的成员（包括继承来的）都将使用 `flow` 注解标记。（需要注意，generator 函数在某些编译器配置中无法被检测到，如果 flow 没有正常运行，请务必明确地指定 `flow` 注解。）
+-   所有 _自有_ 属性都成为 `observable`。
+-   所有 `get`ters 都成为 `computed`。
+-   所有 `set`ters 都成为 `action`。
+-   所有 _prototype 中的 functions_ 都成为 `autoAction`。
+-   所有 _prototype 中的 generator functions_ 都成为 `flow`。（需要注意，generators 函数在某些编译器配置中无法被检测到，如果 flow 没有正常运行，请务必明确地指定 `flow` 注解。）
 -   在 `overrides` 参数中标记为 `false` 的成员将不会被添加注解。例如，将其用于像标识符这样的只读字段。
 
 ## `observable`
@@ -148,7 +149,7 @@ tags.push("prio: for fun")
 同样，你可以传入一个 `overrides` 对象来为特定的成员提供特定的注解。
 查看上面的代码获取示例。
 
-由 `observable` 返回的对象将会使用 Proxy 包装，这意味着之后被添加到这个对象中的属性也将被侦测并使其转化为可观察对象（除非禁用 [proxy](configuration.md#proxy-support)）。
+由 `observable` 返回的对象将会使用 Proxy 包装，这意味着之后被添加到这个对象中的属性也将被侦测并使其转化为可观察对象（除非禁用 [proxy](configuration.md#proxy-选项)）。
 
 `observable` 方法也可以被像 [arrays](api.md#observablearray)，[Maps](api.md#observablemap) 和 [Sets](api.md#observableset) 这样的集合调用。这些集合也将被克隆并转化为可观察对象。
 
@@ -220,8 +221,8 @@ MobX 无法使原始值可观察，因为它们在 JavaScript 中是不可变的
 
 | 注解                               | 描述                                                         |
 | ---------------------------------- | ------------------------------------------------------------ |
-| `observable`<br/>`observable.deep` | 定义一个存储 state 的可跟踪字段。任何被赋给 `observable` 字段的值在其可以被转化时（也就是说，当且仅当该值是纯对象，数组，Map 或 Set 时）都将被递归转化为可观察值。 |
-| `observable.ref`                   | 类似于 `observable`，但只有重新赋值才会被追踪。所赋的值本身并不会被自动转化为可观察值。比方说，在你打算将不可变数据存储在可观察字段中时，可以使用这个注解。 |
+| `observable`<br/>`observable.deep` | 定义一个存储 state 的可跟踪字段。如果可能，任何被赋值给 `observable` 的字段都会基于它自己的类型被（深度）转化为`observable`、`autoAction` 或 `flow`。只有 `plain object`、`array`、`Map`、`Set`、`function`、`generator function` 可以转换，类实例和其他实例不会被影响。 |
+| `observable.ref`                   | 类似于 `observable`，但只有重新赋值才会被追踪。所赋的值会被完全忽略，并且将不会主动转化为 `observable`/`autoAction`/`flow`。比方说，在你打算将不可变数据存储在可观察字段中时，可以使用这个注解。 |
 | `observable.shallow`               | 类似于 `observable.ref` 但是是用于集合的。任何所赋的集合都会被转化为可观察值，但是其内部的值并不会变为可观察值。 |
 | `observable.struct`                | 类似于 `observable`，但是会忽略所赋的值中所有在结构上与当前值相同的值。 |
 | `action`                           | 把一个函数标记为会修改 state 的 action。查看 [actions](actions.md) 获取更多信息。不可写。 |
@@ -230,13 +231,14 @@ MobX 无法使原始值可观察，因为它们在 JavaScript 中是不可变的
 | `computed.struct`                  | 类似于 `computed`，但如果重新计算后的结果在结构上与之前的结果相等，那么观察者将不会收到通知。 |
 | `true`                             | 推断最佳注解。查看 [makeAutoObservable](#makeautoobservable) 获取更多信息。 |
 | `false`                            | 刻意不为该属性指定注解。                                       |
-| `flow`                             | 创建一个 `flow` 管理异步进程。查看 [flow](actions.md#using-flow-instead-of-async--await-) 获取更多信息。需要注意的是，推断出来的 TypeScript 返回类型可能会出错。 不可写。 |
+| `flow`                             | 创建一个 `flow` 管理异步进程。查看 [flow](actions.md#使用-flow-代替-async--await-) 获取更多信息。需要注意的是，推断出来的 TypeScript 返回类型可能会出错。 不可写。 |
+| `flow.bound`                       | 类似于 flow, 但是会将 flow 绑定到实例，因此将始终设置 `this`。 不可写。    |       
 | `override`                         | [用于子类覆盖继承的 `action`，`flow`，`computed`，`action.bound`](subclassing.md)。 |
 | `autoAction`                       | 不应被显式调用，但 `makeAutoObservable` 内部会对其进行调用，以便根据调用上下文将方法标识为 action 或者派生值。 |
 
 ## 局限性
 
-1. `make(Auto)Observable` 仅支持已经定义的属性。请确保你的 [**编译器选项**是正确的](installation.md#use-spec-compliant-transpilation-for-class-properties)，或者，作为权宜之计，确保在你使用 `make(Auto)Observable` 之前已经为所有属性赋了值。如果没有正确的配置，已经声明而未初始化的字段（例如：`class X { y; }`）将无法被正确侦测到。
+1. `make(Auto)Observable` 仅支持已经定义的属性。请确保你的 [**编译器选项**是正确的](installation.md#对类属性使用符合规范的转换)，或者，作为权宜之计，确保在你使用 `make(Auto)Observable` 之前已经为所有属性赋了值。如果没有正确的配置，已经声明而未初始化的字段（例如：`class X { y; }`）将无法被正确侦测到。
 1. `makeObservable` 只能注解由其本身所在的类定义声明出来的属性。如果一个子类或超类引入了可观察字段，那么该子类或超类就必须自己为那些属性调用 `makeObservable`。
 1. `options` 参数只能提供一次。被传入的 `options` 是 _“有粘性”_ 的，之后无法更改（例如，在 [子类](subclassing.md) 中）。
 1. **每个字段只能被注解一次**（`override` 除外）。字段注解和配置不能在 [子类](subclassing.md) 中改变。
@@ -257,9 +259,9 @@ MobX 无法使原始值可观察，因为它们在 JavaScript 中是不可变的
 
 上面的 API 都有一个可选的 `options` 参数，该参数是一个对象，支持以下选项：
 
--   **`autoBind: true`** 默认使用 `action.bound`，而不使用 `action`。不影响被显式注释过的成员。
+-   **`autoBind: true`** 默认使用 `action.bound`/`flow.bound`，而不使用 `action`/`flow`。不影响被显式注释过的成员。
 -   **`deep: false`** 默认使用 `observable.ref`，而不使用 `observable`。不影响被显式注释过的成员。
--   **`name: <string>`** 为对象提供一个调试名称，该名称将被打印在错误消息和 reflection API 中。在生产环境中将被忽略。
+-   **`name: <string>`** 为对象提供一个调试名称，该名称将被打印在错误消息和 reflection API 中。
 -   **`proxy: false`** 迫使 `observable(thing)` 使用非 [**proxy**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) 的实现。如果对象的结构不会随着时间变化，那么这就是一个很好的选择，因为非代理对象更容易调试并且速度更快。请参见 [避免代理](#avoid-proxies)。
 
 <details id="one-options-per-target"><summary>**注意：** options 是*粘性的*并且只能被提供一次<a href="#one-options-per-target" class="tip-anchor"></a></summary>

@@ -25,7 +25,7 @@ const Item = observer(({ item, store }) => (
 
 我们有四种方法可以实现它，你可以在[这里](https://codesandbox.io/s/multi-selection-odup1?file=/src/index.tsx)运行这些实现。
 
-> 译者注：衍生(derivation)是指一个订阅了某些observable的行为
+> 译者注：*任何* 来源是*State(状态)* 并且不需要进一步交互的东西都是 Derivation(派生)。Derivations 包括许多方式，如用户界面、computed值等。
 
 ## 1. Derivation不一定_需要_ 用`computed`实现
 

@@ -2,9 +2,9 @@
 
 # MobX
 
-_简单，可扩展的状态管理库_
+_简单，可扩展的状态管理_
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/2cc625ca-4c31-4bcd-9ccf-ba49184cf1de/deploy-status)](https://app.netlify.com/sites/zh-mobx-js-org/deploys)
+[![GitHub deployments](https://img.shields.io/github/deployments/mobxjs/zh.mobx.js.org/production?label=vercel&logo=vercel)](https://vercel.com/mobxjs/zh-mobx-js-org)
 [![npm version](https://badge.fury.io/js/mobx.svg)](https://badge.fury.io/js/mobx)
 [![OpenCollective](https://opencollective.com/mobx/backers/badge.svg)](docs/backers-sponsors.md#backers)
 [![OpenCollective](https://opencollective.com/mobx/sponsors/badge.svg)](docs/backers-sponsors.md#sponsors)
@@ -48,8 +48,19 @@ mobx是一个流行的状态管理库，在全世界有很多用户。mobx中文
     <td align="center"><a href="https://github.com/YuFengDing"><img src="https://avatars.githubusercontent.com/u/23763023?v=4&s=100" width="100px;" alt=""/><br /><sub><b>YuFengDing</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3AYuFengDing" title="PR">💻</a></td>
   </tr>
   <tr>
+    <td align="center"><a href="https://github.com/chenxiaochun"><img src="https://avatars.githubusercontent.com/u/1744713?v=4&s=100" width="100px;" alt=""/><br /><sub><b>chenxiaochun</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3Achenxiaochun" title="PR">💻</a></td>
     <td align="center"><a href="https://github.com/Rain120"><img src="https://avatars.githubusercontent.com/u/20939839?v=4&s=100" width="100px;" alt=""/><br /><sub><b>Rain120</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3ARain120" title="PR">💻</a></td>
-    <td align="center"><a href="https://github.com/mobxjs/zh.mobx.js.org"><img src="https://zh.mobx.js.org/assets/placeholder.svg" width="100px;" alt=""/><br /><sub><b>Next Contributor</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls" title="PR">💻</a></td>
+    <td align="center"><a href="https://github.com/newraina"><img src="https://avatars.githubusercontent.com/u/10708802?v=4&s=100" width="100px;" alt=""/><br /><sub><b>newraina</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3Anewraina" title="PR">💻</a></td>
+    <td align="center"><a href="https://github.com/Dreams-d"><img src="https://avatars.githubusercontent.com/u/34699694?v=4&s=100" width="100px;" alt=""/><br /><sub><b>Dreams-d</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3ADreams-d" title="PR">💻</a></td>
+    <td align="center"><a href="https://github.com/inceptiongt"><img src="https://avatars.githubusercontent.com/u/20478779?v=4&s=100" width="100px;" alt=""/><br /><sub><b>inceptiongt</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3Ainceptiongt" title="PR">💻</a></td>
+    <td align="center"><a href="https://github.com/JevonsCode"><img src="https://avatars.githubusercontent.com/u/36203025?v=4&s=100" width="100px;" alt=""/><br /><sub><b>JevonsCode</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3AJevonsCode" title="PR">💻</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/finalwhy"><img src="https://avatars.githubusercontent.com/u/24859256?v=4&s=100" width="100px;" alt=""/><br /><sub><b>finalwhy</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3Afinalwhy" title="PR">💻</a></td>
+    <td align="center"><a href="https://github.com/PiersZhang"><img src="https://avatars.githubusercontent.com/u/17962458?v=4s=100" width="100px;" alt=""/><br /><sub><b>PiersZhang</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3APiersZhang" title="PR">💻</a></td>
+    <td align="center"><a href="https://github.com/hec9527"><img src="https://avatars.githubusercontent.com/u/28671232?v=4&s=100" width="100px;" alt=""/><br /><sub><b>hec9527</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3Ahec9527" title="PR">💻</a></td>
+    <td align="center"><a href="https://github.com/bubucuo"><img src="https://avatars.githubusercontent.com/u/9839620?v=4&s=100" width="100px;" alt=""/><br /><sub><b>bubucuo</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3Abubucuo" title="PR">💻</a></td>
+    <td align="center"><a href="https://github.com/vinzid"><img src="https://avatars.githubusercontent.com/u/18076739?v=4&s=100" width="100px;" alt=""/><br /><sub><b>vinzid</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3Avinzid" title="PR">💻</a></td>
     <td align="center"><a href="https://github.com/mobxjs/zh.mobx.js.org"><img src="https://zh.mobx.js.org/assets/placeholder.svg" width="100px;" alt=""/><br /><sub><b>Next Contributor</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls" title="PR">💻</a></td>
   </tr>
 </table>
