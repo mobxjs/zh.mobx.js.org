@@ -6,23 +6,23 @@
     "tagline": "Simple, scalable state management",
     "docs": {
       "about-this-documentation": {
-        "title": "About this documentation",
-        "sidebar_label": "About this documentation"
+        "title": "关于本文档",
+        "sidebar_label": "关于本文档"
       },
       "actions": {
-        "title": "Updating state using actions",
+        "title": "使用 actions 更新 state",
         "sidebar_label": "Actions"
       },
       "analyzing-reactivity": {
-        "title": "Analyzing reactivity",
-        "sidebar_label": "Analyzing reactivity {🚀}"
+        "title": "分析响应性",
+        "sidebar_label": "分析响应性 {🚀}"
       },
       "api": {
         "title": "MobX API 参考",
         "sidebar_label": "MobX API 参考"
       },
       "backers-sponsors": {
-        "title": "MobX Backers and Sponsors"
+        "title": "MobX的贡献者和赞助商"
       },
       "best/debugging-mobx": {
         "title": "Analyzing reactivity"
@@ -38,42 +38,42 @@
       },
       "collection-utilities": {
         "title": "Collection utilities",
-        "sidebar_label": "Collection utilities {🚀}"
+        "sidebar_label": "集合工具 {🚀}"
       },
       "computeds-with-args": {
         "title": "含参数的计算值",
         "sidebar_label": "含参数的计算值 {🚀}"
       },
       "computeds": {
-        "title": "Deriving information with computeds",
+        "title": "通过 computeds 派生信息",
         "sidebar_label": "Computeds"
       },
       "configuration": {
         "title": "Configuration",
-        "sidebar_label": "Configuration {🚀}"
+        "sidebar_label": "配置 {🚀}"
       },
       "custom-observables": {
-        "title": "Creating custom observables",
-        "sidebar_label": "Custom observables {🚀}"
+        "title": "创建一个自定义 observables",
+        "sidebar_label": "自定义 observables {🚀}"
       },
       "defining-data-stores": {
-        "title": "Defining data stores",
-        "sidebar_label": "Defining data stores"
+        "title": "定义数据存储",
+        "sidebar_label": "定义数据存储"
       },
       "enabling-decorators": {
-        "title": "Enabling decorators",
-        "sidebar_label": "Enabling decorators {🚀}"
+        "title": "启用装饰器语法",
+        "sidebar_label": "启用装饰器语法 {🚀}"
       },
       "faq/migrate-to-6": {
         "title": "Migrating from MobX 4/5"
       },
       "installation": {
         "title": "Installation",
-        "sidebar_label": "Installation"
+        "sidebar_label": "安装"
       },
       "intercept-and-observe": {
-        "title": "Intercept & Observe",
-        "sidebar_label": "Intercept & Observe {🚀}"
+        "title": "拦截与观察",
+        "sidebar_label": "拦截与观察 {🚀}"
       },
       "intro/concepts": {
         "title": "The gist of MobX"
@@ -85,15 +85,16 @@
         "title": "Installation"
       },
       "lazy-observables": {
-        "title": "Creating lazy observables",
-        "sidebar_label": "Lazy observables {🚀}"
+        "title": "创建惰性 observables",
+        "sidebar_label": "惰性 observables {🚀}"
       },
       "LINKS": {
-        "title": "LINKS"
+        "title": "链接",
+        "sidebar_label": "链接"
       },
       "migrating-from-4-or-5": {
-        "title": "Migrating from MobX 4/5",
-        "sidebar_label": "Migrating from MobX 4/5 {🚀}"
+        "title": "从MobX 4/5迁移",
+        "sidebar_label": "从MobX 4/5迁移 {🚀}"
       },
       "mobx-utils": {
         "title": "MobX-utils",
@@ -104,12 +105,12 @@
         "sidebar_label": "Observable state"
       },
       "react-integration": {
-        "title": "React integration",
-        "sidebar_label": "React integration"
+        "title": "集成React（react-integration）",
+        "sidebar_label": "集成React（react-integration）"
       },
       "react-optimizations": {
-        "title": "Optimizing React component rendering",
-        "sidebar_label": "React optimizations {🚀}"
+        "title": "优化React组件渲染",
+        "sidebar_label": "React 优化 {🚀}"
       },
       "react/react-integration": {
         "title": "React integration"
@@ -118,7 +119,7 @@
         "title": "Optimizing React component rendering"
       },
       "reactions": {
-        "title": "Running side effects with reactions",
+        "title": "使用 reactions 处理副作用",
         "sidebar_label": "Reactions {🚀}"
       },
       "README": {
@@ -171,16 +172,16 @@
         "title": "Observable Sets"
       },
       "subclassing": {
-        "title": "Subclassing",
-        "sidebar_label": "Subclassing"
+        "title": "使用子类",
+        "sidebar_label": "使用子类"
       },
       "the-gist-of-mobx": {
         "title": "The gist of MobX",
-        "sidebar_label": "The gist of MobX"
+        "sidebar_label": "MobX 主旨"
       },
       "understanding-reactivity": {
-        "title": "Understanding reactivity",
-        "sidebar_label": "Understanding reactivity"
+        "title": "理解响应性",
+        "sidebar_label": "理解响应性"
       }
     },
     "links": {
@@ -194,7 +195,8 @@
       "MobX core": "MobX core",
       "MobX and React": "MobX and React",
       "Tips & Tricks": "Tips & Tricks",
-      "Fine-tuning": "Fine-tuning"
+      "Fine-tuning": "Fine-tuning",
+      "Others": "Others"
     }
   },
   "pages-strings": {
