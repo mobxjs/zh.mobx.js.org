@@ -26,7 +26,7 @@ _把事物转化成 observable。_
 
 [**用法**](observable-state.md#makeobservable)：`makeObservable(target, annotations?, options?)`
 
-属性、整个对象、数组、Maps 和 Sets 都可以被转化成 obervable。
+属性、整个对象、数组、Maps 和 Sets 都可以被转化成 observable。
 
 ### `makeAutoObservable`
 
