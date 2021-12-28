@@ -61,6 +61,10 @@ mobx是一个流行的状态管理库，在全世界有很多用户。mobx中文
     <td align="center"><a href="https://github.com/hec9527"><img src="https://avatars.githubusercontent.com/u/28671232?v=4&s=100" width="100px;" alt=""/><br /><sub><b>hec9527</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3Ahec9527" title="PR">💻</a></td>
     <td align="center"><a href="https://github.com/bubucuo"><img src="https://avatars.githubusercontent.com/u/9839620?v=4&s=100" width="100px;" alt=""/><br /><sub><b>bubucuo</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3Abubucuo" title="PR">💻</a></td>
     <td align="center"><a href="https://github.com/vinzid"><img src="https://avatars.githubusercontent.com/u/18076739?v=4&s=100" width="100px;" alt=""/><br /><sub><b>vinzid</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3Avinzid" title="PR">💻</a></td>
+    <td align="center"><a href="https://github.com/zouHuaLu"><img src="https://avatars.githubusercontent.com/u/32211051?v=4&s=100" width="100px;" alt=""/><br /><sub><b>zouHuaLu</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3AzouHuaLu" title="PR">💻</a></td>
+  </tr>
+    <tr>
+    <td align="center"><a href="https://github.com/mobxjs/zh.mobx.js.org"><img src="https://zh.mobx.js.org/assets/placeholder.svg" width="100px;" alt=""/><br /><sub><b>Next Contributor</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls" title="PR">💻</a></td>
     <td align="center"><a href="https://github.com/mobxjs/zh.mobx.js.org"><img src="https://zh.mobx.js.org/assets/placeholder.svg" width="100px;" alt=""/><br /><sub><b>Next Contributor</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls" title="PR">💻</a></td>
   </tr>
 </table>
