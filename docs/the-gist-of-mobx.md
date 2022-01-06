@@ -173,7 +173,7 @@ render(<TodoListView todoList={store} />, document.getElementById("root"))
 ```
 
 `observer` 将 React 组件转化为了从数据到渲染的派生过程。
-当使用 MobX 的时，不存在“智能组件”和“哑巴组件”。所有的组件在渲染时都是智能的，但是在定义时是按照哑巴组件的方式去定义的。MobX会简单确定这个组件是否需要进行重绘，并止步于此。
+当使用 MobX 的时，不存在“智能组件”和“木偶组件”。所有的组件在渲染时都是智能的，但是在定义时是按照木偶组件的方式去定义的。MobX会简单确定这个组件是否需要进行重绘，并止步于此。
 
 因此，上述示例中的`onClick`事件处理器调用`toggle` Action 后，会使对应的`TodoView`组件重绘，但仅当未完成任务的数量发生更改时才会使 `TodoListView` 组件重绘。
 

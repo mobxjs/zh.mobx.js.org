@@ -39,7 +39,9 @@ configure({ useProxies: "never" }) // Or "ifavailable".
 
 ## MobX和装饰器
 
-如果您以前使用过MobX，或者如果您遵循了在线教程，则可能会看到MobX支持装饰器，例如`@observable`。在MobX 6中，我们选择默认情况下远离装饰器，以最大程度地与标准JavaScript兼容。如果您启用了它们，它们仍然可以使用 [enable them](enabling-decorators.md)。
+如果你以前使用过 Mobx，或者你看过在线教程，你可能会看到  Mobx 可以使用带有 `@observable` 这样的装饰器。在 Mobx 6中，为了与标准 JavaScript 的最大兼容性，我们在默认情况下放弃了装饰器。但如果[启用](enabling-decorators.md)它们，它们仍然可以使用。
+
+**译者注**: 如果好奇放弃原因，可以到👉🏻[官方 issue](https://github.com/mobxjs/mobx/issues/2325) 和 [TC39 Class](https://github.com/tc39/proposal-class-fields#public-fields-created-with-objectdefineproperty) 查看了解更多信息。
 
 ## 其他框架/平台上的MobX
 
