@@ -293,7 +293,7 @@ setInterval(() => {
 围绕 React 组件 `TimerView` 的 `observer` 包装会自动侦测到依赖于 observable `timer.secondsPassed` 的渲染——即使这种依赖关系没有被明确定义出来。
 响应性系统会负责在未来*恰好那个*字段被更新的时候将组件重新渲染。
 
-每个事件（`onClick` 或 `setInterval`）都会调用一个用来更新 *observable 状态* `myTimer.secondsPassed` 的 *action*（`myTimer.create` 或 `myTimer.reset`）。Observable 状态的变更会被精确地传送到 `TimerView` 中所有依赖于它们的*计算*和*副作用*里。
+每个事件（`onClick` 或 `setInterval`）都会调用一个用来更新 *observable 状态* `myTimer.secondsPassed` 的 *action*（`myTimer.increase` 或 `myTimer.reset`）。Observable 状态的变更会被精确地传送到 `TimerView` 中所有依赖于它们的*计算*和*副作用*里。
 
 <img alt="MobX 单向流" src="https://zh.mobx.js.org/assets/zh.flow.png" align="center" />
 
