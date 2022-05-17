@@ -1,17 +1,17 @@
 ---
-title: MobX Backers and Sponsors
+title: MobX的贡献者和赞助商
 hide_title: true
 ---
 
 <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBD4KQ7&placement=mobxjsorg" id="_carbonads_js"></script>
 
-# MobX Backers and Sponsors
+# MobX的贡献者和赞助商
 
-Thanks to your backers and sponsors for their generous support!
+感谢你们的鼎力相助和慷慨解囊！
 
-## Backers
+## 贡献者
 
-Support us with a monthly donation and help us continue our activities. [[Become a backer](https://opencollective.com/mobx#backer)]
+每月为我们提供捐赠，以帮助我们继续开展活动。 [[成为支持者](https://opencollective.com/mobx#backer)]
 
 <a href="https://opencollective.com/mobx/backer/0/website" target="_blank"><img src="https://opencollective.com/mobx/backer/0/avatar.svg"></a>
 <a href="https://opencollective.com/mobx/backer/1/website" target="_blank"><img src="https://opencollective.com/mobx/backer/1/avatar.svg"></a>
@@ -74,9 +74,9 @@ Support us with a monthly donation and help us continue our activities. [[Become
 <a href="https://opencollective.com/mobx/backer/58/website" target="_blank"><img src="https://opencollective.com/mobx/backer/58/avatar.svg"></a>
 <a href="https://opencollective.com/mobx/backer/59/website" target="_blank"><img src="https://opencollective.com/mobx/backer/59/avatar.svg"></a>
 
-## Sponsors
+## 赞助商
 
-Become a sponsor and get your logo on our README on Github with a link to your site. [[Become a sponsor](https://opencollective.com/mobx#sponsor)]
+成为赞助商，附带您网站链接的logo将展示在在我们的Github的README上. [[成为赞助商](https://opencollective.com/mobx#sponsor)]
 
 <a href="https://opencollective.com/mobx/sponsor/0/website" target="_blank"><img src="https://opencollective.com/mobx/sponsor/0/avatar.svg"></a>
 <a href="https://opencollective.com/mobx/sponsor/1/website" target="_blank"><img src="https://opencollective.com/mobx/sponsor/1/avatar.svg"></a>

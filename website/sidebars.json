@@ -32,6 +32,9 @@
       "configuration",
       "enabling-decorators",
       "migrating-from-4-or-5"
+    ],
+    "Others": [
+        "LINKS"
     ]
   }
 }

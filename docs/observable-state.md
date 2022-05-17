@@ -6,32 +6,32 @@ hide_title: true
 
 <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBD4KQ7&placement=mobxjsorg" id="_carbonads_js"></script>
 
-# Creating observable state
+# 创建可观察状态
 
-Properties, entire objects, arrays, Maps and Sets can all be made observable.
-The basics of making objects observable is specifying an annotation per property using `makeObservable`.
-The most important annotations are:
+属性，完整的对象，数组，Maps 和 Sets 都可以被转化为可观察对象。
+使得对象可观察的基本方法是使用 `makeObservable` 为每个属性指定一个注解。
+最重要的注解如下：
 
--   `observable` defines a trackable field that stores the state.
--   `action` marks a method as action that will modify the state.
--   `computed` marks a getter that will derive new facts from the state and cache its output.
+-   `observable` 定义一个存储 state 的可追踪字段。
+-   `action` 将一个方法标记为可以修改 state 的 action。
+-   `computed` 标记一个可以由 state 派生出新的值并且缓存其输出的 getter。
 
-Collections such as arrays, Maps and Sets are made observable automatically.
+像数组，Maps 和 Sets 这样的集合都将被自动转化为可观察对象。
 
 ## `makeObservable`
 
-Usage:
+用法：
 
 -   `makeObservable(target, annotations?, options?)`
 
-It can be used to trap _existing_ object properties and make them observable. Any JavaScript object (including class instances) can be passed into `target`.
-Typically `makeObservable` is used in the constructor of a class, and its first argument is `this`.
-The `annotations` argument maps [annotations](#available-annotations) to each member. Note that when using [decorators](enabling-decorators.md), the `annotations` argument can be omitted.
+这个函数可以捕获_已经存在_的对象属性并且使得它们可观察。任何 JavaScript 对象（包括类的实例）都可以作为 `target` 被传递给这个函数。
+一般情况下，`makeObservable` 是在类的构造函数中调用的，并且它的第一个参数是 `this` 。
+`annotations` 参数将会为每一个成员映射 [注解](#可用的注解)。需要注意的是，当使用 [装饰器](enabling-decorators.md) 时，`annotations` 参数将会被忽略。
 
-Methods that derive information and take arguments (for example `findUsersOlderThan(age: number): User[]`) don't need any annotation.
-Their read operations will still be tracked when they are called from a reaction, but their output won't be memoized to avoid memory leaks. Check out [MobX-utils computedFn {🚀}](https://github.com/mobxjs/mobx-utils#computedfn) as well.
+派生数据并且接受参数的方法（例如：`findUsersOlderThan(age: number): User[]`）不需要任何注解。
+当我们从一个 reaction 中调用它们时，它们的读取操作仍然会被跟踪，但是为了避免内存泄漏，它们的输出将不会被记忆化。更详细的信息可以查看 [MobX-utils computedFn {🚀}](https://github.com/mobxjs/mobx-utils#computedfn)。
 
-[Subclassing is supported with some limitations](subclassing.md) via `override` annotation.
+Mobx 通过 `override` 注解 [支持子类的使用，但会有一些局限性](subclassing.md)。
 
 <!--DOCUSAURUS_CODE_TABS-->
 <!--class + makeObservable-->
@@ -67,8 +67,8 @@ class Doubler {
 }
 ```
 
-**All annotated** fields are **non-configurable**.<br>
-**All non-observable** (stateless) fields (`action`, `flow`) are **non-writable**.
+**所有带注解** 的字段都是 **不可配置的**。<br>
+**所有的不可观察**（无状态）的字段（`action`, `flow`）都是 **不可写的**。
 
 <!--factory function + makeAutoObservable-->
 
@@ -88,8 +88,8 @@ function createDoubler(value) {
 }
 ```
 
-Note that classes can leverage `makeAutoObservable` as well.
-The difference in the examples just demonstrate how MobX can be applied to different programming styles.
+注意，类也可以跟 `makeAutoObservable` 合用。
+示例中的差异就展示了将 MobX 应用于不同编程风格的方法。
 
 <!--observable-->
 
@@ -112,50 +112,51 @@ const tags = observable(["high prio", "medium prio", "low prio"])
 tags.push("prio: for fun")
 ```
 
-In contrast to the first example with `makeObservable`, `observable` supports adding (and removing) _fields_ to an object.
-This makes `observable` great for collections like dynamically keyed objects, arrays, Maps and Sets.
+与第一个例子中的 `makeObservable` 不同，`observable` 支持为对象添加（和删除）字段。
+这使得 `observable` 非常适合用于像动态键控的对象、数组、Maps 和 Sets 之类的集合。
 
 <!--END_DOCUSAURUS_CODE_TABS-->
 
 ## `makeAutoObservable`
 
-Usage:
+使用：
 
 -   `makeAutoObservable(target, overrides?, options?)`
 
-`makeAutoObservable` is like `makeObservable` on steroids, as it infers all the properties by default. You can still use `overrides` to override the default behavior with specific annotations.
-In particular `false` can be used to exclude a property or method from being processed entirely.
-Check out the code tabs above for an example.
-The `makeAutoObservable` function can be more compact and easier to maintain than using `makeObservable`, since new members don't have to be mentioned explicitly.
-However, `makeAutoObservable` cannot be used on classes that have super or are [subclassed](subclassing.md).
+`makeAutoObservable` 就像是加强版的 `makeObservable`，在默认情况下它将推断所有的属性。你仍然可以使用 `overrides` 重写某些注解的默认行为。
+具体来说，`false` 可用于从自动处理中排除一个属性或方法。
+查看上面的代码分页获取示例。
+与使用 `makeObservable` 相比，`makeAutoObservable` 函数更紧凑，也更容易维护，因为新成员不需要显式地提及。
+然而，`makeAutoObservable` 不能被用于带有 super 的类或 [子类](subclassing.md)。
 
-Inference rules:
+推断规则：
 
--   Any (inherited) member that contains a `function` value will be annotated with `autoAction`.
--   Any `get`ter will be annotated with `computed`.
--   Any other _own_ field will be marked with `observable`.
--   Any (inherited) member that is a generator function will be annotated with `flow`. (Note that generators functions are not detectable in some transpiler configurations, if flow doesn't work as expected, make sure to specify `flow` explicitly.)
--   Members marked with `false` in the `overrides` argument will not be annotated. For example, using it for read only fields such as identifiers.
+-   所有 _自有_ 属性都成为 `observable`。
+-   所有 `get`ters 都成为 `computed`。
+-   所有 `set`ters 都成为 `action`。
+-   所有 _prototype 中的 functions_ 都成为 `autoAction`。
+-   所有 _prototype 中的 generator functions_ 都成为 `flow`。（需要注意，generators 函数在某些编译器配置中无法被检测到，如果 flow 没有正常运行，请务必明确地指定 `flow` 注解。）
+-   在 `overrides` 参数中标记为 `false` 的成员将不会被添加注解。例如，将其用于像标识符这样的只读字段。
 
 ## `observable`
 
-Usage:
+用法：
 
 -   `observable(source, overrides?, options?)`
 
-The `observable` annotation can also be called as a function to make an entire object observable at once.
-The `source` object will be cloned and all members will be made observable, similar to how it would be done by `makeAutoObservable`.
-Likewise, an `overrides` map can be provided to specify the annotations of specific members.
-Check out the above code block for an example.
+`observable` 注解可以作为一个函数进行调用，从而一次性将整个对象变成可观察的。
+`source` 对象将会被克隆并且所有的成员都将会成为可观察的，类似于 `makeAutoObservable` 做的那样。
+同样，你可以传入一个 `overrides` 对象来为特定的成员提供特定的注解。
+查看上面的代码获取示例。
 
-The object returned by `observable` will be a Proxy, which means that properties that are added later to the object will be picked up and made observable as well (except when [proxy usage](configuration.md#proxy-support) is disabled).
+由 `observable` 返回的对象将会使用 Proxy 包装，这意味着之后被添加到这个对象中的属性也将被侦测并使其转化为可观察对象（除非禁用 [proxy](configuration.md#proxy-选项)）。
 
-The `observable` method can also be called with collections types like [arrays](api.md#observablearray), [Maps](api.md#observablemap) and [Sets](api.md#observableset). Those will be cloned as well and converted into their observable counterparts.
+`observable` 方法也可以被像 [arrays](api.md#observablearray)，[Maps](api.md#observablemap) 和 [Sets](api.md#observableset) 这样的集合调用。这些集合也将被克隆并转化为可观察对象。
 
-<details id="observable-array"><summary>**Example:** observable array<a href="#observable-array" class="tip-anchor"></a></summary>
+<details id="observable-array"><summary>**例子：** 可观察数组<a href="#observable-array" class="tip-anchor"></a></summary>
 
-The following example creates an observable and observes it using [`autorun`](reactions.md#autorun).
-Working with Map and Set collections works similarly.
+下面的例子创建了一个可观察对象并且使用 [`autorun`](reactions.md#autorun) 观察它。
+使用 Map 和 Set 集合时，用法和这里类似。
 
 ```javascript
 import { observable, autorun } from "mobx"
@@ -174,107 +175,108 @@ autorun(() => {
             .join(", ")
     )
 })
-// Prints: 'Remaining: Make coffee'
+// 打印: 'Remaining: Make coffee'
 
 todos[0].completed = false
-// Prints: 'Remaining: Spoil tea, Make coffee'
+// 打印: 'Remaining: Spoil tea, Make coffee'
 
 todos[2] = { title: "Take a nap", completed: false }
-// Prints: 'Remaining: Spoil tea, Make coffee, Take a nap'
+// 打印: 'Remaining: Spoil tea, Make coffee, Take a nap'
 
 todos.shift()
-// Prints: 'Remaining: Make coffee, Take a nap'
+// 打印: 'Remaining: Make coffee, Take a nap'
 ```
 
-Observable arrays have some additional nifty utility functions:
+可观察的数组还有一些特别好用的实用函数：
 
--   `clear()` removes all current entries from the array.
--   `replace(newItems)` replaces all existing entries in the array with new ones.
--   `remove(value)` removes a single item by value from the array. Returns `true` if the item was found and removed.
-
-</details>
-
-<details id="non-convertibles"><summary>**Note:** primitives and class instances are never converted to observables<a href="#non-convertibles" class="tip-anchor"></a></summary>
-
-Primitive values cannot be made observable by MobX since they are immutable in JavaScript (but they can be [boxed](api.md#observablebox)).
-Although there is typically no use for this mechanism outside libraries.
-
-Class instances will never be made observable automatically by passing them to `observable` or assigning them to an `observable` property.
-Making class members observable is considered the responsibility of the class constructor.
+-   `clear()` 从数组中清除所有元素。
+-   `replace(newItems)` 将数组中现有的元素全部替换成 newItems。
+-   `remove(value)` 根据 value 从数组中删除一个元素。如果找到并删除了元素，返回  `true`。
 
 </details>
 
-<details id="avoid-proxies"><summary>{🚀} **Tip:** observable (proxied) versus makeObservable (unproxied)<a href="#avoid-proxies" class="tip-anchor"></a></summary>
+<details id="non-convertibles"><summary>**注意：** 原始值和类的实例永远不会被转化为可观察对象<a href="#non-convertibles" class="tip-anchor"></a></summary>
 
-The primary difference between `make(Auto)Observable` and `observable` is that the first one modifies the object you are passing in as first argument, while `observable` creates a _clone_ that is made observable.
+MobX 无法使原始值可观察，因为它们在 JavaScript 中是不可变的（但是 Mobx 可以将它们 [包装](api.md#observablebox)起来）。
+尽管在我们不使用库时通常不会用到这样的机制。
 
-The second difference is that `observable` creates a [`Proxy`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) object, to be able to trap future property additions in case you use the object as a dynamic lookup map.
-If the object you want to make observable has a regular structure where all members are known up-front, we recommend to use `makeObservable` as non proxied objects are a little faster, and they are easier to inspect in the debugger and `console.log`.
-
-Because of that, `make(Auto)Observable` is the recommended API to use in factory functions.
-Note that it is possible to pass `{ proxy: false }` as an option to `observable` to get a non proxied clone.
+我们永远无法通过把类的实例传入 `observable` 或用其给一个 `observable` 属性赋值来将其自动转化成可观察对象。
+一般认为应该由类构造函数负责将类成员转化成可观察对象。
 
 </details>
 
-## Available annotations
+<details id="avoid-proxies"><summary>{🚀} **提示：** observable（使用代理）与 makeObservable（不使用代理）<a href="#avoid-proxies" class="tip-anchor"></a></summary>
 
-| Annotation                         | Description                                                                                                                                                                                                                |
-| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `observable`<br/>`observable.deep` | Defines a trackable field that stores state. Any value assigned to an `observable` field will be made recursively observable as well, if possible. That is, if and only if the value is a plain object, array, Map or Set. |
-| `observable.ref`                   | Like `observable`, but only reassignments will be tracked. The assigned values themselves won't be made observable automatically. For example, use this if you intend to store immutable data in an observable field.      |
-| `observable.shallow`               | Like `observable.ref` but for collections. Any collection assigned will be made observable, but the contents of the collection itself won't become observable.                                                             |
-| `observable.struct`                | Like `observable`, except that any assigned value that is structurally equal to the current value will be ignored.                                                                                                         |
-| `action`                           | Mark a method as an action that will modify the state. Check out [actions](actions.md) for more details. Non-writable.                                                                                                     |
-| `action.bound`                     | Like action, but will also bind the action to the instance so that `this` will always be set. Non-writable.                                                                                                                |
-| `computed`                         | Can be used on a [getter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get) to declare it as a derived value that can be cached. Check out [computeds](computeds.md) for more details.      |
-| `computed.struct`                  | Like `computed`, except that if after recomputing the result is structurally equal to the previous result, no observers will be notified.                                                                                  |
-| `true`                             | Infer the best annotation. Check out [makeAutoObservable](#makeautoobservable) for more details.                                                                                                                           |
-| `false`                            | Explicitly do not annotate this property.                                                                                                                                                                                  |
-| `flow`                             | Creates a `flow` to manage asynchronous processes. Check out [flow](actions.md#using-flow-instead-of-async--await-) for more details. Note that the inferred return type in TypeScript might be off. Non-writable.         |
-| `override`                         | [Applicable to inherited `action`, `flow`, `computed`, `action.bound` overriden by subclass](subclassing.md).                                                                                                              |
-| `autoAction`                       | Should not be used explicitly, but is used under the hood by `makeAutoObservable` to mark methods that can act as action or derivation, based on their calling context.                                                    |
+`make(Auto)Observable` 和 `observable` 之间最主要的区别在于，`make(Auto)Observable` 会修改你作为第一个参数传入的对象，而 `observable` 会创建一个可观察的 _副本_ 对象。
 
-## Limitations
+第二个区别是，`observable` 会创建一个 [`Proxy`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) 对象，以便能够在你将该对象当作动态查询映射使用时捕获将要添加的属性。
+如果你想把一个对象转化为可观察对象，而这个对象具有一个常规结构，其中所有的成员都是事先已知的，那么我们建议使用 `makeObservable`，因为非代理对象的速度稍快一些，而且它们在调试器和 `console.log` 中更容易检查。
 
-1. `make(Auto)Observable` only supports properties that are already defined. Make sure your [**compiler configuration** is correct](installation.md#use-spec-compliant-transpilation-for-class-properties), or as work-around, that a value is assigned to all properties before using `make(Auto)Observable`. Without correct configuration, fields that are declared but not initialized (like in `class X { y; }`) will not be picked up correctly.
-1. `makeObservable` can only annotate properties declared by its own class definition. If a sub- or superclass introduces observable fields, it will have to call `makeObservable` for those properties itself.
-1. `options` argument can be provided only once. Passed `options` are _"sticky"_ and can NOT be changed later (eg. in [subclass](subclassing.md)).
-1. **Every field can be annotated only once** (except for `override`). The field annotation or configuration can't change in [subclass](subclassing.md).
-1. **All annotated** fields of non-plain objects (**classes**) are **non-configurable**.<br>
-   [Can be disabled with `configure({ safeDescriptors: false })` {🚀☣️} ](configuration.md#safedescriptors-boolean).
-1. **All non-observable** (stateless) fields (`action`, `flow`) are **non-writable**.<br>
-   [Can be disabled with `configure({ safeDescriptors: false })` {🚀☣️} ](configuration.md#safedescriptors-boolean).
-1. [Only **`action`, `computed`, `flow`, `action.bound`** defined **on prototype** can be **overriden** by subclass](subclassing.md).
-1. By default _TypeScript_ will not allow you to annotate **private** fields. This can be overcome by explicitly passing the relevant private fields as generic argument, like this: `makeObservable<MyStore, "privateField" | "privateField2">(this, { privateField: observable, privateField2: observable })`
-1. **Calling `make(Auto)Observable`** and providing annotations must be done **unconditionally**, as this makes it possible to cache the inference results.
-1. **Modifying prototypes** after **`make(Auto)Observable`** has been called is **not supported**.
-1. _EcmaScript_ **private** fields (**`#field`**) are **not supported**. When using _TypeScript_, it is recommended to use the `private` modifier instead.
-1. **Mixing annotations and decorators** within single inheritance chain is **not supported** - eg. you can't use decorators for superclass and annotations for subclass.
-1. `makeObservable`,`extendObservable` cannot be used on other builtin observable types (`ObservableMap`, `ObservableSet`, `ObservableArray`, etc)
-1. `makeObservable(Object.create(prototype))` copies properties from `prototype` to created object and makes them `observable`. This behavior is wrong, unexpected and therefore **deprecated** and will likely change in future versions. Don't rely on it.
+因此，`make(Auto)Observable` 推荐在工厂函数中使用。
+值得一提的是，可以将 `{ proxy: false }` 作为 option 传入 `observable` 获取非代理副本。
+
+</details>
+
+## 可用的注解
+
+| 注解                               | 描述                                                         |
+| ---------------------------------- | ------------------------------------------------------------ |
+| `observable`<br/>`observable.deep` | 定义一个存储 state 的可跟踪字段。如果可能，任何被赋值给 `observable` 的字段都会基于它自己的类型被（深度）转化为`observable`、`autoAction` 或 `flow`。只有 `plain object`、`array`、`Map`、`Set`、`function`、`generator function` 可以转换，类实例和其他实例不会被影响。 |
+| `observable.ref`                   | 类似于 `observable`，但只有重新赋值才会被追踪。所赋的值会被完全忽略，并且将不会主动转化为 `observable`/`autoAction`/`flow`。比方说，在你打算将不可变数据存储在可观察字段中时，可以使用这个注解。 |
+| `observable.shallow`               | 类似于 `observable.ref` 但是是用于集合的。任何所赋的集合都会被转化为可观察值，但是其内部的值并不会变为可观察值。 |
+| `observable.struct`                | 类似于 `observable`，但是会忽略所赋的值中所有在结构上与当前值相同的值。 |
+| `action`                           | 把一个函数标记为会修改 state 的 action。查看 [actions](actions.md) 获取更多信息。不可写。 |
+| `action.bound`                     | 类似于 action，但是会将 action 绑定到实例，因此将始终设置 `this`。不可写。 |
+| `computed`                         | 可以用在 [getter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get) 上，用来将其声明为可缓存的派生值。查看 [computeds](computeds.md) 获取更多信息。 |
+| `computed.struct`                  | 类似于 `computed`，但如果重新计算后的结果在结构上与之前的结果相等，那么观察者将不会收到通知。 |
+| `true`                             | 推断最佳注解。查看 [makeAutoObservable](#makeautoobservable) 获取更多信息。 |
+| `false`                            | 刻意不为该属性指定注解。                                       |
+| `flow`                             | 创建一个 `flow` 管理异步进程。查看 [flow](actions.md#使用-flow-代替-async--await-) 获取更多信息。需要注意的是，推断出来的 TypeScript 返回类型可能会出错。 不可写。 |
+| `flow.bound`                       | 类似于 flow, 但是会将 flow 绑定到实例，因此将始终设置 `this`。 不可写。    |       
+| `override`                         | [用于子类覆盖继承的 `action`，`flow`，`computed`，`action.bound`](subclassing.md)。 |
+| `autoAction`                       | 不应被显式调用，但 `makeAutoObservable` 内部会对其进行调用，以便根据调用上下文将方法标识为 action 或者派生值。 |
+
+## 局限性
+
+1. `make(Auto)Observable` 仅支持已经定义的属性。请确保你的 [**编译器选项**是正确的](installation.md#对类属性使用符合规范的转换)，或者，作为权宜之计，确保在你使用 `make(Auto)Observable` 之前已经为所有属性赋了值。如果没有正确的配置，已经声明而未初始化的字段（例如：`class X { y; }`）将无法被正确侦测到。
+1. `makeObservable` 只能注解由其本身所在的类定义声明出来的属性。如果一个子类或超类引入了可观察字段，那么该子类或超类就必须自己为那些属性调用 `makeObservable`。
+1. `options` 参数只能提供一次。被传入的 `options` 是 _“有粘性”_ 的，之后无法更改（例如，在 [子类](subclassing.md) 中）。
+1. **每个字段只能被注解一次**（`override` 除外）。字段注解和配置不能在 [子类](subclassing.md) 中改变。
+1. 非普通对象（**类**）中的 **所有被注解过的** 字段都是 **不可配置的**。<br>
+   [可以通过 `configure({ safeDescriptors: false })` 来禁用 {🚀☣️} ](configuration.md#safedescriptors-boolean)。
+1. **所有不可观察**（stateless）字段（`action`，`flow`）都是 **不可写的**。<br>
+   [可以通过 `configure({ safeDescriptors: false })` 来禁用 {🚀☣️} ](configuration.md#safedescriptors-boolean)。
+1. [只有定义在**原型**上的 **`action`，`computed`，`flow`，`action.bound`** 可以在子类中被 **overriden**](subclassing.md)。
+1. 默认情况下 _TypeScript_ 不会允许你注解**私有**字段。这个问题可以通过将相关私有字段作为泛型参数显式传入来解决，就像这样： `makeObservable<MyStore, "privateField" | "privateField2">(this, { privateField: observable, privateField2: observable })`。
+1. **make(Auto)Observable**的调用和注解的提供必须无条件地进行，因为这样才可能对推断结果进行缓存。
+1. **不支持** 在调用 **`make(Auto)Observable`** 之后 **修改原型**。
+1. **不支持** _EcmaScript_ 中的**私有**字段（**`#field`**）。使用 _TypeScript_ 时，推荐改用 `private` 修饰符。
+1. **不支持** 在单个继承链中 **混合使用注解和装饰器** - 例如，在超类中使用了装饰器，就不能再在子类中使用注解。
+1. `makeObservable`，`extendObservable` 不能在其它内置可观察类型上使用（`ObservableMap`，`ObservableSet`，`ObservableArray` 等）。
+1. `makeObservable(Object.create(prototype))` 将属性从 `prototype` 拷贝到新创建的对象并且使得其是可观察的。此行为是错误的、不可预测的，因此已经**不推荐使用**，并可能会在未来有所变动。不要使用它。
 
 ## Options {🚀}
 
-The above APIs take an optional `options` argument which is an object that supports the following options:
+上面的 API 都有一个可选的 `options` 参数，该参数是一个对象，支持以下选项：
 
--   **`autoBind: true`** uses `action.bound` by default, rather than `action`. Does not affect explicitely annotated members.
--   **`deep: false`** uses `observable.ref` by default, rather than `observable`. Does not affect explicitely annotated members.
--   **`name: <string>`** gives the object a debug name that is printed in error messages and reflection APIs. Ignored on production.
--   **`proxy: false`** forces `observable(thing)` to use non-[**proxy**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) implementation. This is a good option if the shape of the object will not change over time, as non-proxied objects are easier to debug and faster. See [avoiding proxies](#avoid-proxies).
+-   **`autoBind: true`** 默认使用 `action.bound`/`flow.bound`，而不使用 `action`/`flow`。不影响被显式注释过的成员。
+-   **`deep: false`** 默认使用 `observable.ref`，而不使用 `observable`。不影响被显式注释过的成员。
+-   **`name: <string>`** 为对象提供一个调试名称，该名称将被打印在错误消息和 reflection API 中。
+-   **`proxy: false`** 迫使 `observable(thing)` 使用非 [**proxy**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) 的实现。如果对象的结构不会随着时间变化，那么这就是一个很好的选择，因为非代理对象更容易调试并且速度更快。请参见 [避免代理](#avoid-proxies)。
 
-<details id="one-options-per-target"><summary>**Note:** options are *sticky* and can be provided only once<a href="#one-options-per-target" class="tip-anchor"></a></summary>
-`options` argument can be provided only for `target` that is NOT observable yet.<br>
-It is NOT possible to change options once the observable object was initialized.<br>
-Options are stored on target and respected by subsequent `makeObservable`/`extendObservable` calls.<br>
-You can't pass different options in [subclass](subclassing.md).
+<details id="one-options-per-target"><summary>**注意：** options 是*粘性的*并且只能被提供一次<a href="#one-options-per-target" class="tip-anchor"></a></summary>
+`options` 参数可以只被提供给还不是可观察对象的 `target`。<br>
+一旦可观察对象被初始化，将无法更改 options。<br>
+options 会被保存在 target 中并且不会被之后的 `makeObservable`/`extendObservable` 调用干扰。<br>
+你不能在 [子类](subclassing.md) 中传入不同的 options。
 </details>
 
-## Converting observables back to vanilla JavaScript collections
+## 将 observable 转换回普通的 JavaScript 集合
 
-Sometimes it is necessary to convert observable data structures back to their vanilla counterparts.
-For example when passing observable objects to a React component that can't track observables, or to obtain a clone that should not be further mutated.
+有时有必要将可观察的数据结构转换回原生的数据结构。
+例如，将可观察对象传入一个无法跟踪可观察对象的 React 组件时，或者想要获取一个不会再被更改的副本时。
 
-To convert a collection shallowly, the usual JavaScript mechanisms work:
+要进行浅转换，用常用的 JavaScript 操作就可以做到：
 
 ```javascript
 const plainObject = { ...observableObject }
@@ -282,15 +284,15 @@ const plainArray = observableArray.slice()
 const plainMap = new Map(observableMap)
 ```
 
-To convert a data tree recursively to plain objects, the [`toJS`](api.md#tojs) utility can be used.
-For classes, it is recommend to implement a `toJSON()` method, as it will be picked up by `JSON.stringify`.
+要将数据树递归地转换为普通对象，可使用 [`toJS`](api.md#tojs) 工具函数。
+对于类，建议实现一个 `toJSON()` 方法，因为这样会被 `JSON.stringify` 识别出来。
 
-## A short note on classes
+## 关于类的说明
 
-So far most examples above have been leaning towards the class syntax.
-MobX is in principle unopinionated about this, and there are probably just as many MobX users that use plain objects.
-However, a slight benefit of classes is that they have more easily discoverable APIs, e.g. TypeScript.
-Also, `instanceof` checks are really powerful for type inference, and class instances aren't wrapped in `Proxy` objects, giving them a better experience in debuggers.
-Finally, classes benefit from a lot of engine optimizations, since their shape is predictable, and methods are shared on the prototype.
-But heavy inheritance patterns can easily become foot-guns, so if you use classes, keep them simple.
-So, even though there is a slight preference to use classes, we definitely want to encourage you to deviate from this style if that suits you better.
+到目前为止，以上大多数示例都倾向于使用类进行构建。
+MobX 原则上对此没有限制，而且可能有同样多的MobX 用户使用的是普通对象。
+但是，使用类的一个好处是更容易被索引以实现自动补全等功能，例如使用 TypeScript。
+另外，`instanceof` 检查对于类型推断来说非常强大，并且类实例不会被包装在 `Proxy` 对象中，这一点给了它们更好的调试体验。
+最后，使用类会从引擎优化中受益良多，因为它们的形态是可预测的并且方法在原型上是共享的。
+但是，复杂的继承模式很容易给您自己带来不必要的麻烦，因此如果您想使用类，请尽量使其保持简单。
+因此，尽管稍微倾向于使用类，但如果有更适合您的，我们肯定会鼓励您不采用这种风格。

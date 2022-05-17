@@ -1,19 +1,16 @@
 ---
-title: Computeds with arguments
-sidebar_label: Computeds with arguments {🚀}
+title: 含参数的计算值
+sidebar_label: 含参数的计算值 {🚀}
 hide_title: true
 ---
 
 <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBD4KQ7&placement=mobxjsorg" id="_carbonads_js"></script>
 
-# Computeds with arguments {🚀}
+# 含参数的计算值 {🚀}
 
-The `computed` annotation can only be used on getters, which don't take arguments.
-What about computations that do take arguments?
-Take the below example of a React component that renders a specific `Item`,
-and the application supports multi-selection.
+`computed` 方法仅能用于getters上，然而getters并不接受参数。那么需要参数的计算要怎么处理呢？结合下面的例子：一个 `Item` 组件，用于表示多选组件中单个的选择项。
 
-How can we implement a derivation like `store.isSelected(item.id)`?
+那么我们要如何实现一个类似于 `store.isSelected(item.id)` 的derivation _（一个订阅item.id变化的状态）_ 呢？
 
 ```javascript
 import * as React from 'react'
@@ -26,24 +23,26 @@ const Item = observer(({ item, store }) => (
 )
 ```
 
-There are four ways in which we can approach this. You can try the solutions below in [this CodeSandbox](https://codesandbox.io/s/multi-selection-odup1?file=/src/index.tsx).
+我们有四种方法可以实现它，你可以在[这里](https://codesandbox.io/s/multi-selection-odup1?file=/src/index.tsx)运行这些实现。
 
-## 1. Derivations don't _need_ to be `computed`
+> 译者注：*任何* 来源是*State(状态)* 并且不需要进一步交互的东西都是 Derivation(派生)。Derivations 包括许多方式，如用户界面、computed值等。
 
-A function doesn't need to be marked as `computed` in order for MobX to track it.
-The above example would already work completely fine out of the box.
-It is important to realize that computed values are only _caching points_.
-If the derivations are pure (and they should be), having a getter or function without `computed` doesn't change the behavior, it is just slightly less efficient.
+## 1. Derivation不一定_需要_ 用`computed`实现
 
-The above example works fine despite `isSelected` not being a `computed`. The `observer` component will detect and subscribe to any observables that were read by `isSelected` because the function executes as part of rendering that is tracked.
 
-It is good to realize that all `Item` components, in this case, will respond to future selection changes,
-as they all subscribe directly to the observables that capture the selection.
-This is a worst-case example. In general, it is completely fine to have unmarked functions that derive information, and this is a good default strategy until numbers prove anything else should be done.
+一个函数不一定要被 `computed` 包裹才能被mobx跟踪。上面的例子即便不被包裹也能够正常运行。
+我们需要认识到计算值（computed values）仅仅是 _缓存点_ 。
+如果derivation是纯粹的（也应当），那么函数是否被包裹是不会影响其行为的，只是会有一些轻微的性能损耗。
 
-## 2. Close over the arguments
+> 译者注：纯粹的derivation是指，计算逻辑只依赖函数参数与store中的observable，而不依赖其他外部状态。
 
-This is a more efficient implementation compared to the original.
+上面的例子即便 `isSelected` 没有被 `computed` 包裹。`observer` 组件会检测并订阅 `isSelected` 内部的任何observable的变化因为`isSelected` 函数的执行是作为被跟踪的渲染函数的一部分。
+
+需要意识到，所有的 `Item` 组件，都会对未来多选组件的被选项发生改变时做出响应，这是由于他们都直接订阅了描述选择项的observable。这是一个最差情况的例子。一般情况下，使用未包裹的函数来表示derivation完全ok，并且这是一种默认的优秀策略，直到有数据证明我们需要做额外的改进。
+
+## 2. 整体作为参数被封装
+
+相比之前的例子，下面是一个更高效的实现。
 
 ```javascript
 import * as React from 'react'
@@ -60,25 +59,67 @@ const Item = observer(({ item, store }) => {
 }
 ```
 
-We create a fresh computed value in the middle of a reaction. This works fine and does introduce that additional caching point, avoiding all components having to directly respond to every selection change.
-The advantage of this approach is that the component itself will only re-render if the
-`isSelected` state toggles, in which case we indeed have to re-render to swap the `className`.
+我们在对observable的reaction中间加入了一段新的计算值。
+这样的逻辑是可以正确允许，并且会带来额外的值缓存，从而避免组件直接对每一个选择框的行为作出反馈。这种做法的优势是，只有在`isSelected` 状态变化时，组件本身才会重渲染。这里也就是我们需要重新渲染来替换 `className`
 
-The fact that we create a new `computed` in a next render is fine, this one will now become the caching
-point and the previous one will be cleaned up nicely.
-This is a great and advanced optimization technique.
+事实是即便我们在下一次渲染时创建了新的 `computed` 也没有问题，新创的建计算值会成为新的缓存点而前一个则会被清理掉。
+这是一个很棒的高级优化技巧。
 
-## 3. Move the state
+## 3. 调整状态
 
-In this specific case the selection could also be stored as an `isSelected` observable on the `Item`. The selection in the store could then be expressed as a `computed` rather than an observable: `get selection() { return this.items.filter(item => item.isSelected) }`, and we don't need `isSelected` anymore.
+在这个具体的场景下，我们可以把 `isSelected` 这个计算值作为一个observable存储在状态中（作为Item的一个属性），而不再是作为一个计算值。这样已选择的值就可以写作一个计算值而不是一个observable `get selection() { return this.items.filter(item => item.isSelected) }`，于是我们就不再需要 `isSelected` 计算值了。
 
-## 4. Use computedFn {🚀}
+之前的写法，selection作为一个状态，isSelected作为计算值。
+```js
+interface ItemType {
+    id: string;
+    title: string;
+}
+class ItemStore {
+  items: ItemType[] = [];
+  selection = new Set<string>();
 
-Finally,
-[`computedFn`](https://github.com/mobxjs/mobx-utils#computedfn) from `mobx-utils` can be used in the definition of `todoStore.selected` to automatically memoize `isSelected`.
-It creates a function that memoizes the output for every combination of input arguments.
+  isSelected(id: string) {
+    return this.selection.has(id);
+  }
+}
+```
 
-We recommend to not resort to this one too quickly. It is typical for memoization, that you will need to think about how many different arguments the function is going to be called with, before you can reason about the memory consumption.
-It does however automatically clean up entries if their results aren't observed by any reaction, so it won't leak memory in normal circumstances.
+调整后的写法，`isSelected`作为状态，被选项selection作为计算值。
+```js
+interface ItemType {
+    id: string;
+    title: string;
+    isSelected: boolean;
+}
+class ItemStore {
+  items: ItemType[] = [];
+  selection = new Set<string>();
 
-Again, check out the [linked CodeSandbox](https://codesandbox.io/s/multi-selection-odup1?file=/src/index.tsx) to try this one out.
+  get selection() { return this.items.filter(item => item.isSelected) }
+}
+```
+
+## 4. 使用 computedFn {🚀}
+
+最后，来自 `mobx-utils` 的 [`computedFn`](https://github.com/mobxjs/mobx-utils#computedfn)  可以被用于定义 `todoStore.selected` 以便自动记忆 `isSelected` 的值。它会创建一个函数用于记忆每一种参数组合对应的输出值。
+
+```js
+const store = observable({
+    a: 1,
+    b: 2,
+    c: 3,
+    m: computedFn(function(x) {
+        return this.a * this.b * x
+    })
+})
+
+const d = autorun(() => {
+    // 在autorun运行时，store.m(3) 的值会被缓存
+    console.log(store.m(3) * store.c)
+})
+```
+
+我们并不推荐你过早的使用它。它更针对记忆化的场景，你需要考虑清楚函数会接收到多少种不同的参数才能准确地评估出内存的消耗。
+不过，它确实会自动的清理掉那些没有被观测的缓存结果，所以你通常不需要担心内存泄露。
+具体用例可以查看 [CodeSandbox链接](https://codesandbox.io/s/multi-selection-odup1?file=/src/index.tsx)。

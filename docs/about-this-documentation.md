@@ -1,50 +1,46 @@
 ---
-title: About this documentation
-sidebar_label: About this documentation
+title: 关于本文档
+sidebar_label: 关于本文档
 hide_title: true
 ---
 
 <script async type="text/javascript" src="//cdn.carbonads.com/carbon.js?serve=CEBD4KQ7&placement=mobxjsorg" id="_carbonads_js"></script>
 
-# About this documentation
+# 关于本文档
 
-It follows the principle that the most commonly used concepts are
-introduced before specialized information. This applies to the headings in the table
-of concepts as well as the pages under those headings.
+它遵循的原则是先介绍最常用的概念，然后再介绍专门的信息。这适用于概念目录中的标题以及那些标题下的页面。
 
-We've marked the sections and concepts that are more advanced with the {🚀} marker. You likely won't have to understand them until you will have a special use case, and can use MobX very effectively without knowing about them. Feel free to skip them and move on to the next section!
+我们用 {🚀} 记号标记了更高级的部分和概念。除非您有特殊的用例，否则您可能不必了解它们，并且您可以在不了解它们的情况下非常高效地使用 MobX。请随意跳过它们，继续阅读接下来的部分！
 
-The documentation has been rewritten for MobX 6. For older versions of MobX, it can be found [here](https://github.com/mobxjs/mobx/tree/mobx4and5/docs).
-All the principles are the same, and the API is largely the same. The main difference is that before MobX 6, [decorators](https://github.com/mobxjs/mobx/blob/mobx4and5/docs/best/decorators.md) were the recommended syntax to write MobX enhanced classes.
+我们为了 MobX 6 对文档进行了重写。旧版本的 MobX 文档可以在[此处](https://github.com/mobxjs/mobx/tree/mobx4and5/docs)找到。所有原理都是相同的，API 也基本相同。主要区别在于，在 MobX 6 之前，[修饰符](https://github.com/mobxjs/mobx/blob/mobx4and5/docs/best/decorators.md) 是编写 MobX 强化型类的推荐语法。
 
-A summary of the documentation can be downloaded as cheat sheet:
 
-<div class="cheat"><a href="https://gum.co/fSocU"><button title="Download the MobX 6 cheat sheet and sponsor the project">Download the MobX 6 cheat sheet</button></a></div>
+你可以把文档摘要下载为速查表：
 
-## Guided tour
+<div class="cheat"><a href="https://gum.co/fSocU"><button title="下载 MobX 6 速查表并赞助本项目">下载 MobX 6 速查表</button></a></div>
 
-To get an overall idea of how to use MobX with React, read through the current _Introduction_ heading, in particular [The gist of MobX](the-gist-of-mobx.md) section.
-It will introduce you to the most important principles, APIs and how they relate.
-You should be ready to use MobX once you read this!
+## 导览
 
-Here are a few suggestions about the next things to check out:
+要全面了解如何将 MobX 与 React 一起使用，请通读当前的 _Introduction_ 标题，特别是 [MobX 主旨](the-gist-of-mobx.md)。它将向您介绍最重要的原则、API以及它们之间的关系。看完这个，你应该就可以使用 MobX 了！
 
--   Try the [10 minute interactive introduction to MobX and React](https://mobx.js.org/getting-started)
+接着，你可以看看这里的推荐内容：
 
--   [React integration](react-integration.md)
+-   尝试 [10 分钟的 Mobx 和 React 交互式介绍](https://mobx.js.org/getting-started)
+
+-   [集成 React](react-integration.md)
 
 -   [`makeObservable` / `makeAutoObservable`](observable-state.md)
 
--   Learn about [actions](actions.md), which includes a discussion on asynchronous actions
+-   了解 [actions](actions.md)，其中包括有关异步操作的讨论
 
--   The basics of [computeds](computeds.md)
+-   [computeds](computeds.md) 基本知识
 
--   Read about [`autorun`](reactions.md#autorun), if only because it's used in the examples
+-   阅读有关 [`autorun`](reactions.md#autorun) 的内容，即使只是因为示例中用到了它
 
--   To get an idea on how to organize your application's data stores, check out [Defining data stores](defining-data-stores.md)
+-   要了解如何组织应用程序的数据存储，请查看 [定义数据存储](defining-data-stores.md)
 
--   If the behavior of MobX confuses you, it's useful to check out [Understanding reactivity](understanding-reactivity.md)
+-   如果您对 MobX 的行为感到困惑，那么[理解响应性](understanding-reactivity.md) 将会很有用
 
--   Get a [quick overview of the API](api.md), also linked in the top navigation bar
+-   获取 [API 参考](api.md)，也可在顶部导航栏中进行查看
 
-This should give you a good understanding of the day-to-day uses of MobX. There is plenty more available for you to read at your own leisure.
+这应该使您对 MobX 的日常使用有了很好的了解。您可以在闲暇时阅读更多的内容。
