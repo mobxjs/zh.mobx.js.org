@@ -37,7 +37,7 @@ Mobx 通过 `override` 注解 [支持子类的使用，但会有一些局限性]
 <!--class + makeObservable-->
 
 ```javascript
-import { makeObservable, observable, computed, action } from "mobx"
+import { makeObservable, observable, computed, action, flow } from "mobx"
 
 class Doubler {
     value
