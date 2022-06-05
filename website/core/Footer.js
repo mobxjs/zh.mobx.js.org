@@ -64,7 +64,7 @@ class Footer extends React.Component {
                         >
                             Star
                         </a>
-                        <a href="https://vercel.com/?utm_source=mobx-docs-cn&utm_campaign=oss" target="_blank"><img src="/img/powered-by-vercel.svg" /></a>
+                        <a href="https://vercel.com/?utm_source=mobxjs&utm_campaign=oss" target="_blank"><img src="/img/powered-by-vercel.svg" /></a>
                         {this.props.config.twitterUsername && (
                             <div className="social">
                                 <a
@@ -91,6 +91,17 @@ class Footer extends React.Component {
                         )}
                     </div>
                 </section>
+                <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS7DZGLK79"></script>
+                <script dangerouslySetInnerHTML={{
+                    __html: `
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        gtag('js', new Date());
+        
+                        gtag('config', 'G-HS7DZGLK79');               
+                    `
+                }}>
+                </script>
             </footer>
         )
     }
