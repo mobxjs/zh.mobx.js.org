@@ -11,14 +11,14 @@ hide_title: true
 用法:
 
 ```javascript
-import { observer } from "mobx-react-lite" // Or "mobx-react".
+import { observer } from "mobx-react-lite" // 或者 "mobx-react".
 
 const MyComponent = observer(props => ReactElement)
 ```
 
-MobX 可以独立于 React 运行, 但是他们通常是结合在一起使用, 在 [Mobx的宗旨（The gist of MobX）](the-gist-of-mobx.md) 一文中你会经常看见集成React最重要的一部分：用于包裹React Component的 `observer` [HOC](https://reactjs.org/docs/higher-order-components.html)方法。
+虽然 MobX 可以独立于 React 运行, 但他们通常结合在一起使用。在 [Mobx宗旨（The gist of MobX）](the-gist-of-mobx.md) 一文中你已经了解过这种结合的最重要的部分：包裹React组件的 `observer` [HOC](https://reactjs.org/docs/higher-order-components.html)。
 
-`observer` 是你可以自主选择的，[在安装时（during installation）](installation.md#installation)独立提供的 React bindings 包。 在下面的例子中,我们将使用更加轻量的[`mobx-react-lite` 包](https://github.com/mobxjs/mobx/tree/main/packages/mobx-react-lite)。
+`observer` 由单独[安装](installation.md#installation)的React Bindings包提供。 在下面的例子中,我们将使用更轻量的[`mobx-react-lite` 包](https://github.com/mobxjs/mobx/tree/main/packages/mobx-react-lite)。
 
 ```javascript
 import React from "react"
@@ -40,7 +40,7 @@ class Timer {
 
 const myTimer = new Timer()
 
-//被`observer`包裹的函数式组件会被监听在它每一次调用前发生的任何变化
+// 被`observer`包裹的函数式组件会对它使用过的可观察对象的任何改变做出响应
 const TimerView = observer(({ timer }) => <span>Seconds passed: {timer.secondsPassed}</span>)
 
 ReactDOM.render(<TimerView timer={myTimer} />, document.body)
@@ -52,22 +52,17 @@ setInterval(() => {
 
 **提示:** 你可以在 [在线编译器CodeSandbox](https://codesandbox.io/s/minimal-observer-p9ti4?file=/src/index.tsx)中尝试上面的例子。
 
- `observer` HOC 将自动订阅 React components 中任何 _在渲染期间_ 被使用的  _可被观察的对象_ 。
-因此, 当任何可被观察的对象 _变化_ 发生时候 组件会自动进行重新渲染（re-render）。
-它还会确保组件在 _没有变化_ 发生的时候不会进行重新渲染（re-render）。
-但是, 更改组件的可观察对象的不可读属性, 也不会触发重新渲染（re-render）。
+ `observer` HOC 将自动订阅 React 组件中所有 _在渲染期间_ 被使用的 _可观察的对象_ (observables)。因此, 当与之关联的可观察的对象发生 _变化_ 时，组件会自动重新渲染。它还会确保组件在 _没有关联的变化_ 发生时，不会重新渲染。所以，当组件能够访问的、但实际没有被组件读取的可观察对象发生变化时，组件不会重新渲染。
 
-在实际项目中，这一特性使得MobX应用程序能够很好的进行开箱即用的优化，并且通常不需要任何额外的代码来防止过度渲染。
+在实践中，这一特性使得MobX应用程序能够被很好地开箱即用地优化，并且通常不需要任何额外代码来防止过度渲染。
 
-要想让`observer`生效, 并不需要关心这些对象 _如何传递到_ 组件的（它们只要能传递给组件即可 ·译者注）, 只需要关心他们是否是可读的。
-深层嵌套的可观察对象也没有问题, 复杂的表达式类似 `todos[0].author.displayName` 也是可以使用的。
-与其他必须显式声明或预先计算数据依赖关系的框架（例如 selectors）相比，这种发生的订阅机制就显得更加精确和高效。
+要想让`observer`生效, 并不需要关心这些对象是 _如何触达到_ 组件的（译者注：即无需关心组件如何访问这些可观察对象）, 只需要关心他们是否被读取。读取深层嵌套的可观察对象也没有问题, 复杂的表达式类似 `todos[0].author.displayName` 也是可以使用的。与其他必须显式声明或预先计算数据依赖关系的框架（例如 selectors）相比，这种发生的订阅机制就显得更加精确和高效。
 
 
 ## 本地与外部状态（Local and external state）
 
-在 Mobx 可以非常灵活的组织或管理（state）, 从（技术角度讲）它不关心我们如何读取可观察对象，也不关心他们来自哪里。
-下面的例子将通过不同的设计模式去使用被 `observer`包裹的组件。
+在 Mobx 可以非常灵活的组织或管理状态, 从（技术角度讲）它不关心我们如何读取可观察对象，也不关心他们来自哪里。
+下面的例子将通过不同的设计模式去展示如何在 `observer` 包裹的组件中使用外部或本地状态。
 
 ### `observer` 组件中使用外部状态 （Using external state in `observer` components）
 
@@ -79,29 +74,29 @@ setInterval(() => {
 ```javascript
 import { observer } from "mobx-react-lite"
 
-const myTimer = new Timer() // See the Timer definition above.
+const myTimer = new Timer() // 请参考之前Timer的定义.
 
 const TimerView = observer(({ timer }) => <span>Seconds passed: {timer.secondsPassed}</span>)
 
-// 通过props传递myTimer.
+// 将myTimer作为props传递.
 ReactDOM.render(<TimerView timer={myTimer} />, document.body)
 ```
 
 <!-- 使用全局变量 -->
 
-虽然我们不关心是 _如何_ 引用（reference）的可观察对象,但是我们可以使用 （consume）
-外部作用域（outer scopes directly）的可观察对象  (类似通过 import这样的方法, 等等)：
+因为我们不关心 _如何_ 引用（reference）可观察对象, 所以我们可以使用 （consume）
+外部作用域（outer scopes directly）中的可观察对象  (类似通过 import这样的方法, 等等)：
 
 ```javascript
-const myTimer = new Timer() //  Timer 定义在上面.
+const myTimer = new Timer() //  请参考之前Timer的定义.
 
-// 没有props, `myTimer` 立刻变成了闭包。
+// 没有props, `myTimer` 直接从作为闭包中的变量使用。
 const TimerView = observer(() => <span>Seconds passed: {myTimer.secondsPassed}</span>)
 
 ReactDOM.render(<TimerView />, document.body)
 ```
 
-直接使用可观察对象效果很好，但是这通常会是通过模块引入，这种写法可能会使单元测试变得复杂。 因此，我们建议使用React Context。
+直接使用可观察对象的效果很好，但是这通常会引入模块状态，这种写法可能会使单元测试变得复杂。 因此，我们建议使用React Context。
 
 <!--使用 React context-->
 
@@ -129,35 +124,33 @@ ReactDOM.render(
 )
 ```
 
-需要注意的是我们并不推荐每一个不同的 `值（value）` 都通过不同的 `Provider`来传递 . 在使用Mobx的过程中不需要这样做, 因为共享的可观察对象会更新他自己。
+需要注意的是我们不推荐用不同的值替换掉同一个 `Provider` 的 `value` （译者注：例如每次状态更新之后都更新 `Provider` 的 `value` , 通常开发者这样做意在使子树拿到最新的状态，从而更新视图）. 在使用Mobx的过程中不需要这样做, 因为共享的可观察对象会自己更新。
 
 <!--END_DOCUSAURUS_CODE_TABS-->
 
-### 在`observer` 组件中使用全局可观察对象（Using local observable state in `observer` components）
+### 在`observer` 组件中使用本地可观察对象（Using local observable state in `observer` components）
 
-因为使用 `observer` 的可观察对象可以来自任何地方, 他们也可以使用local state（全局的state·译者注）。
-再次声明，不同操作方式对于我们而言都是有价值的。
+因为被 `observer` 使用的可观察对象可以来自任何地方, 它们当然也可以是来自本地（译者注：即来自本组件）。
+当然，这几种不同的使用方式对于MobX而言都是可行的。
 
 <!--DOCUSAURUS_CODE_TABS-->
 <!-- useState 和 observable class-->
 
-使用全局可观察对象的最简单的方式就是通过`useState`去存储一个全局可观察对象的引用。
-需要注意的是, 因为我们不需要替换全局可观察对象的引用,所以我们其实可以完全不声明`useState`的更新方法:
+使用本地可观察对象的最简单的方式就是通过`useState`去存储一个本地可观察对象的引用。需要注意的是, 因为我们不需要替换本地可观察对象的引用, 所以我们其实可以完全不声明`useState`的更新方法:
 
 ```javascript
 import { observer } from "mobx-react-lite"
 import { useState } from "react"
 
 const TimerView = observer(() => {
-    const [timer] = useState(() => new Timer()) // Timer的定义在上面（正如上面所说的那样这里我们忽略了更新方法的定义·译者注）。
+    const [timer] = useState(() => new Timer()) // Timer的定义在上面。
     return <span>Seconds passed: {timer.secondsPassed}</span>
 })
 
 ReactDOM.render(<TimerView />, document.body)
 ```
 
-如果你想要类似我们官方的例子那样自动更新 timer ,
-使用`useEffect` 可能是 React 中比较典型的写法：
+如果你想像最开始那样自动更新 timer, 可以使用`useEffect` 这种在React中的经典写法：
 
 ```javascript
 useEffect(() => {
@@ -170,10 +163,9 @@ useEffect(() => {
 }, [timer])
 ```
 
-<!-- useState 与全局可观察对象-->
+<!-- useState 与局部可观察对象-->
 
-如刚才说的那样, 直接创建一个可观察的对象，而不是使用classes（这里的类指的是全局定义的Mobx state，在它们是使用class声明的）。
-我们可以参考 [observable](observable-state.md#observable)这篇文章：
+如之前说的那样, 可以直接创建可观察的对象，而不用classes。可以参考 [observable](observable-state.md#observable)：
 
 ```javascript
 import { observer } from "mobx-react-lite"
@@ -218,24 +210,23 @@ ReactDOM.render(<TimerView />, document.body)
 
 <!--END_DOCUSAURUS_CODE_TABS-->
 
-### 你可能并不需要全局的可观察状态 （You might not need locally observable state）
+### 你可能并不需要本地的可观察状态 （You might not need locally observable state）
 
-通常来讲，我们推荐在编写全局公用组件的时候不要立刻使用Mobx的可观察能力， 因为从技术角度来讲他可能会使你无法使用一些React 的 Suspense 的方法特性。
-总的来说，使用Mobx的可观察能力会捕获组件间的域状态（domain data）可能会 (包含子组件的)。像是todo item, users, bookings, 等等（就是说最好不要用mobx共享一些组件内的状态·译者注）。
+通常来讲，我们不推荐在编写本地组件的时候立刻使用Mobx的可观察能力， 因为从技术角度来看，这可能会使你无法使用一些React Suspense 的方法特性。根据经验，当包含业务数据的State（the state captures domain data）需要在组件间（包括后代组件）共享时再去使用 `Mobx`，比如 todo 项、用户信息、书籍列表等。
 
-状态类似获取UI state, 类似加载的 state, 选择的 state,等等, 最好还是使用 [`useState` hook](https://reactjs.org/docs/hooks-state.html), 这样可以让你使用高级的 React suspense特性。
+仅包含UI的state, 例如加载的 state, 选择的 state,等等, 最好还是使用 [`useState` hook](https://reactjs.org/docs/hooks-state.html), 因为这样可以让你在未来使用高级的 React suspense特性。
 
-使用Mobx的可观察能力作为 React components 的一种状态补充，比如出现以下情况： 1) 层级很深, 2) 拥有计算属性 3) 需要共享状态给其它 `observer` components。
+在React组件中使用可观察的对象能够创造加价值，只要： 1) 层级很深, 2) 拥有计算属性 3) 需要共享状态给其它 `observer` 组件。
 
-## 始终在`observer` 组件中使用可观察能力（Always read observables inside `observer` components）
+## 永远在`observer` 组件中读取可观察对象（Always read observables inside `observer` components）
 
-你可能会感到疑惑, 我应该什么时候使用 `observer`? 大体上说:  _ `observer`应用于所有组件的可观察数据 _ 。
+你可能想问, 我应该什么时候使用 `observer`? 大体上说:  _ 给所有读取可观察对象的组件上包裹上`observer`_ 。
 
-`observer` 是使用修饰模式增强你的组件, 而不是它调用你的组件. 所以通常所有的组件都可能用了 `observer`，但是不要担心， 它不会导致性能损失。从另一个角度讲, 更多的 `observer` 组件可以使渲染更高效，因为它们更新数据的颗粒度更细。
+`observer` 只会增强被它装饰的组件, 而非被它调用的组件. 所以通常你所有的组件都应该被 `observer` 包裹。但是不要担心， 它不会导致性能损失。相反, 更多的 `observer` 组件可以使渲染更高效，因为它们更新数据的颗粒度更细。
 
 ### 小贴士: 尽可能晚地从对象中获取值
 
-只要你传递引用，`observer` 就可以很好的工作。只要获取到内部的属性，基于 `observer` 的组件 就会渲染到 DOM / low-level components（DOM一般是浏览器环境，low-level components 一般是RN环境·译者注）。换句话说， `observer` 会根据实际情况响应你定义的对象中的值的'引用'。
+只要你传递对象引用，并且只从基于 `observer` 的组件中读取对象的属性并渲染到 DOM / low-level组件，`observer` 就可以很好的工作。 另外， `observer` 也会对从对象上解引用到的值做出反应。
 
 下面的例子中, `TimerView` 组件**不会**响应未来的更新，因为`.secondsPassed`不是在 `observer`组件内部读取的而是在外部读取的,因此它_不会_被追踪到：
 
@@ -245,18 +236,15 @@ const TimerView = observer(({ secondsPassed }) => <span>Seconds passed: {seconds
 React.render(<TimerView secondsPassed={myTimer.secondsPassed} />, document.body)
 ```
 
-需要注意的一点是它不同于其它的观念模式库像是 `react-redux`那样, redux 中强调尽可能早的获取和传递原始值以获得更好的副作用响应。
-如果你还是没有理解, 可以先阅读 [理解响应式（Understanding reactivity）](understanding-reactivity.md) 这篇文章。
+需要注意的一点是不同于其它的观念模式库，比如 `react-redux`那样, redux 中强调尽可能早的获取和传递原始值以获得更好的副作用响应。如果你还是没有理解, 可以先阅读 [理解响应式（Understanding reactivity）](understanding-reactivity.md) 这篇文章。
 
-### 不要将可观察对象传递到 不是`observer`的组件中（Don't pass observables into components that aren't `observer`）
+### 不要将可观察对象传递到没有用`observer`包裹的组件（Don't pass observables into components that aren't `observer`）
 
-通过`observer`包裹的组件 _只可以_ 订阅到在 _他们自己_ 渲染的期间的可观察对象. 如果要将可观察对象 objects / arrays / maps 传递到子组件中, 他们必须被 `observer` 包裹。
-通过callback回调的组件也是一样。
+通过`observer`包裹的组件 _只可以_ 订阅到在 _他们自己_ 渲染的期间的可观察对象. 所以，如果要将可观察对象 objects / arrays / maps 传递到子组件中, 子组件必须被 `observer` 包裹。这也同样适用于任何基于回调的组件（译者注：如RenderProps）。
 
-如果你非要传递可观察对象到未被`observer`包裹的组件中， 要么是因为它是第三方组件，要么你需要组件对Mobx无感知，那你必须在传递前 [转换可观察对象为显式 （convert the observables to plain JavaScript values or structures）](observable-state.md#将-observable-转换回普通的-javascript-集合) 。
+如果你非要传递可观察对象到未被`observer`包裹的组件中， 要么是因为它是第三方组件，要么你需要组件对Mobx无感知，那你必须在传递前 [转换可观察对象为普通的JavaScript值或集合 （convert the observables to plain JavaScript values or structures）](observable-state.md#将-observable-转换回普通的-javascript-集合) 。
 
-关于上述的详细描述,
-可以看一下下面的使用 `todo` 对象的例子， 一个 `TodoView` (observer)组件和一个虚构的接收一组对象映射入参的不是`observer`的`GridRow`组件：
+关于上述的详细描述,可以看一下下面的使用 `todo` 对象的例子， 一个 `TodoView` (observer)组件和一个虚构的接收一组对象映射入参的不是`observer`的`GridRow`（但并未被 `observer` 包裹）组件：
 
 ```javascript
 class Todo {
@@ -287,9 +275,7 @@ const TodoView = observer(({ todo }: { todo: Todo }) =>
 
 ###  回调组件可能会需要`<Observer>`（ Callback components might require `<Observer>`）
 
-想象一下在同样的例子中,  `GridRow` 携带一个 `onRender`回调函数。
-`onRender` 是 `GridRow`渲染生命周期的一部分, 而不是 `TodoView` 的render (甚至在语法层面都能看出来)，我们不得不保证回调组件是一个 `observer` 组件。
-或者，我们可以使用 [`<Observer />`](https://github.com/mobxjs/mobx-react#observer)创建一个匿名观察者：
+想象一下在同样的例子中,  `GridRow` 携带一个 `onRender`回调函数。因为`onRender` 是 `GridRow`渲染生命周期的一部分, 而不是 `TodoView` 的render (甚至在语法层面都能看出来)，我们必须保证回调组件是一个 `observer` 组件。或者，我们可以使用 [`<Observer />`](https://github.com/mobxjs/mobx-react#observer)创建一个匿名观察者：
 
 ```javascript
 const TodoView = observer(({ todo }: { todo: Todo }) => {
@@ -315,19 +301,19 @@ const TodoView = observer(({ todo }: { todo: Todo }) => {
 
 1. 对于React class components的支持。
 1. `Provider` 和`inject`. MobX的这些东西在有 React.createContext 替代后变得不必要了。
-1. 特殊的观察对象 `propTypes`。
+1. 可观察对象的具体 `propTypes`。
 
-要注意 `mobx-react` 是全量包，也会暴露 `mobx-react-lite`包中的任何方法,其中包含对函数组件的支持。
+要注意 `mobx-react` 是全量包，会暴露 `mobx-react-lite`包中的所有方法,包括对函数组件的支持。
 如果你使用 `mobx-react`，那就不要添加 `mobx-react-lite` 的依赖和引用了。
 
 </details>
 
 <details id="observer-vs-memo"><summary>**注意:** `observer` or `React.memo`?<a href="#observer-vs-memo" class="tip-anchor"></a></summary>
 `observer` 会自动的使用 `memo`, 所以 `observer` 不需要再包裹 `memo`。
-`memo` 会被 observer 组件安全的使用，因为任何在props中的改变(很深的) 都会被`observer`响应。
+`memo` 可以被安全地包裹 observer 组件，因为任何在props中的改变(很深的) 都会被`observer`响应。
 </details>
 
-<details id="class-comp"><summary>**提示:** 应用`observer` 到基于class的组件<a href="#class-comp" class="tip-anchor"></a>
+<details id="class-comp"><summary>**提示:** 应用`observer` 到class组件<a href="#class-comp" class="tip-anchor"></a>
 </summary>
 如上所述，class 组件只在`mobx-react`包中得到支持， `mobx-react-lite`并不支持。
 简而言之，你可以和函数式组件一样使用 `observer`包裹class 组件：
@@ -349,7 +335,7 @@ const TimerView = observer(
 
 </details>
 
-<details id="displayname"><summary>**提示：** 给组件起个好名字，方便在React DevTools中查看<a href="#displayname" class="tip-anchor"></a>
+<details id="displayname"><summary>**提示：** 给组件起个好名字，以便在React DevTools中查看<a href="#displayname" class="tip-anchor"></a>
 </summary>
 [React DevTools](https://reactjs.org/blog/2019/08/15/new-react-devtools.html) 使用组件名称信息正确显示组件层次结构。
 
@@ -365,7 +351,7 @@ export const MyComponent = observer(props => <div>hi</div>)
 
 以下的手段可以修复这问题:
 
--   不要使用箭头函数而要使用带有命名的 `function` . `mobx-react` 会根据函数名推断组件名称：
+-   不要使用箭头函数，而是使用带有命名的 `function` . `mobx-react` 会根据函数名推断组件名称：
 
     ```javascript
     export const MyComponent = observer(function MyComponent(props) {
@@ -373,14 +359,14 @@ export const MyComponent = observer(props => <div>hi</div>)
     })
     ```
 
--   调换变量名与组件名，达到通过变量名能推导出组件名的目的 (像是在 Babel 或者 TypeScript中)：
+-   从变量名称中推论组件名称（例如Babel或Typescript）：
 
     ```javascript
     const _MyComponent = props => <div>hi</div>
     export const MyComponent = observer(_MyComponent)
     ```
 
--   使用default export 导出, 会通过变量名称推断：
+-   再次从变量名来推断，使用默认导出：
 
     ```javascript
     const MyComponent = props => <div>hi</div>
@@ -408,9 +394,9 @@ export const MyComponent = observer(props => <div>hi</div>)
 
 </details>
 
-<details id="computed-props"><summary>{🚀} **提示：** 从 props导出计算属性<a href="#computed-props" class="tip-anchor"></a></summary>
+<details id="computed-props"><summary>{🚀} **提示：** 从 props派生计算属性<a href="#computed-props" class="tip-anchor"></a></summary>
 在某些情况下你的组件本地可观察对象（local observables）的计算属性可能依赖于一些你组件接受到的参数（props）。
-但是,这一系列从React组件接收到的参数（props）本身并不是可观察对象，所以更改这些组件的属性（props）并不会使得计算属性响应。你可能需要手动的从最新的数据来更新全局可观察对象的状态来触发计算属性更新。
+然而,React组件接收到的参数（props）本身并不是可观察对象，所以更改这些组件的属性（props）并不会使得计算属性响应。你需要手动更新本地的可观察对象的状态，以便正确地从最新的数据中派生出计算属性。
 
 ```javascript
 import { observer, useLocalObservable } from "mobx-react-lite"
@@ -455,10 +441,10 @@ ReactDOM.render(<TimerView />, document.body)
 
 <details id="useeffect"><summary>{🚀} **Tip:** useEffect 与 可观察对象<a href="#useeffect" class="tip-anchor"></a></summary>
 
-`useEffect` 可以被用于触发需要发生的副作用, 它将会被约束在React 组建的生命周期中。
+`useEffect` 可以被用于设置需要发生的副作用, 它将会被约束在React 组件的生命周期中。
 使用 `useEffect`需要指定详细的依赖。
-对于 MobX 却不是必须的, 因为 MobX 拥有一种真正的能检查到依赖发发生的方法， `autorun`。
-结合 `autorun`可以很轻松的在生命周期组件中使用`useEffect`：
+对于 MobX 却不是必须的, 因为 MobX 已经有一种自动判断effect依赖地方法，`autorun`。
+使用 `autorun` 并将其与组件的生命周期 `useEffect` 配合是非常符合直觉的：
 
 ```javascript
 import { observer, useLocalObservable, useAsObservableSource } from "mobx-react-lite"
@@ -500,9 +486,9 @@ ReactDOM.render(<TimerView />, document.body)
 
 依赖数组可以保持为空，除非是一个不可观察对象的值需要触发autorun重新运行，你才需要将它添加到这里面。
 请确保你的格式正确,你可以创建一个`定时器（timer）` (上面的例子中) 作为依赖。
-这是安全并且无副作用的， 因为它引用的依赖根本不会改变。
+这是安全并且无副作用的， 因为它引用不会改变。
 
-如果你不想显式的在Effect中定义可观察对象请使用`reaction`而不是`autorun`，他们的传参是完全相同的。
+如果你想显式地定义哪些可观察对象可以触发effect，请使用`reaction`而不是`autorun`，他们的设计模式是完全相同的。
 
 </details>
 
@@ -515,7 +501,7 @@ ReactDOM.render(<TimerView />, document.body)
 Help！我的组件没有进行重绘...
 
 1. 请确保你没有遗漏 `observer` (是的，这是最常见的错误)。
-1. 请检查你传入的对象确定是可观察对象. 可以使用 [`isObservable`](api.md#isobservable)这个工具函数, 如果需要在运行时检查可以使用这个工具函数[`isObservableProp`](api.md#isobservableprop)。
+1. 请检查你传入的对象确定是可观察对象. 可以在运行时使用 [`isObservable`](api.md#isobservable)或[`isObservableProp`](api.md#isobservableprop)这些工具函数检查。
 1. 请检查在浏览器控制台中的任何错误或者警告。
 1. 请确保你大体上是理解Mobx的调用栈. 详细请阅读 [理解响应式（Understanding reactivity）](understanding-reactivity.md) 这篇文章。
 1. 请阅读上面小贴士中提及的常见错误。
