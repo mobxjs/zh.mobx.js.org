@@ -16,9 +16,9 @@ import { observer } from "mobx-react-lite" // 或者 "mobx-react".
 const MyComponent = observer(props => ReactElement)
 ```
 
-虽然 MobX 可以独立于 React 运行, 但他们通常结合在一起使用。在 [Mobx宗旨（The gist of MobX）](the-gist-of-mobx.md) 一文中你已经了解过这种结合的最重要的部分：包裹React组件的 `observer` [HOC](https://reactjs.org/docs/higher-order-components.html)。
+虽然 MobX 可以独立于 React 运行, 但他们通常结合在一起使用。在 [Mobx宗旨（The gist of MobX）](the-gist-of-mobx.md) 一文中你已经了解过这种结合的最重要的部分：用于包裹React组件的 `observer` [HOC](https://reactjs.org/docs/higher-order-components.html)方法。
 
-`observer` 由单独[安装](installation.md#installation)的React Bindings包提供。 在下面的例子中,我们将使用更轻量的[`mobx-react-lite` 包](https://github.com/mobxjs/mobx/tree/main/packages/mobx-react-lite)。
+`observer` 由需要单独[安装](installation.md#installation)的React Bindings包提供。 在下面的例子中,我们将使用更轻量的[`mobx-react-lite` 包](https://github.com/mobxjs/mobx/tree/main/packages/mobx-react-lite)。
 
 ```javascript
 import React from "react"
@@ -52,9 +52,9 @@ setInterval(() => {
 
 **提示:** 你可以在 [在线编译器CodeSandbox](https://codesandbox.io/s/minimal-observer-p9ti4?file=/src/index.tsx)中尝试上面的例子。
 
- `observer` HOC 将自动订阅 React 组件中所有 _在渲染期间_ 被使用的 _可观察的对象_ (observables)。因此, 当与之关联的可观察的对象发生 _变化_ 时，组件会自动重新渲染。它还会确保组件在 _没有关联的变化_ 发生时，不会重新渲染。所以，当组件能够访问的、但实际没有被组件读取的可观察对象发生变化时，组件不会重新渲染。
+ `observer` HOC 将自动订阅 React 组件中所有 _在渲染期间_ 被使用的 _可观察的对象_ (observables)。因此, 当与之关联的可观察的对象发生 _变化_ 时，组件会自动进行重新渲染。它还会确保组件在 _没有关联的变化_ 发生时，不进行重新渲染。所以，当组件能够访问的、但实际没有被组件读取的可观察对象发生变化时，组件不会重新渲染。
 
-在实践中，这一特性使得MobX应用程序能够被很好地开箱即用地优化，并且通常不需要任何额外代码来防止过度渲染。
+在实践中，这一特性使得使用MobX的应用程序能够被很好地开箱即用地优化，并且通常不需要任何额外代码来防止过度渲染。
 
 要想让`observer`生效, 并不需要关心这些对象是 _如何触达到_ 组件的（译者注：即无需关心组件如何访问这些可观察对象）, 只需要关心他们是否被读取。读取深层嵌套的可观察对象也没有问题, 复杂的表达式类似 `todos[0].author.displayName` 也是可以使用的。与其他必须显式声明或预先计算数据依赖关系的框架（例如 selectors）相比，这种发生的订阅机制就显得更加精确和高效。
 
@@ -69,7 +69,7 @@ setInterval(() => {
 <!--DOCUSAURUS_CODE_TABS-->
 <!--使用 props-->
 
-可被观察对象可以通过组件的props属性传入  (在下面的例子中):
+将可被观察对象作为组件的props传入 (如下所示):
 
 ```javascript
 import { observer } from "mobx-react-lite"
@@ -85,18 +85,18 @@ ReactDOM.render(<TimerView timer={myTimer} />, document.body)
 <!-- 使用全局变量 -->
 
 因为我们不关心 _如何_ 引用（reference）可观察对象, 所以我们可以使用 （consume）
-外部作用域（outer scopes directly）中的可观察对象  (类似通过 import这样的方法, 等等)：
+外部作用域（outer scopes）中的可观察对象  (类似通过 import这样的方法, 等等)：
 
 ```javascript
 const myTimer = new Timer() //  请参考之前Timer的定义.
 
-// 没有props, `myTimer` 直接从作为闭包中的变量使用。
+// 这里不用props, 而是直接使用闭包中的 `myTimer`。
 const TimerView = observer(() => <span>Seconds passed: {myTimer.secondsPassed}</span>)
 
 ReactDOM.render(<TimerView />, document.body)
 ```
 
-直接使用可观察对象的效果很好，但是这通常会引入模块状态，这种写法可能会使单元测试变得复杂。 因此，我们建议使用React Context。
+直接使用可观察对象也能很好地运行，但是这通常会引入模块状态，可能会使单元测试变得复杂。 因此，我们建议使用React Context。
 
 <!--使用 React context-->
 
@@ -124,14 +124,14 @@ ReactDOM.render(
 )
 ```
 
-需要注意的是我们不推荐用不同的值替换掉同一个 `Provider` 的 `value` （译者注：例如每次状态更新之后都更新 `Provider` 的 `value` , 通常开发者这样做意在使子树拿到最新的状态，从而更新视图）. 在使用Mobx的过程中不需要这样做, 因为共享的可观察对象会自己更新。
+需要注意的是我们不推荐用不同的值替换掉同一个 `Provider` 的 `value` （译者注：例如每次状态更新之后都更新 `Provider` 的 `value` , 通常开发者这样做意在使子树拿到最新的状态，从而更新视图）. 在使用Mobx的过程中不需要这样做, 因为共享的可观察对象（译者注：指通过Provider提供给后代子树的可观察对象）会自己更新。
 
 <!--END_DOCUSAURUS_CODE_TABS-->
 
 ### 在`observer` 组件中使用本地可观察对象（Using local observable state in `observer` components）
 
 因为被 `observer` 使用的可观察对象可以来自任何地方, 它们当然也可以是来自本地（译者注：即来自本组件）。
-当然，这几种不同的使用方式对于MobX而言都是可行的。
+当然，下面几种不同的使用方式对于MobX而言都是可行的。
 
 <!--DOCUSAURUS_CODE_TABS-->
 <!-- useState 和 observable class-->
@@ -216,7 +216,7 @@ ReactDOM.render(<TimerView />, document.body)
 
 仅包含UI的state, 例如加载的 state, 选择的 state,等等, 最好还是使用 [`useState` hook](https://reactjs.org/docs/hooks-state.html), 因为这样可以让你在未来使用高级的 React suspense特性。
 
-在React组件中使用可观察的对象能够创造加价值，只要： 1) 层级很深, 2) 拥有计算属性 3) 需要共享状态给其它 `observer` 组件。
+只要符合以下情况，在React组件中使用可观察的对象就可以创造价值： 1) 层级很深, 2) 拥有计算属性 3) 需要共享状态给其它 `observer` 组件。
 
 ## 永远在`observer` 组件中读取可观察对象（Always read observables inside `observer` components）
 
@@ -366,7 +366,7 @@ export const MyComponent = observer(props => <div>hi</div>)
     export const MyComponent = observer(_MyComponent)
     ```
 
--   再次从变量名来推断，使用默认导出：
+-   类似上面的方式，从变量名来推断，但是使用默认导出：
 
     ```javascript
     const MyComponent = props => <div>hi</div>
@@ -467,7 +467,7 @@ const TimerView = observer(() => {
         []
     )
 
-    // 作为demo用途在Effect里定义一个定时器。
+    // 作为例子，这里在Effect里定义一个定时器。
     useEffect(() => {
         const handle = setInterval(timer.increaseTimer, 1000)
         return () => {
