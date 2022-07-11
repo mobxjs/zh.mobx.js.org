@@ -98,7 +98,7 @@ class Footer extends React.Component {
                             appId: 'UBJ6A0HIGD',
                             apiKey: '0b16b32c8604cdba3014d883c0d28b47',
                             indexName: 'mobx-js',
-                            container: '.algolia-autocomplete'
+                            container: '.algolia-autocomplete',
                             debug: false // Set debug to true if you want to inspect the modal
                           });             
                     `
