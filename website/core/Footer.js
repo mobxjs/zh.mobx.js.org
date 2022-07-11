@@ -91,6 +91,19 @@ class Footer extends React.Component {
                         )}
                     </div>
                 </section>
+                <script src="https://cdn.jsdelivr.net/npm/@docsearch/js@3"></script>
+                <script dangerouslySetInnerHTML={{
+                    __html: `
+                          docsearch({
+                            appId: 'UBJ6A0HIGD',
+                            apiKey: '0b16b32c8604cdba3014d883c0d28b47',
+                            indexName: 'mobx-js',
+                            container: '.algolia-autocomplete'
+                            debug: false // Set debug to true if you want to inspect the modal
+                          });             
+                    `
+                }}>
+                </script>
                 <script async src="https://www.googletagmanager.com/gtag/js?id=G-HS7DZGLK79"></script>
                 <script dangerouslySetInnerHTML={{
                     __html: `
