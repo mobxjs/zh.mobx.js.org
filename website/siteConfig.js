@@ -22,8 +22,8 @@ const users = [
 
 const siteConfig = {
     algolia: {
-        apiKey: '0b16b32c8604cdba3014d883c0d28b47',
-        indexName: 'mobx-js',
+        apiKey: '500db32fbdbd53a814f42aafdfa26bd4',
+        indexName: 'mobxjs',
     },
     title: "MobX", // Title for your website.
     tagline: "Simple, scalable state management",
