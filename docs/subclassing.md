@@ -11,7 +11,7 @@ hide_title: true
 对使用子类的支持是有[限制](#limitations)的。 最值得注意的一点是你只能**重新定义原型中的 actions/flows/computeds**——你不能重新定义_[字段声明](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#field_declarations)_。 在子类中请使用 `override` 注释被重新定义的methods/getters - 见下例。 请凡事从简，并优先考虑组合（而非继承）。
 
 ```javascript
-import { makeObservable, observable, computed, action } from "mobx"
+import { makeObservable, observable, computed, action, override } from "mobx"
 
 class Parent {
     // 被注释的实例字段不可被重新定义
