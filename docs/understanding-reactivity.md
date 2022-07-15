@@ -115,7 +115,7 @@ let title = message.title
 autorun(() => {
     console.log(title)
 })
-message.updateMessage("Bar")
+message.updateTitle("Bar")
 ```
 
 这 **不会** 使 MobX 响应。`message.title` 在 `autorun` 函数的外面被引用，并且在被引用时只是 `message.title` 的值（字符串 `"Foo"`），`title` 不是一个可观察对象，因此 `autorun` 永远不会对 `title` 的变化做出响应。
