@@ -173,7 +173,7 @@ render(<TodoListView todoList={store} />, document.getElementById("root"))
 ```
 
 `observer` 将 React 组件转化为了从数据到渲染的派生过程。
-当使用 MobX 的时，不存在“智能组件”和“木偶组件”。所有的组件在渲染时都是智能的，但是在定义时是按照木偶组件的方式去定义的。MobX会简单确定这个组件是否需要进行重绘，并止步于此。
+当使用 MobX 时，不存在“智能组件”和“木偶组件”。所有的组件在渲染时都是智能的，但是在定义时是按照木偶组件的方式去定义的。MobX会简单确定这个组件是否需要进行重绘，并止步于此。
 
 因此，上述示例中的`onClick`事件处理器调用`toggle` Action 后，会使对应的`TodoView`组件重绘，但仅当未完成任务的数量发生更改时才会使 `TodoListView` 组件重绘。
 
@@ -213,7 +213,7 @@ Mobx 使用单向数据流，利用 _action_ 改变 _state_ ，进而更新所�
 1. 所有的 _derivations_ 将在 _state_ 改变时**自动且原子化地更新**。因此不可能观察中间值。
 2. 所有的 _derivations_ 默认将会**同步**更新，这意味着 _action_ 可以在 _state_ 改变 之后安全的直接获得 computed 值。
 3. _computed value_ 的更新是**惰性**的，任何 computed value 在需要他们的副作用发生之前都是不激活的。
-4. 所有的 _computed value_ 都应是**纯函数**,他们不应该修改 _state_。
+4. 所有的 _computed value_ 都应是**纯函数**，他们不应该修改 _state_。
 
 想了解更多背景，请查阅 [MobX背后的基本原则](https://hackernoon.com/the-fundamental-principles-behind-mobx-7a725f71f3e8)
 
