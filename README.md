@@ -68,6 +68,10 @@ mobx是一个流行的状态管理库，在全世界有很多用户。mobx中文
     <td align="center"><a href="https://github.com/ThornWu"><img src="https://avatars.githubusercontent.com/u/22996287?v=4&s=100" width="100px;" alt=""/><br /><sub><b>ThornWu</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3AThornWu" title="PR">💻</a></td>
       <td align="center"><a href="https://github.com/SageKwun"><img src="https://avatars.githubusercontent.com/u/65765025?v=4&s=100" width="100px;" alt=""/><br /><sub><b>SageKwun</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3ASageKwun" title="PR">💻</a></td>
     <td align="center"><a href="https://github.com/caolinjian"><img src="https://avatars.githubusercontent.com/u/7044249?v=4&s=100" width="100px;" alt=""/><br /><sub><b>caolinjian</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3Acaolinjian" title="PR">💻</a></td>
+    <td align="center"><a href="https://github.com/iDestin "><img src="https://avatars.githubusercontent.com/u/36811055?v=4&s=100" width="100px;" alt=""/><br /><sub><b>iDestin</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3AiDestin" title="PR">💻</a></td>
+    <td align="center"><a href="https://github.com/Tsuizen"><img src="https://avatars.githubusercontent.com/u/18416476?s=100&v=4" width="100px;" alt=""/><br /><sub><b>Tsuizen</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3ATsuizen" title="PR">💻</a></td>
+  </tr>
+      <tr>
     <td align="center"><a href="https://github.com/mobxjs/zh.mobx.js.org"><img src="https://zh.mobx.js.org/assets/placeholder.svg" width="100px;" alt=""/><br /><sub><b>Next Contributor</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls" title="PR">💻</a></td>
     <td align="center"><a href="https://github.com/mobxjs/zh.mobx.js.org"><img src="https://zh.mobx.js.org/assets/placeholder.svg" width="100px;" alt=""/><br /><sub><b>Next Contributor</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls" title="PR">💻</a></td>
   </tr>
