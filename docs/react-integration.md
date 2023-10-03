@@ -133,7 +133,7 @@ ReactDOM.render(
 
 <!--END_DOCUSAURUS_CODE_TABS-->
 
-### 在`observer` 组件中使用全局可观察对象（Using local observable state in `observer` components）
+### 在`observer` 组件中使用局部可观察对象（Using local observable state in `observer` components）
 
 因为使用 `observer` 的可观察对象可以来自任何地方, 他们也可以使用local state（全局的state·译者注）。
 再次声明，不同操作方式对于我们而言都是有价值的。
@@ -218,7 +218,7 @@ ReactDOM.render(<TimerView />, document.body)
 
 <!--END_DOCUSAURUS_CODE_TABS-->
 
-### 你可能并不需要全局的可观察状态 （You might not need locally observable state）
+### 你可能并不需要局部的可观察状态 （You might not need locally observable state）
 
 通常来讲，我们推荐在编写全局公用组件的时候不要立刻使用Mobx的可观察能力， 因为从技术角度来讲他可能会使你无法使用一些React 的 Suspense 的方法特性。
 总的来说，使用Mobx的可观察能力会捕获组件间的域状态（domain data）可能会 (包含子组件的)。像是todo item, users, bookings, 等等（就是说最好不要用mobx共享一些组件内的状态·译者注）。
