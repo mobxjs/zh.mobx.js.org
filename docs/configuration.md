@@ -13,7 +13,7 @@ hide_title: true
 ## Proxy 选项
 
 默认情况下，MobX 使用 `Proxy` 代理方式来让数组以及纯对象可观察。`Proxy` 能够提供最佳的性能表现以及在不同环境下大多数行为的一致性。
-但是如过你的目标环境不支持 `Proxy`，你也可以通过配置将 Proxy 支持关闭。
+但是如果你的目标环境不支持 `Proxy`，你也可以通过配置将 Proxy 支持关闭。
 这种情况大部分是由于你需要支持IE或在没有使用`Hermes`引擎的React Native环境中开发。
 
 使用`configure`方法来关闭Proxy支持
