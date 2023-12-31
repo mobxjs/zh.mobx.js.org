@@ -1,0 +1,24 @@
+name: Fetch Original Document pages
+on:
+    issues:
+        types:
+            - labeled
+jobs:
+    Fetch-and-Save:
+        if: github.event.label.name == '📖 documentation'
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+            issues: write
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: freeCodeCamp-China/article-webpage-to-markdown-action@v1
+              with:
+                  newsLink: "${{ github.event.issue.Body }}"
+                  markDownFilePath: "./docs/"
+                  githubToken: ${{ github.token }}
+
+            - uses: stefanzweifel/git-auto-commit-action@v5
+              with:
+                  commit_message: "${{ github.event.issue.title }}"

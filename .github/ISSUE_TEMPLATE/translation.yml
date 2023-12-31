@@ -1,0 +1,16 @@
+name: 📑 Translation Task
+description: 创建翻译任务
+
+title: <原文标题>
+labels:
+    - 📖 documentation
+body:
+    - type: input
+      attributes:
+          label: 原文网址
+          placeholder: 如 https://mobx.js.org/enabling-decorators.html
+      validations:
+          required: true
+    - type: textarea
+      attributes:
+          label: 备注
