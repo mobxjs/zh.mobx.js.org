@@ -1,31 +1,29 @@
 ---
-title: Decorators
+title: 装饰器
 authorURL: ""
 originalURL: https://mobx.js.org/enabling-decorators.html
 translator: ""
 reviewer: ""
 ---
 
-# [](#decorators)Decorators
+## 启用装饰器
 
-## [](#enabling-decorators)Enabling decorators
+历经多年改造，ES 装饰器终于到达 TC39 流程的 Stage 3，意味着它们已经非常稳定，并不再有装饰器提案早期版本的不兼容变更。MobX 已实现对“2022.3/Stage 3”新装饰器语法的支持。有了现代装饰器，我们不再需要调用 `makeObservable`、`makeAutoObservable`。
 
-After years of alterations, ES decorators have finally reached Stage 3 in the TC39 process, meaning that they are quite stable and won't undergo breaking changes again like the previous decorator proposals have. MobX has implemented support for this new "2022.3/Stage 3" decorator syntax. With modern decorators, it is no longer needed to call `makeObservable` / `makeAutoObservable`.
+2022.3 版装饰器支持情况：
 
-2022.3 Decorators are supported in:
+-   TypeScript（5.0 及更新，并确保 `experimentalDecorators` 选项是**禁用**的）。[示例提交][1]。
+-   对于 Babel，确保 [`proposal-decorators`][2] 插件以最高版本启用 （当前是 `2023-05`）。[示例提交][3].
 
--   TypeScript (5.0 and higher, make sure that the `experimentalDecorators` flag is NOT enabled). [Example commit](https://github.com/mweststrate/currencies-demo/commit/acb9ac8c148e8beef88042c847bb395131e85d60).
--   For Babel make sure the plugin [`proposal-decorators`](https://babeljs.io/docs/babel-plugin-proposal-decorators) is enabled with the highest version (currently `2023-05`). [Example commit](https://github.com/mweststrate/currencies-demo/commit/4999d2228208f3e1e10bc00a272046eaefde8585).
-
-```js
+```json
 // tsconfig.json
 {
     "compilerOptions": {
-        "experimentalDecorators": false /* or just remove the flag */
+        "experimentalDecorators": false /* 或直接移除该选项 */
     }
 }
 
-// babel.config.json (or equivalent)
+// babel.config.json（或等价的）
 {
     "plugins": [
         [
@@ -38,92 +36,92 @@ After years of alterations, ES decorators have finally reached Stage 3 in the TC
 }
 ```
 
-## [](#using-decorators)Using decorators
+## 使用装饰器
 
 ```javascript
-import { observable, computed, action } from "mobx"
+import { observable, computed, action } from "mobx";
 
 class Todo {
-    id = Math.random()
-    @observable accessor title = ""
-    @observable accessor finished = false
+    id = Math.random();
+    @observable accessor title = "";
+    @observable accessor finished = false;
 
     @action
     toggle() {
-        this.finished = !this.finished
+        this.finished = !this.finished;
     }
 }
 
 class TodoList {
-    @observable accessor todos = []
+    @observable accessor todos = [];
 
     @computed
     get unfinishedTodoCount() {
-        return this.todos.filter(todo => !todo.finished).length
+        return this.todos.filter(todo => !todo.finished).length;
     }
 }
 ```
 
-Notice the usage of the new `accessor` keyword when using `@observable`. It is part of the 2022.3 spec and is required if you want to use modern decorators.
+注意在使用 `@observable` 时的 `accessor` 新关键字用法。它是 2022.3 版规范的一部分，也是你使用现代装饰器的必需品。
 
-Using legacy decorators
+使用旧版装饰器
 
-We do not recommend codebases to use TypeScript / Babel legacy decorators since they well never become an official part of the language, but you can still use them. It does require a specific setup for transpilation:
+我们不推荐代码库使用 TypeScript / Babel 旧版装饰器，因为它们永远不会成为语言的正式部分，但你仍可使用它们。它确实需要特定的转译设置：
 
-MobX before version 6 encouraged the use of legacy decorators and mark things as `observable`, `computed` and `action`. While MobX 6 recommends against using these decorators (and instead use either modern decorators or [`makeObservable` / `makeAutoObservable`](/observable-state.html)), it is in the current major version still possible. Support for legacy decorators will be removed in MobX 7.
+MobX 6 之前的版本鼓励使用旧版装饰器，并将事物标记为 `observable`、`computed` 和 `action`。虽然 MobX 6 建议不要使用这些装饰器（而是使用现代装饰器或 [`makeObservable`、`makeAutoObservable`][4]），但它在当前大版本依然可用。对旧版装饰器的支持将在 MobX 7 被移除。
 
 ```javascript
-import { makeObservable, observable, computed, action } from "mobx"
+import { makeObservable, observable, computed, action } from "mobx";
 
 class Todo {
-    id = Math.random()
-    @observable title = ""
-    @observable finished = false
+    id = Math.random();
+    @observable title = "";
+    @observable finished = false;
 
     constructor() {
-        makeObservable(this)
+        makeObservable(this);
     }
 
     @action
     toggle() {
-        this.finished = !this.finished
+        this.finished = !this.finished;
     }
 }
 
 class TodoList {
-    @observable todos = []
+    @observable todos = [];
 
     @computed
     get unfinishedTodoCount() {
-        return this.todos.filter(todo => !todo.finished).length
+        return this.todos.filter(todo => !todo.finished).length;
     }
 
     constructor() {
-        makeObservable(this)
+        makeObservable(this);
     }
 }
 ```
 
-Migrating from legacy decorators
+从旧版装饰器迁移
 
-To migrate from legacy decorators to modern decorators, perform the following steps:
+从旧版装饰器迁移到现代装饰器，需执行以下步骤:
 
-1.  Disable / remove the `experimentalDecorators` flag from your TypeScript configuration (or Babel equivalent)
-2.  Remove all `makeObservable(this)` calls from class constructors that use decorators.
-3.  Replace all instances of `@observable` (and variations) with `@observable accessor`
+1.  从你的 TypeScript 配置（或 Babel 等价配置）中禁用或删除 `experimentalDecorators` 选项
+2.  从使用装饰器的类的构造函数中移除所有 `makeObservable(this)` 调用
+3.  将 `@observable`（及其变体）的所有实例替换为 `@observable accessor`
 
-Decorator changes / gotchas
+装饰器变更、陷阱
 
-MobX' 2022.3 Decorators are very similar to the MobX 5 decorators, so usage is mostly the same, but there are some gotchas:
+MobX 2022.3 装饰器与 MobX 5 的非常相似，所以大多数用法是相同的，但是有一些陷阱：
 
--   `@observable accessor` decorators are _not_ enumerable. `accessor`s do not have a direct equivalent in the past - they're a new concept in the language. We've chosen to make them non-enumerable, non-own properties in order to better follow the spirit of the ES language and what `accessor` means. The main cases for enumerability seem to have been around serialization and rest destructuring.
-    -   Regarding serialization, implicitly serializing all properties probably isn't ideal in an OOP-world anyway, so this doesn't seem like a substantial issue (consider implementing `toJSON` or using `serializr` as possible alternatives)
-    -   Addressing rest-destructuring, such is an anti-pattern in MobX - doing so would (likely unwantedly) touch all observables and make the observer overly-reactive).
--   `@action some_field = () => {}` was and is valid usage (_if_ `makeObservable()` is also used). However, `@action accessor some_field = () => {}` is never valid.
+-   `@observable accessor` 装饰器是 _不可_ 枚举的。`accessor` 没有一个与过去直接等价的事物 —— 它们是一个语言中的新概念。我们使它们成为不可枚举、非自有属性，以便更好地遵循 ES 语言的精神和 `accessor` 的含义。可枚举性的主要案例似乎是围绕序列化和剩余解构的。
+    -   关于序列化，隐式序列化所有属性在 OOP 世界中可能并不理想，因此这似乎不是一个重大问题（考虑实现 `toJSON` 或使用 `serializer` 作为可能的替代方案）
+    -   至于解决剩余解构，这在 MobX 中是一个反模式 —— 这么做会（非预期地）触及所有可观察数据并让观察者过度反应。
+-   _如果_ `makeObservable()` 被启用，`@action some_field = () => {}` 曾是并仍是可用的。然而，`@action accessor some_field = () => {}` 从不可用。
 
-## [](#using-observer-as-a-decorator)Using `observer` as a decorator
+## 将 `observer` 用作装饰器
 
-The `observer` function from `mobx-react` is both a function and a decorator that can be used on class components:
+来自 `mobx-react` 的 `observer` 函数既是一个普通函数，又是一个可用在类组件的装饰器：
 
 ```javascript
 @observer
@@ -131,3 +129,8 @@ class Timer extends React.Component {
     /* ... */
 }
 ```
+
+[1]: https://github.com/mweststrate/currencies-demo/commit/acb9ac8c148e8beef88042c847bb395131e85d60
+[2]: https://babeljs.io/docs/babel-plugin-proposal-decorators
+[3]: https://github.com/mweststrate/currencies-demo/commit/4999d2228208f3e1e10bc00a272046eaefde8585
+[4]: observable-state
