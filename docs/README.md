@@ -295,7 +295,7 @@ setInterval(() => {
 
 每个事件（`onClick` 或 `setInterval`）都会调用一个用来更新 *observable 状态* `myTimer.secondsPassed` 的 *action*（`myTimer.increase` 或 `myTimer.reset`）。Observable 状态的变更会被精确地传送到 `TimerView` 中所有依赖于它们的*计算*和*副作用*里。
 
-<img alt="MobX 单向流" src="https://zh.mobx.js.org/assets/zh.flow.png" align="center" />
+<img alt="MobX 单向流" width="100%" src="https://zh.mobx.js.org/assets/zh.flow.png" align="center" />
 
 除了适用于上面的例子之外，这个概念图也适用于其他任何使用 MobX 的应用。
 
