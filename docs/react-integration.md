@@ -457,7 +457,7 @@ ReactDOM.render(<TimerView />, document.body)
 
 `useEffect` 可以被用于触发需要发生的副作用, 它将会被约束在React 组件的生命周期中。
 使用 `useEffect`需要指定详细的依赖。
-对于 MobX 却不是必须的, 因为 MobX 拥有一种真正的能检查到依赖发发生的方法， `autorun`。
+对于 MobX 却不是必须的, 因为 MobX 已经有了一种自动确定副作用的依赖项的方法， `autorun`。
 结合 `autorun`可以很轻松的在生命周期组件中使用`useEffect`：
 
 ```javascript
