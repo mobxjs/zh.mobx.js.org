@@ -293,11 +293,11 @@ setInterval(() => {
 围绕 React 组件 `TimerView` 的 `observer` 包装会自动侦测到依赖于 observable `timer.secondsPassed` 的渲染——即使这种依赖关系没有被明确定义出来。
 响应性系统会负责在未来*恰好那个*字段被更新的时候将组件重新渲染。
 
-每个事件（`onClick` 或 `setInterval`）都会调用一个用来更新 *observable 状态* `myTimer.secondsPassed` 的 *action*（`myTimer.increase` 或 `myTimer.reset`）。Observable 状态的变更会被精确地传送到 `TimerView` 中所有依赖于它们的*计算*和*副作用*里。
+任意事件（`onClick` 或 `setInterval`）调用 *action*（`myTimer.increase` 或 `myTimer.reset`）去更新可观察的状态 （`myTimer.secondsPassed`）。 可观察的状态发生变化，会使依赖它的*计算* （如 `computed`）以及依赖其的组件副作用函数重新执行。
 
 <img alt="MobX 单向流" width="100%" src="https://zh.mobx.js.org/assets/zh.flow.png" align="center" />
 
-除了适用于上面的例子之外，这个概念图也适用于其他任何使用 MobX 的应用。
+这张概念图适用于上面的例子， 也适用于任意使用了`Mobx`的应用程序。
 
 如果想通过一个更大的例子来了解 MobX 的核心概念，请参阅 [MobX 精要](the-gist-of-mobx.md)部分或查看 [10 分钟交互式入门 MobX 和 React](https://zh.mobx.js.org/getting-started.html)。这些博客文章 [事后再考虑 UI](https://michel.codes/blogs/ui-as-an-afterthought) 和 [怎样解耦状态和 UI （又名：你不需要 componentWillMount）](https://hackernoon.com/how-to-decouple-state-and-ui-a-k-a-you-dont-need-componentwillmount-cc90b787aa37)也对 MobX 所提供的心智模型做了非常详细的描述。
 
