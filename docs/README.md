@@ -290,8 +290,7 @@ setInterval(() => {
 }, 1000)
 ```
 
-围绕 React 组件 `TimerView` 的 `observer` 包装会自动侦测到依赖于 observable `timer.secondsPassed` 的渲染——即使这种依赖关系没有被明确定义出来。
-响应性系统会负责在未来*恰好那个*字段被更新的时候将组件重新渲染。
+用`observer`包裹的React组件 `TimerView` 在渲染时会自动追踪收集其依赖的可观察属性 `timer.secondsPassed`, 即使这种观察者的关系没有显示的定义出来。当被收集追踪的可观察属性发生变化时，响应式的系统负责使组件重新渲染。
 
 每个事件（`onClick` 或 `setInterval`）都会调用一个用来更新 *observable 状态* `myTimer.secondsPassed` 的 *action*（`myTimer.increase` 或 `myTimer.reset`）。Observable 状态的变更会被精确地传送到 `TimerView` 中所有依赖于它们的*计算*和*副作用*里。
 
