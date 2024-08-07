@@ -5,7 +5,8 @@ title: <原文标题>
 labels:
     - 📖 documentation
 body:
-    - type: input
+    - id: page_link
+      type: input
       attributes:
           label: 原文网址
           placeholder: 如 https://mobx.js.org/enabling-decorators.html
@@ -14,3 +15,4 @@ body:
     - type: textarea
       attributes:
           label: 备注
+          value: '@Neo42 @iChenLei'
