@@ -70,7 +70,7 @@ configure({ useProxies: "never" }); // Or "ifavailable".
 -   [mobx-angular][7]：MobX 的 Angular 适配
 -   [mobx-vue][8]：MobX 的 Vue 适配
 
-[1]: /enabling-decorators.md
+[1]: /enabling-decorators.html
 [2]: https://compat-table.github.io/compat-table/es6/#test-Proxy
 [3]: /configuration.html#limitations-without-proxy-support
 [4]: /configuration.html#proxy-support

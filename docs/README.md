@@ -28,42 +28,42 @@ _简单，可扩展的状态管理_
         <tr>  
             <td align="center">
                 <a href="https://github.com/Neo42" target="_blank">
-                    <img src="https://avatars.githubusercontent.com/u/22409868?s=100&v=4" width="50px">
+                    <img src="https://avatars.githubusercontent.com/u/22409868?s=100&v=4">
                     <br />
                     <sup style="font-size: 12px">Neo42</sup>
                 </a>
             </td>
             <td align="center">
                 <a href="https://github.com/BlackHole1" target="_blank">
-                    <img src="https://avatars.githubusercontent.com/u/8198408?s=100&v=4" width="50px">
+                    <img src="https://avatars.githubusercontent.com/u/8198408?s=100&v=4">
                     <br />
                     <sup style="font-size: 12px">Black-Hole</sup>
                 </a>
             </td>
             <td align="center">
                 <a href="https://github.com/lichangwei" target="_blank">
-                    <img src="https://avatars.githubusercontent.com/u/718802?s=100&v=4" width="50px">
+                    <img src="https://avatars.githubusercontent.com/u/718802?s=100&v=4">
                     <br />
                     <sup style="font-size: 12px">lichangwei</sup>
                 </a>
             </td>
             <td align="center">
                 <a href="https://github.com/njueyupeng" target="_blank">
-                    <img src="https://avatars.githubusercontent.com/u/13177502?v=4&s=100" width="50px">
+                    <img src="https://avatars.githubusercontent.com/u/13177502?v=4&s=50">
                     <br />
                     <sup style="font-size: 12px">njueyupeng</sup>
                 </a>
             </td>
             <td align="center">
                 <a href="https://github.com/ai-xiaihai" target="_blank">
-                    <img src="https://avatars.githubusercontent.com/u/12586770?v=4&s=100" width="50px">
+                    <img src="https://avatars.githubusercontent.com/u/12586770?v=4&s=50">
                     <br />
                     <sup style="font-size: 12px">ai-xiaihai</sup>
                 </a>
             </td>
             <td align="center">
                 <a href="https://github.com/ObservedObserver" target="_blank">
-                    <img src="https://avatars.githubusercontent.com/u/22167673?s=100&v=4" width="50px">
+                    <img src="https://avatars.githubusercontent.com/u/22167673?s=100&v=4">
                     <br />
                     <sup style="font-size: 12px">ObservedObserver</sup>
                 </a>
@@ -72,42 +72,42 @@ _简单，可扩展的状态管理_
         <tr>
             <td align="center">
                 <a href="https://github.com/berber1016 " target="_blank">
-                    <img src="https://avatars.githubusercontent.com/u/31471551?s=100&v=4" width="50px">
+                    <img src="https://avatars.githubusercontent.com/u/31471551?s=100&v=4">
                     <br />
                     <sup style="font-size: 12px">berber1016</sup>
                 </a>
             </td>
             <td align="center">
                 <a href="https://github.com/BM-laoli" target="_blank">
-                    <img src="https://avatars.githubusercontent.com/u/60060313?v=4&s=100" width="50px">
+                    <img src="https://avatars.githubusercontent.com/u/60060313?v=4&s=50">
                     <br />
                     <sup style="font-size: 12px">BM-laoli</sup>
                 </a>
             </td>
             <td align="center">
                 <a href="https://github.com/wangjq4214" target="_blank">
-                    <img src="https://avatars.githubusercontent.com/u/35188480?v=4&s=100" width="50px">
+                    <img src="https://avatars.githubusercontent.com/u/35188480?v=4&s=50">
                     <br />
                     <sup style="font-size: 12px">wangjq4214</sup>
                 </a>
             </td>
             <td align="center">
                 <a href="https://github.com/WanderWang" target="_blank">
-                    <img src="https://avatars.githubusercontent.com/u/2238280?v=4&s=100" width="50px">
+                    <img src="https://avatars.githubusercontent.com/u/2238280?v=4&s=50">
                     <br />
                     <sup style="font-size: 12px">WanderWang</sup>
                 </a>
             </td>
             <td align="center">
                 <a href="https://github.com/standout-jjc" target="_blank">
-                    <img src="https://avatars.githubusercontent.com/u/17778067?v=4&s=100" width="50px">
+                    <img src="https://avatars.githubusercontent.com/u/17778067?v=4&s=50">
                     <br />
                     <sup style="font-size: 12px">standout-jjc</sup>
                 </a>
             </td>
             <td align="center">
                 <a href="https://github.com/wuxyman" target="_blank">
-                    <img src="https://avatars.githubusercontent.com/u/34463605?v=4&s=100" width="50px">
+                    <img src="https://avatars.githubusercontent.com/u/34463605?v=4&s=50">
                     <br />
                     <sup style="font-size: 12px">wuxyman</sup>
                 </a>
@@ -116,42 +116,42 @@ _简单，可扩展的状态管理_
         <tr>
             <td align="center">
                 <a href="https://github.com/newraina" target="_blank">
-                    <img src="https://avatars.githubusercontent.com/u/10708802?v=4&s=100" width="50px">
+                    <img src="https://avatars.githubusercontent.com/u/10708802?v=4&s=50">
                     <br />
                     <sup style="font-size: 12px">newraina</sup>
                 </a>
             </td>
             <td align="center">
                 <a href="https://github.com/YuFengDing" target="_blank">
-                    <img src="https://avatars.githubusercontent.com/u/23763023?v=4&s=100" width="50px">
+                    <img src="https://avatars.githubusercontent.com/u/23763023?v=4&s=50">
                     <br />
                     <sup style="font-size: 12px">YuFengDing</sup>
                 </a>
             </td>
             <td align="center">
                 <a href="https://github.com/TheFirstSunday" target="_blank">
-                    <img src="https://avatars.githubusercontent.com/u/20334663?v=4&s=100" width="50px">
+                    <img src="https://avatars.githubusercontent.com/u/20334663?v=4&s=50">
                     <br />
                     <sup style="font-size: 12px">TheFirstSunday</sup>
                 </a>
             </td>
             <td align="center">
                 <a href="https://github.com/Cufoon" target="_blank">
-                    <img src="https://avatars.githubusercontent.com/u/65291826?v=4&s=100" width="50px">
+                    <img src="https://avatars.githubusercontent.com/u/65291826?v=4&s=50">
                     <br />
                     <sup style="font-size: 12px">Cufoon</sup>
                 </a>
             </td>
             <td align="center">
                 <a href="https://github.com/PiersZhang" target="_blank">
-                    <img src="https://avatars.githubusercontent.com/u/17962458?v=4s=100" width="50px">
+                    <img src="https://avatars.githubusercontent.com/u/17962458?v=4&s=50">
                     <br />
                     <sup style="font-size: 12px">PiersZhang</sup>
                 </a>
             </td>
             <td align="center">
                 <a href="https://github.com/Rain120" target="_blank">
-                    <img src="https://avatars.githubusercontent.com/u/20939839?v=4s=100" width="50px">
+                    <img src="https://avatars.githubusercontent.com/u/20939839?v=4&s=50">
                     <br />
                     <sup style="font-size: 12px">Rain120</sup>
                 </a>
@@ -159,10 +159,10 @@ _简单，可扩展的状态管理_
         </tr>
         <tr>
             <td align="center">
-                <a href="https://github.com/mobxjs/zh.mobx.js.org" target="_blank">
-                    <img src="img/placeholder.svg" width="50px">
+                <a href="https://github.com/TechQuery" target="_blank">
+                    <img src="https://avatars.githubusercontent.com/u/19969570?v=4&s=50">
                     <br />
-                    <sup style="font-size: 12px">虚位以待</sup>
+                    <sup style="font-size: 12px">TechQuery</sup>
                 </a>
             </td>
              <td align="center">
