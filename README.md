@@ -73,6 +73,7 @@ mobx是一个流行的状态管理库，在全世界有很多用户。mobx中文
   </tr>
       <tr>
     <td align="center"><a href="https://github.com/JiangJie"><img src="https://avatars.githubusercontent.com/u/1536338?s=100&v=4" width="100px;" alt=""/><br /><sub><b>JiangJie</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3AJiangJie" title="PR">💻</a></td>
+    <td align="center"><a href="https://github.com/TechQuery"><img src="https://avatars.githubusercontent.com/u/19969570?s=100&v=4" width="100px;" alt=""/><br /><sub><b>TechQuery</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls?q=author%3ATechQuery" title="PR">💻</a></td>
     <td align="center"><a href="https://github.com/mobxjs/zh.mobx.js.org"><img src="https://zh.mobx.js.org/assets/placeholder.svg" width="100px;" alt=""/><br /><sub><b>Next Contributor</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls" title="PR">💻</a></td>
     <td align="center"><a href="https://github.com/mobxjs/zh.mobx.js.org"><img src="https://zh.mobx.js.org/assets/placeholder.svg" width="100px;" alt=""/><br /><sub><b>Next Contributor</b></sub></a><br /><a href="https://github.com/mobxjs/zh.mobx.js.org/pulls" title="PR">💻</a></td>
   </tr>
@@ -95,13 +96,6 @@ mobx是一个流行的状态管理库，在全世界有很多用户。mobx中文
 
 ### 翻译规范
 目前工作重心会先放在完成翻译上，我们会在翻译过程中积累沉淀规范以提高质量，目前暂不提前设定规范来约束翻译活动进展。
-
-### 翻译奖励
-对于提过PR并成功合并的同学，我们会将您的账号放在本项目仓库的README.md中的贡献者名单里(如上所示)。对于贡献较大的同学我们我们会奖励Mobx官方贴纸和Mobx6 Cheatsheet，并将您的Github账号放在文档网站首页。（一般来说贡献较大是指翻译一篇或者多篇文档，积极参与校对也属于贡献较大
-
-<img src="https://zh.mobx.js.org/assets/gift.jpg" width="700px;" alt="gift for translation volunteer"/>
-
->Mobx6 Cheatsheet为电子版PDF，通过Email发送。考虑邮递成本，Mobx贴纸将以中国邮政平信的方式寄到您的地址。
 
 ### 感谢赞助商Vercel
 <a href="https://vercel.com/?utm_source=mobx-docs-cn&utm_campaign=oss"><img src="https://zh.mobx.js.org/assets/powered-by-vercel.svg" width="250px;" alt="zh-mobx-docs powered by vercel"/></a>
