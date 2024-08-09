@@ -1,0 +1,41 @@
+name: Fetch Original Document pages
+on:
+    issues:
+        types:
+            - labeled
+jobs:
+    Fetch-and-Save:
+        if: github.event.label.name == '📖 documentation'
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+            issues: write
+        steps:
+            - uses: actions/checkout@v4
+
+            - id: issue-parser
+              uses: stefanbuck/github-issue-parser@v3
+              with:
+                  template-path: ".github/ISSUE_TEMPLATE/translation.yml"
+
+            - id: fetch-md
+              uses: freeCodeCamp-China/article-webpage-to-markdown-action@v2
+              with:
+                  pageURL: "${{ steps.issue-parser.outputs.issueparser_page_link  }}"
+                  markdownFolder: "./docs/"
+                  githubToken: ${{ github.token }}
+
+            - name: 将输出发至评论区
+              run: gh issue comment "$NUMBER" --body "$BODY"
+              env:
+                GH_TOKEN: ${{ github.token }}
+                GH_REPO: ${{ github.repository }}
+                NUMBER: ${{ github.event.issue.number }}
+                BODY: |
+                  - 原文网址: [${{ steps.fetch-md.outputs.title }}](${{ steps.fetch-md.outputs.original_url }})
+                  - 原文作者: [${{ steps.fetch-md.outputs.author || 'anonymous' }}](${{ steps.fetch-md.outputs.author_url }})
+                  - Markdown 文件: [点击编辑](${{ steps.fetch-md.outputs.editor_url }})
+
+            - uses: stefanzweifel/git-auto-commit-action@v5
+              with:
+                  commit_message: "${{ github.event.issue.title }}"
